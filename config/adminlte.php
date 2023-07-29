@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Alcaldia Talanga</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/casa.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/casa.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -311,13 +311,25 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
+
+        ['header' => 'Opciones de Modulos'],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
+            'text' => 'Permiso Sacrificio',
+            //'url' => 'permisosacrificio',
+            //'label' => 2,
             'label_color' => 'success',
+            'icon' => 'fa-solid fa-file-circle-check',
+            'icon_color' => 'info',
+            'submenu' => [
+                [
+                    'text' => 'Permiso Sacrificio',
+                    'icon' => 'fa-solid fa-file-circle-check',
+                    'icon_color' => 'indigo',
+                    'url' => 'Permiso Sacrificio'
+                ]
+            ]
         ],
+
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
