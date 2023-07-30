@@ -312,7 +312,32 @@ return [
             'can'  => 'manage-blog',
         ],
 
+            
+        
         ['header' => 'Opciones de Modulos'],
+        [
+            'text' => 'Fierros',
+            //'url' => 'fierro',
+            //'label' => 2,
+            'label_color' => 'success',
+            'icon' => '<x-icons.upwork />',
+            'icon_color' => 'info',
+            'submenu' => [
+                [
+                    'text' => 'Registro de Fierros',
+                    'icon' => '<x-icons.upwork />',
+                    'icon_color' => 'indigo',
+                    'url' => 'fierro'
+                ],
+
+                [
+                    'text' => 'Mostrar Fierros',
+                    'icon' => '<x-icons.upwork />',
+                    'icon_color' => 'indigo',
+                    'url' => 'fierro/mostrar'
+                ]
+            ]
+        ],
         [
             'text' => 'Permiso Sacrificio',
             //'url' => 'permisosacrificio',
