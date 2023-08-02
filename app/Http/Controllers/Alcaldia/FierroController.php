@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Alcaldia;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\http;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Http;
 
 class FierroController extends Controller
 {
 
-    public function fierro(){
-        $fierro = Http:: get('http://localhost:3000/FIERROS/GETALL');
-        $citaArreiglo = json_decode($fierro,true);
-        //return
+    public function fierro()
+{
+    $fierro = Http::get('http://localhost:3000/FIERROS/GETALL');
+    $citaArreglo = json_decode($fierro->body(), true);
+    // Imprime los datos para verificar si están llegando correctamente
+    // dd($citaArreglo);
 
-        return view ('Alcaldia.fierro', compact('citaArreiglo'));
-
-        }
+    return view('Alcaldia.fierro', compact('citaArreglo'));
+}
 
         public function nuevo_fierro(Request $request){
             
@@ -29,12 +29,13 @@ class FierroController extends Controller
                 "NUM_FOLIO_FIERRO" => $request -> input("NUM_FOLIO_FIERRO"),
                 "MON_CERTIFICO_FIERRO" => $request -> input("MON_CERTIFICO_FIERRO"),
             ]);
-            return readirect('\fierro');
+            return redirect('/fierro');
+            
         }
 
         public function actualizar_fierro(Request $request){
             
-            $actualizar_fierro = Http::post('http://localhost:3000/FIERROS/ACTUALIZAR/'.$request->input("COD_FIERRO"),[
+            $actualizar_fierro = Http::put('http://localhost:3000/FIERROS/ACTUALIZAR/'.$request->input("COD_FIERRO"),[
                 "COD_FIERRO" => $request -> input("COD_FIERRO"),
                 "FEC_TRAMITE_FIERRO" => $request -> input("FEC_TRAMITE_FIERRO"),
                 "COD_PERSONA" => $request -> input("COD_PERSONA"),
@@ -43,7 +44,8 @@ class FierroController extends Controller
                 "NUM_FOLIO_FIERRO" => $request -> input("NUM_FOLIO_FIERRO"),
                 "MON_CERTIFICO_FIERRO" => $request -> input("MON_CERTIFICO_FIERRO"),
             ]);
-            return readirect('\fierro');
+            return redirect('/fierro');
+
         }
 
 }

@@ -210,8 +210,12 @@ svg {
 
 table {
   border-collapse: collapse;
-}
 
+}
+.table-verde-claro {
+  background-color: #28a745;; /* Puedes ajustar este color según tus preferencias */
+  color: black; /* Puedes cambiar el color del texto si es necesario */
+}
 caption {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
