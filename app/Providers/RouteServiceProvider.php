@@ -42,7 +42,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('fierro')
                 ->group(base_path('routes/fierro.php'));
 
-            
+            Route::middleware('web')
+                ->prefix('psacrificio')
+                ->group(base_path('routes/psacrificio.php'));
         });
     }
 }

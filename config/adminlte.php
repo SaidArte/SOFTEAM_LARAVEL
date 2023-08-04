@@ -339,18 +339,18 @@ return [
             ]
         ],
         [
-            'text' => 'Permiso Sacrificio',
+            'text' => 'Permisos',
             //'url' => 'permisosacrificio',
             //'label' => 2,
-            'label_color' => 'success',
-            'icon' => 'fa-solid fa-file-circle-check',
-            'icon_color' => 'info',
+            //'label_color' => 'success',
+            'icon' => 'fa fa-id-card',
+            //'icon_color' => 'info',
             'submenu' => [
                 [
-                    'text' => 'Permiso Sacrificio',
-                    'icon' => 'fa-solid fa-file-circle-check',
-                    'icon_color' => 'indigo',
-                    'url' => 'Permiso Sacrificio'
+                    'icon' => 'fa fa-id-card',
+                    'text' => 'Permiso de Sacrificio',
+                   // 'icon_color' => 'info',
+                    'url' => 'psacrificio'
                 ]
             ]
         ],
