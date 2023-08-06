@@ -355,6 +355,23 @@ return [
             ]
         ],
 
+        [
+            'text' => 'Seguridad',
+            //'url' => 'Usuarios',
+            //'label' => 2,
+            //'label_color' => 'success',
+            'icon' => 'fa fa-id-card',
+            //'icon_color' => 'info',
+            'submenu' => [
+                [
+                    'icon' => 'fa fa-id-card',
+                    'text' => 'Usuarios',
+                   // 'icon_color' => 'info',
+                    'url' => 'Usuarios'
+                ]
+            ]
+        ],
+
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

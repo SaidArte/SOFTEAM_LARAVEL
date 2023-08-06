@@ -187,9 +187,9 @@
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                         </form>
                                     </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
             @endforeach
         </tbody>
     </table>
