@@ -45,9 +45,7 @@ class UsuariosController extends Controller
             "FEC_ULTIMO_ACCESO"           => $request -> input("FEC_ULTIMO_ACCESO"),
             "LIM_INTENTOS"        => $request -> input("LIM_INTENTOS"),
             "NUM_INTENTOS_FALLIDOS"            => $request -> input("NUM_INTENTOS_FALLIDOS"),
-            "FEC_VENCIMIENTO"       => $request -> input("FEC_VENCIMIENTO"),
-            "PREGUNTA"       => $request -> input("PREGUNTA"),
-            "RESPUESTA"       => $request -> input("RESPUESTA")
+            "FEC_VENCIMIENTO"       => $request -> input("FEC_VENCIMIENTO")
         ]);
         return redirect('/Usuarios');
 

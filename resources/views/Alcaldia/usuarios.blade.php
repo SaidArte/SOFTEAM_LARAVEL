@@ -1,4 +1,7 @@
 @extends('adminlte::page')
+@php
+    use Carbon\Carbon;
+@endphp
 
 @section('title', 'Alcaldia')
 
@@ -30,7 +33,7 @@
                                 <label for="NOM_ROL">Rol</label>
                                 <select class="form-select" id="NOM_ROL" name="NOM_ROL">
                                     <option value="X">- Elija el rol -</option>
-                                    <option value="Admin">Adminstrador</option>
+                                    <option value="Adminstrador">Adminstrador</option>
                                     <option value="Usuario">Usuario</option>
                                     <option value="Secretario">Secretario</option>
                                 </select>
@@ -110,11 +113,11 @@
                     <td>{{$Usuarios['NOM_PERSONA']}}</td>   
                     <td>{{$Usuarios['NOM_ROL']}}</td> 
                     <td>{{$Usuarios['IND_USUARIO']}}</td>
-                    <td>{{$Usuarios['FEC_ULTIMO_CAMBIO']}}</td>
-                    <td>{{$Usuarios['FEC_ULTIMO_ACCESO']}}</td>
+                    <td>{{date('d-m-y', strtotime($Usuarios['FEC_ULTIMO_CAMBIO']))}}</td>
+                    <td>{{date('d-m-y', strtotime($Usuarios['FEC_ULTIMO_ACCESO']))}}</td>
                     <td>{{$Usuarios['LIM_INTENTOS']}}</td>
                     <td>{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}</td>
-                    <td>{{$Usuarios['FEC_VENCIMIENTO']}}</td>
+                    <td>{{date('d-m-y', strtotime($Usuarios['FEC_VENCIMIENTO']))}}</td>
                     <td>
                         <button value="Editar" title="Editar" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#Usuarios-edit-{{$Usuarios['COD_USUARIO']}}">
                             <i class='fas fa-edit' style='font-size:13px;color:Orange'></i> Editar
@@ -145,7 +148,7 @@
                                             <input type="text" readonly class="form-control" id="NOM_ROL" name="NOM_ROL" value="{{$Usuarios['NOM_ROL']}}">
                                             <select class="form-select" id="NOM_ROL" name="NOM_ROL">
                                                 <option value="X">- Elija el rol -</option>
-                                                <option value="Admin">Adminstrador</option>
+                                                <option value="Adminstrador">Adminstrador</option>
                                                 <option value="Usuario">Usuario</option>
                                                 <option value="Secretario">Secretario</option>
                                             </select>
@@ -161,12 +164,12 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="Usuarios">Fecha de ultimo cambio</label>
-                                            <input type="text" readonly class="form-control" id="FEC_ULTIMO_CAMBIO" name="FEC_ULTIMO_CAMBIO" value="{{$Usuarios['FEC_ULTIMO_CAMBIO']}}">
+                                            <input type="text" readonly class="form-control" id="FEC_ULTIMO_CAMBIO" name="FEC_ULTIMO_CAMBIO" value="{{date('d-m-y', strtotime($Usuarios['FEC_ULTIMO_CAMBIO']))}}">
                                             <input type="date" class="form-control" id="FEC_ULTIMO_CAMBIO" name="FEC_ULTIMO_CAMBIO" value="{{$Usuarios['FEC_ULTIMO_CAMBIO']}}">
                                         </div>
                                         <div class="mb-3">
                                             <label for="usuarios">Fecha de ultimo acceso</label>
-                                            <input type="text" readonly class="form-control" id="FEC_ULTIMO_ACCESO" name="FEC_ULTIMO_ACCESO" value="{{$Usuarios['FEC_ULTIMO_ACCESO']}}">
+                                            <input type="text" readonly class="form-control" id="FEC_ULTIMO_ACCESO" name="FEC_ULTIMO_ACCESO" value="{{date('d-m-y', strtotime($Usuarios['FEC_ULTIMO_ACCESO']))}}">
                                             <input type="date" class="form-control" id="FEC_ULTIMO_ACCESO" name="FEC_ULTIMO_ACCESO" value="{{$Usuarios['FEC_ULTIMO_ACCESO']}}">
                                         </div>
                                         <div class="mb-3">
@@ -179,7 +182,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="Usuarios">Fecha de vencimiento de contraseña</label>
-                                            <input type="text" readonly class="form-control" id="FEC_VENCIMIENTO" name="FEC_VENCIMIENTO" value="{{$Usuarios['FEC_VENCIMIENTO']}}">
+                                            <input type="text" readonly class="form-control" id="FEC_VENCIMIENTO" name="FEC_VENCIMIENTO" value="{{date('d-m-y', strtotime($Usuarios['FEC_VENCIMIENTO']))}}">
                                             <input type="date" class="form-control" id="FEC_VENCIMIENTO" name="FEC_VENCIMIENTO" value="{{$Usuarios['FEC_VENCIMIENTO']}}">
                                         </div>
                                         <div class="mb-3">
