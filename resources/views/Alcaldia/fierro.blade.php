@@ -1,4 +1,12 @@
 @extends('adminlte::page')
+@php
+    $tiposFierro = [
+        'L' => 'Letra',
+        'F' => 'Figura',
+        'N' => 'Numero',
+        'S' => 'Simbolo',
+    ];
+@endphp
 
 @section('title', 'Alcaldia')
 
@@ -13,7 +21,10 @@
 @stop
 
 @section('content')
+<p align="right">
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#fierro">+ Nuevo</button>
+</p>
+
     <div class="modal fade bd-example-modal-sm" id="fierro" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -26,12 +37,16 @@
                     <form action="{{ url('fierro/insertar') }}" method="post">
                         @csrf
                         <div class="mb-3 mt-3">
+                            <label for="COD_PERSONA">Codigo de Persona</label>
+                            <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA" placeholder="Ingrese el codigo del dueño del fierro">
+                        </div>
+                        <div class="mb-3 mt-3">
                             <label for="FEC_TRAMITE_FIERRO">Fecha de Tramite</label>
                             <input type="date" id="FEC_TRAMITE_FIERRO" class="form-control" name="FEC_TRAMITE_FIERRO" placeholder="inserte la fecha de tramite.">
                         </div>
-                        <div class="mb-3 mt-3">
-                            <label for="COD_PERSONA">Codigo de Persona</label>
-                            <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA" placeholder="Ingrese el codigo del dueño del fierro">
+                        <div class="mb-3">
+                            <label for="NUM_FOLIO_FIERRO">Numero de Folio</label>
+                            <input type="text" id="NUM_FOLIO_FIERRO" class="form-control" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro">
                         </div>
                         <div class="mb-3">
                             <label for="TIP_FIERRO" class="form-label">Tipo de Fierro</label>
@@ -42,22 +57,38 @@
                                 <option value="S">Simbolo</option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="IMG_FIERRO">Imagen de Fierro</label>
-                            <input type="text" id="IMG_FIERRO" class="form-control" name="IMG_FIERRO" placeholder="Ingrese la imagen del fierro">
-                        </div>
-                        <div class="mb-3">
-                            <label for="NUM_FOLIO_FIERRO">Numero de Folio</label>
-                            <input type="text" id="NUM_FOLIO_FIERRO" class="form-control" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro">
-                        </div>
+                         
                         <div class="mb-3">
                             <label for="MON_CERTIFICO_FIERRO">Monto del Certifico</label>
                             <input type="text" id="MON_CERTIFICO_FIERRO" class="form-control" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el monto del certifico">
-                        </div>
+                        </div> 
+
+                        
+                    <!--  <div class="mb-3">
+                            <label for="IMG_FIERRO">Imagen del Fierro</label>
+                            <input type="text" id="IMG_FIERRO" class="form-control" name="IMG_FIERRO" placeholder="Ingrese la imagen del fierro">
+                        </div> -->
+                        
+ <div class="card">
+    <div class="col">
+        <label for="IMG_FIERRO">Subir Imagen del Fierro</label>
+        <form action="{{ url('fierro/insertar') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group">
+                <input type="file" name="file" id="" accept="image/*">
+            </div>
+           </form>
+           <button type="submit" class="btn btn-primary">Guardar</button>
+           <button type="reset" class="btn btn-danger">Cancelar</button>
+    </div>
+</div>
+                   <!--      <p align="right">
                         <div class="mb-3">
-                            <button class="btn btn-primary" type="submit">Guardar</button>
+                            <button class="btn btn-primary" type="submit">Registrar</button>
                             <button class="btn btn-danger" type="reset">Cancelar</button>
+                        
                         </div>
+                        </p>-->
                     </form>
                 </div>
             </div>
@@ -66,27 +97,28 @@
 
     <table cellspacing="7" cellpadding="7" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" style="border:2px solid lime;">
         <thead>
-            <th>Codigo Fierro</th>
-            <th>Fecha Tramite</th>
+            <th> N°</th>
             <th>Dueño Fierro</th>
-            <th>Tipo Fierro</th>
-            <th>Img Fierro</th>
+            <th>Fecha Tramite</th>
             <th>Numero Folio</th>
+            <th>Tipo Fierro</th>
             <th>Monto Certifico</th>
+            <th>Img Fierro</th>
             <th>Opciones de la Tabla</th>
             <th></th>
         </thead>
         <tbody>
             <!-- Loop through $citaArreglo and show data -->
             @foreach($citaArreglo as $fierro)
+            
                 <tr>
                     <td>{{$fierro['COD_FIERRO']}}</td>
-                    <td>{{$fierro['FEC_TRAMITE_FIERRO']}}</td>   
-                    <td>{{$fierro['COD_PERSONA']}}</td> 
-                    <td>{{$fierro['TIP_FIERRO']}}</td>
-                    <td>{{$fierro['IMG_FIERRO']}}</td>
+                    <td>{{$fierro['COD_PERSONA']}}</td>
+                    <td>{{date('d-m-Y', strtotime($fierro['FEC_TRAMITE_FIERRO']))}}</td>   
                     <td>{{$fierro['NUM_FOLIO_FIERRO']}}</td>
+                    <td>{{ $tiposFierro[$fierro['TIP_FIERRO']] }}</td>
                     <td>{{$fierro['MON_CERTIFICO_FIERRO']}}</td>
+                    <td> <img src="{{ $fierro['IMG_FIERRO'] }}" alt="Imagen del Fierro" style="max-height: 100px;"></td>
                     <td>
                         <button value="Editar" title="Editar" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#fierro-edit-{{$fierro['COD_FIERRO']}}">
                             <i class='fas fa-edit' style='font-size:13px;color:Orange'></i> Editar
@@ -107,13 +139,18 @@
                                     @csrf
                                     <input type="hidden" class="form-control" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
                                     <div class="mb-3 mt-3">
-                                        <label for="fierro" class="form-label">Fecha de Tramite</label>
-                                        <input type="date" class="form-control" id="FEC_TRAMITE_FIERRO" name="FEC_TRAMITE_FIERRO" placeholder="Ingrese la Fecha de Tramite" value="{{$fierro['FEC_TRAMITE_FIERRO']}}">
-                                    </div>
-                                    <div class="mb-3 mt-3">
                                         <label for="fierro" class="form-label">Codigo de Persona</label>
                                         <input type="text" class="form-control" id="COD_PERSONA" name="COD_PERSONA" placeholder="Ingrese el codigo del dueño del fierro" value="{{$fierro['COD_PERSONA']}}">
                                     </div>
+                                    <div class="mb-3 mt-3">
+                                        <label for="fierro" class="form-label">Fecha de Tramite</label>
+                                        <input type="date" class="form-control" id="FEC_TRAMITE_FIERRO" name="FEC_TRAMITE_FIERRO" placeholder="Ingrese la Fecha de Tramite" value="{{$fierro['FEC_TRAMITE_FIERRO']}}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="fierro">Numero de Folio</label>
+                                        <input type="text" class="form-control" id="NUM_FOLIO_FIERRO" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro" value="{{$fierro['NUM_FOLIO_FIERRO']}}">
+                                    </div>
+                                    
                                     <div class="mb-3">
                                         <label for="fierro" class="form-label">Tipo de Fierro</label>
                                         <select class="form-select" id="TIP_FIERRO" name="TIP_FIERRO">
@@ -124,29 +161,40 @@
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="fierro">Imagen de Fierro</label>
-                                        <input type="text" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" placeholder="Seleccione la Imagen del Fierro" value="{{$fierro['IMG_FIERRO']}}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="fierro">Numero de Folio</label>
-                                        <input type="text" class="form-control" id="NUM_FOLIO_FIERRO" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro" value="{{$fierro['NUM_FOLIO_FIERRO']}}">
-                                    </div>
-                                    <div class="mb-3">
                                         <label for="fierro">Monto del Certifico</label>
                                         <input type="text" class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}}">
                                     </div>
-                                    <div class="mb-3">
+                                
+                                     <!-- <div class="mb-3">
+                                        <label for="fierro">Imagen del Fierro</label>
+                                        <input type="text" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" placeholder="Ingrese la imagen del fierro" value="{{$fierro['IMG_FIERRO']}}">
+                                    </div> -->
+                                    <div class="card">
+                        <div class="col">
+                        <label for="IMG_FIERRO">Subir Imagen del Fierro</label>
+                                        <form action="" method="POST" enctype="multipart/form-data">
+                                          <div class= "form-group">
+                                         <input type="file" name="file" id="" accept= "image/*">
+                                         </div>
+                                           </form>
+
+                                    </div>
+                         </div>
+                                   <div class="mb-3">
                                         <button type="submit" class="btn btn-primary">Editar</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
+           
         </tbody>
     </table>
+  
 @stop
 
 @section('css')

@@ -32,6 +32,7 @@
     <p align="right">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#psacrificio">+ Nuevo</button>
     </p>
+   
     <div class="modal fade bd-example-modal-sm" id="psacrificio" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -97,6 +98,7 @@
         <tbody>
             <!-- Loop through $citaArreglo and show data -->
             @foreach($citaArreglo as $psacrificio)
+          
                 <tr>
                     <td>{{$psacrificio['COD_PSACRIFICIO']}}</td>  
                     <td>{{$psacrificio['NOM_PERSONA']}}</td> 
@@ -191,6 +193,7 @@
                             </div>
                         </div>
             @endforeach
+           
         </tbody>
     </table>
 @stop

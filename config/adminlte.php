@@ -89,8 +89,8 @@ return [
             'path' => 'vendor/adminlte/dist/img/Talanga.png',
             'alt' => 'Auth Logo',
             'class' => '',
-            'width' => 50,
-            'height' => 50,
+            'width' => 100,
+            'height' => 100,
         ],
     ],
 
@@ -112,8 +112,8 @@ return [
             'path' => 'vendor/adminlte/dist/img/Talanga.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 60,
-            'height' => 60,
+            'width' => 300,
+            'height' => 300,
         ],
     ],
 
@@ -319,21 +319,21 @@ return [
             'text' => 'Fierros',
             //'url' => 'fierro',
             //'label' => 2,
-            'label_color' => 'success',
-            'icon' => '<x-icons.upwork />',
-            'icon_color' => 'info',
+           // 'label_color' => 'success',
+            'icon' => 'fa fa-magnet',
+            //'icon_color' => 'info',
             'submenu' => [
                 [
                     'text' => 'Registro de Fierros',
-                    'icon' => '<x-icons.upwork />',
-                    'icon_color' => 'indigo',
+                    'icon' => 'fa fa-registered',
+                   // 'icon_color' => 'indigo',
                     'url' => 'fierro'
                 ],
 
                 [
                     'text' => 'Mostrar Fierros',
-                    'icon' => '<x-icons.upwork />',
-                    'icon_color' => 'indigo',
+                    'icon' => 'fa fa-search',
+                    //'icon_color' => 'indigo',
                     'url' => 'fierro/mostrar'
                 ]
             ]
@@ -343,7 +343,7 @@ return [
             //'url' => 'permisosacrificio',
             //'label' => 2,
             //'label_color' => 'success',
-            'icon' => 'fa fa-id-card',
+            'icon' => 'fa fa-archive',
             //'icon_color' => 'info',
             'submenu' => [
                 [
@@ -360,11 +360,11 @@ return [
             //'url' => 'Usuarios',
             //'label' => 2,
             //'label_color' => 'success',
-            'icon' => 'fa fa-id-card',
+            'icon' => 'fa fa-lock',
             //'icon_color' => 'info',
             'submenu' => [
                 [
-                    'icon' => 'fa fa-id-card',
+                    'icon' => 'fa fa-user',
                     'text' => 'Usuarios',
                    // 'icon_color' => 'info',
                     'url' => 'Usuarios'

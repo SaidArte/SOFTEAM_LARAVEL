@@ -10,6 +10,7 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ 
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -68,6 +69,8 @@ body {
   text-align: left;
   background-color: #fff;
 }
+
+
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
@@ -53014,3 +53017,10 @@ a.text-muted:hover {
   border-color: #4b545c !important;
 }
 /*# sourceMappingURL=adminlte.css.map */
+
+    $tiposFierro = [
+        'L' => 'Letra',
+        'F' => 'Figura',
+        'N' => 'Numero',
+        'S' => 'Simbolo',
+    ];
