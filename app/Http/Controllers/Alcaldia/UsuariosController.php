@@ -37,7 +37,7 @@ class UsuariosController extends Controller
 
     public function actualizar_usuario(Request $request){
 
-        $actualizar_fierro = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_USUARIOS',[
+        $actualizar_usuario = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_USUARIOS',[
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "IND_USUARIO"           => $request -> input("IND_USUARIO"),
@@ -53,7 +53,7 @@ class UsuariosController extends Controller
 
     public function actualizar_pass_usuarios(Request $request){
 
-        $actualizar_fierro = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_PASS_USUARIOS',[
+        $actualizar_pass_usuario = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_PASS_USUARIOS',[
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
             "PAS_USUARIO"       => $request -> input("PAS_USUARIO"),
         ]);

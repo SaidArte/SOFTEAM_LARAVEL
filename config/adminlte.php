@@ -364,10 +364,46 @@ return [
             //'icon_color' => 'info',
             'submenu' => [
                 [
-                    'icon' => 'fa fa-user',
                     'text' => 'Usuarios',
-                   // 'icon_color' => 'info',
+                    'icon' => 'fa fa-user',
+                    //'icon_color' => 'indigo',
                     'url' => 'Usuarios'
+                ],
+                [
+                    'text' => 'Preguntas',
+                    'icon' => 'fa fa-question',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Preguntas'
+                ],
+                [
+                    'text' => 'Respuesta Usuario',
+                    'icon' => 'fa fa-unlock-alt',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Respuestas'
+                ],
+                [
+                    'text' => 'Roles',
+                    'icon' => 'fa fa-universal-access',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Roles'
+                ],
+                [
+                    'text' => 'Objetos',
+                    'icon' => 'fa fa-object-ungroup',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Objetos'
+                ],
+                [
+                    'text' => 'Permisos',
+                    'icon' => 'fa fa-gavel',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Permisos'
+                ],
+                [
+                    'text' => 'Mantenimientos',
+                    'icon' => 'fa fa-wrench',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Mantenimientos'
                 ]
             ]
         ],

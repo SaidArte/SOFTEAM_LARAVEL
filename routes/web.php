@@ -27,6 +27,12 @@ Route::delete('/psacrificio/eliminar/{id}', 'Alcaldia\PSacrificioController@elim
 use App\Http\Controllers\Alcaldia\FierroController;
 use App\Http\Controllers\Alcaldia\PSacrificioController;
 use App\Http\Controllers\Alcaldia\UsuariosController;
+use App\Http\Controllers\Alcaldia\PreguntasController;
+use App\Http\Controllers\Alcaldia\RolesController;
+use App\Http\Controllers\Alcaldia\ObjetosController;
+use App\Http\Controllers\Alcaldia\PermisosController;
+use App\Http\Controllers\Alcaldia\RespuestasController;
+use App\Http\Controllers\Alcaldia\MantenimientosController;
 
 /*Route::get('/fierro', [FierroController::class, 'fierro'])->name('fierro');
 Route::post('/fierro/nuevo', [FierroController::class, 'nuevo_fierro'])->name('fierro.nuevo');

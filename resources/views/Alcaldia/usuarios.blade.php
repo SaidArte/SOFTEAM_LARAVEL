@@ -32,8 +32,8 @@
                             <div class="mb-3 mt-3">
                                 <label for="NOM_ROL">Rol</label>
                                 <select class="form-select" id="NOM_ROL" name="NOM_ROL">
-                                    <option value="X">- Elija el rol -</option>
-                                    <option value="Adminstrador">Adminstrador</option>
+                                    <option value="X" selected = "selected" disabled>- Elija el rol -</option>
+                                    <option value="Administrador">Administrador</option>
                                     <option value="Usuario">Usuario</option>
                                     <option value="Secretario">Secretario</option>
                                 </select>
@@ -50,7 +50,7 @@
                             <div class="mb-3">
                                 <label for="IND_USUARIO">Estado del usuario</label>
                                 <select class="form-select" id="IND_USUARIO" name="IND_USUARIO">
-                                    <option value="X">- Elija un estado -</option>
+                                    <option value="X" selected = "selected" disabled>- Elija un estado -</option>
                                     <option value="ACTIVO">Activo</option>
                                     <option value="INACTIVO">Inactivo</option>
                                 </select>
@@ -70,7 +70,7 @@
                             <div class="mb-3">
                                 <label for="PREGUNTA">Pregunta de seguridad</label>
                                 <select class="form-select" id="PREGUNTA" name="PREGUNTA">
-                                    <option value="X">- Elija una pregunta -</option>
+                                    <option value="X" selected = "selected" disabled>- Elija una pregunta -</option>
                                     <option value="¿Nombre de su primer mascota?">¿Nombre de su primer mascota?</option>
                                     <option value="¿Nombre primer pareja?">¿Nombre primer pareja?</option>
                                     <option value="¿Ciudad donde nacio?">¿Ciudad donde nacio?</option>
@@ -80,7 +80,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="RESPUESTA">Respuesta</label>
-                                <input type="text" id="RESPUESTA" class="form-control" name="RESPUESTA" placeholder="Ingrese la respuesta a la pregunta elejida">
+                                <input type="text" id="RESPUESTA" class="form-control" name="RESPUESTA" placeholder="Ingrese la respuesta a la pregunta elegida">
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary" type="submit">Guardar</button>
@@ -147,8 +147,8 @@
                                             <label for="Usuarios" class="form-label">Rol</label>
                                             <input type="text" readonly class="form-control" id="NOM_ROL" name="NOM_ROL" value="{{$Usuarios['NOM_ROL']}}">
                                             <select class="form-select" id="NOM_ROL" name="NOM_ROL">
-                                                <option value="X">- Elija el rol -</option>
-                                                <option value="Adminstrador">Adminstrador</option>
+                                                <option value="X" selected = "selected" disabled>- Elija el rol -</option>
+                                                <option value="Administrador">Administrador</option>
                                                 <option value="Usuario">Usuario</option>
                                                 <option value="Secretario">Secretario</option>
                                             </select>
@@ -157,7 +157,7 @@
                                             <label for="Usuarios" class="form-label">Estado del usuario</label>
                                             <input type="text" readonly class="form-control" id="IND_USUARIO" name="IND_USUARIO" value="{{$Usuarios['IND_USUARIO']}}">
                                             <select class="form-select" id="IND_USUARIO" name="IND_USUARIO">
-                                                <option value="X">- Elija un estado -</option>
+                                                <option value="X" selected = "selected" disabled>- Elija un estado -</option>
                                                 <option value="ACTIVO">Activo</option>
                                                 <option value="INACTIVO">Inactivo</option>
                                             </select>
@@ -170,7 +170,11 @@
                                         <div class="mb-3">
                                             <label for="usuarios">Fecha de ultimo acceso</label>
                                             <input type="text" readonly class="form-control" id="FEC_ULTIMO_ACCESO" name="FEC_ULTIMO_ACCESO" value="{{date('d-m-y', strtotime($Usuarios['FEC_ULTIMO_ACCESO']))}}">
-                                            <input type="date" class="form-control" id="FEC_ULTIMO_ACCESO" name="FEC_ULTIMO_ACCESO" value="{{$Usuarios['FEC_ULTIMO_ACCESO']}}">
+                                            <input type="date" class="form-control" id="date-picker" name="FEC_ULTIMO_ACCESO">
+                                            <script>
+                                                var datePattern = Usuarios[FEC_ULTIMO_ACCESO];
+                                                document.getElementById("date-picker").value = datePattern;
+                                            </script>
                                         </div>
                                         <div class="mb-3">
                                             <label for="Usuarios">Intentos permitidos (Login)</label>

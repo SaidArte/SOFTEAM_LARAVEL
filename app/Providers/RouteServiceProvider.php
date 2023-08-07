@@ -47,8 +47,32 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/psacrificio.php'));
             
             Route::middleware('web')
-            ->prefix('Usuarios')
-            ->group(base_path('routes/Usuarios.php'));
+                ->prefix('Usuarios')
+                ->group(base_path('routes/Usuarios.php'));
+    
+            Route::middleware('web')
+                ->prefix('Preguntas')
+                ->group(base_path('routes/Preguntas.php'));
+    
+            Route::middleware('web')
+                ->prefix('Respuestas')
+                ->group(base_path('routes/Respuestas.php'));
+    
+            Route::middleware('web')
+                ->prefix('Roles')
+                ->group(base_path('routes/Roles.php'));
+    
+            Route::middleware('web')
+                ->prefix('Objetos')
+                ->group(base_path('routes/Objetos.php'));
+    
+            Route::middleware('web')
+                ->prefix('Permisos')
+                ->group(base_path('routes/Permisos.php'));
+    
+            Route::middleware('web')
+                ->prefix('Mantenimientos')
+                ->group(base_path('routes/Mantenimientos.php'));
         });
     }
 }
