@@ -23,7 +23,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::delete('/psacrificio/eliminar/{id}', 'Alcaldia\PSacrificioController@eliminar_psacrificio'); //Ruta del boton eliminar
 
 
-
+use App\Http\Controllers\Alcaldia\PersonasController;
 use App\Http\Controllers\Alcaldia\FierroController;
 use App\Http\Controllers\Alcaldia\PSacrificioController;
 use App\Http\Controllers\Alcaldia\UsuariosController;

@@ -74,7 +74,11 @@
                 </div>
             </div>
         </nav>
-
+        <style>
+            .custom-select {
+                height: 50px; /* Ajusta la altura como desees */
+            }
+        </style>
         <main class="py-4">
             
             @yield('content')

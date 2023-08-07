@@ -316,6 +316,22 @@ return [
         
         ['header' => 'Opciones de Modulos'],
         [
+            'text' => 'Personas',
+            //'url' => 'personas',
+            //'label' => 2,
+            //'label_color' => 'success',
+            'icon' => 'fa fa-users',
+            //'icon_color' => 'info',
+            'submenu' => [
+                [
+                    'icon' => 'fa fa-user',
+                    'text' => 'Personas',
+                   // 'icon_color' => 'info',
+                    'url' => 'personas'
+                ]
+            ]
+        ],
+        [
             'text' => 'Fierros',
             //'url' => 'fierro',
             //'label' => 2,
