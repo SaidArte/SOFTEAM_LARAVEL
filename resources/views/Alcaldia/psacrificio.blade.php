@@ -2,6 +2,8 @@
 
 @section('title', 'Alcaldia')
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- confirmDelete -->
 @section('js')
     <script>
@@ -32,7 +34,6 @@
     <p align="right">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#psacrificio">+ Nuevo</button>
     </p>
-   
     <div class="modal fade bd-example-modal-sm" id="psacrificio" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -44,39 +45,144 @@
                 </div>
                 <div class="modal-body">
                     <p>Ingresar Datos Solicitados:</p>
-                    <form action="{{ url('psacrificio/insertar') }}" method="post">
+                    <form action="{{ url('psacrificio/insertar') }}" method="post" class="needs-validation">
                         @csrf
                             
-                            <div class="mb-3 mt-3">
+                            <div class="mb-3">
                                 <label for="NOM_PERSONA">Nombre de la Persona</label>
-                                <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre de la persona">
+                                <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre de la persona" required>
+                                <div class="invalid-feedback"></div>
                             </div>
                        
                             <div class="mb-3">
                                 <label for="DNI_PERSONA">Numero de Identidad</label>
-                                <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="Ingresar el numero de identidad">
+                                <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="Ingresar el numero de identidad" required>
+                                <div class="invalid-feedback"></div>
                             </div>
+
                             <div class="mb-3">
                                 <label for="TEL_PERSONA">Numero de Telefono</label>
-                                <input type="text" id="TEL_PERSONA" class="form-control" name="TEL_PERSONA" placeholder="Ingresar el numero de telefono">
+                                <input type="text" id="TEL_PERSONA" class="form-control" name="TEL_PERSONA" placeholder="Ingresar el numero de telefono" required>
+                                <div class="invalid-feedback"></div>
                             </div>
+
                             <div class="mb-3">
                                 <label for="FEC_SACRIFICIO">Fecha del Sacrificio</label>
-                                <input type="date" id="FEC_SACRIFICIO" class="form-control" name="FEC_SACRIFICIO" placeholder="Inserte la fecha del sacrificio">
+                                <input type="date" id="FEC_SACRIFICIO" class="form-control" name="FEC_SACRIFICIO" placeholder="Inserte la fecha del sacrificio" required>
+                                <div class="invalid-feedback"></div>
                             </div>
+
                             <div class="mb-3">
                                 <label for="COD_ANIMAL">Codigo del Animal</label>
-                                <input type="text" id="COD_ANIMAL" class="form-control" name="COD_ANIMAL" placeholder="Inserte el codigo del animal">
+                                <input type="text" id="COD_ANIMAL" class="form-control" name="COD_ANIMAL" placeholder="Inserte el codigo del animal" required>
+                                <div class="invalid-feedback"></div>
                             </div>
+
                             <div class="mb-3">
                                 <label for="DIR_PSACRIFICIO">Direccion del Sacrificio</label>
-                                <input type="text" id="DIR_PSACRIFICIO" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingresar la direccion del sacrificio">
+                                <input type="text" id="DIR_PSACRIFICIO" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingresar la direccion del sacrificio" required>
+                                <div class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
                                 <button class="btn btn-primary" type="submit">Guardar</button>
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                             </div>
                     </form>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('#NOM_PERSONA').on('input', function() {
+                                var nombre = $(this).val();
+                                var errorMessage = 'El nombre debe tener al menos 3 caracteres';
+                                if (nombre.length < 3) {
+                                    $(this).addClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text(errorMessage);
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('');
+                                }
+                            });
+
+                            $('#DNI_PERSONA').on('input', function() {
+                                var dni = $(this).val();
+                                var errorMessage = 'El DNI debe tener exactamente 13 caracteres';
+                                if (dni.length !== 13) {
+                                    $(this).addClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text(errorMessage);
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('');
+                                }
+                            });
+
+                            $('#TEL_PERSONA').on('input', function() {
+                                var telefono = $(this).val();
+                                var errorMessage = 'El teléfono debe tener exactamente 8 dígitos';
+                                if (!/^\d{8}$/.test(telefono)) {
+                                    $(this).addClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text(errorMessage);
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('');
+                                }
+                            });
+
+                            $('#FEC_SACRIFICIO').on('input', function() {
+                                var fechaSacrificio = $(this).val();
+                                var currentDate = new Date().toISOString().split('T')[0];
+                                var errorMessage = 'La fecha debe ser válida y no puede ser anterior a hoy';
+                                
+                                if (!fechaSacrificio || fechaSacrificio < currentDate) {
+                                    $(this).addClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text(errorMessage);
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('');
+                                }
+                            });
+
+                            $('#COD_ANIMAL').on('input', function() {
+                                var codigoAnimal = $(this).val();
+                                // Implementar la lógica para verificar si el código ya existe
+                                // y mostrar el mensaje de error correspondiente si ya está en uso.
+                            });
+
+                            $('#DIR_PSACRIFICIO').on('input', function() {
+                                var direccionSacrificio = $(this).val();
+                                var errorMessage = 'La dirección debe tener al menos 5 caracteres';
+                                
+                                if (direccionSacrificio.length < 5) {
+                                    $(this).addClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text(errorMessage);
+                                } else {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('');
+                                }
+                            });
+                        });
+
+                        // Ejemplo de JavaScript inicial para deshabilitar el envío de formularios si hay campos no válidos
+                        (function () {
+                        'use strict'
+
+                        // Obtener todos los formularios a los que queremos aplicar estilos de validación de Bootstrap personalizados
+                        var forms = document.querySelectorAll('.needs-validation')
+
+                        // Bucle sobre ellos y evitar el envío
+                        Array.prototype.slice.call(forms)
+                            .forEach(function (form) {
+                            form.addEventListener('submit', function (event) {
+                                if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                                }
+
+                                form.classList.add('was-validated')
+                            }, false)
+                            })
+                        })()
+
+                    </script>
                 </div>
             </div>
         </div>
@@ -88,7 +194,6 @@
             <th>Nombre</th>
             <th>Numero de Identidad</th>
             <th>Telefono</th>
-            
             <th>Fecha del Sacrificio</th>
             <th>Direccion del Sacrificio</th>
             <th>Registro del Animal</th>
@@ -98,14 +203,12 @@
         <tbody>
             <!-- Loop through $citaArreglo and show data -->
             @foreach($citaArreglo as $psacrificio)
-          
                 <tr>
                     <td>{{$psacrificio['COD_PSACRIFICIO']}}</td>  
                     <td>{{$psacrificio['NOM_PERSONA']}}</td> 
                     <td>{{$psacrificio['DNI_PERSONA']}}</td>
                     <td>{{$psacrificio['TEL_PERSONA']}}</td>
-                    
-                    <td>{{$psacrificio['FEC_SACRIFICIO']}}</td>
+                    <td>{{date('d/m/y',strtotime($psacrificio['FEC_SACRIFICIO']))}}</td>
                     <td>{{$psacrificio['DIR_PSACRIFICIO']}}</td>
                     <td>{{$psacrificio['COD_ANIMAL']}}</td>
                     <td>
@@ -129,13 +232,19 @@
                             </div>
                             <div class="modal-body">
                                 <p>Ingresa los Nuevos Datos</p>
-                                <form action="{{ url('psacrificio/actualizar') }}" method="post">
+                                <form action="{{ url('psacrificio/actualizar') }}" method="post" class="row g-3 needs-validation" novalidate>
                                     @csrf
                                         <input type="hidden" class="form-control" name="COD_PSACRIFICIO" value="{{$psacrificio['COD_PSACRIFICIO']}}">
                                         
                                         <div class="mb-3 mt-3">
                                             <label for="psacrificio" class="form-label">Nombre de la Persona</label>
-                                            <input type="text" class="form-control" id="NOM_PERSONA" name="NOM_PERSONA" placeholder="Ingrese el nombre de la persona" value="{{$psacrificio['NOM_PERSONA']}}">
+                                            <input type="text" class="form-control" id="NOM_PERSONA" name="NOM_PERSONA" placeholder="Ingrese el nombre de la persona" value="{{$psacrificio['NOM_PERSONA']}}" required>
+                                            <div class="valid-feedback">
+
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Es necesario poner el nombre
+                                            </div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="psacrificio">Numero de Identidad</label>
@@ -193,7 +302,6 @@
                             </div>
                         </div>
             @endforeach
-           
         </tbody>
     </table>
 @stop
@@ -205,4 +313,5 @@
 @section('js')
    <script> console.log('Hi!'); </script>
 @stop
+
 
