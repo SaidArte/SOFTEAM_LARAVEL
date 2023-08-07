@@ -21,7 +21,13 @@ class FierroController extends Controller
     // Agregar el nombre de la persona dueña del fierro al arreglo
     // Agregar el nombre de la persona dueña del fierro al arreglo
     foreach ($citaArreglo as &$fierroItem) {
-      
+        $persona = Http::get('http://localhost:3000/PERSONAS/' . $fierroItem['COD_PERSONA']);
+        $personaData = json_decode($persona->body(), true);
+        if (isset($personaData['NOM_PERSONA'])) {
+            $fierroItem['NOM_PERSONA'] = $personaData['NOM_PERSONA'];
+        } else {
+            $fierroItem['NOM_PERSONA'] = 'Nombre No Disponible';
+        }
     }
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);

@@ -112,8 +112,8 @@
             @foreach($citaArreglo as $fierro)
             
                 <tr>
-                    <td>{{$fierro['COD_FIERRO']}}</td>
-                    <td>{{$fierro['COD_PERSONA']}}</td>
+                     <td>{{$fierro['COD_FIERRO']}}</td>
+                    <td>{{$fierro['NOM_PERSONA']}}</td>
                     <td>{{date('d-m-Y', strtotime($fierro['FEC_TRAMITE_FIERRO']))}}</td>   
                     <td>{{$fierro['NUM_FOLIO_FIERRO']}}</td>
                     <td>{{ $tiposFierro[$fierro['TIP_FIERRO']] }}</td>
