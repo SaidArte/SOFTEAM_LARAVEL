@@ -33,6 +33,8 @@ use App\Http\Controllers\Alcaldia\ObjetosController;
 use App\Http\Controllers\Alcaldia\PermisosController;
 use App\Http\Controllers\Alcaldia\RespuestasController;
 use App\Http\Controllers\Alcaldia\MantenimientosController;
+use App\Http\Controllers\Alcaldia\PTrasladoController;
+
 
 /*Route::get('/fierro', [FierroController::class, 'fierro'])->name('fierro');
 Route::post('/fierro/nuevo', [FierroController::class, 'nuevo_fierro'])->name('fierro.nuevo');
