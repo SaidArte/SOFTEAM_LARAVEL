@@ -2,19 +2,8 @@
 
 @section('title', 'Alcaldia')
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- confirmDelete -->
-@section('js')
-    <script>
-        function confirmDelete(id) {
-            $('#psacrificio-delete-confirm').modal('show');
-            $('#delete-form').attr('action', '{{ url("psacrificio/eliminar") }}/' + id);
-        }
-    </script>
-@stop
-
 @section('css')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Agrega la clase CSS personalizada aquí -->
     <style>
         /* CSS personalizado */
@@ -22,17 +11,23 @@
             color: white !important;
         }
     </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
 @stop
 
 @section('content_header')
 
-    <center>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <center><br>
         <h1>INFORMACIÓN DE LOS PERMISOS DE SACRIFICIO</h1>
-    </center>
+    </center></br>
 
     <br>
         <center>
-            <p class="mb-0">Permiso de Sacrificio</p>
+            <br><p class="mb-0">Permiso de Sacrificio</p></br>
             <footer class="blockquote-footer">Permisos <cite title="Source Title"> Otorgados</cite></footer>
         </center>
     </br>
@@ -226,17 +221,22 @@
         </div>
     </div>
 
-    <table cellspacing="8" cellpadding="8" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" >
+    <div class="card">
+        <div class="card-body">
+
+        <table cellspacing="8" cellpadding="8" class="table table-hover table-responsive table-verde-claro table-striped mt-1" id="sacrificio">
         <thead>
-            <th>Nº</th>
-            <th>Nombre</th>
-            <th>Numero de Identidad</th>
-            <th>Telefono</th>
-            <th>Fecha del Sacrificio</th>
-            <th>Direccion del Sacrificio</th>
-            <th>Registro del Animal</th>
-            <th>Opciones de la Tabla</th>
-            <th></th>
+            <tr>
+                <th>Nº</th>
+                <th>Nombre</th>
+                <th>Numero de Identidad</th>
+                <th>Telefono</th>
+                <th>Fecha del Sacrificio</th>
+                <th>Direccion del Sacrificio</th>
+                <th>Registro del Animal</th>
+                <th>Opciones de la Tabla</th>
+                
+            </tr>
         </thead>
         <tbody>
             <!-- Loop through $citaArreglo and show data -->
@@ -256,10 +256,6 @@
                         <button value="Eliminar" title="Eliminar" class="btn btn-outline-danger custom-delete-button" type="button" data-toggle="modal" data-target="#psacrificio-delete-confirm" data-id="{{$psacrificio['COD_PSACRIFICIO']}}">
                             <i class='fas fa-trash-alt' style='font-size:13px;color:Red'></i> Eliminar
                         </button>
-
-
-
-
                     </td>
                 </tr>
                 <!-- Modal for editing goes here -->
@@ -340,24 +336,44 @@
             @endforeach
         </tbody>
     </table>
-@stop
-
-@section('css')
-   <link rel="stylesheet" href="/css/admin_custom.css">
+    </div>
+    </div>
 @stop
 
 @section('js')
    <script> console.log('Hi!'); </script>
    <script>
-    $(document).ready(function() {
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#sacrificio').DataTable({
+                    responsive: true
+                });
+            });
+        </script>
+    </script>
+    <script>
         // Manejar el clic en el botón de eliminar
         $('.btn-outline-danger').on('click', function() {
-            var deleteId = $(this).data('id'); // Obtener el ID del registro a eliminar
-            $('#delete_id').val(deleteId); // Asignar el ID al campo oculto
-        });
-    });
-</script>
-
+                    var deleteId = $(this).data('id');
+                    $('#delete_id').val(deleteId);
+                });
+            });
+        //Función para confirmar eliminación
+        function confirmDelete(id) {
+            $('#psacrificio-delete-confirm').modal('show');
+            $('#delete-form').attr('action', '{{ url("psacrificio/eliminar") }}/' + id);
+        }
+    </script>    
 @stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
 
 
