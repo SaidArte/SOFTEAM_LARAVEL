@@ -370,7 +370,26 @@ return [
                 ]
             ]
         ],
-
+        [
+            'text' => 'Cartas ventas',
+            'label_color' => 'success',
+            'icon' => 'fa-solid fa-file-circle-check',
+            'icon_color' => 'info',
+            'submenu' => [
+                [
+                    'text' => 'Expediente de Carta de ventas',
+                    'icon' => 'fa-solid fa-file-circle-check',
+                    'icon_color' => 'indigo',
+                    'url' => 'Cventa'
+                ],
+                [
+                    'text' => 'ANIMALES',
+                    'icon' => 'fa-solid fa-file-circle-check',
+                    'icon_color' => 'indigo',
+                    'url' => 'Animal'
+                ]
+            ]
+        ],
         [
             'text' => 'Seguridad',
             //'url' => 'Usuarios',
