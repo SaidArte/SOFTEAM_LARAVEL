@@ -53024,3 +53024,15 @@ a.text-muted:hover {
         'N' => 'Numero',
         'S' => 'Simbolo',
     ];
+    $generos =[
+      'M' => 'MASCULINO',
+      'F' => 'FEMENINO',
+    ];
+    $tiposdirecciones =[
+      'DO' => 'DOMICILIO',
+      'TR' => 'TRABAJO',
+    ];
+    $tipostelefonos =[
+      'FI' => 'FIJO',
+      'MO' => 'MOVIL',
+    ];

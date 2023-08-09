@@ -3,6 +3,20 @@
 @php
     use Carbon\Carbon;
 @endphp
+@php
+    $generos =[
+      'M' => 'MASCULINO',
+      'F' => 'FEMENINO',
+    ];
+    $tiposdirecciones =[
+      'DO' => 'DOMICILIO',
+      'TR' => 'TRABAJO',
+    ];
+    $tipostelefonos =[
+      'FI' => 'FIJO',
+      'MO' => 'MOVIL',
+    ];
+@endphp
 
 @section('title', 'Alcaldia')
 
@@ -20,7 +34,7 @@
 @stop
 
 @section('content')
-<!-- Pantalla para Insertar PERSONAS -->
+ <!-- Pantalla para Insertar PERSONAS -->
     <p align="right">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Personas">
             <i class='fa fa-user-plus' style='font-size:13px;color:Orange'></i> Nuevo
@@ -58,18 +72,17 @@
                                 <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento">
                             </div>
                             <div class="mb-3">
-                                <label for="IMG_FIR_PERSONA">Imagen de Firma de la Persona:</label>
-                                <input type="text" id="IMG_FIR_PERSONA" class="form-control" name="IMG_FIR_PERSONA" placeholder="Inserte la imagen de la firma">
-                            </div>
-                            <div class="mb-3">
-                                <label for="IMG_HUE_PERSONA">Imagen de Huella de la Persona</label>
-                                <input type="text" id="IMG_HUE_PERSONA" class="form-control" name="IMG_HUE_PERSONA" placeholder="Inserte la imagen de la huella">
-                            </div>
-                            <div class="mb-3">
                                 <label for="IMG_PERSONA">Imagen de la Persona</label>
-                                <input type="text" id="IMG_PERSONA" class="form-control" name="IMG_PERSONA" placeholder="Inserte la imagen de la persona">
+                                <input type="file" id="IMG_PERSONA" class="form-control-file custom-file-input" name="IMG_PERSONA" accept="image/*">
                             </div>
-                            <div class="mb-3">
+                            <style>/*para seleccionar archivos en PERSONAS */
+                                .custom-file-input {
+                                    width: 500px; /* Ajusta el ancho según tus preferencias */
+                                    height: auto; /* Ajusta la altura según tus preferencias */
+                                    opacity: 1;
+                                }
+                            </style>
+                             <div class="mb-3">
                                 <label for="DES_DIRECCION">Descripción de la Dirección:</label>
                                 <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona">
                             </div>
@@ -124,15 +137,13 @@
     </div>
 <!-- FIN Pantalla para Insertar PERSONAS --> 
 <!-- Tabla del Modulo PERSONAS -->
-<table cellspacing="8" cellpadding="8" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" >
+<table cellspacing="7" cellpadding="7" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" style="border:2px solid lime;">
         <thead>
             <th>Código Persona</th>
             <th>DNI</th>
             <th>Nombre</th>
             <th>Género</th>
             <th>Fecha de Nacimiento</th>
-            <th>Imagen Firma</th>
-            <th>Imagen Huella</th>
             <th>Imagen Persona</th>
             <th>Codigo Dirección</th>
             <th>Descripción Dirección</th>
@@ -154,19 +165,17 @@
                     <td>{{$personas['COD_PERSONA']}}</td>
                     <td>{{$personas['DNI_PERSONA']}}</td>
                     <td>{{$personas['NOM_PERSONA']}}</td>
-                    <td>{{$personas['GEN_PERSONA']}}</td>
+                    <td>{{$generos[$personas['GEN_PERSONA']]}}</td>
                     <td>{{ Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d') }}</td>
-                    <td>{{$personas['IMG_FIR_PERSONA']}}</td>
-                    <td>{{$personas['IMG_HUE_PERSONA']}}</td>
                     <td>{{$personas['IMG_PERSONA']}}</td>
-                    <td>{{$personas['COD_DIRECCION']}}</td>  
+                    <td>{{$personas['COD_DIRECCION']}}</td>   
                     <td>{{$personas['DES_DIRECCION']}}</td>  
-                    <td>{{$personas['TIP_DIRECCION']}}</td> 
+                    <td>{{$tiposdirecciones[$personas['TIP_DIRECCION']]}}</td> 
                     <td>{{$personas['COD_EMAIL']}}</td>  
                     <td>{{$personas['DIR_EMAIL']}}</td> 
                     <td>{{$personas['COD_TELEFONO']}}</td>  
                     <td>{{$personas['NUM_TELEFONO']}}</td>  
-                    <td>{{$personas['TIP_TELEFONO']}}</td>  
+                    <td>{{$tipostelefonos[$personas['TIP_TELEFONO']]}}</td>  
                     <td>{{$personas['DES_TELEFONO']}}</td>  
                     <td>{{$personas['OPE_TELEFONO']}}</td>  
                     <td>{{$personas['IND_TELEFONO']}}</td>  
@@ -213,16 +222,8 @@
                                             <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$personas['FEC_NAC_PERSONA']}}">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="personas">Imagen de Firma de la Persona:</label>
-                                            <input type="text" id="IMG_FIR_PERSONA" class="form-control" name="IMG_FIR_PERSONA" placeholder="Inserte la imagen de la firma" value="{{$personas['IMG_FIR_PERSONA']}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="personas">Imagen de Huella de la Persona</label>
-                                            <input type="text" id="IMG_HUE_PERSONA" class="form-control" name="IMG_HUE_PERSONA" placeholder="Inserte la imagen de la huella" value="{{$personas['IMG_HUE_PERSONA']}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="personas">Imagen de la Persona</label>
-                                            <input type="text" id="IMG_PERSONA" class="form-control" name="IMG_PERSONA" placeholder="Inserte la imagen de la persona" value="{{$personas['IMG_PERSONA']}}">
+                                            <label for="IMG_PERSONA">Imagen de la Persona</label>
+                                            <input type="file" id="IMG_PERSONA" class="form-control-file custom-file-input" name="IMG_PERSONA" accept="image/*" value="{{$personas['IMG_PERSONA']}}">
                                         </div>
                                         <div class="mb-3 mt-3">
                                             <label for="personas" class="form-label">Codigo Dirección:</label>
