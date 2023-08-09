@@ -29,7 +29,7 @@
                       <h4 class="mt-1 mb-5 pb-1">Inicio de Sesión</h4>
                 </div>
 
-                <form action="../routes/validar.php" method="post">
+                <form action="../home" method="post">
                   <p>Ingresa tu Usuario y Contraseña</p>
 
                   <div class="form-outline mb-4">
