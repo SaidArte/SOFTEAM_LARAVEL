@@ -4,7 +4,7 @@
 
 @section('css')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Agrega la clase CSS personalizada aquí -->
+    <!-- Clase CSS personalizada aquí -->
     <style>
         /* CSS personalizado */
         .custom-delete-button:hover .fas.fa-trash-alt {
@@ -94,13 +94,12 @@
                     </form>
 
                     <script>
-                        // Aplicar las validaciones a cada dato solicitado en el formulario
                         $(document).ready(function() {
-                            // Validaciones al campo Nombre Persona
+                            //Validaciones del nombre persona, no permite que se ingrese numeros solo letras
                             $('#NOM_PERSONA').on('input', function() {
                                 var nombre = $(this).val();
-                                var errorMessage = 'El nombre debe tener al menos 3 caracteres';
-                                if (nombre.length < 3) {
+                                var errorMessage = 'El nombre debe tener al menos 3 letras';
+                                if (nombre.length < 3 || !/^[a-zA-Z]+$/.test(nombre)) {
                                     $(this).addClass('is-invalid');
                                     $(this).siblings('.invalid-feedback').text(errorMessage);
                                 } else {
@@ -108,10 +107,12 @@
                                     $(this).siblings('.invalid-feedback').text('');
                                 }
                             });
-                            // Validaciones al campo DNI Persona
+                            //Validaciones del campo DNI el cual no permite el ingreso de letras (las bloquea y no se muestra)
+                            //y solo permite el ingreso de numeros
                             $('#DNI_PERSONA').on('input', function() {
-                                var dni = $(this).val();
-                                var errorMessage = 'El DNI debe tener exactamente 13 caracteres';
+                                var dni = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
+                                $(this).val(dni); // Actualizar el valor del campo solo con números
+                                var errorMessage = 'El DNI debe tener exactamente 13 dígitos numéricos ';
                                 if (dni.length !== 13) {
                                     $(this).addClass('is-invalid');
                                     $(this).siblings('.invalid-feedback').text(errorMessage);
@@ -120,11 +121,13 @@
                                     $(this).siblings('.invalid-feedback').text('');
                                 }
                             });
-                            // Validaciones al campo Telefono Persona
+                            //Validaciones del campo Telefono en el cual no permite el ingreso de letras (las bloquea y no se muestra)
+                            //y solo permite el ingreso de numeros
                             $('#TEL_PERSONA').on('input', function() {
-                                var telefono = $(this).val();
-                                var errorMessage = 'El teléfono debe tener exactamente 8 dígitos';
-                                if (!/^\d{8}$/.test(telefono)) {
+                                var telefono = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
+                                $(this).val(telefono); // Actualizar el valor del campo solo con números
+                                var errorMessage = 'El teléfono debe tener exactamente 8 dígitos numéricos ';
+                                if (telefono.length !== 8) {
                                     $(this).addClass('is-invalid');
                                     $(this).siblings('.invalid-feedback').text(errorMessage);
                                 } else {
@@ -132,7 +135,7 @@
                                     $(this).siblings('.invalid-feedback').text('');
                                 }
                             });
-                            // Validaciones al campo Fecha de Sacrificio
+                            //Validaciones del campo Fecha Registro el cual no permitira el ingreso de una fecha anterior al dia de registro
                             $('#FEC_SACRIFICIO').on('input', function() {
                                 var fechaSacrificio = $(this).val();
                                 var currentDate = new Date().toISOString().split('T')[0];
@@ -146,13 +149,13 @@
                                     $(this).siblings('.invalid-feedback').text('');
                                 }
                             });
-                            // Validaciones al Codigo del Animal
+                            //
                             $('#COD_ANIMAL').on('input', function() {
                                 var codigoAnimal = $(this).val();
-                                // Implementar la lógica para verificar si el código ya existe
-                                // y mostrar el mensaje de error correspondiente si ya está en uso.
+                                // Implementar la lógica para verificar si el código ya existe y 
+                                //mostrar el mensaje de error correspondiente si ya está en uso.
                             });
-                            // Validaciones a la Direccion del Sacrificio
+                            //Validaciones del campo direccion 
                             $('#DIR_PSACRIFICIO').on('input', function() {
                                 var direccionSacrificio = $(this).val();
                                 var errorMessage = 'La dirección debe tener al menos 5 caracteres';
@@ -166,29 +169,25 @@
                                 }
                             });
                         });
-
-                        // Ejemplo de JavaScript inicial para deshabilitar el envío de formularios si hay campos no válidos
+                        //Deshabilitar el envio de formularios si hay campos no validos
                         (function () {
-                        'use strict'
+                            'use strict'
+                            //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
+                            var forms = document.querySelectorAll('.needs-validation')
+                            //Bucle sobre ellos y evitar el envio
+                            Array.prototype.slice.call(forms)
+                                .forEach(function (form) {
+                                    form.addEventListener('submit', function (event) {
+                                        if (!form.checkValidity()) {
+                                            event.preventDefault()
+                                            event.stopPropagation()
+                                        }
 
-                        // Obtener todos los formularios a los que queremos aplicar estilos de validación de Bootstrap personalizados
-                        var forms = document.querySelectorAll('.needs-validation')
-
-                        // Bucle sobre ellos y evitar el envío
-                        Array.prototype.slice.call(forms)
-                            .forEach(function (form) {
-                            form.addEventListener('submit', function (event) {
-                                if (!form.checkValidity()) {
-                                event.preventDefault()
-                                event.stopPropagation()
-                                }
-
-                                form.classList.add('was-validated')
-                            }, false)
-                            })
+                                        form.classList.add('was-validated')
+                                    }, false)
+                                })
                         })()
-
-                        // Función para limpiar los campos del formulario y las validaciones
+                        //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                         function limpiarFormulario() {
                             document.getElementById("NOM_PERSONA").value = "";
                             document.getElementById("DNI_PERSONA").value = "";
@@ -197,20 +196,17 @@
                             document.getElementById("COD_ANIMAL").value = "";
                             document.getElementById("DIR_PSACRIFICIO").value = "";
 
-                            // Limpiar las clases de validación
                             const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
                             invalidFeedbackElements.forEach(element => {
                                 element.textContent = "";
                             });
 
-                            // Remover clases de validación de campos inválidos
                             const invalidFields = document.querySelectorAll(".form-control.is-invalid");
                             invalidFields.forEach(field => {
                                 field.classList.remove("is-invalid");
                             });
                         }
 
-                        // Evento click para el botón de "Cancelar"
                         document.getElementById("btnCancelar").addEventListener("click", function() {
                             limpiarFormulario();
                         });
@@ -235,7 +231,6 @@
                 <th>Direccion del Sacrificio</th>
                 <th>Registro del Animal</th>
                 <th>Opciones de la Tabla</th>
-                
             </tr>
         </thead>
         <tbody>
@@ -374,6 +369,3 @@
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
-
-
-
