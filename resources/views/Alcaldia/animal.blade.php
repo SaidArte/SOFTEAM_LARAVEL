@@ -4,7 +4,20 @@
 @endphp
 
 @section('title', 'Alcaldia')
+@section('css')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Agrega la clase CSS personalizada aquí -->
+    <style>
+        /* CSS personalizado */
+        .custom-delete-button:hover .fas.fa-trash-alt {
+            color: white !important;
+        }
+    </style>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+@stop
 @section('content_header')
     <center>
         <h1>Información de Animales</h1>
@@ -16,7 +29,10 @@
 @stop
 
 @section('content')
+<p align="right">
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Animal">+ Nuevo</button>
+</p>
+    
     <div class="modal fade bd-example-modal-sm" id="Animal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -102,7 +118,7 @@
         </div>
     </div>
 
-    <table cellspacing="9" cellpadding="9" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" style="border:2px solid lime;">
+    <table cellspacing="9" cellpadding="9" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" style="border:2px solid lime;" " id="modAnimal" >
         <thead>
             <th>Código Animal</th>
             <th>Fecha registro</th>
@@ -190,7 +206,7 @@
                                         
 
                                         <div class="mb-3 mt-3">
-                                            <label for="Animal" >ESta Venteado El Animal</label>
+                                            <label for="Animal" >Esta Venteado El Animal</label>
                                            
                                             <select class="form-select  custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL" value="{{$Animal['VEN_ANIMAL']}}">
                                                 <option value="" disabled selected>Seleccione una opción</option>
@@ -203,7 +219,7 @@
                                         <div class="mb-3 mt-3">
                                             <label for="Animal" class="form-label">Esta Herrado El Animal</label>
                                            
-                                            <select class="form-select" id="HER_ANIMAL" name="HER_ANIMAL" value="{{$Animal['HER_ANIMAL']}}" >
+                                            <select class="form-select  custom-select" id="HER_ANIMAL" name="HER_ANIMAL" value="{{$Animal['HER_ANIMAL']}}" >
                                                 <option value="" disabled selected>Seleccione una opción</option>
                                                 <option value="S" selected >SI</option>
                                                 <option value="N" selected >NO</option>
@@ -231,9 +247,26 @@
             @endforeach
         </tbody>
     </table>
+
+@stop
+@section('js')
+   <script> console.log('Hi!'); </script>
+   <script>
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#modAnimal').DataTable({
+                    responsive: true
+                });
+            });
+        </script>
+    </script>
     
 @stop
-
 @section('css')
    <link rel="stylesheet" href="/css/admin_custom.css">
 @stop

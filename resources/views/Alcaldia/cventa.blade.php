@@ -5,10 +5,27 @@
 
 @section('title', 'Alcaldia')
 
+@section('title', 'Alcaldia')
+@section('css')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Agrega la clase CSS personalizada aquí -->
+    <style>
+        /* CSS personalizado */
+        .custom-delete-button:hover .fas.fa-trash-alt {
+            color: white !important;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+@stop
+
 @section('content_header')
     <center>
         <h1>Información de Expedientes Cartas De Ventas</h1>
     </center>
+    
     <blockquote class="blockquote text-center">
         <p class="mb-0">Registro de Expediente Cartas De Ventas.</p>
         <footer class="blockquote-footer">Expedientes_Cventas <cite title="Source Title">Registrados</cite></footer>
@@ -16,7 +33,11 @@
 @stop
 
 @section('content')
+
+<p align="right">
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Cventa">+ Nuevo</button>
+</p>
+    
     <div class="modal fade bd-example-modal-sm" id="Cventa" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -74,7 +95,7 @@
         </div>
     </div>
 
-    <table cellspacing="7" cellpadding="7" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" style="border:2px solid lime;">
+    <table cellspacing="7" cellpadding="7" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" style="border:2px solid lime ; " id="modCventa" >
         <thead>
             <th>Código Cventas</th>
             <th>Fecha Venta</th>
@@ -172,6 +193,24 @@
             @endforeach
         </tbody>
     </table>
+@stop
+@section('js')
+   <script> console.log('Hi!'); </script>
+   <script>
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#modCventa').DataTable({
+                    responsive: true
+                });
+            });
+        </script>
+    </script>
+    
 @stop
 
 @section('css')
