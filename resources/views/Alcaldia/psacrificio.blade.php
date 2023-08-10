@@ -48,7 +48,7 @@
                             
                             <div class="mb-3">
                                 <label for="NOM_PERSONA">Nombre de la Persona</label>
-                                <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre de la persona" required>
+                                <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" required>
                                 <div class="invalid-feedback"></div>
                             </div>
                        
@@ -92,8 +92,8 @@
                             //Validaciones del nombre persona, no permite que se ingrese numeros solo letras
                             $('#NOM_PERSONA').on('input', function() {
                                 var nombre = $(this).val();
-                                var errorMessage = 'El nombre debe tener al menos 3 letras';
-                                if (nombre.length < 3 || !/^[a-zA-Z]+$/.test(nombre)) {
+                                var errorMessage = 'El nombre debe tener al menos 5 letras';
+                                if (nombre.length < 5 || !/^[a-zA-Z\s]+$/.test(nombre)) {
                                     $(this).addClass('is-invalid');
                                     $(this).siblings('.invalid-feedback').text(errorMessage);
                                 } else {
@@ -204,7 +204,10 @@
                         document.getElementById("btnCancelar").addEventListener("click", function() {
                             limpiarFormulario();
                         });
-
+                        // Mostrar el modal de registro exitoso cuando se envíe el formulario
+                        $('#psacrificio form').submit(function() {
+                            $('#registroExitosoModal').modal('show');
+                        });    
                     </script>
                 </div>
             </div>
@@ -275,8 +278,10 @@
                                             <input type="text" class="form-control" id="TEL_PERSONA" name="TEL_PERSONA" placeholder="Ingrese el numero de telefono" value="{{$psacrificio['TEL_PERSONA']}}">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="psacrificio">Fecha de Sacrificio</label>
-                                            <input type="date" class="form-control" id="FEC_SACRIFICIO" name="FEC_SACRIFICIO" placeholder="Ingrese la fecha del sacrificio" value="{{$psacrificio['FEC_SACRIFICIO']}}">
+                                            <label for="psacrificio" class="form-laabel">Fecha de Sacrificio</label>
+                                            <!-- Codigo para que me muestre la fecha ya registrada al momento de actualizar --->
+                                            <?php $fecha_formateada = date('Y-m-d', strtotime($psacrificio['FEC_SACRIFICIO'])); ?>
+                                            <input type="date" class="form-control" id="FEC_SACRIFICIO" name="FEC_SACRIFICIO" placeholder="Ingrese la fecha del sacrificio" value="{{$fecha_formateada}}">
                                         </div>
                                         <div class="mb-3">
                                             <label for="psacrificio">Codigo del Animal</label>
@@ -292,6 +297,26 @@
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal de Confirmación de Registro Exitoso -->
+                <div class="modal fade" id="registroExitosoModal" tabindex="-1" aria-labelledby="registroExitosoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="registroExitosoModalLabel">Registro Exitoso</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Permiso de sacrificio registrado exitosamente.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
                             </div>
                         </div>
                     </div>
