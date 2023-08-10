@@ -19,19 +19,13 @@
 
 @section('content_header')
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <center><br>
         <h1>INFORMACIÓN DE LOS PERMISOS DE SACRIFICIO</h1>
     </center></br>
 
-    <br>
-        <center>
-            <br><p class="mb-0">Permiso de Sacrificio</p></br>
-            <footer class="blockquote-footer">Permisos <cite title="Source Title"> Otorgados</cite></footer>
-        </center>
-    </br>
-
+    
 @stop
 
 @section('content')
@@ -220,17 +214,17 @@
     <div class="card">
         <div class="card-body">
 
-        <table cellspacing="8" cellpadding="8" class="table table-hover table-responsive table-verde-claro table-striped mt-1" id="sacrificio">
+        <table width=100% cellspacing="8" cellpadding="8" class="table table-hover table-responsive table-verde-claro table-striped mt-1" id="sacrificio">
         <thead>
             <tr>
                 <th>Nº</th>
-                <th>Nombre</th>
-                <th>Numero de Identidad</th>
-                <th>Telefono</th>
-                <th>Fecha del Sacrificio</th>
-                <th>Direccion del Sacrificio</th>
-                <th>Registro del Animal</th>
-                <th>Opciones de la Tabla</th>
+                <th><center>Nombre</center></th>
+                <th><center>Numero de Identidad</center></th>
+                <th><center>Telefono</center></th>
+                <th><center>Fecha del Sacrificio</center></th>
+                <th><center>Direccion del Sacrificio</center></th>
+                <th><center>Registro del Animal</center></th>
+                <th><center>Opciones de la Tabla</center></th>
             </tr>
         </thead>
         <tbody>
