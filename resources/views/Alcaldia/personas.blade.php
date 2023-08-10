@@ -152,18 +152,15 @@
         <div class="card-body">
             <table cellspacing="10" cellpadding="5" class="table table-hover table-responsive table-verde-claro table-striped mt-1" id="persona">
                 <thead class="thead-light">
-                    <th>Código Persona</th>
+                    <th>N°</th>
                     <th>DNI</th>
                     <th>Nombre</th>
                     <th>Género</th>
                     <th>Fecha de Nacimiento</th>
                     <th>Imagen Persona</th>
-                    <th>Codigo Dirección</th>
                     <th>Descripción Dirección</th>
                     <th>Tipo de Dirección</th>
-                    <th>Codigo Correo</th>
                     <th>Dirección Correo</th>
-                    <th>Codigo Telefono</th>
                     <th>Número Telefono</th>
                     <th>Tipo Telefono</th>
                     <th>Descripción Telefono</th>
@@ -179,13 +176,10 @@
                             <td>{{$personas['NOM_PERSONA']}}</td>
                             <td>{{$generos[$personas['GEN_PERSONA']]}}</td>
                             <td>{{ Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d') }}</td>
-                            <td>{{$personas['IMG_PERSONA']}}</td>
-                            <td>{{$personas['COD_DIRECCION']}}</td>   
+                            <td>{{$personas['IMG_PERSONA']}}</td>  
                             <td>{{$personas['DES_DIRECCION']}}</td>  
-                            <td>{{$tiposdirecciones[$personas['TIP_DIRECCION']]}}</td> 
-                            <td>{{$personas['COD_EMAIL']}}</td>  
-                            <td>{{$personas['DIR_EMAIL']}}</td> 
-                            <td>{{$personas['COD_TELEFONO']}}</td>  
+                            <td>{{$tiposdirecciones[$personas['TIP_DIRECCION']]}}</td>  
+                            <td>{{$personas['DIR_EMAIL']}}</td>   
                             <td>{{$personas['NUM_TELEFONO']}}</td>  
                             <td>{{$tipostelefonos[$personas['TIP_TELEFONO']]}}</td>  
                             <td>{{$personas['DES_TELEFONO']}}</td>  
@@ -225,8 +219,8 @@
                                                     <label for="personas">Género:</label>
                                                     <select class="form-select custom-select" id="GEN_PERSONA" name="GEN_PERSONA" value="{{$personas['GEN_PERSONA']}}">
                                                         <option value="" disabled selected>Seleccione una opción</option>
-                                                        <option value="M">M</option>
-                                                        <option value="F">F</option>
+                                                        <option value="M">MASCULINO</option>
+                                                        <option value="F">FEMENINO</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
@@ -249,8 +243,8 @@
                                                     <label for="personas">Tipo de Dirección:</label>
                                                     <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" value="{{$personas['TIP_DIRECCION']}}">
                                                         <option value="" disabled selected>Seleccione una opción</option>
-                                                        <option value="DO">DO</option>
-                                                        <option value="TR">TR</option>
+                                                        <option value="DO">DOMICILIO</option>
+                                                        <option value="TR">TRABAJO</option>
                                                     </select>  
                                                 </div>  
                                                 <div class="mb-3 mt-3">
@@ -273,8 +267,8 @@
                                                     <label for="personas">Tipo de Telefono:</label>
                                                     <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" value="{{$personas['TIP_TELEFONO']}}">
                                                         <option value="" disabled selected>Seleccione una opción</option>
-                                                        <option value="FI">FI</option>
-                                                        <option value="MO">MO</option>
+                                                        <option value="FI">FIJO</option>
+                                                        <option value="MO">MOVIL</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
