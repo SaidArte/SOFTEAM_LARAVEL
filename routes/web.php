@@ -1,29 +1,20 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController; // Agrega esta importación
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+// Ruta de inicio
 
 
-Route::get('/', function () {
-    return view('home');
-});
+// Rutas generadas por Auth::routes()
+Auth::routes();
 
-//Auth::routes();
+// Rutas adicionales
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::delete('/psacrificio/eliminar/{id}', 'Alcaldia\PSacrificioController@eliminar_psacrificio');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::delete('/psacrificio/eliminar/{id}', 'Alcaldia\PSacrificioController@eliminar_psacrificio'); //Ruta del boton eliminar
-
-
+// Importaciones de los controladores
 use App\Http\Controllers\Alcaldia\PersonasController;
 use App\Http\Controllers\Alcaldia\FierroController;
 use App\Http\Controllers\Alcaldia\PSacrificioController;
@@ -36,6 +27,16 @@ use App\Http\Controllers\Alcaldia\RespuestasController;
 use App\Http\Controllers\Alcaldia\MantenimientosController;
 use App\Http\Controllers\Alcaldia\PTrasladoController;
 
+// Resto de tus rutas...
+// Aquí puedes agregar las rutas para tus otros controladores
+Route::get('/', function () {
+    return view('auth.login');
+});
+// Rutas de autenticación personalizadas
+//Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
-
-
+// Resto de tus rutas...
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
