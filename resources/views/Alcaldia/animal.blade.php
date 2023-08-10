@@ -28,12 +28,12 @@
                     <p>Favor, ingrese los datos solicitados:</p>
                     <form action="{{ url('Animal/insertar') }}" method="post">
                         @csrf
-                       <!--
+                       
                         <div class="mb-3 mt-3">
                             <label for="COD_ANIMAL">Codigo Animal</label>
                             <input type="text" id="COD_ANIMAL" class="form-control" name="COD_ANIMAL" placeholder="Ingrese el codigo animal">
                         </div>-->
-                         <!--
+                        <!--
                         <div class="mb-3 mt-3">
                             <label for="FEC_REG_ANIMAL">Fecha de Resgistro</label>
                             <input type="date" id="FEC_REG_ANIMAL" class="form-control" name="FEC_REG_ANIMAL" placeholder="Ingrese la fecha">
@@ -53,11 +53,19 @@
                             <label for="COL_ANIMAL">color del Animal</label>
                             <input type="text" id="COL_ANIMAL" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal">
                         </div>
-    
+
+                        <div class="mb-3">
+                            <label for="COD_FIERRO">Código Fierro</label>
+                            <input type="text" id="COD_FIERRO" class="form-control" name="COD_FIERRO" placeholder="Ingresar el código de la Fierro">
+                        </div>
+
+                       
+
                 
                         <div class="mb-3 mt-3">
-                            <label for="VEN_ANIMAL" class="form-label">Venteado Animal</label>
-                            <select class="form-select " id="VEN_ANIMAL" name="VEN_ANIMAL" >
+                            <label for="VEN_ANIMAL" >Venteado Animal</label>
+                            <select class="form-select custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL" >
+                                <option value="" disabled selected>Seleccione una opción</option>
                                 <option value="S" selected >SI</option>
                                 <option value="N" selected >NO</option>
                                
@@ -65,14 +73,19 @@
                         </div>
 
                         <div class="mb-3 mt-3">
-                            <label for="HER_ANIMAL" class="form-label">Herraso Animal</label>
-                            <select class="form-select " id="HER_ANIMAL" name="HER_ANIMAL" >
+                            <label for="HER_ANIMAL">Herrado Animal</label>
+                            <select class="form-select custom-select" id="HER_ANIMAL" name="HER_ANIMAL" >
+                                <option value="" disabled selected>Seleccione una opción</option>
+
                                 <option value="S" selected >SI</option>
                                 <option value="N" selected >NO</option>
                                
                             </select>
                         </div>
-
+    
+                
+                        
+                        
                         <div class="mb-3 mt-3">
                             <label for="DET_ANIMAL">Detalle del Animal</label>
                             <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal">
@@ -170,14 +183,17 @@
 
 
                                         <div class="mb-3">
-                                            <label for="Animal">Codigo Del Animal</label>
+                                            <label for="Animal">Codigo Del fierro</label>
                                             <input type="text" class="form-control" id="COD_FIERRO" name="COD_FIERRO" placeholder=" Ingrese El Codigo Del Fierro  " value="{{$Animal['COD_FIERRO']}}">
                                         </div>
 
+                                        
+
                                         <div class="mb-3 mt-3">
-                                            <label for="Animal" class="form-label">Venteado El Animal</label>
-                                            <input type="text" readonly class="form-control" id="VEN_ANIMAL" name="VEN_ANIMAL" value="{{$Animal['VEN_ANIMAL']}}">
-                                            <select class="form-select" id="VEN_ANIMAL" name="VEN_ANIMAL">
+                                            <label for="Animal" >ESta Venteado El Animal</label>
+                                           
+                                            <select class="form-select  custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL" value="{{$Animal['VEN_ANIMAL']}}">
+                                                <option value="" disabled selected>Seleccione una opción</option>
                                                 <option value="S" selected >SI</option>
                                                 <option value="N" selected >NO</option>
                                                 
@@ -185,9 +201,10 @@
                                         </div>
 
                                         <div class="mb-3 mt-3">
-                                            <label for="Animal" class="form-label">Herrado El Animal</label>
-                                            <input type="text" readonly class="form-control" id="HER_ANIMAL" name="HER_ANIMAL" value="{{$Animal['HER_ANIMAL']}}">
-                                            <select class="form-select" id="HER_ANIMAL" name="HER_ANIMAL">
+                                            <label for="Animal" class="form-label">Esta Herrado El Animal</label>
+                                           
+                                            <select class="form-select" id="HER_ANIMAL" name="HER_ANIMAL" value="{{$Animal['HER_ANIMAL']}}" >
+                                                <option value="" disabled selected>Seleccione una opción</option>
                                                 <option value="S" selected >SI</option>
                                                 <option value="N" selected >NO</option>
                                                 
