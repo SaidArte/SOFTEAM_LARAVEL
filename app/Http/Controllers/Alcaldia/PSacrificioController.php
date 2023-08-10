@@ -36,7 +36,7 @@ class PSacrificioController extends Controller
 
         public function actualizar_psacrificio(Request $request){
             
-            $actualizar_fierro = Http::put('http://localhost:3000/PSACRIFICIO/ACTUALIZAR/'.$request->input("COD_PSACRIFICIO"),[
+            $actualizar_psacrificio = Http::put('http://localhost:3000/PSACRIFICIO/ACTUALIZAR/'.$request->input("COD_PSACRIFICIO"),[
                 "COD_PSACRIFICIO"       => $request -> input("COD_PSACRIFICIO"),
                 "FEC_REG_PSACRIFICIO"   => $request -> input("FEC_REG_PSACRIFICIO"),
                 "NOM_PERSONA"           => $request -> input("NOM_PERSONA"),

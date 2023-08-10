@@ -10,7 +10,81 @@
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('assets/estilos.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/estilos.css')}}">
+
+  <!-- Importando la fuente de Google Font -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+  </style>
+
+  <style>
+    /* Fuente de Google Fonts */
+    font-family: 'Poppins', sans-serif;
+  </style>
+  
+  <style>
+    /* Estilos de color al boton de Iniciar */
+    .gradient-environmental {
+      background: linear-gradient(to right, #3BB78F, #0F4C75); /* Ajustar los colores según las preferencias */
+    }
+    /* Estilos al boton de crear uno nuevo */
+    .cta {
+      position: relative;
+      margin: auto;
+      padding: 12px 18px;
+      transition: all 0.2s ease;
+      border: none;
+      background: none;
+      }
+
+    .cta:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      border-radius: 50px;
+      background: #b1dae7;
+      width: 45px;
+      height: 45px;
+      transition: all 0.3s ease;
+    }
+
+    .cta span {
+      position: relative;
+      font-family: "Ubuntu", sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #234567;
+    }
+
+    .cta svg {
+      position: relative;
+      top: 0;
+      margin-left: 10px;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke: #234567;
+      stroke-width: 2;
+      transform: translateX(-5px);
+      transition: all 0.3s ease;
+    }
+
+    .cta:hover:before {
+      width: 100%;
+      background: #b1dae7;
+    }
+
+    .cta:hover svg {
+      transform: translateX(0);
+    }
+
+    .cta:active {
+      transform: scale(0.95);
+    }
+  </style>
 </head>
 
 <body>
@@ -31,8 +105,7 @@
 
                 <form action="{{ route('auth.login') }}" method="post">
                 @csrf
-                  <p>Ingresa tu Usuario y Contraseña</p>
-
+                  <p><center>Ingresa tu Usuario y Contraseña</center></p>
                   <div class="form-outline mb-4">
                     <input type="text" id="COD_USUARIO" name="COD_USUARIO" class="form-control"
                       placeholder="Usuario" value="{{ old('COD_USUARIO') }}"/>
@@ -45,20 +118,26 @@
                     <label class="form-label" for="PAS_USUARIO">Contraseña</label>
                   </div>
                   <div class="text-center pt-1 mb-5 pb-1">
-                    <button type="submit" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">Iniciar</button>
-                    <a class="text-muted" href="#!">¿Olvidaste la contraseña?</a>
+                  <button type="submit" class="btn btn-primary btn-block fa-lg gradient-environmental mb-2">Iniciar</button>
+                      <a class="text-muted" href="#!">¿Olvidaste la contraseña?</a>    
                   </div>
 
                   <div class="d-flex align-items-center justify-content-center pb-4">
                     <p class="mb-0 me-2">¿No tienes Usuario?</p>
-                    <button type="button" class="btn btn-outline-danger">Crear uno nuevo</button>
+                    <button class="cta">
+                      <span>Crear uno Nuevo</span>
+                      <svg viewBox="0 0 13 10" height="10px" width="15px">
+                        <path d="M1,5 L11,5"></path>
+                        <polyline points="8 1 12 5 8 9"></polyline>
+                      </svg>
+                    </button>
                   </div>
 
                 </form>
 
               </div>
             </div>
-            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+            <div class="col-lg-6 d-flex align-items-center gradient-environmental">
               <div class="text-white px-3 py-4 p-md-5 mx-md-4">
                 <center><h4 class="mb-4">BIENVENIDOS AL DEPARTAMENTO DE JUSTICIA MUNICIPAL DE TALANGA</h4></center>
                 <center><h3 class="mb-3">0824</h3></center>
