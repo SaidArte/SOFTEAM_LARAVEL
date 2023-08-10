@@ -371,26 +371,29 @@ return [
             ]
         ],
         [
-            'text' => 'Cartas ventas',
-            'label_color' => 'success',
-            'icon' => 'fa-solid fa-file-circle-check',
-            'icon_color' => 'info',
+            'icon' => 'fa fa-briefcase',
+            'text' => 'Cartas De Ventas',
+            //'label_color' => 'success',
+            //'icon_color' => 'info',
             'submenu' => [
                 [
+                    'icon' => 'fa fa-folder-open',
+                    //'icon' => 'fa fa-briefcase',
                     'text' => 'Expediente de Carta de ventas',
-                    'icon' => 'fa-solid fa-file-circle-check',
-                    'icon_color' => 'indigo',
+                    //'icon_color' => 'indigo',
                     'url' => 'Cventa'
                 ],
+             
                 [
+                    'icon' => 'fa fa-paw',
                     'text' => 'ANIMALES',
-                    'icon' => 'fa-solid fa-file-circle-check',
-                    'icon_color' => 'indigo',
-                    'url' => 'Animal'
+                     'url' => 'Animal'
                 ]
             ]
         ],
-        [
+        
+        ['header' => 'Configuraciones de la cuenta'],
+      [
             'text' => 'Seguridad',
             //'url' => 'Usuarios',
             //'label' => 2,
@@ -443,71 +446,6 @@ return [
             ]
         ],
 
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ],
     ],
 
     /*

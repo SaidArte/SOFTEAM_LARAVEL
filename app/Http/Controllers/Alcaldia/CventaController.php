@@ -43,11 +43,6 @@ class CventaController extends Controller
        ]);
 
 
-
-
-
-
-
        
        return redirect('/Cventa');
    }
@@ -55,10 +50,10 @@ class CventaController extends Controller
    public function actualizar_cventa(request $request)
    {
        //
-       $actualizar_cventa = Http::post('http://localhost:3000/CVENTA/ACTUALIZAR', [
+       $actualizar_cventa = Http::put('http://localhost:3000/CVENTA/ACTUALIZAR/' .$request->input("COD_CVENTA"),[
        //"TABLA_NOMBRE"=>$request->input("TABLA_NOMBRE"),
        
-        //"COD_CVENTA"=>$request->input("COD_CVENTA") ,
+        "COD_CVENTA"=>$request->input("COD_CVENTA") ,
         "COD_VENDEDOR"=> $request->input("COD_VENDEDOR") ,
         "COD_COMPRADOR"=> $request->input("COD_COMPRADOR"),
         "COD_ANIMAL" => $request->input("COD_ANIMAL"),
