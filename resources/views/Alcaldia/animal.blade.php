@@ -231,6 +231,7 @@
             @endforeach
         </tbody>
     </table>
+    
 @stop
 
 @section('css')

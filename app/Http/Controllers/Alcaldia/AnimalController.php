@@ -44,6 +44,7 @@ class AnimalController extends Controller
        return redirect('/Animal');
    }
 
+   
 
    public function actualizar_animal(request $request)
    {

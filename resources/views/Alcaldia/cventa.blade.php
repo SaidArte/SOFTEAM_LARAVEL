@@ -160,7 +160,6 @@
                                             </select>
                                         </div>
 
-                                        
                                         <div class="mb-3">
                                             <button type="submit" class="btn btn-primary">Editar</button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>

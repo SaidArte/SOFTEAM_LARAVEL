@@ -43,11 +43,6 @@ class CventaController extends Controller
        ]);
 
 
-
-
-
-
-
        
        return redirect('/Cventa');
    }
