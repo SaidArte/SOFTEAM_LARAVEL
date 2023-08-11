@@ -10,7 +10,7 @@
 
     <script>
         Swal.fire(
-            'Inicio Sesion Correctamente!',
+            'Inicio Sesión Correctamente!',
             'Bienvenido a Justicia Municipal',
             'success'
         )
@@ -114,27 +114,34 @@
         }
 
         .image-container {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("vendor/adminlte/dist/img/Ciudad.png");
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                            linear-gradient(to bottom, #87CEEB, #2E8B57); /* Degradado de colores de naturaleza */
             background-size: cover;
             position: relative;
             height: 400px;
         }
 
+        /* Estilos al image-container */
+        .image-container {
+            /* Otros estilos de la image-container */
+            position: relative;
+            height: 400px;
+        }
+
         .text {
-            background-color: ;
+            /* Estilos del texto */
+            background-color: transparent;
             color: white;
-            font-size: 10vw;
+            font-size: 6vw; /* Ajusta el tamaño del texto según tus necesidades */
             font-weight: bold;
-            margin: 0 auto;
-            padding: -30px;
-            width: 50%;
             text-align: center;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            mix-blend-mode: screen;
+            width: 100%; /* Asegura que el texto ocupe todo el ancho de la container */
         }
+
     </style>
 
     <!--Estilo del segundo diseño-->

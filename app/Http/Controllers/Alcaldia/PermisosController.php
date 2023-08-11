@@ -12,10 +12,18 @@ class PermisosController extends Controller
     public function Permisos(){
     $Permisos = Http::get('http://localhost:3000/SEGURIDAD/GETALL_PERMISOS');
     $citaArreglo = json_decode($Permisos->body(), true);
+    $roles = Http::get('http://localhost:3000/SEGURIDAD/GETALL_ROLES');
+    $rolesArreglo = json_decode($roles->body(), true);
+    $objetos = Http::get('http://localhost:3000/SEGURIDAD/GETALL_OBJETOS');
+    $objetosArreglo = json_decode($objetos->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
 
-    return view('Alcaldia.Permisos', compact('citaArreglo'));
+    //return view('Alcaldia.Permisos', compact('citaArreglo'));
+    return view('Alcaldia.Permisos')
+    ->with('citaArreglo', $citaArreglo)
+    ->with('rolesArreglo', $rolesArreglo)
+    ->with('objetosArreglo', $objetosArreglo); 
     }
 
     public function nuevo_permiso(Request $request){

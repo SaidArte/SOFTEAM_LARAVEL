@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Http;
 class CventaController extends Controller
 {
 
+    const urlapi='http://localhost:3000/';
+
    public function Cventa(){
-      $Cventa = Http::get('http://localhost:3000/CVENTA/GETALL');
+      $Cventa = Http::get(self::urlapi.'CVENTA/GETALL');
       $citaArreglo = json_decode($Cventa->body(), true);
       // Imprime los datos para verificar si están llegando correctamente
       // dd($citaArreglo);
@@ -23,7 +25,7 @@ class CventaController extends Controller
    public function nuevo_cventa(request $request)
    {
        //
-       $nuevo_cventa = Http::post('http://localhost:3000/CVENTA/INSERTAR',[
+       $nuevo_cventa = Http::post(self::urlapi.'CVENTA/INSERTAR',[
        //"TABLA_NOMBRE"=>$request->input("TABLA_NOMBRE"),
        
        // "COD_CVENTA"=> $request->input("COD_CVENTA"),
@@ -50,7 +52,7 @@ class CventaController extends Controller
    public function actualizar_cventa(request $request)
    {
        //
-       $actualizar_cventa = Http::put('http://localhost:3000/CVENTA/ACTUALIZAR/' .$request->input("COD_CVENTA"),[
+       $actualizar_cventa = Http::put(self::urlapi.'CVENTA/ACTUALIZAR/' .$request->input("COD_CVENTA"),[
        //"TABLA_NOMBRE"=>$request->input("TABLA_NOMBRE"),
        
         "COD_CVENTA"=>$request->input("COD_CVENTA") ,

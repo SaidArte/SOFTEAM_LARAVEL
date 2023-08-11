@@ -32,9 +32,11 @@
                                 <label for="LNOM_ROL">Rol</label>
                                 <select class="form-select" id="NOM_ROL" name="NOM_ROL">
                                     <option value="X" selected = "selected" disabled>- Elija el rol -</option>
-                                    <option value="Administrador">Administrador</option>
-                                    <option value="Usuario">Usuario</option>
-                                    <option value="Secretario">Secretario</option>
+                                    
+                                    @foreach ($rolesArreglo as $roles)
+                                        <option value="{{$roles['COD_ROL']}}">{{$roles['NOM_ROL']}}</option>
+                                    @endforeach 
+
                                 </select>
                             </div>
                             <div class="mb-3">
