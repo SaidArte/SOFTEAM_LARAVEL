@@ -350,7 +350,7 @@
     <div class="card">
         <div class="card-body">
 
-        <table width=100% cellspacing="8" cellpadding="8" class="table table-hover table-responsive table-verde-claro table-striped mt-1" id="sacrificio">
+        <table  width="100%" cellspacing="8 " cellpadding="8" class="table table-hover table-responsive mt-1" id="sacrificio">
         <thead>
             <tr>
                 <th>Nº</th>
@@ -395,7 +395,6 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Actualizar Datos</h5>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <p>Ingresa los Nuevos Datos</p>
@@ -405,12 +404,12 @@
                                         
                                         <div class="mb-3 mt-3">
                                             <label for="psacrificio" class="form-label">Nombre de la Persona</label>
-                                            <input type="text" class="form-control" id="NOM_PERSONA" name="NOM_PERSONA" placeholder="Ingrese el nombre de la persona" value="{{$psacrificio['NOM_PERSONA']}}" required>
+                                            <input type="text" class="form-control" id="NOM_PERSONA" name="NOM_PERSONA" placeholder="Ingrese el nombre de la persona" value="{{$psacrificio['NOM_PERSONA']}}" readonly>
                                             <div class="valid-feedback"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="psacrificio">Numero de Identidad</label>
-                                            <input type="text" class="form-control" id="DNI_PERSONA" name="DNI_PERSONA" placeholder="Ingrese el numero de identidad" value="{{$psacrificio['DNI_PERSONA']}}">
+                                            <input type="text" class="form-control" id="DNI_PERSONA" name="DNI_PERSONA" placeholder="Ingrese el numero de identidad" value="{{$psacrificio['DNI_PERSONA']}}" readonly>
                                         </div>
                                         <div class="mb-3">
                                             <label for="psacrificio">Numero de Telefono</label>
@@ -424,7 +423,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="psacrificio">Codigo del Animal</label>
-                                            <input type="text" class="form-control" id="COD_ANIMAL" name="COD_ANIMAL" placeholder="Ingrese el codigo del animal" value="{{$psacrificio['COD_ANIMAL']}}">
+                                            <input type="text" class="form-control" id="COD_ANIMAL" name="COD_ANIMAL" placeholder="Ingrese el codigo del animal" value="{{$psacrificio['COD_ANIMAL']}}" readonly>
                                         </div>
                                         <div class="mb-3">
                                             <label for="psacrificio">Direccion del Sacrificio</label>
@@ -504,7 +503,32 @@
         <script>
             $(document).ready(function() {
                 $('#sacrificio').DataTable({
-                    responsive: true
+                    responsive: true,
+                    lengthMenu : [10, 20, 30, 40, 50],
+                    columnDefs: [
+                        { orderable: false, target: [0, 2, 3, 6, 7]},
+                        { searchable: false, target: [0, 3, 6, 7]},
+                        { width: '25%', target: [1] },
+                        { width: '10%', target: [2, 3, 4, 6, 7] }, 
+                        { width: '25%', target: [5] },
+                    ],
+                    language: {
+                        processing: "Procesando...",
+                        lengthMenu: "Mostrar _MENU_ registros",
+                        zeroRecords: "No se encontraron resultados",
+                        emptyTable: "Ningún dato disponible en esta tabla",
+                        infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                        search: "Buscar:",
+                        infoThousands: ",",
+                        loadingRecords: "Cargando...",
+                        paginate: {
+                            first: "Primero",
+                            last: "Último",
+                            next: "Siguiente",
+                            previous: "Anterior"
+                        },
+                    } 
                 });
             });
         </script>
