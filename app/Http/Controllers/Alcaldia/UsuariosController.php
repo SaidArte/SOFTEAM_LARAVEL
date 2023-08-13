@@ -12,10 +12,17 @@ class UsuariosController extends Controller
     public function Usuarios(){
     $Usuarios = Http::get('http://localhost:3000/SEGURIDAD/GETALL_USUARIOS');
     $citaArreglo = json_decode($Usuarios->body(), true);
+    $roles = Http::get('http://localhost:3000/SEGURIDAD/GETALL_ROLES');
+    $rolesArreglo = json_decode($roles->body(), true);
+    $preguntas = Http::get('http://localhost:3000/SEGURIDAD/GETALL_PREGUNTAS');
+    $preguntasArreglo = json_decode($preguntas->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
 
-    return view('Alcaldia.Usuarios', compact('citaArreglo'));
+    return view('Alcaldia.Usuarios')
+    ->with('citaArreglo', $citaArreglo)
+    ->with('rolesArreglo', $rolesArreglo)
+    ->with('preguntasArreglo', $preguntasArreglo);
     }
 
     public function nuevo_usuario(Request $request){
