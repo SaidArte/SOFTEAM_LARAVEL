@@ -85,70 +85,86 @@
       transform: scale(0.95);
     }
   </style>
+  <style> /* estilo para el error al iniciar sesion */
+    .error-message {
+        display: none;
+        color: #dc3545;
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 5px;
+    }
+  </style>
+
 </head>
 
 <body>
-<section class="h-100 gradient-form" style="background-color: #eee;">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-xl-10">
-        <div class="card rounded-3 text-black">
-          <div class="row g-0">
-            <div class="col-lg-6">
-              <div class="card-body p-md-5 mx-md-4">
+  <section class="h-100 gradient-form" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-xl-10">
+          <div class="card rounded-3 text-black">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="card-body p-md-5 mx-md-4">
 
-                <div class="text-center">
-                    <img src="vendor/adminlte/dist/img/Talanga.png"
-                      style="width: 150px;" alt="logo">
-                      <h4 class="mt-1 mb-5 pb-1">Inicio de Sesión</h4>
+                  <div class="text-center">
+                      <img src="vendor/adminlte/dist/img/Talanga.png"
+                        style="width: 150px;" alt="logo">
+                        <h4 class="mt-1 mb-5 pb-1">Inicio de Sesión</h4>
+                  </div>
+
+                  <form action="{{ route('auth.login') }}" method="post">
+                  @csrf
+                    <p><center>Ingresa tu Usuario y Contraseña</center></p>
+                    <div class="form-outline mb-4">
+                      <input type="text" id="COD_USUARIO" name="COD_USUARIO" class="form-control"
+                        placeholder="Usuario" value="{{ old('COD_USUARIO') }}"/>
+                      <label class="form-label" for="COD_USUARIO">Usuario</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <input type="password" id="PAS_USUARIO" name="PAS_USUARIO" class="form-control"
+                        placeholder="Contraseña" />
+                      <label class="form-label" for="PAS_USUARIO">Contraseña</label>
+                    </div>
+                    <div class="text-center pt-1 mb-5 pb-1">
+                        <button type="submit" class="btn btn-primary btn-block fa-lg gradient-environmental mb-2">Iniciar</button>
+                        <a class="text-muted" href="#!">¿Olvidaste la contraseña?</a>
+                    </div>
+                    @if(session('error'))
+                    <div class="alert alert-danger" role="alert">
+                        <div class="text-center">
+                            <strong>Error:</strong> {{ session('error') }}
+                        </div>
+                    </div>
+                    @endif
+                    <div class="d-flex align-items-center justify-content-center pb-4">
+                      <p class="mb-0 me-2">¿No tienes Usuario?</p>
+                      <button class="cta">
+                        <span>Crear uno Nuevo</span>
+                        <svg viewBox="0 0 13 10" height="10px" width="15px">
+                          <path d="M1,5 L11,5"></path>
+                          <polyline points="8 1 12 5 8 9"></polyline>
+                        </svg>
+                      </button>
+                    </div>
+
+                  </form>
+
                 </div>
-
-                <form action="{{ route('auth.login') }}" method="post">
-                @csrf
-                  <p><center>Ingresa tu Usuario y Contraseña</center></p>
-                  <div class="form-outline mb-4">
-                    <input type="text" id="COD_USUARIO" name="COD_USUARIO" class="form-control"
-                      placeholder="Usuario" value="{{ old('COD_USUARIO') }}"/>
-                    <label class="form-label" for="COD_USUARIO">Usuario</label>
-                  </div>
-
-                  <div class="form-outline mb-4">
-                    <input type="password" id="PAS_USUARIO" name="PAS_USUARIO" class="form-control"
-                      placeholder="Contraseña" />
-                    <label class="form-label" for="PAS_USUARIO">Contraseña</label>
-                  </div>
-                  <div class="text-center pt-1 mb-5 pb-1">
-                  <button type="submit" class="btn btn-primary btn-block fa-lg gradient-environmental mb-2">Iniciar</button>
-                      <a class="text-muted" href="#!">¿Olvidaste la contraseña?</a>    
-                  </div>
-
-                  <div class="d-flex align-items-center justify-content-center pb-4">
-                    <p class="mb-0 me-2">¿No tienes Usuario?</p>
-                    <button class="cta">
-                      <span>Crear uno Nuevo</span>
-                      <svg viewBox="0 0 13 10" height="10px" width="15px">
-                        <path d="M1,5 L11,5"></path>
-                        <polyline points="8 1 12 5 8 9"></polyline>
-                      </svg>
-                    </button>
-                  </div>
-
-                </form>
-
               </div>
-            </div>
-            <div class="col-lg-6 d-flex align-items-center gradient-environmental">
-              <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                <center><h4 class="mb-4">BIENVENIDOS AL DEPARTAMENTO DE JUSTICIA MUNICIPAL DE TALANGA</h4></center>
-                <center><h3 class="mb-3">0824</h3></center>
+              <div class="col-lg-6 d-flex align-items-center gradient-environmental">
+                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                  <center><h4 class="mb-4">BIENVENIDOS AL DEPARTAMENTO DE JUSTICIA MUNICIPAL DE TALANGA</h4></center>
+                  <center><h3 class="mb-3">0824</h3></center>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
@@ -158,5 +174,28 @@
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
   </script>
 </body>
+<script>
+  // JavaScript para mostrar u ocultar el mensaje de error
+  document.addEventListener("DOMContentLoaded", function () {
+    const mensajeError = document.getElementById("mensajeError");
+    
+    // Mostrar el mensaje de error
+    function mostrarMensajeError() {
+      mensajeError.style.display = "block";
+    }
+    
+    // Ocultar el mensaje de error
+    function ocultarMensajeError() {
+      mensajeError.style.display = "none";
+    }
+    
+    // Agregar eventos para mostrar u ocultar el mensaje
+    document.getElementById("COD_USUARIO").addEventListener("input", ocultarMensajeError);
+    document.getElementById("PAS_USUARIO").addEventListener("input", ocultarMensajeError);
+    
+    // Mostrar el mensaje de error al enviar el formulario
+    document.querySelector("form").addEventListener("submit", mostrarMensajeError);
+  });
+</script>
 
 </html>

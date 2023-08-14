@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Alcaldia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use App\Models\Personas;
 
 class PersonasController extends Controller
 {
@@ -61,6 +62,19 @@ class PersonasController extends Controller
 
         ]);
         return redirect('/personas');
+    }
+
+    public function store(Request $request){
+        $newPost = new Post();
+        if($request->hasFile('IMG_PERSONA') ){
+            $file = $request->file('IMG_PERSONA');
+            $ubicacion = 'images/featureds/';
+            $filename = time() . '.' . $file->getClientOriginalName();
+            $uploadSuccess = $request->file('IMG_PERSONA')->move($ubicacion, $filename);
+            $newPost->IMG_PERSONA = $ubicacion . $filename;
+            $newPost->save(); // ¡Agrega esta línea para guardar el registro en la base de datos!
+        }    
+        return $request->all(); 
     }
 
 }

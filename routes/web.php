@@ -13,6 +13,7 @@ Auth::routes();
 // Rutas adicionales
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::delete('/psacrificio/eliminar/{id}', 'Alcaldia\PSacrificioController@eliminar_psacrificio');
+Route::post('/personas', [PersonasController::class, 'store'])->name('store');
 
 // Importaciones de los controladores
 use App\Http\Controllers\Alcaldia\PersonasController;

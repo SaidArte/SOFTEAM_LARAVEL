@@ -445,7 +445,12 @@ return [
                 ]
             ]
         ],
-
+        [
+            'text' => 'Cerrar Sesión',
+            'icon' =>'material-icons-outlined',
+           // 'icon_color' => 'Blue',
+            'url' => 'logout'   
+        ]
     ],
 
     /*

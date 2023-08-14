@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Auth; // Importa el facade de autenticación
 
 class AuthController extends Controller
 {
@@ -18,15 +17,17 @@ class AuthController extends Controller
             'COD_USUARIO' => $request->input('COD_USUARIO'),
             'PAS_USUARIO' => $request->input('PAS_USUARIO'),
         ]);
-    
+
         $data = $response->json();
-    
+
         if ($response->successful()) {
             return redirect()->route('home'); // Redirigir al home
         } else {
-            return redirect()->route('login')->with('error', $data['error']);
+            if ($data['error_type'] === 'inactive') {
+                return redirect()->back()->with('error', 'Este usuario está inactivo, ingresa datos correctos');
+            } else {
+                return redirect()->back()->with('error', 'Usuario o Contraseña incorrectos');
+            }
         }
     }
-    
-
 }

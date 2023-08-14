@@ -19,7 +19,6 @@
 
 
 @section('content')
-
     <div class="image-container">
         <div class="text">  Justicia Municipal  </div>
     </div>
