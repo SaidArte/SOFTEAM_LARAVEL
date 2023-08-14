@@ -14,7 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Clase CSS personalizada aquí -->
     <style>
-        /* CSS personalizado */
+     
         .custom-delete-button:hover .fas.fa-trash-alt {
             color: white !important;
         }
@@ -45,7 +45,8 @@
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#fierro">+ Nuevo</button>
     </p>
     <div class="modal fade bd-example-modal-sm" id="fierro" tabindex="-1">
-        <div class="modal-dialog">
+
+         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     
@@ -55,7 +56,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Ingresar Datos Solicitados:</p>
-                    <form action="{{ url('fierro/insertar') }}" method="post" class="needs-validation">
+                    <form action="{{ url('fierro/insertar') }}" method="post" class="needs-validation" enctype= "multipart/form-data">
                         @csrf
                             
                         <div class="mb-3 mt-3">
@@ -97,132 +98,31 @@
                         </div>
                         </div> 
 
-                        <div class="card">
-                            <div class="card-header">Subir Imagen del Fierro</div>
-                            <div class="card-body">
-                        <form action="{{ url('fierro/insertar-imagen') }}" method="POST" enctype="multipart/form-data">
-                     @csrf
+                        <form action="{{ route('fierro.guardar-imagen') }}" method="POST" enctype="multipart/form-data">
+                         @csrf
+
                         <div class="form-group">
-                            <label for="IMG_FIERRO">Imagen del Fierro</label>
-                            <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" required>
+                             <label for="IMG_FIERRO">Imagen del Fierro</label>
+                             <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*">
                         </div>
-                         <button type="submit" class="btn btn-primary">Subir Imagen</button>
-                        </form>
-                         </div>
+                    <center><br>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Guardar Informacion</button>
+                            <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                             
+                        </div>
+                    </center></br> 
+               </form>
                   
-                            <div class="mb-3">
-                                <button class="btn btn-primary" type="submit">Guardar</button>
-                                <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
-                    </form>
-
-                    <script>
-                        $(document).ready(function() {
-                            
-                            $('#COD_FIERRO').on('input', function() {
-                                var codigoFierro = $(this).val();
-                                // Implementar la lógica para verificar si el código ya existe y 
-                                //mostrar el mensaje de error correspondiente si ya está en uso.
-                            });
-                            $('#FEC_TRAMITE_FIERRO').on('input', function() {
-                                var fechaTramiteFierro = $(this).val();
-                                var currentDate = new Date().toISOString().split('T')[0];
-                                var errorMessage = 'La fecha debe ser válida y no puede ser anterior a hoy';
-                                
-                                if (!fechaTramiteFierro || fechaTramiteFierro < currentDate) {
-                                    $(this).addClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text(errorMessage);
-                                } else {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('');
-                                }
-                            });
-                            //
-                            //Validaciones del campo folio el cual no permite el ingreso de letras (las bloquea y no se muestra)
-                            //y solo permite el ingreso de numeros
-                            $('#NUM_FOLIO_FIERRO').on('input', function() {
-                                var folio = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
-                                $(this).val(folio); // Actualizar el valor del campo solo con números
-                                var errorMessage = 'El folio debe tener exactamente 6 dígitos numéricos ';
-                                if (folio.length !== 6) {
-                                    $(this).addClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text(errorMessage);
-                                } else {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('');
-                                }
-                            });
-                            //Validaciones del campo Telefono en el cual no permite el ingreso de letras (las bloquea y no se muestra)
-                            //y solo permite el ingreso de numeros
-                            $('#MON_CERTIFICO_FIERRO').on('input', function() {
-                                var monto = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
-                                $(this).val(monto); // Actualizar el valor del campo solo con números
-                                var errorMessage = 'El teléfono debe tener  2 dígitos numéricos ';
-                                if (monto.length  <2) {
-                                    $(this).addClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text(errorMessage);
-                                } else {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('');
-                                }
-                            });
-                            //Validaciones del campo Fecha Registro el cual no permitira el ingreso de una fecha anterior al dia de registro
-                         
-                        //Deshabilitar el envio de formularios si hay campos no validos
-                        (function () {
-                            'use strict'
-                            //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
-                            var forms = document.querySelectorAll('.needs-validation')
-                            //Bucle sobre ellos y evitar el envio
-                            Array.prototype.slice.call(forms)
-                                .forEach(function (form) {
-                                    form.addEventListener('submit', function (event) {
-                                        if (!form.checkValidity()) {
-                                            event.preventDefault()
-                                            event.stopPropagation()
-                                        }
-
-                                        form.classList.add('was-validated')
-                                    }, false)
-                                })
-                        })()
-                        //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
-                        function limpiarFormulario() {
-                            document.getElementById("NOM_PERSONA").value = "";
-                            document.getElementById("FEC_TRAMITE_FIERRO").value = "";
-                            document.getElementById("NUM_FOLIO_FIERRO").value = "";
-                            document.getElementById("TIP_FIERRO").value = "";
-                            document.getElementById("MON_CERTIFICO_FIERRO").value = "";
-                            document.getElementById("IMG_FIERRO").value = "";
-
-                            const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
-                            invalidFeedbackElements.forEach(element => {
-                                element.textContent = "";
-                            });
-
-                            const invalidFields = document.querySelectorAll(".form-control.is-invalid");
-                            invalidFields.forEach(field => {
-                                field.classList.remove("is-invalid");
-                            });
-                        }
-
-                        document.getElementById("btnCancelar").addEventListener("click", function() {
-                            limpiarFormulario();
-                        });
-                        // Mostrar el modal de registro exitoso cuando se envíe el formulario
-                        $('#fierro form').submit(function() {
-                            $('#registroExitosoModal').modal('show');
-                        });    
-                    </script>
                 </div>
             </div>
-        </div>
-    </div>
+     </div>
+</div>
 
-    <div class="card">
-        <div class="card-body">
+<div class="card">
+  <div class="card-body">
 
-        <table width=100% cellspacing="8" cellpadding="8" class="table table-hover table-responsive table-verde-claro table-striped mt-1" id="Rfierro">
+  <table width=100% cellspacing="8" cellpadding="8" class="table table-hover table-responsive table-verde-claro table-striped mt-1" id="Rfierro">
         <thead>
             <tr>
                 <th>Nº</th>
@@ -261,7 +161,10 @@
                           <td>{{$fierro['NUM_FOLIO_FIERRO']}}</td>
                           <td>{{ $tiposFierro[$fierro['TIP_FIERRO']] }}</td>
                           <td>{{$fierro['MON_CERTIFICO_FIERRO']}}</td>
-                          <td> <img src="{{ $fierro['IMG_FIERRO'] }}" alt="Imagen del Fierro" style="max-height: 100px;"></td>
+                          <td>
+                          <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen del Fierro" class="img-fluid" style="max-height: 100px;">
+                        </td>
+
                     <td>
                         <button value="Editar" title="Editar" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#fierro-edit-{{$fierro['COD_FIERRO']}}">
                             <i class='fas fa-edit' style='font-size:13px;color:Orange'></i> Editar
@@ -283,7 +186,7 @@
                             <input type="hidden" class="form-control" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
                                         
                             <div class="mb-3">
-                                    <label for="fierro" class="form-label">Fecha de nacimiento:</label>
+                                    <label for="fierro" class="form-label">Fecha de Tramite:</label>
                                     <?php $fecha_formateada = date('Y-m-d', strtotime($fierro['FEC_TRAMITE_FIERRO'])); ?>
                             <input type="date" class="form-control" id="FEC_TRAMITE_FIERRO" name="FEC_TRAMITE_FIERRO" value="{{ $fecha_formateada }}">
                             </div>
@@ -307,29 +210,30 @@
                                     <input type="text" class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}}">
                              </div>
                                 
-                            <div class="card">
-                            <div class="card-header">Subir Imagen del Fierro</div>
-                            <div class="card-body">
-                            <form action="{{ url('fierro/insertar-imagen') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                            <div class="form-group">
-                                     <label for="IMG_FIERRO">Imagen del Fierro</label>
-                                     <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" required>
-                            </div>
-                                     <button type="submit" class="btn btn-primary">Subir Imagen</button>
-                             </form>
-                            </div>
+                             <div class="card">
+                        <div class="card-header">Actualizar Imagen del Fierro</div>
+                        <div class="card-body">
+                            <form action="{{ url('fierro/actualizar-imagen') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                
+                                @csrf
+                                <input type="hidden" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
+                                <div class="form-group">
+                                    <label for="IMG_FIERRO">Nueva Imagen del Fierro</label>
+                                    <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" readonly>
                                 </div>
-                                    
-                            <div class="mb-3">
-                                     <button type="submit" class="btn btn-primary">Editar</button>
-                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                             </div>
-                                </form>
-                            </div>
+                                <button type="submit" class="btn btn-primary">Actualizar Imagen</button>
+                            </form>
                         </div>
                     </div>
-                </div>
+                    
+                    <div class="mb-3">
+                  
+                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
                
                 <div class="modal fade" id="registroExitosoModal" tabindex="-1" aria-labelledby="registroExitosoModalLabel" aria-hidden="true">
@@ -354,8 +258,8 @@
          @endforeach
         </tbody>
     </table>
-    </div>
-    </div>
+  </div>
+</div>
 @stop
 
 @section('js')
