@@ -8,4 +8,4 @@ Route::get('',[UsuariosController::class,'Usuarios']);
 
 Route::post('/insertar',[UsuariosController::class,'nuevo_usuario']);
 Route::post('/actualizar',[UsuariosController::class,'actualizar_usuario']);
-Route::post('/actualizar',[UsuariosController::class,'actualizar_pass_usuarios']);
+//Route::post('/actualizar',[UsuariosController::class,'actualizar_pass_usuarios']);

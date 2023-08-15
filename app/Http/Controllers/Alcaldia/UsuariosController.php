@@ -30,6 +30,7 @@ class UsuariosController extends Controller
         $nuevo_usuario = Http::post('http://localhost:3000/SEGURIDAD/INSERTAR_USUARIOS',[
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "COD_PERSONA"  => $request -> input("COD_PERSONA"),
+            "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
             "PAS_USUARIO"   => $request -> input("PAS_USUARIO"),
             "IND_USUARIO"   => $request -> input("IND_USUARIO"),
             "LIM_INTENTOS"   => $request -> input("LIM_INTENTOS"),
@@ -46,9 +47,9 @@ class UsuariosController extends Controller
 
         $actualizar_usuario = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_USUARIOS',[
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
+            "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "IND_USUARIO"           => $request -> input("IND_USUARIO"),
-            "FEC_ULTIMO_CAMBIO"           => $request -> input("FEC_ULTIMO_CAMBIO"),
             "FEC_ULTIMO_ACCESO"           => $request -> input("FEC_ULTIMO_ACCESO"),
             "LIM_INTENTOS"        => $request -> input("LIM_INTENTOS"),
             "NUM_INTENTOS_FALLIDOS"            => $request -> input("NUM_INTENTOS_FALLIDOS"),

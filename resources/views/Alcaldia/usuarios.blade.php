@@ -193,6 +193,10 @@
                                 <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA" placeholder="Ingresar el código de la persona" required>
                             </div>
                             <div class="mb-3">
+                                <label for="LNOM_PERSONA">Usuario</label>
+                                <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el alias del usuario" required>
+                            </div>
+                            <div class="mb-3">
                                 <label for="PAS_USUARIO">Contraseña</label>
                                 <input type="password" id="PAS_USUARIO" class="form-control" name="PAS_USUARIO" placeholder="Ingresar una contraseña" required>
                             </div>
@@ -372,6 +376,7 @@
                         function limpiarFormulario() {
                             document.getElementById("NOM_ROL").value = "";
                             document.getElementById("COD_PERSONA").value = "";
+                            document.getElementById("NOM_USUARIO").value = "";
                             document.getElementById("PAS_USUARIO").value = "";
                             document.getElementById("IND_USUARIO").value = "";
                             document.getElementById("LIM_INTENTOS").value = "";
@@ -409,11 +414,11 @@
             <table width=100% cellspacing="8" cellpadding="8" class="table table-hover table-responsive table-verde-claro table-striped mt-1" id="usuarios">
                 <thead>
                     <tr>
-                        <th><center>Código</center></th>
+                        <th><center>Código de Usuario</center></th>
+                        <th><center>Usuario</center></th>
                         <th><center>Nombre</center></th>
                         <th><center>Rol</center></th>
                         <th><center>Estado</center></th>
-                        <th><center>Ultimo Cambio</center></th>
                         <th><center>Ultimo Acceso</center></th>
                         <th><center>Límite de Intentos</center></th>
                         <th><center>Intentos Fallidos</center></th>
@@ -426,10 +431,10 @@
                     @foreach($citaArreglo as $Usuarios)
                         <tr>
                             <td>{{$Usuarios['COD_USUARIO']}}</td>
+                            <td>{{$Usuarios['NOM_USUARIO']}}</td>
                             <td>{{$Usuarios['NOM_PERSONA']}}</td>   
                             <td>{{$Usuarios['NOM_ROL']}}</td> 
                             <td>{{$Usuarios['IND_USUARIO']}}</td>
-                            <td>{{date('d-m-y', strtotime($Usuarios['FEC_ULTIMO_CAMBIO']))}}</td>
                             <td>{{date('d-m-y', strtotime($Usuarios['FEC_ULTIMO_ACCESO']))}}</td>
                             <td>{{$Usuarios['LIM_INTENTOS']}}</td>
                             <td>{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}</td>
@@ -462,6 +467,10 @@
                                             @csrf
                                                 <input type="hidden" class="form-control" name="COD_USUARIO" value="{{$Usuarios['COD_USUARIO']}}">
                                                 
+                                                <div class="mb-3">
+                                                    <label for="Usuarios">Usuario</label>
+                                                    <input type="text" class="form-control" id="NOM_USUARIO" name="NOM_USUARIO" placeholder="Ingrese el alias del usuario" value="{{$Usuarios['NOM_USUARIO']}}">
+                                                </div>
                                                 <div class="mb-3 mt-3">
                                                     <label for="Usuarios" class="form-label">Rol</label>
                                                     <input type="text" readonly class="form-control" id="NOM_ROL" name="NOM_ROL" value="{{$Usuarios['NOM_ROL']}}">
@@ -480,11 +489,6 @@
                                                         <option value="ACTIVO">Activo</option>
                                                         <option value="INACTIVO">Inactivo</option>
                                                     </select>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="Usuarios">Fecha de ultimo cambio</label>
-                                                    <?php $fecha_formateadaUC = date('Y-m-d', strtotime($Usuarios['FEC_ULTIMO_CAMBIO'])); ?>
-                                                    <input type="date" class="form-control" id="FEC_ULTIMO_CAMBIO" name="FEC_ULTIMO_CAMBIO" value="{{$fecha_formateadaUC}}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="Usuarios">Fecha de ultimo acceso</label>

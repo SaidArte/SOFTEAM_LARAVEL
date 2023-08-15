@@ -117,8 +117,8 @@
                   @csrf
                     <p><center>Ingresa tu Usuario y Contraseña</center></p>
                     <div class="form-outline mb-4">
-                      <input type="text" id="COD_USUARIO" name="COD_USUARIO" class="form-control"
-                        placeholder="Usuario" value="{{ old('COD_USUARIO') }}"/>
+                      <input type="text" id="NOM_USUARIO" name="NOM_USUARIO" class="form-control"
+                        placeholder="Usuario" value="{{ old('NOM_USUARIO') }}"/>
                       <label class="form-label" for="COD_USUARIO">Usuario</label>
                     </div>
 

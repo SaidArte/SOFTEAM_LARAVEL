@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $response = Http::post('http://localhost:3000/api/login', [
-            'COD_USUARIO' => $request->input('COD_USUARIO'),
+            'NOM_USUARIO' => $request->input('NOM_USUARIO'),
             'PAS_USUARIO' => $request->input('PAS_USUARIO'),
         ]);
 
