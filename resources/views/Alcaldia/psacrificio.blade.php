@@ -11,6 +11,20 @@
             color: white !important;
         }
     </style>
+    <style>
+    .success-message {
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+    }
+</style>
 
     <style>
         /* Boton Nuevo */
@@ -74,72 +88,9 @@
             transform: translate(2px ,2px);
         }
     </style>
-    <style>
-        /* Estilos al boton editar */
-        .edit-button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgb(0, 150, 255);
-            border: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
-            cursor: pointer;
-            transition-duration: 0.3s;
-            overflow: hidden;
-            position: relative;
-            text-decoration: none !important;
-            }
-
-        .edit-svgIcon {
-            width: 17px;
-            transition-duration: 0.3s;
-        }
-
-        .edit-svgIcon path {
-            fill: white;
-        }
-
-        .edit-button:hover {
-            width: 120px;
-            border-radius: 50px;
-            transition-duration: 0.3s;
-            background-color: rgb(0, 100, 255);
-            align-items: center;
-        }
-
-        .edit-button:hover .edit-svgIcon {
-            width: 20px;
-            transition-duration: 0.3s;
-            transform: translateY(60%);
-            -webkit-transform: rotate(360deg);
-            -moz-transform: rotate(360deg);
-            -o-transform: rotate(360deg);
-            -ms-transform: rotate(360deg);
-            transform: rotate(360deg);
-        }
-
-        .edit-button::before {
-            display: none;
-            content: "Editar";
-            color: white;
-            transition-duration: 0.3s;
-            font-size: 2px;
-        }
-
-        .edit-button:hover::before {
-            display: block;
-            padding-right: 10px;
-            font-size: 13px;
-            opacity: 1;
-            transform: translateY(0px);
-            transition-duration: 0.3s;
-        }
-
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -176,7 +127,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Ingresar Datos Solicitados:</p>
-                    <form action="{{ url('psacrificio/insertar') }}" method="post" class="needs-validation">
+                    <form action="{{ url('psacrificio/insertar') }}" method="post" class="needs-validation psacrificio-form">
                         @csrf
                             
                             <div class="mb-3">
@@ -296,8 +247,8 @@
                                 }
                             });
                         });
-                        //Deshabilitar el envio de formularios si hay campos no validos
-                        (function () {
+                         //Deshabilitar el envio de formularios si hay campos vacios
+                         (function () {
                             'use strict'
                             //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
                             var forms = document.querySelectorAll('.needs-validation')
@@ -337,10 +288,24 @@
                         document.getElementById("btnCancelar").addEventListener("click", function() {
                             limpiarFormulario();
                         });
-                        // Mostrar el modal de registro exitoso cuando se envíe el formulario
-                        $('#psacrificio form').submit(function() {
-                            $('#registroExitosoModal').modal('show');
-                        });    
+                        // Agregar una clase de CSS para mostrar la notificación flotante
+                        function showSuccessMessage() {
+                            const successMessage = document.createElement('div');
+                            successMessage.className = 'success-message';
+                            successMessage.textContent = 'Registro Exitoso';
+
+                            document.body.appendChild(successMessage);
+
+                            setTimeout(() => {
+                                successMessage.remove();
+                            }, 4000); // La notificación desaparecerá después de 4 segundos (puedes ajustar este valor)
+                        }
+
+                        // Función que se ejecutará después de enviar el formulario
+                        function formSubmitHandler() {
+                            showSuccessMessage();
+                        }
+                        document.querySelector('.psacrificio-form').addEventListener('submit', formSubmitHandler);
                     </script>
                 </div>
             </div>
@@ -350,7 +315,7 @@
     <div class="card">
         <div class="card-body">
 
-        <table  width="100%" cellspacing="8 " cellpadding="8" class="table table-hover table-responsive mt-1" id="sacrificio">
+        <table  width="100%" cellspacing="8 " cellpadding="8" class="table table-hover table-bordered mt-1" id="sacrificio">
         <thead>
             <tr>
                 <th>Nº</th>
@@ -375,18 +340,12 @@
                     <td>{{$psacrificio['DIR_PSACRIFICIO']}}</td>
                     <td>{{$psacrificio['COD_ANIMAL']}}</td>
                     <td>
-                        <button value="Editar" title="Editar" class="edit-button" type="button" data-toggle="modal" data-target="#psacrificio-edit-{{$psacrificio['COD_PSACRIFICIO']}}">
-                            <svg class="edit-svgIcon" viewBox="0 0 512 512">
-                                <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 
-                                480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 
-                                22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 
-                                325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 
-                                0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
-                            </svg>
+                        <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#psacrificio-edit-{{$psacrificio['COD_PSACRIFICIO']}}">
+                        <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                         </button>
-                        <!--<button value="Eliminar" title="Eliminar" class="btn btn-outline-danger custom-delete-button" type="button" data-toggle="modal" data-target="#psacrificio-delete-confirm" data-id="{{$psacrificio['COD_PSACRIFICIO']}}">
-                            <i class='fas fa-trash-alt' style='font-size:13px;color:Red'></i> Eliminar
-                        </button>-->
+                        <button value="Generar PDF" title="Generar PDF" class="btn btn-sm btn-danger" type="button" onclick="generatePDF({{$psacrificio['COD_PSACRIFICIO']}})">
+                        <i class="fa-solid fa-file-pdf" style='font-size:15px'></i>
+                        </button>
                     </td>
                 </tr>
                 <!-- Modal for editing goes here -->
@@ -439,27 +398,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Modal de Confirmación de Registro Exitoso -->
-                <div class="modal fade" id="registroExitosoModal" tabindex="-1" aria-labelledby="registroExitosoModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="registroExitosoModalLabel">Registro Exitoso</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                Permiso de sacrificio registrado exitosamente.
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Modal Eliminar -->
                 <div class="modal fade" id="psacrificio-delete-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -489,12 +427,30 @@
         </tbody>
     </table>
     </div>
+    <!-- MENSAJE BAJO -->
+    <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                2023 &copy; SOFTEAM  
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-right footer-links d-none d-sm-block">
+                                    <a>Version 1.0</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- FIN MENSAJE -->
     </div>
+    
 @stop
 
 @section('js')
-   <script> console.log('Hi!'); </script>
-   <script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script> console.log('Hi!'); </script>
+    <script>
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -504,6 +460,27 @@
             $(document).ready(function() {
                 $('#sacrificio').DataTable({
                     responsive: true,
+                    dom: "Bfrtilp",
+                    buttons: [
+                        {
+                            extend: "excelHtml5",
+                            text: "<i class='fa-solid fa-file-excel'></i>",
+                            tittleAttr: "Exportar a Excel",
+                            className: "btn btn-success",
+                        },
+                        {
+                            extend: "pdfHtml5",
+                            text: "<i class='fa-solid fa-file-pdf'></i>",
+                            tittleAttr: "Exportar a PDF",
+                            className: "btn btn-danger",
+                        },
+                        {
+                            extend: "print",
+                            text: "<i class='fa-solid fa-print'></i>",
+                            tittleAttr: "Imprimir",
+                            className: "btn btn-secondary",
+                        },
+                    ],
                     lengthMenu : [10, 20, 30, 40, 50],
                     columnDefs: [
                         { orderable: false, target: [0, 2, 3, 6, 7]},
@@ -526,9 +503,22 @@
                             first: "Primero",
                             last: "Último",
                             next: "Siguiente",
-                            previous: "Anterior"
+                            previous: "Anterior",
                         },
-                    } 
+                        buttons: {
+                            copy: "Copiar",
+                            colvis: "Visibilidad",
+                            collection: "Colección",
+                            colvisRestore: "Restaurar visibilidad",
+                            copyKeys: "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                            copySuccess: {
+                                1: "Copiada 1 fila al portapapeles",
+                                _: "Copiadas %ds fila al portapapeles",
+                            },
+                            pdf: "PDF",
+                            print: "Imprimir",
+                        },
+                    },
                 });
             });
         </script>
@@ -545,7 +535,13 @@
             $('#psacrificio-delete-confirm').modal('show');
             $('#delete-form').attr('action', '{{ url("psacrificio/eliminar") }}/' + id);
         }
-    </script>    
+    </script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
 @stop
 
 @section('css')

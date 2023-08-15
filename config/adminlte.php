@@ -150,8 +150,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -194,7 +194,8 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
+    //barra del menu de arriba
+    'classes_topnav' => 'navbar-dark navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -211,7 +212,7 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
+    'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
@@ -293,18 +294,25 @@ return [
         // Navbar items:
         [
             'type'         => 'navbar-search',
-            'text'         => 'search',
+            'text'         => 'Busqueda',
             'topnav_right' => true,
         ],
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
+        [
+            'text' => 'Cerrar Sesión',
+            'type' =>'fa-sing-out',
+           // 'icon_color' => 'Blue',
+            'url' => 'logout'  ,
+            'topnav_right' => true, 
+        ],
 
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Busqueda',
         ],
         [
             'text' => 'blog',
@@ -327,7 +335,8 @@ return [
                     'icon' => 'fa fa-user',
                     'text' => 'Personas',
                    // 'icon_color' => 'info',
-                    'url' => 'personas'
+                    'url' => 'personas',
+                    'icon_color' => 'green',
                 ]
             ]
         ],
@@ -343,14 +352,16 @@ return [
                     'text' => 'Registro de Fierros',
                     'icon' => 'fa fa-registered',
                    // 'icon_color' => 'indigo',
-                    'url' => 'fierro'
+                    'url' => 'fierro',
+                    'icon_color' => 'green',
                 ],
 
                 [
                     'text' => 'Mostrar Fierros',
                     'icon' => 'fa fa-search',
                     //'icon_color' => 'indigo',
-                    'url' => 'fierro/mostrar'
+                    'url' => 'fierro/mostrar',
+                    'icon_color' => 'green',
                 ]
             ]
         ],
@@ -366,7 +377,8 @@ return [
                     'icon' => 'fa fa-id-card',
                     'text' => 'Permiso de Sacrificio',
                    // 'icon_color' => 'info',
-                    'url' => 'psacrificio'
+                    'url' => 'psacrificio',
+                    'icon_color' => 'green',
                 ]
             ]
         ],
@@ -381,13 +393,15 @@ return [
                     //'icon' => 'fa fa-briefcase',
                     'text' => 'Expediente de Carta de ventas',
                     //'icon_color' => 'indigo',
-                    'url' => 'Cventa'
+                    'url' => 'Cventa',
+                    'icon_color' => 'green',
                 ],
              
                 [
                     'icon' => 'fa fa-paw',
                     'text' => 'Animales',
-                     'url' => 'Animal'
+                     'url' => 'Animal',
+                     'icon_color' => 'green',
                 ]
             ]
         ],
@@ -405,52 +419,53 @@ return [
                     'text' => 'Usuarios',
                     'icon' => 'fa fa-user',
                     //'icon_color' => 'indigo',
-                    'url' => 'Usuarios'
+                    'url' => 'Usuarios',
+                    'icon_color' => 'green',
                 ],
                 [
                     'text' => 'Preguntas',
                     'icon' => 'fa fa-question',
                     //'icon_color' => 'indigo',
-                    'url' => 'Preguntas'
+                    'url' => 'Preguntas',
+                    'icon_color' => 'green',
                 ],
                 [
                     'text' => 'Respuesta Usuario',
                     'icon' => 'fa fa-unlock-alt',
                     //'icon_color' => 'indigo',
-                    'url' => 'Respuestas'
+                    'url' => 'Respuestas',
+                    'icon_color' => 'green',
                 ],
                 [
                     'text' => 'Roles',
                     'icon' => 'fa fa-universal-access',
                     //'icon_color' => 'indigo',
-                    'url' => 'Roles'
+                    'url' => 'Roles',
+                    'icon_color' => 'green',
                 ],
                 [
                     'text' => 'Objetos',
                     'icon' => 'fa fa-object-ungroup',
                     //'icon_color' => 'indigo',
-                    'url' => 'Objetos'
+                    'url' => 'Objetos',
+                    'icon_color' => 'green',
                 ],
                 [
                     'text' => 'Permisos',
                     'icon' => 'fa fa-gavel',
                     //'icon_color' => 'indigo',
-                    'url' => 'Permisos'
+                    'url' => 'Permisos',
+                    'icon_color' => 'green',
                 ],
                 [
                     'text' => 'Mantenimientos',
                     'icon' => 'fa fa-wrench',
                     //'icon_color' => 'indigo',
-                    'url' => 'Mantenimientos'
+                    'url' => 'Mantenimientos',
+                    'icon_color' => 'green',
                 ]
             ]
         ],
-        [
-            'text' => 'Cerrar Sesión',
-            'icon' =>'material-icons-outlined',
-           // 'icon_color' => 'Blue',
-            'url' => 'logout'   
-        ]
     ],
 
     /*
