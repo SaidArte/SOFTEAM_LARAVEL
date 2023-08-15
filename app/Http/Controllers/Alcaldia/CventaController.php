@@ -16,8 +16,20 @@ class CventaController extends Controller
       $citaArreglo = json_decode($Cventa->body(), true);
       // Imprime los datos para verificar si están llegando correctamente
       // dd($citaArreglo);
+      $Animal = Http::get(self::urlapi.'ANIMAL/GETALL');
+      $AnimalArreglo = json_decode($Animal->body(), true);
+      $personas = Http::get(self::urlapi.'PERSONAS/GETALL');
+      $personasArreglo = json_decode($personas->body(), true);
+      // Imprime los datos para verificar si están llegando correctamente
+     // dd($citaArreglo);
+
+     
+      return view('Alcaldia.Cventa')
+      ->with('citaArreglo', $citaArreglo)
+      ->with('AnimalArreglo', $AnimalArreglo)
+     ->with('personasArreglo', $personasArreglo); 
   
-      return view('Alcaldia.Cventa', compact('citaArreglo'));
+      //return view('Alcaldia.Cventa', compact('citaArreglo'));
    } 
 
 
@@ -31,7 +43,8 @@ class CventaController extends Controller
        // "COD_CVENTA"=> $request->input("COD_CVENTA"),
         //"FEC_CVENTA"=> $request->input("FEC_CVENTA"),
         "COD_VENDEDOR"=> $request->input("COD_VENDEDOR") ,
-        "COD_COMPRADOR"=> $request->input("COD_COMPRADOR"),
+        "NOM_COMPRADOR"=> $request->input("NOM_COMPRADOR"),
+        "DNI_COMPRADOR"=> $request->input("DNI_COMPRADOR"),
         "COD_ANIMAL" => $request->input("COD_ANIMAL"),
         "FOL_CVENTA" => $request->input("FOL_CVENTA"),
         "ANT_CVENTA"=> $request->input("ANT_CVENTA") ,
@@ -57,7 +70,8 @@ class CventaController extends Controller
        
         "COD_CVENTA"=>$request->input("COD_CVENTA") ,
         "COD_VENDEDOR"=> $request->input("COD_VENDEDOR") ,
-        "COD_COMPRADOR"=> $request->input("COD_COMPRADOR"),
+        "NOM_COMPRADOR"=> $request->input("NOM_COMPRADOR"),
+        "DNI_COMPRADOR"=> $request->input("DNI_COMPRADOR"),
         "COD_ANIMAL" => $request->input("COD_ANIMAL"),
         "FOL_CVENTA" => $request->input("FOL_CVENTA"),
         "ANT_CVENTA"=> $request->input("ANT_CVENTA") ,
