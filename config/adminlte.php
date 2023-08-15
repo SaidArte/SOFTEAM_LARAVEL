@@ -386,7 +386,7 @@ return [
              
                 [
                     'icon' => 'fa fa-paw',
-                    'text' => 'ANIMALES',
+                    'text' => 'Animales',
                      'url' => 'Animal'
                 ]
             ]
