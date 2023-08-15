@@ -26,11 +26,12 @@ class AuthController extends Controller
         $data = $response->json();
 
         if ($response->successful()) {
-            Session::put('NOM_USUARIO', $NOM_USUARIO);
+            $user = $data['user'];
+            Session::put('user_data', $user); // Almacena todos los datos en la sesión
             return redirect()->route('home'); // Redirigir al home
         } else {
             if ($data['error_type'] === 'inactive') {
-                return redirect()->back()->with('error', 'Este usuario está inactivo, ingresa datos correctos');
+                return redirect()->back()->with('error', 'Este usuario está inactivo');
             } else {
                 return redirect()->back()->with('error', 'Usuario o Contraseña incorrectos');
             }

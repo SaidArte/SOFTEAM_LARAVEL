@@ -11,7 +11,9 @@ use App\Http\Controllers\HomeController; // Agrega esta importación
 Auth::routes();
 
 // Rutas adicionales
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
 Route::delete('/psacrificio/eliminar/{id}', 'Alcaldia\PSacrificioController@eliminar_psacrificio');
 Route::post('/personas', [PersonasController::class, 'store'])->name('store');
 
@@ -37,8 +39,3 @@ Route::get('/', function () {
 //Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
-// Resto de tus rutas...
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
