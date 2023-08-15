@@ -19,6 +19,19 @@
 
 
 @section('content')
+    @if(Session::has('NOM_USUARIO'))
+        <p>Bienvenido, {{ Session::get('NOM_USUARIO') }}!</p>
+    @else
+        <p>Inicia sesión para acceder.</p>
+        <form action="{{ route('login') }}" method="post">
+            @csrf
+            <label for="NOM_USUARIO">Usuario:</label>
+            <input type="text" id="NOM_USUARIO" name="NOM_USUARIO" required><br>
+            <label for="PAS_USUARIO">Contraseña:</label>
+            <input type="password" id="PAS_USUARIO" name="PAS_USUARIO" required><br>
+            <input type="submit" value="Iniciar Sesión">
+        </form>
+    @endif
     <div class="image-container">
         <div class="text">  Justicia Municipal  </div>
     </div>

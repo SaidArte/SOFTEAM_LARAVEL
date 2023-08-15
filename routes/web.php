@@ -36,6 +36,7 @@ Route::get('/', function () {
 // Rutas de autenticación personalizadas
 //Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Resto de tus rutas...
 Route::get('/home', function () {
