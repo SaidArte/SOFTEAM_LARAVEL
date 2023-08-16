@@ -2,6 +2,7 @@
 
 namespace Masterminds\HTML5\Serializer;
 
+
 /**
  * Traverser for walking a DOM tree.
  *

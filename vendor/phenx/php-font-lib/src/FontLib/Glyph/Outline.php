@@ -8,6 +8,7 @@
  */
 namespace FontLib\Glyph;
 
+
 use FontLib\Table\Type\glyf;
 use FontLib\TrueType\File;
 use FontLib\BinaryStream;

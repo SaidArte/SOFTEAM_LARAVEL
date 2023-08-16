@@ -11,6 +11,7 @@ namespace FontLib\EOT;
 use Exception;
 use FontLib\Font;
 
+
 /**
  * TrueType font file header.
  *

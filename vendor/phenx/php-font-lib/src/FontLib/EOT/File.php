@@ -8,6 +8,7 @@
 
 namespace FontLib\EOT;
 
+
 /**
  * EOT font file.
  *
