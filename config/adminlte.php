@@ -379,6 +379,13 @@ return [
                    // 'icon_color' => 'info',
                     'url' => 'psacrificio',
                     'icon_color' => 'green',
+                ],
+                [
+                    'icon' => 'fa fa-truck',
+                    'text' => 'Permiso de Traslado',
+                   // 'icon_color' => 'info',
+                    'url' => 'ptraslado'
+                    'icon_color' => 'green',
                 ]
             ]
         ],

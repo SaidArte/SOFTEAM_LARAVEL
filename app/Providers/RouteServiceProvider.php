@@ -83,7 +83,11 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->prefix('Animal')
-                ->group(base_path('routes/Animal.php'));   
+                ->group(base_path('routes/Animal.php'));
+                
+                Route::middleware('web')
+                ->prefix('ptraslado')
+                ->group(base_path('routes/ptraslado.php'));
 
 
 

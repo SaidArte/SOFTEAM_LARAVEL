@@ -2,11 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Alcaldia\PermisoTrasladoController;
+use App\Http\Controllers\Alcaldia\PTrasladoController;
 
 //Ruta para el GetAll (Obtener todos los registros)
-Route::get('',[PermisoTrasladoController::class,'permisotraslado']);
+Route::get('',[PTrasladoController::class,'ptraslado']);
 //Ruta Para el insert
-Route::post('/insertar',[PermisoTrasladoController::class,'nuevo_PermisoTraslado']);
+Route::post('/insertar',[PTrasladoController::class,'nuevo_PermisoTraslado']);
 //Ruta para el Update
-Route::put('/actualizar',[PermisoTrasladoController::class,'actualizar_PermisoTraslado']);
+Route::put('/actualizar',[PTrasladoController::class,'actualizar_PermisoTraslado']);
