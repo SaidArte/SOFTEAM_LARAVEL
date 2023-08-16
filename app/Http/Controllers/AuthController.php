@@ -27,7 +27,7 @@ class AuthController extends Controller
 
         if ($response->successful()) {
             $user = $data['user'];
-            Session::put('user_data', $user); // Almacena todos los datos en la sesión
+            Session::put('user_data', $user); //Almacena datos del usuario
             return redirect()->route('home'); // Redirigir al home
         } else {
             if ($data['error_type'] === 'inactive') {
