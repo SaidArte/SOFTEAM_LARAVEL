@@ -53,11 +53,5 @@ class PSacrificioController extends Controller
 
         }
 
-        public function eliminar_psacrificio(Request $request, $id){
-            
-            $eliminar_psacrificio = Http::delete('http://localhost:3000/PSACRIFICIO/ELIMINAR/' . $id);
-            return redirect('/psacrificio');
-        } 
-
 
 }

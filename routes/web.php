@@ -1,5 +1,6 @@
 <?php
 
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController; // Agrega esta importación
@@ -9,6 +10,11 @@ use App\Http\Controllers\HomeController; // Agrega esta importación
 
 // Rutas generadas por Auth::routes()
 Auth::routes();
+// Ruta para el pdf
+Route::get('psacrificio/pdf' , function () {
+    $pdf = PDF ::loadView('Alcaldia.pdf'); 
+    return $pdf->stream('Permiso.pdf');
+})->name('psacrificio.pdf');
 
 // Rutas adicionales
 Route::get('/home', function () {
