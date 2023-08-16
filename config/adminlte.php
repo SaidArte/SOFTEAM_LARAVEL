@@ -384,7 +384,7 @@ return [
                     'icon' => 'fa fa-truck',
                     'text' => 'Permiso de Traslado',
                    // 'icon_color' => 'info',
-                    'url' => 'ptraslado'
+                    'url' => 'ptraslado',
                     'icon_color' => 'green',
                 ]
             ]
