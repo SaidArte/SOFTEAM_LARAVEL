@@ -16,6 +16,9 @@ Route::get('psacrificio/pdf' , function () {
     return $pdf->stream('Permiso.pdf');
 })->name('psacrificio.pdf');
 
+Route::get('fierro/pdf/{fierroId}', 'PDFController@generateFierroPDF')->name('fierro.pdf');
+
+
 // Rutas adicionales
 Route::get('/home', function () {
     return view('home');
@@ -35,6 +38,7 @@ use App\Http\Controllers\Alcaldia\PermisosController;
 use App\Http\Controllers\Alcaldia\RespuestasController;
 use App\Http\Controllers\Alcaldia\MantenimientosController;
 use App\Http\Controllers\Alcaldia\PTrasladoController;
+
 
 // Resto de tus rutas...
 // Aquí puedes agregar las rutas para tus otros controladores

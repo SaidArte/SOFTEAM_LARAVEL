@@ -128,9 +128,11 @@
                       <label class="form-label" for="PAS_USUARIO">Contraseña</label>
                     </div>
                     <div class="text-center pt-1 mb-5 pb-1">
-                        <button type="submit" class="btn btn-primary btn-block fa-lg gradient-environmental mb-2">Iniciar</button>
-                        <a class="text-muted" href="#!">¿Olvidaste la contraseña?</a>
-                    </div>
+                        <button type="submit" class="btn btn-primary btn-block fa-lg gradient-environmental mb-2">  Iniciar  </button>
+                  </div>
+                  <div>
+                  <center> <a class="text-muted" href="#!">¿Olvidaste la contraseña?</a></center>
+                  </div>
                     @if(session('error'))
                     <div class="alert alert-danger" role="alert">
                         <div class="text-center">
@@ -138,7 +140,7 @@
                         </div>
                     </div>
                     @endif
-                    <div class="d-flex align-items-center justify-content-center pb-4">
+              <!--  <div class="d-flex align-items-center justify-content-center pb-4">
                       <p class="mb-0 me-2">¿No tienes Usuario?</p>
                       <button class="cta">
                         <span>Crear uno Nuevo</span>
@@ -147,7 +149,7 @@
                           <polyline points="8 1 12 5 8 9"></polyline>
                         </svg>
                       </button>
-                    </div>
+                    </div> -->
 
                   </form>
 

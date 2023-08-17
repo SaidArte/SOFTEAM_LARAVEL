@@ -360,7 +360,7 @@ return [
                     'text' => 'Mostrar Fierros',
                     'icon' => 'fa fa-search',
                     //'icon_color' => 'indigo',
-                    'url' => 'fierro/mostrar',
+                    'url' => 'comparar',
                     'icon_color' => 'green',
                 ]
             ]

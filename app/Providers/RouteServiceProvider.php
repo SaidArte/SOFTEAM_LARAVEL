@@ -89,10 +89,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('ptraslado')
                 ->group(base_path('routes/ptraslado.php'));
 
-
-
-
-            
+                            
         });
     }
 }
