@@ -60,29 +60,9 @@ class PersonasController extends Controller
         }
     }
     
-    public function actualizar_persona(Request $request) {
-
-        if ($request->hasFile('IMG_PERSONA')) {
-            $request->validate([
-                'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
-    
-            $imagen = $request->file('IMG_PERSONA');
-    
-            if ($imagen->isValid()) {
-                $extension = $imagen->getClientOriginalExtension();
-                $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $extension;
-    
-                $imagen->move(public_path('imagenes/personas'), $nombreImagen);
-    
-                $rutaImagen = '/imagenes/personas/' . $nombreImagen;
-                $rutaImagenAbsoluta = url($rutaImagen);
-            } else {
-                return redirect()->back()->with('error', 'Invalid image file');
-            }
-        }
-    
-        $actualizar_persona = [
+    public function actualizar_persona(Request $request){
+        $actualizar_personas = [
+            "COD_PERSONA" => $request->input("COD_PERSONA"),
             "DNI_PERSONA" => $request->input("DNI_PERSONA"),
             "NOM_PERSONA" => $request->input("NOM_PERSONA"),
             "GEN_PERSONA" => $request->input("GEN_PERSONA"),
@@ -100,14 +80,28 @@ class PersonasController extends Controller
             "IND_TELEFONO" => $request->input("IND_TELEFONO"),
         ];
     
-        if (isset($rutaImagenAbsoluta)) {
-            $actualizar_persona['IMG_PERSONA'] = $rutaImagenAbsoluta;
+        // Manejar la imagen si se proporciona
+        if ($request->hasFile('IMG_PERSONA')) {
+            $request->validate([
+                'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+    
+            $imagen = $request->file('IMG_PERSONA');
+            $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $imagen->getClientOriginalExtension();
+            $imagen->move(public_path('imagenes/personas'), $nombreImagen);
+            $rutaImagen = '/imagenes/personas/' . $nombreImagen;
+            $rutaImagenAbsoluta = url($rutaImagen);
+    
+            // Actualiza la ruta de la imagen en los datos a actualizar
+            $actualizar_personas['IMG_PERSONA'] = $rutaImagenAbsoluta;
         }
     
-        $respuesta = Http::put(self::urlapi."/PERSONAS/ACTUALIZAR/COD_PERSONA", $actualizar_persona);
+        // Realizar la solicitud HTTP para actualizar los datos
+        $actualizar_persona = Http::put('http://localhost:3000/PERSONAS/ACTUALIZAR/'.$request->input("COD_PERSONA"), $actualizar_personas);
     
         return redirect('/personas');
     }
+    
     
 
     public function subirImagen(Request $request){

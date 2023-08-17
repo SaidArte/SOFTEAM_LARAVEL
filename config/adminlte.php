@@ -437,10 +437,10 @@ return [
                     'icon_color' => 'green',
                 ],
                 [
-                    'text' => 'Respuesta Usuario',
+                    'text' => 'Cambiar contraseña',
                     'icon' => 'fa fa-unlock-alt',
                     //'icon_color' => 'indigo',
-                    'url' => 'Respuestas',
+                    'url' => 'change-password',
                     'icon_color' => 'green',
                 ],
                 [

@@ -49,3 +49,5 @@ Route::get('/', function () {
 //Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/change-password', [AuthController::class, 'showChangePasswordForm'])->name('change.password');
+Route::post('/change-password', [AuthController::class, 'changePassword'])->name('change.password.submit');
