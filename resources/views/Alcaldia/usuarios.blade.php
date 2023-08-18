@@ -194,8 +194,8 @@
                                             <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA" placeholder="Ingresar el código de la persona" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="LNOM_PERSONA">Usuario</label>
-                                            <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el alias del usuario" required>
+                                            <label for="LNOM_USUARIO">Usuario</label>
+                                            <input type="text" id="NOM_USUARIO" class="form-control" name="NOM_USUARIO" placeholder="Ingresar el alias del usuario" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="PAS_USUARIO">Contraseña</label>
@@ -208,14 +208,6 @@
                                                 <option value="ACTIVO">Activo</option>
                                                 <option value="INACTIVO">Inactivo</option>
                                             </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="LIM_INTENTOS">Intentos permitidos (Login)</label>
-                                            <input type="text" id="LIM_INTENTOS" class="form-control" name="LIM_INTENTOS" placeholder="Ingrese el número de intentos permitidos" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="NUM_INTENTOS_FALLIDOS">Intentos fallidos</label>
-                                            <input type="text" id="NUM_INTENTOS_FALLIDOS" class="form-control" name="NUM_INTENTOS_FALLIDOS" placeholder="Ingresar el número de intentos fallidos" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="FEC_VENCIMIENTO">Fecha de Vencimiento de contraseña</label>
@@ -292,31 +284,6 @@
                                                 $(this).siblings('.invalid-feedback').text('');
                                             }
                                         });
-                                        $('#LIM_INTENTOS').on('input', function() {
-                                            var intentos = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
-                                            $(this).val(intentos); // Actualizar el valor del campo solo con números
-                                            var errorMessage = 'Favor, ingrese el número de intentos permitidos';
-                                            if (intentos == '') {
-                                                $(this).addClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text(errorMessage);
-                                            } else {
-                                                $(this).removeClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('');
-                                            }
-                                        });
-                                        //Esto no lo debería de poner
-                                        $('#NUM_INTENTOS_FALLIDOS').on('input', function() {
-                                            var intentosFallidos = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
-                                            $(this).val(intentosFallidos); // Actualizar el valor del campo solo con números
-                                            var errorMessage = 'Favor, ingrese el número de intentos fallidos';
-                                            if (intentosFallidos == '') {
-                                                $(this).addClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text(errorMessage);
-                                            } else {
-                                                $(this).removeClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('');
-                                            }
-                                        });
                                         //Validaciones del campo Fecha Registro el cual no permitira el ingreso de una fecha anterior al dia de registro
                                         $('#FEC_VENCIMIENTO').on('input', function() {
                                             var fechaVencimiento = $(this).val();
@@ -380,8 +347,6 @@
                                         document.getElementById("NOM_USUARIO").value = "";
                                         document.getElementById("PAS_USUARIO").value = "";
                                         document.getElementById("IND_USUARIO").value = "";
-                                        document.getElementById("LIM_INTENTOS").value = "";
-                                        document.getElementById("NUM_INTENTOS_FALLIDOS").value = "";
                                         document.getElementById("FEC_VENCIMIENTO").value = "";
                                         document.getElementById("PREGUNTA").value = "";
                                         document.getElementById("RESPUESTA").value = "";
@@ -490,19 +455,6 @@
                                                                     <option value="ACTIVO">Activo</option>
                                                                     <option value="INACTIVO">Inactivo</option>
                                                                 </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="Usuarios">Fecha de ultimo acceso</label>
-                                                                <?php $fecha_formateadaUA = date('Y-m-d', strtotime($Usuarios['FEC_ULTIMO_ACCESO'])); ?>
-                                                                <input type="date" class="form-control" id="date-picker" name="FEC_ULTIMO_ACCESO" value="{{$fecha_formateadaUA}}">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="Usuarios">Intentos permitidos (Login)</label>
-                                                                <input type="text" class="form-control" id="LIM_INTENTOS" name="LIM_INTENTOS" placeholder="Ingrese los intentos permitidos" value="{{$Usuarios['LIM_INTENTOS']}}">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="Usuarios">Intentos fallidos</label>
-                                                                <input type="text" class="form-control" id="NUM_INTENTOS_FALLIDOS" name="NUM_INTENTOS_FALLIDOS" placeholder="Ingrese los intentos fallidos" value="{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="Usuarios">Fecha de vencimiento de contraseña</label>

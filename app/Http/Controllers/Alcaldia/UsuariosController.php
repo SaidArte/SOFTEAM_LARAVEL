@@ -33,8 +33,6 @@ class UsuariosController extends Controller
             "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
             "PAS_USUARIO"   => $request -> input("PAS_USUARIO"),
             "IND_USUARIO"   => $request -> input("IND_USUARIO"),
-            "LIM_INTENTOS"   => $request -> input("LIM_INTENTOS"),
-            "NUM_INTENTOS_FALLIDOS"    => $request -> input("NUM_INTENTOS_FALLIDOS"),
             "FEC_VENCIMIENTO"    => $request -> input("FEC_VENCIMIENTO"),
             "PREGUNTA"    => $request -> input("PREGUNTA"),
             "RESPUESTA"   => $request -> input("RESPUESTA")
@@ -50,16 +48,13 @@ class UsuariosController extends Controller
             "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "IND_USUARIO"           => $request -> input("IND_USUARIO"),
-            "FEC_ULTIMO_ACCESO"           => $request -> input("FEC_ULTIMO_ACCESO"),
-            "LIM_INTENTOS"        => $request -> input("LIM_INTENTOS"),
-            "NUM_INTENTOS_FALLIDOS"            => $request -> input("NUM_INTENTOS_FALLIDOS"),
             "FEC_VENCIMIENTO"       => $request -> input("FEC_VENCIMIENTO")
         ]);
         return redirect('/Usuarios');
 
     }
 
-    public function actualizar_pass_usuarios(Request $request){
+    public function actualizar_pass_usuarios(Request $request){ //Este código es innesesario.
 
         $actualizar_pass_usuario = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_PASS_USUARIOS',[
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
@@ -68,12 +63,6 @@ class UsuariosController extends Controller
         return redirect('/Usuarios');
 
     }
-
-    /*public function eliminar_usuario(Request $request, $id){
-
-        $eliminar_psacrificio = Http::delete('http://localhost:3000/SEGURIDAD/ELIMINAR_USUARIO/' . $id);
-        return redirect('/Usuarios');
-    } */
 
 
 }

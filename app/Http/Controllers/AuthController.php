@@ -17,6 +17,7 @@ class AuthController extends Controller
     {
         $NOM_USUARIO = $request->input('NOM_USUARIO');
         $PAS_USUARIO = $request->input('PAS_USUARIO');
+        $CONTADOR = 0;
 
         $response = Http::post('http://localhost:3000/api/login', [
             'NOM_USUARIO' => $NOM_USUARIO,
@@ -28,11 +29,38 @@ class AuthController extends Controller
         if ($response->successful()) {
             $user = $data['user'];
             Session::put('user_data', $user); //Almacena datos del usuario
-            return redirect()->route('home'); // Redirigir al home
+            $COD_USUARIO = Session::get('user_data')['COD_USUARIO'];
+            $notification = [
+                'type' => 'success',
+                'title' => '¡Bienvenido(a)!',
+                'message' => 'Inicio de sesión exitoso'
+            ];
+            $CONTADOR = 0;
+            $response2 = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
+                'COD_USUARIO' => $COD_USUARIO,
+                'NUM_INTENTOS_FALLIDOS' => $CONTADOR,
+            ]);
+            $response3 = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_FECHA_ACCESO', [
+                'COD_USUARIO' => $COD_USUARIO
+            ]);
+            return redirect()->route('home')->with('notification', $notification); // Redirigir al home y muestra un mensaje de bienvenida.
         } else {
             if ($data['error_type'] === 'inactive') {
-                return redirect()->back()->with('error', 'Este usuario está inactivo');
+                return redirect()->back()->with('error', 'Este usuario está inactivo. Favor, contactar con el administrador');
             } else {
+                $response4 = Http::post('http://localhost:3000/SEGURIDAD/GETONE_USUARIOS', [
+                    'NOM_USUARIO' => $NOM_USUARIO,
+                ]);
+                
+                $data2 = $response4->json();
+
+                if (!empty($data2)) {
+                    $CONTADOR = $data2[0]['NUM_INTENTOS_FALLIDOS'];
+                    $response4 = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
+                        'COD_USUARIO' => $data2[0]['COD_USUARIO'],
+                        'NUM_INTENTOS_FALLIDOS' => $CONTADOR + 1,
+                    ]);
+                }
                 return redirect()->back()->with('error', 'Usuario o Contraseña incorrectos');
             }
         }
@@ -66,7 +94,7 @@ class AuthController extends Controller
         }
 
         if ($oldPassword == $newPassword) {
-            return redirect()->back()->with('error', 'Favor, ingrese una contraseña diferente')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese una contraseña diferente a la actual')->withInput();
         } elseif ($newPassword != $confPassword || $newPassword == "") {
             return redirect()->back()->with('error', 'Favor, ingrese una contraseña y confirmela')->withInput();
         }

@@ -45,7 +45,7 @@
 
             <table cellspacing="7" cellpadding="7" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" style="border:2px solid lime;">
                 <thead>
-                    <th>Código Pregunta</th>
+                    <th>No.</th>
                     <th>Pregunta</th>
                     <th></th>
                 </thead>

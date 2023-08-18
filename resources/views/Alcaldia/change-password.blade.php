@@ -47,6 +47,14 @@
                                     <a href="{{ route('home') }}" class="btn btn-secondary">Cancelar</a>
                                 </div>
                             </div>
+                            <br>
+                            @if(session('error'))
+                                <div class="alert alert-danger" role="alert">
+                                    <div class="text-center">
+                                        <strong>Error:</strong> {{ session('error') }}
+                                    </div>
+                                </div>
+                            @endif
                         </form>
                     </div>
                 </div>
