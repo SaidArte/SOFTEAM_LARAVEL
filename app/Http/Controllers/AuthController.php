@@ -43,4 +43,52 @@ class AuthController extends Controller
         Session::flush();
         return redirect()->route('login');
     }
+
+    public function showChangePasswordForm()
+    {
+        return view('Alcaldia.change-password');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $COD_USUARIO = Session::get('user_data')['COD_USUARIO'];
+        $NOM_USUARIO = Session::get('user_data')['NOM_USUARIO'];
+        $oldPassword = $request->input('PAS_USUARIO');
+        $newPassword = $request->input('newPassword');
+        $confPassword = $request->input('confPassword');
+        $response = Http::post('http://localhost:3000/api/login', [
+            'NOM_USUARIO' => $NOM_USUARIO,
+            'PAS_USUARIO' => $oldPassword,
+        ]);
+
+        if (!$response->successful()) {
+            return redirect()->back()->with('error', 'Favor, ingrese su contraseña actual')->withInput();
+        }
+
+        if ($oldPassword == $newPassword) {
+            return redirect()->back()->with('error', 'Favor, ingrese una contraseña diferente')->withInput();
+        } elseif ($newPassword != $confPassword || $newPassword == "") {
+            return redirect()->back()->with('error', 'Favor, ingrese una contraseña y confirmela')->withInput();
+        }
+
+        $response2 = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [
+            'COD_USUARIO' => $COD_USUARIO,
+            'PAS_USUARIO' => $newPassword,
+        ]);
+
+        if ($response2->successful()) {
+            $notification = [
+                'type' => 'success',
+                'title' => 'Cambio de contraseña',
+                'message' => 'Tu contraseña ha sido actualizada con éxito.'
+            ];
+            
+            return redirect()->route('home')
+                ->with('notification', $notification);
+        } else {
+            return redirect()->back()->with('error', 'Error interno de servidor')->withInput();
+        }
+    }
+
+
 }

@@ -4,7 +4,7 @@
 @section('content')
     @if(session()->has('user_data'))
         <!-- Contenido que solo se muestra a usuarios autenticados -->
-        <p><br>Bienvenido, {{ session('user_data')['NOM_PERSONA'] }}</p>
+        <p><br>¡Bienvenido (a), {{ session('user_data')['NOM_PERSONA'] }}!</p>
         <div class="image-container">
             <div class="text">  Justicia Municipal  </div>
         </div>
@@ -77,6 +77,17 @@
                 dots[slideIndex - 1].className += " active";
             }
         </script>
+        @if(session('notification'))
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script>
+                    Swal.fire({
+                        icon: '{{ session('notification')['type'] }}',
+                        title: '{{ session('notification')['title'] }}',
+                        text: '{{ session('notification')['message'] }}',
+                    });
+                </script>
+            @endif
+        @stop
 
     @section('css')
 
@@ -221,7 +232,6 @@
                 color: cornflowerblue;
             }
         </style>
-        @stop
     @else
         <!-- Contenido para usuarios no autenticados -->
         <script>
