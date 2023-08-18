@@ -17,8 +17,13 @@ class PSacrificioController extends Controller
     $citaArreglo = json_decode($psacrificio->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
+    $animalController = new AnimalController();
+    $Animal = Http::get(self::urlapi.'ANIMAL/GETALL');
+    $AnimalArreglo = json_decode($Animal->body(), true);
 
-    return view('Alcaldia.psacrificio', compact('citaArreglo'));
+    return view('Alcaldia.psacrificio', compact('citaArreglo', 'AnimalArreglo'));
+    //->with('citaArreglo', $citaArreglo)
+    //->width('AnimalArreglo', $AnimalArreglo);
     
 }
 

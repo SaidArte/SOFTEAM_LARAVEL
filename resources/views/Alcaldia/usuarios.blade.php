@@ -198,8 +198,9 @@
                                             <input type="text" id="NOM_USUARIO" class="form-control" name="NOM_USUARIO" placeholder="Ingresar el alias del usuario" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="PAS_USUARIO">Contraseña</label>
+                                            <label for="PAS_USUARIO" class="form-label">Contraseña</label>
                                             <input type="password" id="PAS_USUARIO" class="form-control" name="PAS_USUARIO" placeholder="Ingresar una contraseña" required>
+                                            <div id="password-feedback" class="invalid-feedback"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="IND_USUARIO">Estado del usuario</label>
@@ -259,18 +260,45 @@
                                                 $(this).siblings('.invalid-feedback').text('');
                                             }
                                         });
-                                        //Validaciones del campo Telefono en el cual no permite el ingreso de letras (las bloquea y no se muestra)
-                                        //y solo permite el ingreso de numeros
-                                        $('#PAS_USUARIO').on('input', function() {
-                                            var password = $(this).val();
-                                            var errorMessage = 'Favor, ingrese una contraseña';
-                                            
-                                            if (password == '') {
-                                                $(this).addClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text(errorMessage);
+                                         //Validaciones de la Contraña
+                                         const passwordInput = document.getElementById('PAS_USUARIO');
+                                        const passwordFeedback = document.getElementById('password-feedback');
+
+                                        passwordInput.addEventListener('input', () => {
+                                            const password = passwordInput.value;
+                                            let isValid = true;
+
+                                            // Validaciones
+                                            if (password.length < 8) {
+                                                isValid = false;
+                                                passwordFeedback.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+                                            } else if (!/[A-Z]/.test(password)) {
+                                                isValid = false;
+                                                passwordFeedback.textContent = 'La contraseña debe contener al menos una letra mayúscula.';
+                                            } else if (!/[0-9]/.test(password)) {
+                                                isValid = false;
+                                                passwordFeedback.textContent = 'La contraseña debe contener al menos un número.';
+                                            } else if (!/[!@#$%^&*]/.test(password)) {
+                                                isValid = false;
+                                                passwordFeedback.textContent = 'La contraseña debe contener al menos un carácter especial (!@#$%^&*).';
+                                            } else if (/\s/.test(password)) {
+                                                isValid = false;
+                                                passwordFeedback.textContent = 'La contraseña no debe contener espacios.';
                                             } else {
-                                                $(this).removeClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('');
+                                                passwordFeedback.textContent = '';
+                                            }
+
+                                            // Agregar o quitar clase 'is-invalid' en el campo de contraseña
+                                            if (isValid) {
+                                                passwordInput.classList.remove('is-invalid');
+                                            } else {
+                                                passwordInput.classList.add('is-invalid');
+                                            }
+
+                                            // Habilitar o deshabilitar el botón de envío según la validez de la contraseña
+                                            const submitButton = document.querySelector('button[type="submit"]');
+                                            if (submitButton) {
+                                                submitButton.disabled = !isValid;
                                             }
                                         });
                                         $('#IND_USUARIO').on('input', function() {
