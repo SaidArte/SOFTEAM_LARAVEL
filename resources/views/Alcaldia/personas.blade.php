@@ -145,7 +145,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Ingrese los datos solicitados:</p>
-                            <form action="{{ url('personas/insertar') }}" method="post" class="needs-validation" enctype="multipart/form-data">
+                            <form action="{{ url('personas/insertar') }}" method="post" class="needs-validation personas-form" enctype="multipart/form-data">
                                 @csrf
                                     <div class="mb-3">
                                         <label for="DNI_PERSONA">Número de Identidad:</label>
@@ -428,7 +428,7 @@
                                 function formSubmitHandler() {
                                     showSuccessMessage();
                                 }
-                                document.querySelector('.psacrificio-form').addEventListener('submit', formSubmitHandler);     
+                                document.querySelector('.personas-form').addEventListener('submit', formSubmitHandler);     
                             </script>
                         </div>
                     </div>
@@ -480,7 +480,7 @@
                                                 <h5 class="modal-title">Actualizar Datos</h5>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ url('personas/actualizar') }}" method="post" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
+                                                <form action="{{ url('personas/actualizar') }}" method="post" enctype="multipart/form-data">
                                                     @csrf
                                                         <input type="hidden" class="form-control" name="COD_PERSONA" value="{{$personas['COD_PERSONA']}}">
                                                         <div class="mb-3">
@@ -495,10 +495,9 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Género:</label>
-                                                            <select class="form-select custom-select" id="GEN_PERSONA" name="GEN_PERSONA" value="{{$personas['GEN_PERSONA']}}">
-                                                                <option value="" disabled selected>Seleccione una opción</option>
-                                                                <option value="M">MASCULINO</option>
-                                                                <option value="F">FEMENINO</option>
+                                                            <select class="form-select custom-select" id="GEN_PERSONA" name="GEN_PERSONA" value="{{$personas['GEN_PERSONA']}}" required>
+                                                                <option value="M" @if($personas['GEN_PERSONA'] === 'M') selected @endif>MASCULINO</option>
+                                                                <option value="F" @if($personas['GEN_PERSONA'] === 'F') selected @endif>FEMENINO</option>
                                                             </select>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
@@ -508,10 +507,12 @@
                                                             <?php $fecha_formateada = Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d'); ?>
                                                             <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$fecha_formateada}}">                                    
                                                         </div>
-                                                        <div class="mb-3">
-                                                          <label for="IMG_PERSONA">Imagen de la Persona:</label>
-                                                          <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
+                                                        <div class="form-group">
+                                                            <label for="IMG_PERSONA">Imagen de la Persona:</label>
+                                                            <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
                                                         </div>
+                                                        <!-- Mostrar imagen actual -->
+                                                        <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
                                                         <div class="mb-3 mt-3">
                                                             <label for="personas" class="form-label">Codigo Dirección:</label>
                                                             <input type="text" id="COD_DIRECCION" class="form-control" name="COD_DIRECCION" placeholder="Ingrese el codigo de la dirección" value="{{$personas['COD_DIRECCION']}}" readonly>
@@ -523,10 +524,9 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Tipo de Dirección:</label>
-                                                            <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" value="{{$personas['TIP_DIRECCION']}}">
-                                                                <option value="" disabled selected>Seleccione una opción</option>
-                                                                <option value="DO">DOMICILIO</option>
-                                                                <option value="TR">TRABAJO</option>
+                                                            <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" value="{{$personas['TIP_DIRECCION']}}" required>
+                                                                <option value="DO" @if($personas['TIP_DIRECCION'] === 'DO') selected @endif>DOMICILIO</option>
+                                                                <option value="TR" @if($personas['TIP_DIRECCION'] === 'TR') selected @endif>TRABAJO</option>
                                                             </select>  
                                                             <div class="invalid-feedback"></div>
                                                         </div>  
@@ -551,10 +551,9 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Tipo de Telefono:</label>
-                                                            <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" value="{{$personas['TIP_TELEFONO']}}">
-                                                                <option value="" disabled selected>Seleccione una opción</option>
-                                                                <option value="FI">FIJO</option>
-                                                                <option value="MO">MOVIL</option>
+                                                            <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" value="{{$personas['TIP_TELEFONO']}}" required>
+                                                                <option value="FI" @if($personas['TIP_TELEFONO'] === 'FI') selected @endif>FIJO</option>
+                                                                <option value="MO" @if($personas['TIP_TELEFONO'] === 'MO') selected @endif>MOVIL</option>
                                                             </select>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
@@ -570,10 +569,9 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Estado:</label>
-                                                            <select class="form-select custom-select" id="IND_TELEFONO" name="IND_TELEFONO" value="{{$personas['IND_TELEFONO']}}">
-                                                                <option value="" disabled selected>Seleccione una opción</option>    
-                                                                <option value="ACTIVO">ACTIVO</option>
-                                                                <option value="INACTIVO">INACTIVO</option>
+                                                            <select class="form-select custom-select" id="IND_TELEFONO" name="IND_TELEFONO" value="{{$personas['IND_TELEFONO']}}" required>   
+                                                                <option value="ACTIVO" @if($personas['IND_TELEFONO'] === 'ACTIVO') selected @endif>ACTIVO</option>
+                                                                <option value="INACTIVO" @if($personas['IND_TELEFONO'] === 'INACTIVO') selected @endif>INACTIVO</option>
                                                             </select>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
