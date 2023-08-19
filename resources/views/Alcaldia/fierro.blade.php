@@ -368,17 +368,29 @@
                                 </tr>
                                 <!-- Modal for editing goes here -->
                                 <div class="modal fade bd-example-modal-sm" id="fierro-edit-{{$fierro['COD_FIERRO']}}" tabindex="-1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Actualizar Datos</h5>
-                                            </div>
-                                            <div class="modal-body">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                         <h5 class="modal-title">Actualizar Datos</h5>
+                                             </div>
+                                             <div class="modal-body">
+                                               @if(session('success'))
+                                               <div class="alert alert-success">
+                                                {{ session('success') }}
+                                                </div>
+                                                 @endif
                                                 <p>Ingresa los Nuevos Datos</p>
-                                                <form action="{{ url('fierro/actualizar') }}" method="post" class="row g-3 needs-validation" enctype= "multipart/form-data" novalidate>
-                                                    @csrf
-                                                         <input type="hidden" class="form-control" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
-                                                        
+                                          <form action="{{ url('fierro/actualizar') }}" method="post" class="row g-3 needs-validation" enctype="multipart/form-data">
+                                                   @csrf
+                                                    <div class="mb-3 mt-3">
+                                                        <label for="COD_PERSONA" class="form-label">Persona: </label>
+                                                            <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" disabled>
+                                                                <option value="" disabled selected>Seleccione una persona</option>
+                                                     @foreach ($personasArreglo as $persona)
+                                                               <option value="{{ $persona['COD_PERSONA'] }}" @if($persona['COD_PERSONA'] == $fierro['COD_PERSONA']) selected @endif>{{ $persona['NOM_PERSONA'] }}</option>
+                                                    @endforeach
+                                                            </select>
+                                                    </div>
                                                          <div class="mb-3">
                                                          <label for="fierro" class="form-label">Fecha de Tramite:</label>
                                                             <?php $fecha_formateada = date('Y-m-d', strtotime($fierro['FEC_TRAMITE_FIERRO'])); ?>
@@ -402,24 +414,15 @@
                                                              <label for="fierro">Monto del Certifico</label>
                                                              <input type="text" class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}}">
                                                        </div>
-                                                       <div class="card">
-                                                         <div class="card-header">Actualizar Imagen del Fierro</div>
-                                                         <div class="card-body">
-                                                             <form action="{{ url('fierro/actualizar-imagen') }}" method="POST" enctype="multipart/form-data">
-                                                             @csrf
-                                    
-                                                             @csrf
-                                                        <input type="hidden" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
-                                                            <div class="form-group">
-                                                        <label for="IMG_FIERRO">Nueva Imagen del Fierro</label>
-                                                         <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" readonly>
-                                                         </div>
-                                                         <button type="submit" class="btn btn-primary">Editar</button>
-                                                            </form>
-                                                         </div>
+                                                       <div class="form-group">
+                                                            <label for="IMG_FIERRO">Imagen del Fierro:</label>
+                                                            <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*">
                                                         </div>
+                                                        <!-- Mostrar imagen actual -->
+                                                        <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
                                                         <div class="mb-3">
-                                                             <!-- Boton de cancelar -->
+                                                             <!-- Boton de cancelar  y editar-->
+                                                             <button type="submit" class="btn btn-primary">Editar</button>
                                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                                     </div>
                                                 </form>

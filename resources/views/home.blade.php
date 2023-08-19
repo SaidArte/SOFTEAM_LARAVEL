@@ -4,7 +4,12 @@
 @section('content')
     @if(session()->has('user_data'))
         <!-- Contenido que solo se muestra a usuarios autenticados -->
-        <p><br>¡Bienvenido (a), {{ session('user_data')['NOM_PERSONA'] }}!</p>
+        <div style="background: linear-gradient(to right, #008080 , #000000); text-align: right; padding: 10px; font-weight: bold; color: white;">
+        ¡Bienvenido(a), {{ session('user_data')['NOM_PERSONA'] }}!
+        </div>
+
+
+
         <div class="image-container">
             <div class="text">  Justicia Municipal  </div>
         </div>
@@ -29,11 +34,7 @@
                 <q>Somos Grandes</q>
                 <p class="author">-Equipo Suave</p>
             </div>
-
-
-
-
-
+            
             <a class="prev" onclick="plusSlides(-1)">❮</a>
             <a class="next" onclick="plusSlides(1)">❯</a>
 
@@ -240,3 +241,15 @@
     @endif
 
 @stop
+
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+   
+
+@stop
+
+
+
+
+
