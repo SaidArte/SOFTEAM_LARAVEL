@@ -305,7 +305,7 @@
                 </div>
             </div>
 
-            <table cellspacing="9" cellpadding="9" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" style="border:2px solid lime;" " id="modAnimal" >
+            <table cellspacing="9" cellpadding="9" class="Table table-hover table-bordered mt-1 " id="modAnimal" >
                 <thead>
                     <th>Código Animal</th>
                     <th>Fecha registro</th>
@@ -513,7 +513,32 @@
                 <script>
                     $(document).ready(function() {
                         $('#modAnimal').DataTable({
-                            responsive: true
+                            responsive: true,
+                            lengthMenu : [10, 20, 30, 40, 50],
+                            columnDefs: [
+                                { orderable: false, target: [0, 2, 3, 6, 7]},
+                                { searchable: false, target: [0, 3, 6, 7]},
+                                { width: '25%', target: [1] },
+                                { width: '10%', target: [2, 3, 4, 6, 7] }, 
+                                { width: '25%', target: [5] },
+                            ],
+                            language: {
+                                processing: "Procesando...",
+                                lengthMenu: "Mostrar _MENU_ registros",
+                                zeroRecords: "No se encontraron resultados",
+                                emptyTable: "Ningún dato disponible en esta tabla",
+                                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                                search: "Buscar:",
+                                infoThousands: ",",
+                                loadingRecords: "Cargando...",
+                                paginate: {
+                                    first: "Primero",
+                                    last: "Último",
+                                    next: "Siguiente",
+                                    previous: "Anterior"
+                                },
+                            }
                         });
                     });
                 </script>

@@ -122,7 +122,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Favor, ingrese los datos solicitados:</p>
-                            <form action="{{ url('Cventa/insertar') }}" method="post">
+                            <form action="{{ url('Cventa/insertar') }}" method="post" class="needs-validation cventa-form" >
                                 @csrf
                                 <!--metodo de inserta en codigo de vendedor  atraendo los datos ya existente de la tabla persona-->
                                 <div class="mb-3 mt-3">
@@ -138,17 +138,27 @@
                                 </div>
 
                                 <!--metodo de inserta en codigo de comprador  atraendo los datos ya existente de la tabla persona-->
-                                <div class="mb-3">
+                               <div class="mb-3">
                                     <label for="NOM_COMPRADOR">Nombre del Comprador</label>
                                     <input type="text" id="NOM_COMPRADOR" class="form-control" name="NOM_COMPRADOR" placeholder="Ingresar el nombre completo de la Comprador" required>
-                                    <div class="invalid-feedback"></div>
+                                    <div class="invalid-feedback">Ingresar el nombre completo de la Comprador</div>
                                 </div>
                         
-                                <div class="mb-3">
+                             <!--    <div class="mb-3">
                                     <label for="DNI_COMPRADOR">Numero de Identidad comprador</label>
                                     <input type="text" id="DNI_COMPRADOR" class="form-control" name="DNI_COMPRADOR" placeholder="Ingresar el numero de identidad de comprador" required>
                                     <div class="invalid-feedback"></div>
+                                </div>-->
+                                <div class="mb-3">
+                                    <label for="DNI_COMPRADOR">Numero de Identidad comprador</label>
+                                    <input type="text" id="DNI_COMPRADOR" class="form-control @error('DNI_COMPRADOR') is-invalid @enderror" name="DNI_COMPRADOR" placeholder="Ingresar el numero de identidad de comprador" required pattern="[0-9]+" title="Ingrese solo números" maxlength="13">
+                                    <div class="invalid-feedback"> Ingresar el DNI completo de la Comprador</div>
+                                    @error('DNI_COMPRADOR')
+                                        <div class="invalid-feedback">Ingresar el DNI ompleto de la Comprador</div>
+                                    @enderror
                                 </div>
+
+
 
                                 <!--metodo de inserta en codigo de animal  atraendo los datos ya existente de la tabla persona-->
                                 <div class="mb-3 mt-3">
@@ -186,6 +196,7 @@
                                         <option value="00014">Folio #00014</option>
                                         <option value="00015">Folio #00015</option>
                                         <option value="00016">Folio #00016</option>
+                                        <option value="" disabled selected>Seleccione una opción del folio</option>
 
 
                                     </select>
@@ -197,6 +208,7 @@
                                         <option value="" disabled selected>Seleccione una opción</option>
                                         <option value="SI" selected >SI</option>
                                         <option value="NO" selected >NO</option>
+                                        <option value="" disabled selected>Seleccione una opción</option>
                                     
                                     </select>
                                 </div>
@@ -208,7 +220,16 @@
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                     </div>
                             </form>
-                            <script>
+
+
+
+
+
+
+
+
+
+                           <!-- <script>
 
                                 // Validación del formulario
                                 $(document).ready(function() {
@@ -291,35 +312,8 @@
                                             }, false)
                                         })
                                 })()
-                                //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
-                                function limpiarFormulario() {
-                                    document.getElementById("COD_VENDEDOR").value = "";
-                                    document.getElementById("NOM_COMPRADOR").value = "";
-                                    document.getElementById("DNI_COMPRADOR").value = "";
-                                    document.getElementById("COD_ANIMAL").value = "";
-                                    document.getElementById("FOL_CVENTA").value = "";
-                                    document.getElementById("ANT_CVENTA").value = "";
-                                
-
-                                    const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
-                                    invalidFeedbackElements.forEach(element => {
-                                        element.textContent = "";
-                                    });
-
-                                    const invalidFields = document.querySelectorAll(".form-control.is-invalid");
-                                    invalidFields.forEach(field => {
-                                        field.classList.remove("is-invalid");
-                                    });
-                                }
-
-                                document.getElementById("btnCancelar").addEventListener("click", function() {
-                                    limpiarFormulario();
-                                });
-                                // Mostrar el modal de registro exitoso cuando se envíe el formulario
-                                $('#Cventa form').submit(function() {
-                                    $('#registroExitosoModal').modal('show');
-                                });    
-                            </script>
+                                  
+                            </script>-->
                         </div>
                     </div>
                 </div>
