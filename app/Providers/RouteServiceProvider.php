@@ -57,10 +57,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/Preguntas.php'));
     
             Route::middleware('web')
-                ->prefix('Respuestas')
-                ->group(base_path('routes/Respuestas.php'));
-    
-            Route::middleware('web')
                 ->prefix('Roles')
                 ->group(base_path('routes/Roles.php'));
     

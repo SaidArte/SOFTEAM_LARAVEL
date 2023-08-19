@@ -11,11 +11,11 @@ class PreguntasController extends Controller
 
     public function Preguntas(){
     $Preguntas = Http::get('http://localhost:3000/SEGURIDAD/GETALL_PREGUNTAS');
-    $citaArreglo = json_decode($Preguntas->body(), true);
+    $PreguntasArreglo = json_decode($Preguntas->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
 
-    return view('Alcaldia.Preguntas', compact('citaArreglo'));
+    return view('Alcaldia.Preguntas', compact('PreguntasArreglo'));
     }
 
     public function nueva_pregunta(Request $request){

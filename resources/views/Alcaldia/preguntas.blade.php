@@ -51,7 +51,7 @@
                 </thead>
                 <tbody>
                     <!-- Loop through $citaArreglo and show data -->
-                    @foreach($citaArreglo as $Preguntas)
+                    @foreach($PreguntasArreglo as $Preguntas)
                         <tr>
                             <td>{{$Preguntas['COD_PREGUNTA']}}</td>
                             <td>{{$Preguntas['PREGUNTA']}}</td>

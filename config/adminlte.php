@@ -430,10 +430,17 @@ return [
                     'icon_color' => 'green',
                 ],
                 [
-                    'text' => 'Preguntas',
+                    'text' => 'Preguntas de seguridad',
                     'icon' => 'fa fa-question',
                     //'icon_color' => 'indigo',
                     'url' => 'Preguntas',
+                    'icon_color' => 'green',
+                ],
+                [
+                    'text' => 'Cambiar respuesta',
+                    'icon' => 'fa fa-check-circle',
+                    //'icon_color' => 'indigo',
+                    'url' => 'preguntas-auth',
                     'icon_color' => 'green',
                 ],
                 [

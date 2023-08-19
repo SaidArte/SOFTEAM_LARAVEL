@@ -87,7 +87,7 @@
                         text: '{{ session('notification')['message'] }}',
                     });
                 </script>
-            @endif
+        @endif
         @stop
 
     @section('css')

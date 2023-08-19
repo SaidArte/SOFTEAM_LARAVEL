@@ -131,7 +131,7 @@
                         <button type="submit" class="btn btn-primary btn-block fa-lg gradient-environmental mb-2">  Iniciar  </button>
                   </div>
                   <div>
-                  <center> <a class="text-muted" href="#!">¿Olvidaste la contraseña?</a></center>
+                  <center> <a class="text-muted" href="{{ route('auth.usuariopassreset') }}">¿Olvidaste la contraseña?</a></center>
                   </div>
                     @if(session('error'))
                     <div class="alert alert-danger" role="alert">
@@ -150,7 +150,16 @@
                         </svg>
                       </button>
                     </div> -->
-
+                    @if(session('notification'))
+                          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                              <script>
+                                  Swal.fire({
+                                      icon: '{{ session('notification')['type'] }}',
+                                      title: '{{ session('notification')['title'] }}',
+                                      text: '{{ session('notification')['message'] }}',
+                                  });
+                              </script>
+                    @endif
                   </form>
 
                 </div>
