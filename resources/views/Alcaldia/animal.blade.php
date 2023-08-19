@@ -13,6 +13,73 @@
             color: white !important;
         }
     </style>
+      <style>
+        /* Boton Nuevo */
+        .Btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 40px;
+            height: 40px;
+            border-radius: calc(45px/2);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition-duration: .3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+            background-color: rgb(0, 143, 0);
+            }
+
+        /* plus sign */
+        .sign {
+            width: 100%;
+            font-size: 2.0em;
+            color: white;
+            transition-duration: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* text */
+        .text {
+            position: absolute;
+            right: 0%;
+            width: 0%;
+            opacity: 0;
+            color: white;
+            font-size: 1.0em;
+            font-weight: 300;
+            transition-duration: .3s;
+        }
+        /* hover effect on button width */
+        .Btn:hover {
+            width: 125px;
+            transition-duration: .3s;
+        }
+
+        .Btn:hover .sign {
+            width: 30%;
+            transition-duration: .3s;
+            padding-left: 15px;
+        }
+        /* hover effect button's text */
+        .Btn:hover .text {
+            opacity: 1;
+            width: 70%;
+            transition-duration: .3s;
+            padding-right: 15px;
+        }
+        /* button click effect*/
+        .Btn:active {
+            transform: translate(2px ,2px);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -20,18 +87,29 @@
 @stop
 @section('content_header')
     @if(session()->has('user_data'))
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+            
             <center>
                 <h1>Información de Animales</h1>
             </center>
-            <blockquote class="blockquote text-center">
-                <p class="mb-0">Registro de Animales.</p>
+
+        <br>
+            <center>
                 <footer class="blockquote-footer">Animales <cite title="Source Title">Registrados</cite></footer>
-            </blockquote>
+
+            </center>
+        </br>
+            
 
         @section('content')
         <p align="right">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Animal">+ Nuevo</button>
+            <button type="button" class="Btn" data-toggle="modal" data-target="#Animal">
+                <div class="sign">+</div>
+                <div class="text">Nuevo</div>
+            </button>
         </p>
+
+        
             
             <div class="modal fade bd-example-modal-sm" id="Animal" tabindex="-1">
                 <div class="modal-dialog">
@@ -42,11 +120,11 @@
                         </div>
                         <div class="modal-body">
                             <p>Favor, ingrese los datos solicitados:</p>
-                            <form action="{{ url('Animal/insertar') }}" method="post">
+                            <form action="{{ url('Animal/insertar') }}" method="post"  class="needs-validation Animal-form">
                                 @csrf
                                 <div class="mb-3 mt-3">
                                     <label for="CLAS_ANIMAL" >clases de Animal</label>
-                                    <select class="form-select custom-select" id="CLAS_ANIMAL" name="CLAS_ANIMAL" placeholder="Seleccione una clase de animal" required >
+                                    <select class="form-select custom-select" id="CLAS_ANIMAL" name="CLAS_ANIMAL" required >
                                         <option value="" disabled selected>Seleccione una clase de animal</option>
                                         <option value="Vaca" selected >Vaca</option>
                                         <option value="Caballo" selected >Caballo</option>
@@ -54,14 +132,17 @@
                                         <option value="Burro" selected >Burro</option>
                                         <option value="Mula" selected >Mula</option>
                                         <option value="Yegua" selected >Yegua</option>
+                                        <option value="Vaca" selected >Vaca</option>
+
                                     
                                     
                                     </select>
+
                                 </div>
 
                                 <div class="mb-3 mt-3">
                                     <label for="RAZ_ANIMAL" >Raza de Animal</label>
-                                    <select class="form-select custom-select" id="RAZ_ANIMAL" name="RAZ_ANIMAL"placeholder="Seleccione una Raza de Animal" required >
+                                    <select class="form-select custom-select" id="RAZ_ANIMAL" name="RAZ_ANIMAL" required >
                                         <option value="" disabled selected>Seleccione una Raza de Animal</option>
                                     <!--Raza de Vaca-->
                                         <option value="Holstein" selected >Vaca Holstein</option>
@@ -85,16 +166,20 @@
                                         <option value="criollo" selected >Burro criollo</option>
                                         <!--Raza de Yegua-->
                                         <option value="criollo" selected >Yegua criollo</option>
+                                         <!--Raza de mula-->
+                                         <option value="criollo" selected >Mula criollo</option>
+                                         <option value="" disabled selected>Seleccione una Raza de Animal</option>
 
 
                                     
                                     </select>
+
                                 </div>
                             
 
                             <div class="mb-3 mt-3">
                                 <label for="COL_ANIMAL" >Color del Animal</label>
-                                <select class="form-select custom-select" id="COL_ANIMAL" name="COL_ANIMAL" placeholder="Seleccione el color del Ganado"required >
+                                <select class="form-select custom-select" id="COL_ANIMAL" name="COL_ANIMAL" required >
                                     <option value="" disabled selected>Seleccione el color del Ganado</option>
 
                                     <option value=" castaño" selected >castaño</option>
@@ -104,14 +189,16 @@
                                     <option value="cafes" selected >cafes</option>
                                     <option value="manchado " selected >manchado </option>
                                     <option value="Gris " selected >Gris </option>
+                                    <option value="" disabled selected>Seleccione el color del Ganado</option>
                                 
                                 </select>
+
                             </div>
 
                             <!--metodo de inserta en codigo de fierro  atraendo los datos ya existente de la tabla persona-->
                             <div class="mb-3 mt-3">
                                 <label for="COD_FIERRO" >Datos de Fierro</label>
-                                <select class="form-select custom-select" id="COD_FIERRO" name="COD_FIERRO" placeholder="Seleccione Datos de Fierro"required >
+                                <select class="form-select custom-select" id="COD_FIERRO" name="COD_FIERRO" required >
                                     <option value="" disabled selected>Seleccione Datos de Fierro </option>
                                     @foreach ($fierroArreglo as $fierro)
                                         <option value="{{$fierro['COD_FIERRO']}}">{{$fierro['COD_FIERRO']}} {{$fierro['COD_PERSONA']}} {{$fierro['TIP_FIERRO']}} {{$fierro['NUM_FOLIO_FIERRO']}} </option>
@@ -127,10 +214,11 @@
                         
                                 <div class="mb-3 mt-3">
                                     <label for="VEN_ANIMAL" >Venteado Animal</label>
-                                    <select class="form-select custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL" placeholder="Seleccione una opción Venteado"required >
+                                    <select class="form-select custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL" required >
                                         <option value="" disabled selected>Seleccione una opción Venteado</option>
                                         <option value="S" selected >SI</option>
                                         <option value="N" selected >NO</option>
+                                        <option value="" disabled selected>Seleccione una opción Venteado</option>
                                         
                                     
                                     </select>
@@ -138,14 +226,16 @@
 
                                 <div class="mb-3 mt-3">
                                     <label for="HER_ANIMAL">Herrado Animal</label>
-                                    <select class="form-select custom-select" id="HER_ANIMAL" name="HER_ANIMAL" placeholder="Seleccione una opción de Herrado"required >
+                                    <select class="form-select custom-select" id="HER_ANIMAL" name="HER_ANIMAL" required >
                                         <option value="" disabled selected>Seleccione una opción de Herrado</option>
 
                                         <option value="S" selected >SI</option>
                                         <option value="N" selected >NO</option>
+                                        <option value="" disabled selected>Seleccione una opción de Herrado</option>
                                     
                                     
                                     </select>
+
                                 </div>
             
                         
@@ -154,6 +244,7 @@
                                 <div class="mb-3 mt-3">
                                     <label for="DET_ANIMAL">Detalle del Animal</label>
                                     <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal"required >
+
                                 </div>
                             
                             
@@ -167,7 +258,7 @@
                             <script>
                                 $(document).ready(function() {
                                     // Validación del formulario
-                                    $("#Cventa form").validate({
+                                    $("#Animal form").validate({
                                         rules: {
                                             CLAS_ANIMAL: "required",
                                             RAZ_ANIMAL: "required",
@@ -204,59 +295,8 @@
                                             }
                                     });
                                 });
-                
-
-
-        
-                            
-
-                                //Deshabilitar el envio de formularios si hay campos no validos
-                                (function () {
-                                    'use strict'
-                                    //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
-                                    var forms = document.querySelectorAll('.needs-validation')
-                                    //Bucle sobre ellos y evitar el envio
-                                    Array.prototype.slice.call(forms)
-                                        .forEach(function (form) {
-                                            form.addEventListener('submit', function (event) {
-                                                if (!form.checkValidity()) {
-                                                    event.preventDefault()
-                                                    event.stopPropagation()
-                                                }
-
-                                                form.classList.add('was-validated')
-                                            }, false)
-                                        })
-                                })()
-                                //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
-                                function limpiarFormulario() {
-                                    document.getElementById(" CLAS_ANIMAL").value = "";
-                                    document.getElementById("RAZ_ANIMAL").value = "";
-                                    document.getElementById("COL_ANIMAL").value = "";
-                                    document.getElementById("COD_FIERRO").value = "";
-                                    document.getElementById("VEN_ANIMAL").value = "";
-                                    document.getElementById("HER_ANIMAL").value = "";
-                                    document.getElementById("DET_ANIMAL").value = "";
-                                
-
-                                    const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
-                                    invalidFeedbackElements.forEach(element => {
-                                        element.textContent = "";
-                                    });
-
-                                    const invalidFields = document.querySelectorAll(".form-control.is-invalid");
-                                    invalidFields.forEach(field => {
-                                        field.classList.remove("is-invalid");
-                                    });
-                                }
-
-                                document.getElementById("btnCancelar").addEventListener("click", function() {
-                                    limpiarFormulario();
-                                });
-                                // Mostrar el modal de registro exitoso cuando se envíe el formulario
-                                $('#Animal form').submit(function() {
-                                    $('#registroExitosoModal').modal('show');
-                                });    
+            
+                                 
                             </script>
 
 
@@ -298,9 +338,10 @@
 
 
                             <td>
-                                <button value="Editar" title="Editar" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#Animal-edit-{{$Animal['COD_ANIMAL']}}">
-                                    <i class='fas fa-edit' style='font-size:13px;color:Orange'></i> Editar
-                                </button>
+                                
+                                <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Animal-edit-{{$Animal['COD_ANIMAL']}}">
+                                    <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
+                            </button>
                                 <!--
                                 <button value="Eliminar" title="Eliminar" class="btn btn-outline-danger" type="button" onclick="confirmDelete({{$Animal['COD_ANIMAL']}})">
                                     <i class='fas fa-trash-alt' style='font-size:13px;color:Red'></i> Eliminar

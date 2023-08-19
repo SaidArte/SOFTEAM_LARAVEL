@@ -3,7 +3,7 @@
     use Carbon\Carbon;
 @endphp
 
-@section('title', 'Alcaldia')
+
 
 @section('title', 'Alcaldia')
 @section('css')
@@ -15,6 +15,74 @@
             color: white !important;
         }
     </style>
+      <style>
+        /* Boton Nuevo */
+        .Btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 40px;
+            height: 40px;
+            border-radius: calc(45px/2);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition-duration: .3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+            background-color: rgb(0, 143, 0);
+            }
+
+        /* plus sign */
+        .sign {
+            width: 100%;
+            font-size: 2.0em;
+            color: white;
+            transition-duration: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* text */
+        .text {
+            position: absolute;
+            right: 0%;
+            width: 0%;
+            opacity: 0;
+            color: white;
+            font-size: 1.0em;
+            font-weight: 300;
+            transition-duration: .3s;
+        }
+        /* hover effect on button width */
+        .Btn:hover {
+            width: 125px;
+            transition-duration: .3s;
+        }
+
+        .Btn:hover .sign {
+            width: 30%;
+            transition-duration: .3s;
+            padding-left: 15px;
+        }
+        /* hover effect button's text */
+        .Btn:hover .text {
+            opacity: 1;
+            width: 70%;
+            transition-duration: .3s;
+            padding-right: 15px;
+        }
+        /* button click effect*/
+        .Btn:active {
+            transform: translate(2px ,2px);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -26,18 +94,25 @@
             <center>
                 <h1>Información de Expedientes Cartas De Ventas</h1>
             </center>
-            
-            <blockquote class="blockquote text-center">
-                <p class="mb-0">Registro de Expediente Cartas De Ventas.</p>
+            <br>
+            <center>
                 <footer class="blockquote-footer">Expedientes_Cventas <cite title="Source Title">Registrados</cite></footer>
-            </blockquote>
+               
+
+            </center>
+        </br
+            
+           
 
         @section('content')
-
         <p align="right">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Cventa">+ Nuevo</button>
+            <button type="button" class="Btn" data-toggle="modal" data-target="#Cventa">
+                <div class="sign">+</div>
+                <div class="text">Nuevo</div>
+            </button>
         </p>
-            
+
+       
             <div class="modal fade bd-example-modal-sm" id="Cventa" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -250,7 +325,7 @@
                 </div>
             </div>
 
-            <table cellspacing="9" cellpadding="9" class="Table table-hover table-hover table-responsive table-verde-claro table-striped mt-1" style="border:2px solid lime ; " id="modCventa" >
+            <table  width="100%"  cellspacing="9" cellpadding="9" class="Table table-hover table-bordered mt-1 " id="modCventa" >
                 <thead>
                     <th>Código Cventas</th>
                     <th>Fecha Venta</th>
@@ -259,10 +334,10 @@
                     <th>Nombre Comprador</th>
                     <th>DNI Comprador</th>
                     <th>Código Animal </th>
-                    <th>Folio cventas</th>
-                    <th>Antecedentes Cventas </th>
-                
-                    <th></th>
+                    <th>Folio Cventa</th>
+                    <th>Ant Cventa</th>
+                    <th>opciones </th>
+                   
                 </thead>
                 <tbody>
                     <!-- Loop through $citaArreglo and show data -->
@@ -278,16 +353,13 @@
                             <td>{{$Cventa['FOL_CVENTA']}}</td> 
                             <td>{{$Cventa['ANT_CVENTA']}}</td>
                             <td>
-                                <button value="Editar" title="Editar" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#Cventa-edit-{{$Cventa['COD_CVENTA']}}">
-                                    <i class='fas fa-edit' style='font-size:13px;color:Orange'></i> Editar
+                               
+                                <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Cventa-edit-{{$Cventa['COD_CVENTA']}}">
+                                        <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                                 </button>
-                                
-                                <button value="Eliminar" title="Eliminar" class="btn btn-outline-danger" type="button" onclick="confirmDelete({{$Cventa['COD_CVENTA']}})">
-                                    <i class='fas fa-trash-alt' style='font-size:13px;color:Red'></i> Eliminar
-                                </button>
-                                
-
-                            </td>
+                       
+                            </td>   
+                               
                         </tr>
                         <!-- Modal for editing goes here -->
                         <div class="modal fade bd-example-modal-sm" id="Cventa-edit-{{$Cventa['COD_CVENTA']}}" tabindex="-1">
@@ -319,7 +391,7 @@
                                                     <input type="text" class="form-control" id="NOM_COMPRADOR" name="NOM_COMPRADOR" placeholder=" Ingrese el codigo del comprador  " value="{{$Cventa['NOM_COMPRADOR']}}">
                                                 </div>
 
-        <div class="mb-3">
+                                               <div class="mb-3">
                                                     <label for="Cventa">DNI Comprador</label>
                                                     <input type="text" class="form-control" id="DNI_COMPRADOR" name="DNI_COMPRADOR" placeholder=" Ingrese el codigo del comprador  " value="{{$Cventa['DNI_COMPRADOR']}}">
                                                 </div>
@@ -329,7 +401,7 @@
                                                     <input type="text" class="form-control" id="COD_ANIMAL" name="COD_ANIMAL" placeholder=" Ingrese el codigo del animal  " value="{{$Cventa['COD_ANIMAL']}}">
                                                     <select class="form-select custom-select" id="COD_ANIMAL" name="COD_ANIMAL" required>
                                                         <option value="" disabled selected>Seleccione una opción</option>
-                                        @                      @foreach ($AnimalArreglo as $Animal)
+                                                            @foreach ($AnimalArreglo as $Animal)
                                                                 <option value="{{$Animal['COD_ANIMAL']}}">{{$Animal['COD_ANIMAL']}} {{$Animal['CLAS_ANIMAL']}} {{$Animal['CLAS_ANIMAL']}} {{$Animal['RAZ_ANIMAL']}} {{$Animal['COL_ANIMAL']}} {{$Animal['COD_FIERRO']}} {{$Animal['VEN_ANIMAL']}} {{$Animal['HER_ANIMAL']}} {{$Animal['DET_ANIMAL']}}</option>
                                             
 
@@ -407,7 +479,32 @@
                 <script>
                     $(document).ready(function() {
                         $('#modCventa').DataTable({
-                            responsive: true
+                            responsive: true,
+                            lengthMenu : [10, 20, 30, 40, 50],
+                            columnDefs: [
+                                { orderable: false, target: [0, 2, 3, 6, 7]},
+                                { searchable: false, target: [0, 3, 6, 7]},
+                                { width: '25%', target: [1] },
+                                { width: '10%', target: [2, 3, 4, 6, 7] }, 
+                                { width: '25%', target: [5] },
+                            ],
+                            language: {
+                                processing: "Procesando...",
+                                lengthMenu: "Mostrar _MENU_ registros",
+                                zeroRecords: "No se encontraron resultados",
+                                emptyTable: "Ningún dato disponible en esta tabla",
+                                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                                search: "Buscar:",
+                                infoThousands: ",",
+                                loadingRecords: "Cargando...",
+                                paginate: {
+                                    first: "Primero",
+                                    last: "Último",
+                                    next: "Siguiente",
+                                    previous: "Anterior"
+                                },
+                            }
                         });
                     });
                 </script>
