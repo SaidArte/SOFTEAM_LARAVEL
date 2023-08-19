@@ -90,7 +90,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
         <center><br>
-            <h1>INFORMACIÓN DE LOS PERMISOS DE SACRIFICIO</h1>
+            <h1>Información de Permisos de Sacrificio</h1>
         </center></br>
 
         @section('content')
@@ -145,7 +145,6 @@
                                         <select class="form-select" id="COD_ANIMAL" name="COD_ANIMAL" required>
                                             <option value="" disable selected> Seleccione al Animal</option>
                                             @foreach ($AnimalArreglo as $Animal)
-                                            
                                                 <option value="{{ $Animal['COD_ANIMAL'] }}">{{ $Animal['CLAS_ANIMAL'] }}</option>
                                             @endforeach
                                         </select>

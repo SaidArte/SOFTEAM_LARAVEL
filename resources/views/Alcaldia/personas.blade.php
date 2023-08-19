@@ -120,14 +120,9 @@
     @if(session()->has('user_data'))
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
             
-            <center>
-                <h1>Información de Personas</h1>
-            </center>
-            <br>
-                <center>
-                    <footer class="blockquote-footer">Personas <cite title="Source Title">Registradas</cite></footer>
-                </center>
-            </br>
+            <center><br>
+                <h1>Infromación de Personas</h1>
+            </center></br>
         
         @section('content')
             <!-- Pantalla para Insertar PERSONAS -->
@@ -438,7 +433,7 @@
             <!-- Tabla del Modulo PERSONAS -->
             <div class="card">
                 <div class="card-body">
-                    <table width=100% cellspacing="10" cellpadding="5" class="table table-hover table-bordered mt-1" id="persona">
+                    <table width=100% cellspacing="10" cellpadding="5" class="table table-hover table-bordered table-responsive mt-1" id="persona">
                         <thead>
                             <th><center>N°</center></th>
                             <th><center>DNI</center></th>

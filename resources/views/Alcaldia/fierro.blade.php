@@ -111,12 +111,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
        <center><br>
-            <h1>Informacion de Fierro</h1>
+            <h1>Información de Fierros</h1>
         </center></br>
-        <blockquote class="blockquote text-center">
-            <p class="mb-0"></p>
-            <footer class="blockquote-footer">Fierro <cite title="Source Title">Registrados</cite></footer>
-        </blockquote>
 
         @section('content')
             <!-- Boton Nuevo -->

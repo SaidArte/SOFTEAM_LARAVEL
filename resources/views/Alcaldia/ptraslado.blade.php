@@ -3,12 +3,83 @@
 @section('title', 'Alcaldia')
 
 @section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
     <!-- Clase CSS personalizada aquí -->
     <style>
         /* CSS personalizado */
         .custom-delete-button:hover .fas.fa-trash-alt {
             color: white !important;
+        }
+    </style>
+    <style>
+                /* Boton Nuevo */
+                .Btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 40px;
+            height: 40px;
+            border-radius: calc(45px/2);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition-duration: .3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+            background-color: rgb(0, 143, 0);
+            }
+
+        /* plus sign */
+        .sign {
+            width: 100%;
+            font-size: 2.0em;
+            color: white;
+            transition-duration: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* text */
+        .text {
+            position: absolute;
+            right: 0%;
+            width: 0%;
+            opacity: 0;
+            color: white;
+            font-size: 1.0em;
+            font-weight: 300;
+            transition-duration: .3s;
+        }
+        /* hover effect on button width */
+        .Btn:hover {
+            width: 125px;
+            transition-duration: .3s;
+        }
+
+        .Btn:hover .sign {
+            width: 30%;
+            transition-duration: .3s;
+            padding-left: 15px;
+        }
+        /* hover effect button's text */
+        .Btn:hover .text {
+            opacity: 1;
+            width: 70%;
+            transition-duration: .3s;
+            padding-right: 15px;
+        }
+        /* button click effect*/
+        .Btn:active {
+            transform: translate(2px ,2px);
         }
     </style>
 
@@ -21,16 +92,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <center><br>
-        <h1>INFORMACIÓN DE LOS PERMISOS DE TRASLADO</h1>
+        <h1>Información de Permisos de Traslado</h1>
     </center></br>
 
     
 @stop
 
 @section('content')
+    <!-- Boton Nuevo -->
     <p align="right">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ptraslado">+ Nuevo</button>
-    </p>
+                <button type="button" class="Btn" data-toggle="modal" data-target="#ptraslado">
+                    <div class="sign">+</div>
+                    <div class="text">Nuevo</div>
+                </button>
+            </p>
     <div class="modal fade bd-example-modal-sm" id="ptraslado" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -287,7 +362,7 @@
     <div class="card">
         <div class="card-body">
 
-        <table width=100% cellspacing="14" cellpadding="14" class="table table-hover table-responsive table-verde-claro table-striped mt-1" id="traslado">
+        <table width=100% cellspacing="14" cellpadding="14" class="table table-hover table-responsive   mt-1" id="traslado">
         <thead>
             <tr>
                 <th>Nº</th>                
@@ -342,12 +417,10 @@
                     <td>{{$PTraslado['COL_VEHICULO']}}</td>
                     <td>{{$PTraslado['MON_TRASLADO']}}</td>
                     <td>
-                        <button value="Editar" title="Editar" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#PTraslado-edit-{{$PTraslado['COD_PTRASLADO']}}">
-                            <i class='fas fa-edit' style='font-size:13px;color:Orange'></i> Editar
+                        <button value="Editar" title="Editar" class="btn btn-sm btn-warning"  type="button" data-toggle="modal" data-target="#PTraslado-edit-{{$PTraslado['COD_PTRASLADO']}}">
+                        <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                         </button>
-                        <button value="Eliminar" title="Eliminar" class="btn btn-outline-danger custom-delete-button" type="button" data-toggle="modal" data-target="#PTraslado-delete-confirm" data-id="{{$PTraslado['COD_PTRASLADO']}}">
-                            <i class='fas fa-trash-alt' style='font-size:13px;color:Red'></i> Eliminar
-                        </button>
+                        
                     </td>
                 </tr>
                 <!-- Modal for editing goes here -->
@@ -472,6 +545,22 @@
     </table>
     </div>
     </div>
+    <!-- MENSAJE BAJO -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            2023 &copy; SOFTEAM  
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-md-right footer-links d-none d-sm-block">
+                                <a>Version 1.0</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- FIN MENSAJE -->
 @stop
 
 @section('js')
@@ -480,11 +569,77 @@
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
        
-       
-        <script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+            
+            <script>
             $(document).ready(function() {
                 $('#traslado').DataTable({
-                    responsive: true
+                    responsive: true,
+                        dom: "Bfrtilp",
+                        buttons: [//Botones de Excel, PDF, Imprimir
+                            {
+                                extend: "excelHtml5",
+                                text: "<i class='fa-solid fa-file-excel'></i>",
+                                tittleAttr: "Exportar a Excel",
+                                className: "btn btn-success",
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                },
+                            },
+                            {
+                                extend: "pdfHtml5",
+                                text: "<i class='fa-solid fa-file-pdf'></i>",
+                                tittleAttr: "Exportar a PDF",
+                                className: "btn btn-danger",
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                },
+                            },
+                            {
+                                extend: "print",
+                                text: "<i class='fa-solid fa-print'></i>",
+                                tittleAttr: "Imprimir",
+                                className: "btn btn-secondary",
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                },
+                            },
+                        ],
+                        lengthMenu : [10, 20, 30, 40, 50],
+                        language: {
+                            processing: "Procesando...",
+                            lengthMenu: "Mostrar _MENU_ registros",
+                            zeroRecords: "No se encontraron resultados",
+                            emptyTable: "Ningún dato disponible en esta tabla",
+                            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                            search: "Buscar:",
+                            infoThousands: ",",
+                            loadingRecords: "Cargando...",
+                            paginate: {
+                                first: "Primero",
+                                last: "Último",
+                                next: "Siguiente",
+                                previous: "Anterior",
+                            },
+                            buttons: {
+                                copy: "Copiar",
+                                colvis: "Visibilidad",
+                                collection: "Colección",
+                                colvisRestore: "Restaurar visibilidad",
+                                copyKeys: "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                                copySuccess: {
+                                    1: "Copiada 1 fila al portapapeles",
+                                    _: "Copiadas %ds fila al portapapeles",
+                                },
+                                pdf: "PDF",
+                                print: "Imprimir",
+                            },
+                        },
                 });
             });
         </script>
@@ -501,7 +656,10 @@
             $('#psacrificio-delete-confirm').modal('show');
             $('#delete-form').attr('action', '{{ url("psacrificio/eliminar") }}/' + id);
         }
-    </script>    
+    </script>   
+    
+    
+    
 @stop
 
 @section('css')

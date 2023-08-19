@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center align-items-center" style="height: 100vh;">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Cambiar Contraseña</div>
@@ -12,7 +12,7 @@
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}
                             </div>
-                        @endif <!-- Cambiar despues-->
+                        @endif <!-- Cambiar después-->
 
                         <form method="POST" action="{{ route('change.password.submit') }}">
                             @csrf
