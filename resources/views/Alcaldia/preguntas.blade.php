@@ -22,22 +22,60 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Ingresar una nueva pregunta</h5>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                           <!-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                         </div>
                         <div class="modal-body">
                             <p>Favor, ingrese la nueva pregunta:</p>
-                            <form action="{{ url('Preguntas/insertar') }}" method="post">
+                            <form action="{{ url('Preguntas/insertar') }}" method="post" class="needs-validation preguntas-form">
                                 @csrf
-                                    
                                     <div class="mb-3 mt-3">
                                         <label for="PREGUNTA">Pregunta</label>
-                                        <input type="text" id="PREGUNTA" class="form-control" name="PREGUNTA" placeholder="Ingrese una breve pregunta">
+                                        <input type="text" id="PREGUNTA" class="form-control" name="PREGUNTA" placeholder="Ingrese una breve pregunta" required>
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
                                         <button class="btn btn-primary" type="submit">Guardar</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                     </div>
                             </form>
+                            <script>
+                                //Deshabilitar el envio de formularios si hay campos no validos
+                                (function () {
+                                    'use strict'
+                                    //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
+                                    var forms = document.querySelectorAll('.needs-validation')
+                                    //Bucle sobre ellos y evitar el envio
+                                    Array.prototype.slice.call(forms)
+                                        .forEach(function (form) {
+                                            form.addEventListener('submit', function (event) {
+                                                if (!form.checkValidity()) {
+                                                    event.preventDefault()
+                                                    event.stopPropagation()
+                                                }
+        
+                                                form.classList.add('was-validated')
+                                            }, false)
+                                        })
+                                })()
+                                //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
+                                function limpiarFormulario() {
+                                    document.getElementById("PREGUNTA").value = "";
+                                    
+                                    const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
+                                    invalidFeedbackElements.forEach(element => {
+                                        element.textContent = "";
+                                    });
+
+                                    const invalidFields = document.querySelectorAll(".form-control.is-invalid");
+                                    invalidFields.forEach(field => {
+                                        field.classList.remove("is-invalid");
+                                    });
+                                }
+
+                                document.getElementById("btnCancelar").addEventListener("click", function() {
+                                    limpiarFormulario();
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -77,9 +115,11 @@
                                         <form action="{{ url('Preguntas/actualizar') }}" method="post">
                                             @csrf
                                                 <input type="hidden" class="form-control" name="COD_PREGUNTA" value="{{$Preguntas['COD_PREGUNTA']}}">
+                                                
                                                 <div class="mb-3">
-                                                    <label for="LPREGUNTA">PREGUNTA</label>
-                                                    <input type="text" class="form-control" id="PREGUNTA" name="PREGUNTA" placeholder="Ingrese una breve pregunta" value="{{$Preguntas['PREGUNTA']}}">
+                                                    <label for="PREGUNTA">PREGUNTA</label>
+                                                    <input type="text" class="form-control" id="PREGUNTA" name="PREGUNTA" placeholder="Ingrese una breve pregunta" value="{{$Preguntas['PREGUNTA']}}" required>
+                                                    <div class="invalid-feedback"></div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <button type="submit" class="btn btn-primary">Editar</button>

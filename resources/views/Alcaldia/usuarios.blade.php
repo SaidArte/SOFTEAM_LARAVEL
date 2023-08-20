@@ -74,72 +74,9 @@
                 transform: translate(2px ,2px);
             }
         </style>
-        <style>
-            /* Estilos al boton editar */
-            .edit-button {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                background-color: rgb(0, 150, 255);
-                border: none;
-                font-weight: 600;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
-                cursor: pointer;
-                transition-duration: 0.3s;
-                overflow: hidden;
-                position: relative;
-                text-decoration: none !important;
-                }
-
-            .edit-svgIcon {
-                width: 17px;
-                transition-duration: 0.3s;
-            }
-
-            .edit-svgIcon path {
-                fill: white;
-            }
-
-            .edit-button:hover {
-                width: 120px;
-                border-radius: 50px;
-                transition-duration: 0.3s;
-                background-color: rgb(0, 100, 255);
-                align-items: center;
-            }
-
-            .edit-button:hover .edit-svgIcon {
-                width: 20px;
-                transition-duration: 0.3s;
-                transform: translateY(60%);
-                -webkit-transform: rotate(360deg);
-                -moz-transform: rotate(360deg);
-                -o-transform: rotate(360deg);
-                -ms-transform: rotate(360deg);
-                transform: rotate(360deg);
-            }
-
-            .edit-button::before {
-                display: none;
-                content: "Editar";
-                color: white;
-                transition-duration: 0.3s;
-                font-size: 2px;
-            }
-
-            .edit-button:hover::before {
-                display: block;
-                padding-right: 10px;
-                font-size: 13px;
-                opacity: 1;
-                transform: translateY(0px);
-                transition-duration: 0.3s;
-            }
-
-        </style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -172,7 +109,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Ingresar un nuevo usuario</h5>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                <!-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                             </div>
                             <div class="modal-body">
                                 <p>Favor, ingrese los datos solicitados:</p>
@@ -181,8 +118,8 @@
                                         
                                         <div class="mb-3 mt-3">
                                             <label for="NOM_ROL">Rol</label>
-                                            <select class="form-select" id="NOM_ROL" name="NOM_ROL" required>
-                                                <option value="X" selected = "selected" disabled>- Elija el rol -</option>
+                                            <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL" required>
+                                                <option value="" disabled selected>Seleccione una opción</option>
                                                 @foreach ($rolesArreglo as $roles)
                                                     <option value="{{$roles['NOM_ROL']}}">{{$roles['NOM_ROL']}}</option>
                                                 @endforeach
@@ -192,10 +129,12 @@
                                         <div class="mb-3">
                                             <label for="COD_PERSONA">Código de la persona</label>
                                             <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA" placeholder="Ingresar el código de la persona" required>
+                                            <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="LNOM_USUARIO">Usuario</label>
+                                            <label for="NOM_USUARIO">Usuario</label>
                                             <input type="text" id="NOM_USUARIO" class="form-control" name="NOM_USUARIO" placeholder="Ingresar el alias del usuario" required>
+                                            <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="PAS_USUARIO" class="form-label">Contraseña</label>
@@ -204,28 +143,32 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="IND_USUARIO">Estado del usuario</label>
-                                            <select class="form-select" id="IND_USUARIO" name="IND_USUARIO">
-                                                <option value="X" selected = "selected" disabled>- Elija un estado -</option>
-                                                <option value="ACTIVO">Activo</option>
-                                                <option value="INACTIVO">Inactivo</option>
+                                            <select class="form-select custom-select" id="IND_USUARIO" name="IND_USUARIO" required>
+                                                <option value="" disabled selected>Seleccione una opción</option>
+                                                <option value="ACTIVO">ACTIVO</option>
+                                                <option value="INACTIVO">INACTIVO</option>
                                             </select>
+                                            <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="FEC_VENCIMIENTO">Fecha de Vencimiento de contraseña</label>
                                             <input type="date" id="FEC_VENCIMIENTO" class="form-control" name="FEC_VENCIMIENTO" placeholder="Ingrese la fecha de vencimiento." required>
+                                            <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="PREGUNTA">Pregunta de seguridad</label>
-                                            <select class="form-select" id="PREGUNTA" name="PREGUNTA" required>
-                                                <option value="X" selected = "selected" disabled>- Elija una pregunta -</option>
+                                            <select class="form-select custom-select" id="PREGUNTA" name="PREGUNTA" required>
+                                                <option value="" disabled selected>Seleccione una opción</option>
                                                 @foreach ($preguntasArreglo as $preguntas)
                                                     <option value="{{$preguntas['PREGUNTA']}}">{{$preguntas['PREGUNTA']}}</option>
                                                 @endforeach
                                             </select>
+                                            <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="RESPUESTA">Respuesta</label>
                                             <input type="text" id="RESPUESTA" class="form-control" name="RESPUESTA" placeholder="Ingrese la respuesta a la pregunta elegida" required>
+                                            <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="mb-3">
                                             <button class="btn btn-primary" type="submit">Guardar</button>
@@ -234,25 +177,13 @@
                                 </form>
                                 <script>
                                     $(document).ready(function() {
-                                        //Validaciones de los roles.
-                                        $('#NOM_ROL').on('input', function() {
-                                            var rol = $(this).val();
-                                            var errorMessage = 'Favor, elija un rol';
-                                            if (rol == 'X') {
-                                                $(this).addClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text(errorMessage);
-                                            } else {
-                                                $(this).removeClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('');
-                                            }
-                                        });
                                         //Validaciones del campo DNI el cual no permite el ingreso de letras (las bloquea y no se muestra)
                                         //y solo permite el ingreso de numeros
                                         $('#COD_PERSONA').on('input', function() {
                                             var id = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
                                             $(this).val(id); // Actualizar el valor del campo solo con números
                                             var errorMessage = 'Favor, ingrese un código de usuario valido';
-                                            if (id == '') {
+                                            if (id.length == '') {
                                                 $(this).addClass('is-invalid');
                                                 $(this).siblings('.invalid-feedback').text(errorMessage);
                                             } else {
@@ -260,7 +191,7 @@
                                                 $(this).siblings('.invalid-feedback').text('');
                                             }
                                         });
-                                         //Validaciones de la Contraña
+                                         //Validaciones de la Contraseña
                                          const passwordInput = document.getElementById('PAS_USUARIO');
                                         const passwordFeedback = document.getElementById('password-feedback');
 
@@ -301,17 +232,6 @@
                                                 submitButton.disabled = !isValid;
                                             }
                                         });
-                                        $('#IND_USUARIO').on('input', function() {
-                                            var estado = $(this).val();
-                                            var errorMessage = 'Favor, indique si el usuario está "Activo" o "INACTIVO"';
-                                            if (estado == 'X') {
-                                                $(this).addClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text(errorMessage);
-                                            } else {
-                                                $(this).removeClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('');
-                                            }
-                                        });
                                         //Validaciones del campo Fecha Registro el cual no permitira el ingreso de una fecha anterior al dia de registro
                                         $('#FEC_VENCIMIENTO').on('input', function() {
                                             var fechaVencimiento = $(this).val();
@@ -326,19 +246,8 @@
                                                 $(this).siblings('.invalid-feedback').text('');
                                             }
                                         });
-                                        $('#PREGUNTA').on('input', function() {
-                                            var pregunta = $(this).val();
-                                            var errorMessage = 'Favor, ingrese una de las preguntas';
-                                            if (pregunta == 'X') {
-                                                $(this).addClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text(errorMessage);
-                                            } else {
-                                                $(this).removeClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('');
-                                            }
-                                        });
                                         $('#RESPUESTA').on('input', function() {
-                                            var respuesta = $(this).val();
+                                            var respuestaSacrificio = $(this).val();
                                             var errorMessage = 'La respuesta no debe ser mayor a 50 carácteres';
                                             
                                             if (respuestaSacrificio.length > 50) {
@@ -434,17 +343,10 @@
                                         <td>{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}</td>
                                         <td>{{date('d-m-y', strtotime($Usuarios['FEC_VENCIMIENTO']))}}</td>
                                         <td>
-                                            <button value="Editar" title="Editar" class="edit-button" type="button" data-toggle="modal" data-target="#Usuarios-edit-{{$Usuarios['COD_USUARIO']}}">
-                                                <svg class="edit-svgIcon" viewBox="0 0 512 512">
-                                                    <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 
-                                                    480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 
-                                                    22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 
-                                                    325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 
-                                                    0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
-                                                </svg>
+                                            <!-- Boton de Editar -->
+                                            <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Usuarios-edit-{{$Usuarios['COD_USUARIO']}}">
+                                                <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                                             </button>
-
-
                                         </td>
                                     </tr>
                                     <!-- Modal for editing goes here -->
@@ -466,22 +368,19 @@
                                                                 <input type="text" class="form-control" id="NOM_USUARIO" name="NOM_USUARIO" placeholder="Ingrese el alias del usuario" value="{{$Usuarios['NOM_USUARIO']}}">
                                                             </div>
                                                             <div class="mb-3 mt-3">
-                                                                <label for="Usuarios" class="form-label">Rol</label>
-                                                                <input type="text" readonly class="form-control" id="NOM_ROL" name="NOM_ROL" value="{{$Usuarios['NOM_ROL']}}">
-                                                                <select class="form-select" id="NOM_ROL" name="NOM_ROL">
-                                                                    <option value="X" selected = "selected" disabled>- Elija el rol -</option>
-                                                                    <option value="Administrador">Administrador</option>
-                                                                    <option value="Usuario">Usuario</option>
-                                                                    <option value="Secretario">Secretario</option>
+                                                                <label for="Usuarios">Rol</label>
+                                                                <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL" value="{{$Usuarios['NOM_ROL']}}" required>
+                                                                    <option value="Administrador" @if($Usuarios['NOM_ROL'] === 'Administrador') selected @endif>Administrador</option>
+                                                                    <option value="Usuario" @if($Usuarios['NOM_ROL'] === 'Usuario') selected @endif>Usuario</option>
+                                                                    <option value="Secretario" @if($Usuarios['NOM_ROL'] === 'Secretario') selected @endif>Secretario</option>
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3 mt-3">
-                                                                <label for="Usuarios" class="form-label">Estado del usuario</label>
-                                                                <input type="text" readonly class="form-control" id="IND_USUARIO" name="IND_USUARIO" value="{{$Usuarios['IND_USUARIO']}}">
-                                                                <select class="form-select" id="IND_USUARIO" name="IND_USUARIO">
+                                                                <label for="Usuarios">Estado del usuario</label>
+                                                                <select class="form-select custom-select" id="IND_USUARIO" name="IND_USUARIO" value="{{$Usuarios['IND_USUARIO']}}" required>
                                                                     <option value="X" selected = "selected" disabled>- Elija un estado -</option>
-                                                                    <option value="ACTIVO">Activo</option>
-                                                                    <option value="INACTIVO">Inactivo</option>
+                                                                    <option value="ACTIVO" @if($Usuarios['IND_USUARIO'] === 'ACTIVO') selected @endif>ACTIVO</option>
+                                                                    <option value="INACTIVO" @if($Usuarios['IND_USUARIO'] === 'INACTIVO') selected @endif>INACTIVO</option>
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">

@@ -25,64 +25,92 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Ingresar un nuevo permiso</h5>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                            <!--<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                         </div>
                         <div class="modal-body">
                             <p>Favor, ingrese los datos solicitados:</p>
                             <form action="{{ url('Permisos/insertar') }}" method="post">
                                 @csrf              
                                     <div class="mb-3">
-                                        <label for="LNOM_ROL">Rol</label>
-                                        <select class="form-select" id="NOM_ROL" name="NOM_ROL">
-                                            <option value="X" selected = "selected" disabled>- Elija el rol -</option>
-                                            
+                                        <label for="NOM_ROL">Rol</label>
+                                        <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL"required>
+                                            <option value="" disabled selected>Seleccione una opción</option>
                                             @foreach ($rolesArreglo as $roles)
                                                 <option value="{{$roles['COD_ROL']}}">{{$roles['NOM_ROL']}}</option>
                                             @endforeach 
-
                                         </select>
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="LROL">OBJETO</label>
-                                        <select class="form-select" id="OBJETO" name="OBJETO">
-                                            <option value="X" selected = "selected" disabled>- Elija un objeto -</option>
+                                        <label for="OBJETO">OBJETO</label>
+                                        <select class="form-select custom-select" id="OBJETO" name="OBJETO" required>
+                                            <option value="" disabled selected>Seleccione una opción</option>
                                             <option value="Principal">Principal</option>
                                             <option value="Mant. General">Mant. General</option>
                                             <option value="Permisos Alcaldía">Permisos Alcaldía</option>
                                             <option value="Tablas Seguridad">Tablas Seguridad</option>
                                         </select>
+                                        <div class="invalid-feedback"></div>
                                     </div>
-                                    <div class="mb-3">
-                                    <p>Seleccione las funciones que desea que realice este permiso</p>
-    <label for="LPRM_INSERTAR">Permiso de Insertar</label>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="PRM_INSERTAR" name="PRM_INSERTAR" value="S">
-        <label class="form-check-label" for="PRM_INSERTAR">Insertar</label>
-    </div>
-</div>
+                                    <div class="form-group">
+                                        <div class="mb-3">
+                                            <p>Seleccione las funciones que desea que realice este permiso</p>
+                                            <label for="PRM_INSERTAR">Permiso de Insertar</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="PRM_INSERTAR" name="PRM_INSERTAR" value="S">
+                                                <label class="form-check-label" for="PRM_INSERTAR">Insertar</label>
+                                            </div>
+                                        </div>
+                                        <!-- Actualizar -->
+                                        <div class="mb-3">
+                                            <label for="PRM_ACTUALIZAR">Permiso de Actualizar</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="PRM_ACTUALIZAR" name="PRM_ACTUALIZAR" value="S">
+                                                <label class="form-check-label" for="PRM_ACTUALIZAR">Actualizar</label>
+                                            </div>
+                                        </div>
 
-<!-- Actualizar -->
-<div class="mb-3">
-    <label for="LPRM_ACTUALIZAR">Permiso de Actualizar</label>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="PRM_ACTUALIZAR" name="PRM_ACTUALIZAR" value="S">
-        <label class="form-check-label" for="PRM_ACTUALIZAR">Actualizar</label>
-    </div>
-</div>
-
-<!-- Consultar -->
-<div class="mb-3">
-    <label for="LPRM_CONSULTAR">Permiso de Consultar</label>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" value="S">
-        <label class="form-check-label" for="PRM_CONSULTAR">Consultar</label>
-    </div>
-</div>
+                                        <!-- Consultar -->
+                                        <div class="mb-3">
+                                            <label for="PRM_CONSULTAR">Permiso de Consultar</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" value="S">
+                                                <label class="form-check-label" for="PRM_CONSULTAR">Consultar</label>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
                                     <div class="mb-3">
                                         <button class="btn btn-primary" type="submit">Guardar</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                     </div>
                             </form>
+                            <script>
+                                // Funcion de limpiar el formulario al momento que le demos al boton de cancelar
+                                function limpiarFormulario() {
+                                    document.getElementById("NOM_ROL").value = "";
+                                    document.getElementById("OBJETO").value = "";
+                                    
+                                    const checkboxes = document.querySelectorAll(".form-check-input");
+                                    checkboxes.forEach(checkbox => { //limpiando los check
+                                        checkbox.checked = false;
+                                    });
+
+                                    const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
+                                    invalidFeedbackElements.forEach(element => {
+                                        element.textContent = "";
+                                    });
+
+                                    const invalidFields = document.querySelectorAll(".form-control.is-invalid");
+                                    invalidFields.forEach(field => {
+                                        field.classList.remove("is-invalid");
+                                    });
+                                }
+
+                                document.getElementById("btnCancelar").addEventListener("click", function() {
+                                    limpiarFormulario();
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>

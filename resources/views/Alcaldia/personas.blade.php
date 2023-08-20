@@ -20,6 +20,8 @@
 
 @section('title', 'Alcaldia')
 
+@section('plugins.Sweetalert2', true)
+
 @section('css')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Clase CSS personalizada aquí -->   
@@ -27,21 +29,6 @@
         /* CSS personalizado */
         .custom-delete-button:hover .fas.fa-trash-alt {
             color: white !important;
-        }
-    </style>
-    <!-- Estilos del mensaje de registro exitoso -->
-    <style>
-        .success-message {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 9999;
         }
     </style>
     <style>
@@ -358,24 +345,22 @@
                                     });
         
                                 });
-                                //Deshabilitar el envio de formularios si hay campos no validos
-                                (function () {
-                                    'use strict'
-                                    //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
-                                    var forms = document.querySelectorAll('.needs-validation')
-                                    //Bucle sobre ellos y evitar el envio
-                                    Array.prototype.slice.call(forms)
-                                        .forEach(function (form) {
-                                            form.addEventListener('submit', function (event) {
-                                                if (!form.checkValidity()) {
-                                                    event.preventDefault()
-                                                    event.stopPropagation()
-                                                }
-        
-                                                form.classList.add('was-validated')
-                                            }, false)
-                                        })
-                                })()
+                                // Deshabilita el botón de enviar inicialmente
+                                $('form.needs-validation').find('button[type="submit"]').prop('disabled', true);
+
+                                // Habilita o deshabilita el botón de enviar según la validez del formulario
+                                $('form.needs-validation').on('input change', function() {
+                                    var esValido = true;
+
+                                    $(this).find('.form-control').each(function() {
+                                        if ($(this).hasClass('is-invalid') || $(this).val().trim() === '') {
+                                            esValido = false;
+                                            return false; // Sale del bucle si encuentra un campo no válido
+                                        }
+                                    });
+
+                                    $(this).find('button[type="submit"]').prop('disabled', !esValido);
+                                });                             
                                 //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                                 function limpiarFormulario() {
                                     document.getElementById("DNI_PERSONA").value = "";
@@ -454,9 +439,9 @@
                                     <td>{{$personas['NOM_PERSONA']}}</td>
                                     <td>{{$generos[$personas['GEN_PERSONA']]}}</td>
                                     <td>{{ Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d') }}</td>
-                                    <td>
+                                    <td><center>
                                         <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen de la persona" class="img-fluid" style="max-height: 100px;">
-                                    </td> 
+                                    </center></td> 
                                     <td>{{$personas['DES_DIRECCION']}}</td>   
                                     <td>{{$personas['DIR_EMAIL']}}</td>   
                                     <td>{{$personas['NUM_TELEFONO']}}</td>   
@@ -475,7 +460,7 @@
                                                 <h5 class="modal-title">Actualizar Datos</h5>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ url('personas/actualizar') }}" method="post" enctype="multipart/form-data">
+                                                <form action="{{ url('personas/actualizar') }}" method="post" class="personas-form"enctype="multipart/form-data">
                                                     @csrf
                                                         <input type="hidden" class="form-control" name="COD_PERSONA" value="{{$personas['COD_PERSONA']}}">
                                                         <div class="mb-3">
@@ -603,6 +588,24 @@
                 <!-- FIN MENSAJE -->
             @stop
         @section('js')
+            <script>
+                // Agregar una función para mostrar una ventana emergente de SweetAlert2 para el mensaje de registro exitoso
+                function showSuccessMessage() {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registro Exitoso',
+                        text: 'El registro ha sido guardado exitosamente.',
+                        showConfirmButton: false,
+                        timer: 6000,
+                    });
+                }
+
+                // Función que se ejecutará después de enviar el formulario
+                function formSubmitHandler() {
+                    showSuccessMessage();
+                }
+                document.querySelector('.personas-form').addEventListener('submit', formSubmitHandler);
+            </script> 
             <script> console.log('Hi!'); </script>
             <script>
                 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
