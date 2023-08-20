@@ -180,7 +180,7 @@
 
                      <div class="form-group">
                                 <label for="IMG_FIERRO">Imagen del Fierro</label>
-                                <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*">
+                                <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" required>
                             </div>
                             <center><br>
                               <div class="mb-3">
@@ -380,8 +380,9 @@
                                                 </div>
                                                  @endif
                                                 <p>Ingresa los Nuevos Datos</p>
-                                          <form action="{{ url('fierro/actualizar') }}" method="post" class="row g-3 needs-validation" enctype="multipart/form-data">
+                                          <form action="{{ url('fierro/actualizar') }}" method="post" enctype="multipart/form-data">
                                                    @csrf
+                                                   <input type="hidden" class="form-control" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
                                                     <div class="mb-3 mt-3">
                                                         <label for="COD_PERSONA" class="form-label">Persona: </label>
                                                             <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" disabled>
@@ -479,14 +480,38 @@
                                 },
                             },
                             {
-                                extend: "pdfHtml5",
-                                text: "<i class='fa-solid fa-file-pdf'></i>",
-                                tittleAttr: "Exportar a PDF",
-                                className: "btn btn-danger",
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
-                                },
-                            },
+    extend: "pdfHtml5",
+    text: "<i class='fa-solid fa-file-pdf'></i>",
+    titleAttr: "Exportar a PDF", // Corrected property name
+    className: "btn btn-danger",
+    exportOptions: {
+        columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+    },
+   /* customize: function(doc) {
+    // Add images to the PDF
+    var imgUrls = [];
+
+    // Collect image URLs from the table cells
+    $('#Rfierro tbody tr').each(function() {
+        var imgSrc = $(this).find('td:eq(7)').find('img').attr('src');
+        imgUrls.push(imgSrc);
+    });
+
+    // Embed the images in the PDF
+    if (imgUrls.length > 0) {
+        
+       
+var imgContainer = doc.content[1].table.body;
+
+        for (var i = 0; i < imgUrls.length; i++) {
+            imgContainer[i].splice(7, 1, {
+                image: imgUrls[i],
+                width: 50
+            });
+        }
+    }
+}*/
+},
                             {
                                 extend: "print",
                                 text: "<i class='fa-solid fa-print'></i>",

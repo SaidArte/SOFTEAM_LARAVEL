@@ -456,15 +456,15 @@
                                 },
                             },
                             {
-                                extend: "pdfHtml5",
-                                text: "<i class='fa-solid fa-file-pdf'></i>",
-                                tittleAttr: "Exportar a PDF",
-                                className: "btn btn-danger",
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
-                                },
-                            },
-                            {
+                extend: "pdfHtml5",
+                text: "<i class='fa-solid fa-file-pdf'></i>",
+                titleAttr: "Exportar a PDF",
+                className: "btn btn-danger",
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6] // Export the specified columns
+                },
+               
+            },             {
                                 extend: "print",
                                 text: "<i class='fa-solid fa-print'></i>",
                                 tittleAttr: "Imprimir",

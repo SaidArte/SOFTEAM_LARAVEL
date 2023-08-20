@@ -57,39 +57,39 @@ class FierroController extends Controller
 
 public function actualizar_fierro(Request $request)
 {
-           // Realiza la solicitud de actualización con los datos nuevos
-        $actualizar_fierro =  [
-            "COD_FIERRO"           => $request->input("COD_FIERRO"),
-            "COD_PERSONA"          => $request->input("COD_PERSONA"),
-            "FEC_TRAMITE_FIERRO"   => $request->input("FEC_TRAMITE_FIERRO"),
-            "NUM_FOLIO_FIERRO"     => $request->input("NUM_FOLIO_FIERRO"),
-            "TIP_FIERRO"           => $request->input("TIP_FIERRO"),
-            "MON_CERTIFICO_FIERRO" => $request->input("MON_CERTIFICO_FIERRO"),
-          
-        ];
-        if ($request->hasFile('IMG_FIERRO')) {
-            $request->validate([
-                'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
+    $updateData = [
+       
+        "FEC_TRAMITE_FIERRO"   => $request->input("FEC_TRAMITE_FIERRO"),
+        "NUM_FOLIO_FIERRO"     => $request->input("NUM_FOLIO_FIERRO"),
+        "TIP_FIERRO"           => $request->input("TIP_FIERRO"),
+        "MON_CERTIFICO_FIERRO" => $request->input("MON_CERTIFICO_FIERRO"),
+    ];
+
+    if ($request->hasFile('IMG_FIERRO')) {
+        $request->validate([
+            'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $imagen = $request->file('IMG_FIERRO');
+        $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $imagen->getClientOriginalExtension();
+        $imagen->move(public_path('imagenes/fierros'), $nombreImagen);
+        $rutaImagen = '/imagenes/fierros/' . $nombreImagen;
+        $rutaImagenAbsoluta = url($rutaImagen);
+
+        // Update the image path in the update data
+        $updateData['IMG_FIERRO'] = $rutaImagenAbsoluta;
+    }
+   // dd($updateData);
+    // Perform the update request
+    $actualizar_fierro_response = Http::put(self::urlapi.'FIERROS/ACTUALIZAR/'.$request->input("COD_FIERRO"), $updateData);
     
-            $imagen = $request->file('IMG_FIERRO');
-            $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $imagen->getClientOriginalExtension();
-            $imagen->move(public_path('imagenes/fierros'), $nombreImagen);
-            $rutaImagen = '/imagenes/fierros/' . $nombreImagen;
-            $rutaImagenAbsoluta = url($rutaImagen);
-    
-            // Actualiza la ruta de la imagen en los datos a actualizar
-            $actualizar_fierro['IMG_FIERRO'] = $rutaImagenAbsoluta;
-        }
-    
-        $actualizar_fierro_response = Http::put(self::urlapi.'FIERROS/ACTUALIZAR/'.$request->input("COD_FIERRO"), $actualizar_fierro);
-        
-        if ($actualizar_fierro_response->successful()) {
-            return redirect('/fierro')->with('success', 'Datos actualizados exitosamente.');
-        } else {
-            return redirect('/fierro')->with('error', 'Error al actualizar los datos.');
-        }
+    if ($actualizar_fierro_response->successful()) {
+        return redirect('/fierro')->with('success', 'Datos actualizados exitosamente.');
+    } else {
+        return redirect('/fierro')->with('error', 'Error al actualizar los datos.');
+    }
 }
+
 
 
     public function subirImagen(Request $request)
