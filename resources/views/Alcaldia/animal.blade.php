@@ -102,6 +102,7 @@
             
 
         @section('content')
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <p align="right">
             <button type="button" class="Btn" data-toggle="modal" data-target="#Animal">
                 <div class="sign">+</div>
@@ -124,76 +125,33 @@
                                 @csrf
                                 <div class="mb-3 mt-3">
                                     <label for="CLAS_ANIMAL" >clases de Animal</label>
-                                    <select class="form-select custom-select" id="CLAS_ANIMAL" name="CLAS_ANIMAL" required >
-                                        <option value="" disabled selected>Seleccione una clase de animal</option>
-                                        <option value="Vaca" selected >Vaca</option>
-                                        <option value="Caballo" selected >Caballo</option>
-                                        <option value="Cerdo" selected >Cerdo</option>
-                                        <option value="Burro" selected >Burro</option>
-                                        <option value="Mula" selected >Mula</option>
-                                        <option value="Yegua" selected >Yegua</option>
-                                        <option value="Vaca" selected >Vaca</option>
+                                    <input type="text" id="CLAS_ANIMAL" class="form-control" name="CLAS_ANIMAL" placeholder="Ingresar a Clases del Animal" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" required>
+                                    <div class="invalid-feedback">Ingresar a Clases del Animal</div>
 
-                                    
-                                    
-                                    </select>
+                                </div>
+                                  
 
                                 </div>
 
                                 <div class="mb-3 mt-3">
                                     <label for="RAZ_ANIMAL" >Raza de Animal</label>
-                                    <select class="form-select custom-select" id="RAZ_ANIMAL" name="RAZ_ANIMAL" required >
-                                        <option value="" disabled selected>Seleccione una Raza de Animal</option>
-                                    <!--Raza de Vaca-->
-                                        <option value="Holstein" selected >Vaca Holstein</option>
-                                        <option value="criolla" selected >Vaca criolla</option>
-                                        <option value="Hereford" selected >Vaca Hereford</option>
-                                        <option value="simmental<" selected >Vaca simmental</option>
-                                        <option value="Angus " selected >Vaca Angus </option>
-                                        <option value="Angus rojo" selected >Vaca Angus rojo</option>
-                                        <option value="Brangus" selected >Vaca Brangus</option>
-                                        <option value="Ganado Lechero" selected >Vaca Ganado Lechero</option>
-                                    <!--Raza de caballlo-->
-                                        <option value="criollo" selected >Caballo criollo</option>
-                                        <option value="mustang" selected >Caballo mustang</option>
-                                        <option value="shire" selected >Caballo shire</option>
-                                        <option value="frison" selected >Caballo frison</option>
-                                        <option value="arabe" selected >Caballo arabe</option>
-                                        <option value="pura sangre ingles" selected >Caballo pura sangre ingles</option>
-                                        <!--Raza de Cerdo-->
-                                        <option value="criollo" selected >Cerdo criollo</option>
-                                        <!--Raza de Burro-->
-                                        <option value="criollo" selected >Burro criollo</option>
-                                        <!--Raza de Yegua-->
-                                        <option value="criollo" selected >Yegua criollo</option>
-                                         <!--Raza de mula-->
-                                         <option value="criollo" selected >Mula criollo</option>
-                                         <option value="" disabled selected>Seleccione una Raza de Animal</option>
-
-
-                                    
-                                    </select>
+                                    <input type="text" id="RAZ_ANIMAL" class="form-control" name="RAZ_ANIMAL" placeholder="Ingresar la  Raza del Animal"pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" required >
+                                    <div class="invalid-feedback">Ingresar la Raza del Animal</div>
 
                                 </div>
+
                             
 
                             <div class="mb-3 mt-3">
                                 <label for="COL_ANIMAL" >Color del Animal</label>
-                                <select class="form-select custom-select" id="COL_ANIMAL" name="COL_ANIMAL" required >
-                                    <option value="" disabled selected>Seleccione el color del Ganado</option>
-
-                                    <option value=" castaño" selected >castaño</option>
-                                    <option value="marron" selected >marron</option>
-                                    <option value="blanco" selected >blanco</option>
-                                    <option value=" negro" selected >negro</option>
-                                    <option value="cafes" selected >cafes</option>
-                                    <option value="manchado " selected >manchado </option>
-                                    <option value="Gris " selected >Gris </option>
-                                    <option value="" disabled selected>Seleccione el color del Ganado</option>
-                                
-                                </select>
-
+                                <input type="text" id="COL_ANIMAL" class="form-control" name="COL_ANIMAL" placeholder="Ingresar el Color del Animal"pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" required>
+                               <!-- <div class="invalid-feedback">Ingresar el Color del Animal</div>-->
+                                <div class="invalid-feedback">Ingrese solo letras en el color</div>
                             </div>
+
+
+
+                                
 
                             <!--metodo de inserta en codigo de fierro  atraendo los datos ya existente de la tabla persona-->
                             <div class="mb-3 mt-3">
@@ -243,7 +201,8 @@
                                 
                                 <div class="mb-3 mt-3">
                                     <label for="DET_ANIMAL">Detalle del Animal</label>
-                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal"required >
+                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras"required >
+                                    <div class="invalid-feedback">Ingrese detalle del animal </div>
 
                                 </div>
                             
@@ -257,47 +216,81 @@
                             </form>
                             <script>
                                 $(document).ready(function() {
-                                    // Validación del formulario
-                                    $("#Animal form").validate({
-                                        rules: {
-                                            CLAS_ANIMAL: "required",
-                                            RAZ_ANIMAL: "required",
-                                            COL_ANIMAL: "required",
-                                            COD_FIERRO: "required",
-                                            VEN_ANIMAL: "required",
-                                            HER_ANIMAL: "required",
-                                            DET_ANIMAL: "required"
-
-
-                                            
-                                            },
-                                            messages: {
-                                            CLAS_ANIMAL: "Seleccione una clase de animal",
-                                            RAZ_ANIMAL: "Seleccione una Raza de Animal",
-                                            COL_ANIMAL: "Seleccione el color del Ganado",
-                                            COD_FIERRO: "Seleccione Datos de Fierro ",
-                                            VEN_ANIMAL: "Seleccione una opción Venteado",
-                                            HER_ANIMAL: "Seleccione una opción de Herrado",
-                                            DET_ANIMAL: "Ingrese detalle del animal"
-
-                                            
-                                            },
-                                            errorElement: "div",
-                                            errorPlacement: function(error, element) {
-                                                error.addClass("invalid-feedback");
-                                                element.closest(".mb-3").append(error);
-                                            },
-                                            highlight: function(element, errorClass, validClass) {
-                                                $(element).addClass("is-invalid").removeClass("is-valid");
-                                            },
-                                            unhighlight: function(element, errorClass, validClass) {
-                                                $(element).removeClass("is-invalid").addClass("is-valid");
-                                            }
+                                    function validateInput(input, regex) {
+                                        const value = input.val();
+                                        const invalidFeedback = input.siblings('.invalid-feedback');
+                            
+                                        if (regex.test(value)) {
+                                            input.removeClass('is-invalid');
+                                            invalidFeedback.hide();
+                                        } else {
+                                            input.addClass('is-invalid');
+                                            invalidFeedback.show();
+                                        }
+                                    }
+                            
+                                    function validateSelection(input) {
+                                        const value = input.val();
+                                        const invalidFeedback = input.siblings('.invalid-feedback');
+                            
+                                        if (value !== null && value !== '') {
+                                            input.removeClass('is-invalid');
+                                            invalidFeedback.hide();
+                                        } else {
+                                            input.addClass('is-invalid');
+                                            invalidFeedback.show();
+                                        }
+                                    }
+                            
+                                    $('#CLAS_ANIMAL, #RAZ_ANIMAL, #COL_ANIMAL, #DET_ANIMAL').on('input', function() {
+                                        validateInput($(this), /^[A-Za-z\s]+$/);
                                     });
+                            
+                                    $('select').on('change', function() {
+                                        validateSelection($(this));
+                                    });
+                            
+                                    $('#Animal').submit(function(event) {
+                                        let formIsValid = true;
+                            
+                                        $('input[required]').each(function() {
+                                            if ($(this).val() === '') {
+                                                $(this).addClass('is-invalid');
+                                                $(this).siblings('.invalid-feedback').text('Este campo es requerido').show();
+                                                formIsValid = false;
+                                            }
+                                        });
+                            
+                                        $('select[required]').each(function() {
+                                            if ($(this).val() === '' || $(this).val() === null) {
+                                                $(this).addClass('is-invalid');
+                                                $(this).siblings('.invalid-feedback').text('Este campo es requerido').show();
+                                                formIsValid = false;
+                                            }
+                                        });
+                            
+                                        if (!formIsValid) {
+                                            event.preventDefault();
+                                        } else {
+                                                showSuccessMessage();
+                                        }
+                                    });
+                            
+                                    // Función para mostrar el mensaje de éxito
+                                    function showSuccessMessage() {
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Registro Exitoso',
+                                                text: 'El registro ha sido guardado exitosamente.',
+                                                showConfirmButton: false,
+                                                timer: 6000,
+                                            });
+                                    }
+                                    
+                            
                                 });
-            
-                                 
                             </script>
+                          
 
 
                         </div>
@@ -378,65 +371,19 @@
                                                 <div class="mb-3">
                                                     <label for="Animal">Clase Del Animal</label>
                                                     <input type="text" class="form-control" id="CLAS_ANIMAL" name="CLAS_ANIMAL" placeholder=" Ingrese La clase Del Animal  " value="{{$Animal['CLAS_ANIMAL']}}">
-                                                    <select class="form-select custom-select" id="CLAS_ANIMAL" name="CLAS_ANIMAL" placeholder="Seleccione una clase de animal" required >
-                                                        <option value="" disabled selected>Seleccione una clase de animal</option>
-                                                        <option value="Vaca" selected >Vaca</option>
-                                                        <option value="Caballo" selected >Caballo</option>
-                                                        <option value="Cerdo" selected >Cerdo</option>
-                                                        <option value="Burro" selected >Burro</option>
-                                                        <option value="Mula" selected >Mula</option>
-                                                        <option value="Yegua" selected >Yegua</option>
-                                                    
-                                                    
-                                                    </select>
+                                            
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="Animal">Raza Del Animal</label>
                                                     <input type="text" class="form-control" id="RAZ_ANIMAL" name="RAZ_ANIMAL" placeholder=" Ingrese La Raza Del Animal  " value="{{$Animal['RAZ_ANIMAL']}}">
-                                                    <select class="form-select custom-select" id="RAZ_ANIMAL" name="RAZ_ANIMAL"placeholder="Seleccione una Raza de Animal" required >
-                                                        <option value="" disabled selected>Seleccione una Raza de Animal</option>
-                                                    <!--Raza de Vaca-->
-                                                        <option value="Holstein" selected >Vaca Holstein</option>
-                                                        <option value="criolla" selected >Vaca criolla</option>
-                                                        <option value="Hereford" selected >Vaca Hereford</option>
-                                                        <option value="simmental<" selected >Vaca simmental</option>
-                                                        <option value="Angus " selected >Vaca Angus </option>
-                                                        <option value="Angus rojo" selected >Vaca Angus rojo</option>
-                                                        <option value="Brangus" selected >Vaca Brangus</option>
-                                                        <option value="Ganado Lechero" selected >Vaca Ganado Lechero</option>
-                                                    <!--Raza de caballlo-->
-                                                        <option value="criollo" selected >Caballo criollo</option>
-                                                        <option value="mustang" selected >Caballo mustang</option>
-                                                        <option value="shire" selected >Caballo shire</option>
-                                                        <option value="frison" selected >Caballo frison</option>
-                                                        <option value="arabe" selected >Caballo arabe</option>
-                                                        <option value="pura sangre ingles" selected >Caballo pura sangre ingles</option>
-                                                        <!--Raza de Cerdo-->
-                                                        <option value="criollo" selected >Cerdo criollo</option>
-                                                        <!--Raza de Burro-->
-                                                        <option value="criollo" selected >Burro criollo</option>
-                                                        <!--Raza de Yegua-->
-                                                        <option value="criollo" selected >Yegua criollo</option>
-                        
-                                                    </select>
+                                                    
                                                 </div>
 
 
                                                 <div class="mb-3">
                                                     <label for="Animal">Color Del Animal</label>
                                                     <input type="text" class="form-control" id="COL_ANIMAL" name="COL_ANIMAL" placeholder=" Ingrese El Color Del animal  " value="{{$Animal['COL_ANIMAL']}}">
-                                                    <select class="form-select custom-select" id="COL_ANIMAL" name="COL_ANIMAL" placeholder="Seleccione el color del Ganado"required >
-                                                        <option value="" disabled selected>Seleccione el color del Ganado</option>
-                            
-                                                        <option value=" castaño" selected >castaño</option>
-                                                        <option value="marron" selected >marron</option>
-                                                        <option value="blanco" selected >blanco</option>
-                                                        <option value=" negro" selected >negro</option>
-                                                        <option value="cafes" selected >cafes</option>
-                                                        <option value="manchado " selected >manchado </option>
-                                                        <option value="Gris " selected >Gris </option>
-                                                    
-                                                    </select>
+                                                  
 
                                                 </div>
 

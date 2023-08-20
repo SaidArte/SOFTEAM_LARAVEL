@@ -91,6 +91,8 @@
 
 @section('content_header')
     @if(session()->has('user_data'))
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <center><br>
                 <h1>Información de Expedientes Cartas De Ventas</h1>
             </center></br>
@@ -98,6 +100,7 @@
            
 
         @section('content')
+
         <p align="right">
             <button type="button" class="Btn" data-toggle="modal" data-target="#Cventa">
                 <div class="sign">+</div>
@@ -133,7 +136,7 @@
                                 <!--metodo de inserta en codigo de comprador  atraendo los datos ya existente de la tabla persona-->
                                <div class="mb-3">
                                     <label for="NOM_COMPRADOR">Nombre del Comprador</label>
-                                    <input type="text" id="NOM_COMPRADOR" class="form-control" name="NOM_COMPRADOR" placeholder="Ingresar el nombre completo de la Comprador" required>
+                                    <input type="text" id="NOM_COMPRADOR" class="form-control" name="NOM_COMPRADOR" placeholder="Ingresar el nombre completo de la Comprador"   pattern="^[A-Za-z\s]+$" title="Ingrese solo letras"required>
                                     <div class="invalid-feedback">Ingresar el nombre completo de la Comprador</div>
                                 </div>
                         
@@ -167,33 +170,20 @@
                                     
                                     </select>
                                 </div>
+
+                                <div class="mb-3 mt-3">
+                                    <label for="FOL_CVENTA">Folios De Cartas</label>
+                                    <input type="text" id="FOL_CVENTA" class="form-control"  @error('FOL_CVENTA') is-invalid @enderror "   name="FOL_CVENTA" placeholder="Ingrese numero de Folio "required pattern="[0-9]+" title="Ingrese solo números" maxlength="5" >
+                                    
+                                    <div class="invalid-feedback">Ingresar el numero de folio </div>
+                                    @error('FOL_CVENTA')
+                                        <div class="invalid-feedback">Ingresar el numero de folio</div>
+                                    @enderror
+                                   
+                                    
+                                </div>
                             
 
-                                <div class="mb-3">
-                                    <label for="FOL_CVENTA">Folios De Cartas </label>
-                                    <select class="form-select  custom-select " id="FOL_CVENTA" name="FOL_CVENTA"required>
-                                        <option value="" disabled selected>Seleccione una opción del folio</option>
-                                        <option value="0001">Folio  #0001</option>
-                                        <option value="0002">Folio  #0002</option>
-                                        <option value="0003">Folio  #0003</option>
-                                        <option value="0004">Folio  #0004</option>
-                                        <option value="0005">Folio  #0005</option>
-                                        <option value="0006">Folio  #0006</option>
-                                        <option value="0007">Folio  #0007</option>
-                                        <option value="0008">Folio  #0008</option>
-                                        <option value="0009">Folio  #0009</option>
-                                        <option value="00010">Folio #00010</option>
-                                        <option value="00011">Folio #00011</option>
-                                        <option value="00012">Folio #00012</option>
-                                        <option value="00013">Folio #00013</option>
-                                        <option value="00014">Folio #00014</option>
-                                        <option value="00015">Folio #00015</option>
-                                        <option value="00016">Folio #00016</option>
-                                        <option value="" disabled selected>Seleccione una opción del folio</option>
-
-
-                                    </select>
-                                </div>
 
                                 <div class="mb-3 mt-3">
                                     <label for="ANT_CVENTA">Antecedentes de carta venta</label>
@@ -201,9 +191,10 @@
                                         <option value="" disabled selected>Seleccione una opción</option>
                                         <option value="SI" selected >SI</option>
                                         <option value="NO" selected >NO</option>
-                                        <option value="" disabled selected>Seleccione una opción</option>
+                                        
                                     
                                     </select>
+                                    <div class="invalid-feedback" id="antCventaError">Seleccione una opción válida.</div>
                                 </div>
                             
                             
@@ -213,100 +204,122 @@
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                     </div>
                             </form>
-
-
-
-
-
-
-
-
-
-                           <!-- <script>
-
-                                // Validación del formulario
-                                $(document).ready(function() {
-                                    // Validación del formulario
-
-                                    //Validaciones del nombre persona, no permite que se ingrese numeros solo letras
-                                    $('#NOM_COMPRADOR').on('input', function() {
-                                        var nombre = $(this).val();
-                                        var errorMessage = 'El nombre debe tener al menos 5 letras';
-                                        if (nombre.length < 5 || !/^[a-zA-Z\s]+$/.test(nombre)) {
-                                            $(this).addClass('is-invalid');
-                                            $(this).siblings('.invalid-feedback').text(errorMessage);
-                                        } else {
-                                            $(this).removeClass('is-invalid');
-                                            $(this).siblings('.invalid-feedback').text('');
-                                        }
-                                    });
-                                    //Validaciones del campo DNI el cual no permite el ingreso de letras (las bloquea y no se muestra)
-                                    //y solo permite el ingreso de numeros
-                                    $('#DNI_COMPRADOR').on('input', function() {
-                                        var dni = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
-                                        $(this).val(dni); // Actualizar el valor del campo solo con números
-                                        var errorMessage = 'El DNI debe tener exactamente 13 dígitos numéricos ';
-                                        if (dni.length !== 13) {
-                                            $(this).addClass('is-invalid');
-                                            $(this).siblings('.invalid-feedback').text(errorMessage);
-                                        } else {
-                                            $(this).removeClass('is-invalid');
-                                            $(this).siblings('.invalid-feedback').text('');
-                                        
-                                    $("#Cventa form").validate({
-                                        rules: {
-                                            COD_VENDEDOR: "required",
-                                            ,
-                                            COD_ANIMAL: "required",
-                                            FOL_CVENTA: "required",
-                                            ANT_CVENTA: "required"
-                                            },
-                                            messages: {
-                                            COD_VENDEDOR: "Por favor, seleccione el nombre del vendedor",
-                                            
-                                            COD_ANIMAL: "Por favor, seleccione un animal",
-                                            FOL_CVENTA: "Por favor, seleccione un folio",
-                                            ANT_CVENTA: "Por favor, seleccione una opció"
-                                            },
-                                            errorElement: "div",
-                                            errorPlacement: function(error, element) {
-                                                error.addClass("invalid-feedback");
-                                                element.closest(".mb-3").append(error);
-                                            },
-                                            highlight: function(element, errorClass, validClass) {
-                                                $(element).addClass("is-invalid").removeClass("is-valid");
-                                            },
-                                            unhighlight: function(element, errorClass, validClass) {
-                                                $(element).removeClass("is-invalid").addClass("is-valid");
-                                            }
-                                    });
+                        <script>
+                            $(document).ready(function() {
+                                $('#NOM_COMPRADOR').on('input', function() {
+                                    var nombreComprador = $(this).val();
+                                    if (!/^[A-Za-z\s]+$/.test(nombreComprador) || nombreComprador.trim().length < 5) {
+                                        $(this).addClass('is-invalid');
+                                    } else {
+                                        $(this).removeClass('is-invalid');
+                                    }
                                 });
-                
+                    
+                                $('#DNI_COMPRADOR').on('input', function() {
+                                    var dniComprador = $(this).val();
+                                    var dniRegex = /^[0-9]+$/;
+                                    if (dniComprador === "" || !dniComprador.match(dniRegex) || dniComprador.length !== 13) {
+                                        $(this).addClass('is-invalid');
+                                    } else {
+                                        $(this).removeClass('is-invalid');
+                                    }
+                                });
+                    
+                                $('#FOL_CVENTA').on('input', function() {
+                                    var folCventa = $(this).val();
+                                    if (!/^[0-9]+$/.test(folCventa) || folCventa.length > 5) {
+                                        $(this).addClass('is-invalid');
+                                    } else {
+                                        $(this).removeClass('is-invalid');
+                                    }
+                                });
+                    
+                                $('#ANT_CVENTA').on('change', function() {
+                                    var antCventa = $(this).val();
+                                    if (antCventa === "") {
+                                        $(this).addClass('is-invalid');
+                                        $('#antCventaError').text('Seleccione una opción.');
+                                    } else {
+                                        $(this).removeClass('is-invalid');
+                                        $('#antCventaError').text('');
+                                    }
+                                });
+                    
+                                $('select[required]').on('change', function() {
+                                    if ($(this).val() === '' || $(this).val() === null) {
+                                        $(this).addClass('is-invalid');
+                                    } else {
+                                        $(this).removeClass('is-invalid');
+                                    }
+                                });
+                    
+                                $('#Cventa').submit(function(event) {
+                                    var formIsValid = true;
+                    
+                                    if ($('#NOM_COMPRADOR').val().trim().length < 5) {
+                                        $('#NOM_COMPRADOR').addClass('is-invalid');
+                                        formIsValid = false;
+                                    } else {
+                                        $('#NOM_COMPRADOR').removeClass('is-invalid');
+                                    }
+                    
+                                    var dniComprador = $('#DNI_COMPRADOR').val();
+                                    var dniRegex = /^[0-9]+$/;
+                                    if (dniComprador === "" || !dniComprador.match(dniRegex) || dniComprador.length !== 13) {
+                                        $('#DNI_COMPRADOR').addClass('is-invalid');
+                                        formIsValid = false;
+                                    } else {
+                                        $('#DNI_COMPRADOR').removeClass('is-invalid');
+                                    }
+                    
+                                    var folCventa = $('#FOL_CVENTA').val();
+                                    if (!/^[0-9]+$/.test(folCventa) || folCventa.length > 5) {
+                                        $('#FOL_CVENTA').addClass('is-invalid');
+                                        formIsValid = false;
+                                    } else {
+                                        $('#FOL_CVENTA').removeClass('is-invalid');
+                                    }
+                    
+                                    var antCventa = $('#ANT_CVENTA').val();
+                                    if (antCventa === "") {
+                                        $('#ANT_CVENTA').addClass('is-invalid');
+                                        $('#antCventaError').text('Seleccione una opción.');
+                                        formIsValid = false;
+                                    } else {
+                                        $('#ANT_CVENTA').removeClass('is-invalid');
+                                        $('#antCventaError').text('');
+                                    }
 
 
-        
-                            
+                                                      
+                                    if (!formIsValid) {
+                                        event.preventDefault();
+                                    } else {
+                                        showSuccessMessage();
+                                    }
+                                });
+                    
+                                function showSuccessMessage() {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Registro Exitoso',
+                                        text: 'El registro ha sido guardado exitosamente.',
+                                        showConfirmButton: false,
+                                        timer: 6000,
+                                    });
+                                }
+                            });
+                        </script>
 
-                                //Deshabilitar el envio de formularios si hay campos no validos
-                                (function () {
-                                    'use strict'
-                                    //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
-                                    var forms = document.querySelectorAll('.needs-validation')
-                                    //Bucle sobre ellos y evitar el envio
-                                    Array.prototype.slice.call(forms)
-                                        .forEach(function (form) {
-                                            form.addEventListener('submit', function (event) {
-                                                if (!form.checkValidity()) {
-                                                    event.preventDefault()
-                                                    event.stopPropagation()
-                                                }
 
-                                                form.classList.add('was-validated')
-                                            }, false)
-                                        })
-                                })()
-                                  
-                            </script>-->
+
+
+
+
+
+
+
+                         
                         </div>
                     </div>
                 </div>
@@ -407,25 +420,7 @@
                                                 <div class="mb-3">
                                                     <label for="Cventa">Folio de Carta De Venta</label>
                                                     <input type="text" class="form-control" id="FOL_CVENTA" name="FOL_CVENTA" placeholder=" Ingrese el numero de folio  " value="{{$Cventa['FOL_CVENTA']}}">
-                                                    <select class="form-select  custom-select " id="FOL_CVENTA" name="FOL_CVENTA"required>
-                                                        <option value="" disabled selected>Seleccione una opción del folio</option>
-                                                        <option value="0001">Folio  #0001</option>
-                                                        <option value="0002">Folio  #0002</option>
-                                                        <option value="0003">Folio  #0003</option>
-                                                        <option value="0004">Folio  #0004</option>
-                                                        <option value="0005">Folio  #0005</option>
-                                                        <option value="0006">Folio  #0006</option>
-                                                        <option value="0007">Folio  #0007</option>
-                                                        <option value="0008">Folio  #0008</option>
-                                                        <option value="0009">Folio  #0009</option>
-                                                        <option value="00010">Folio #00010</option>
-                                                        <option value="00011">Folio #00011</option>
-                                                        <option value="00012">Folio #00012</option>
-                                                        <option value="00013">Folio #00013</option>
-                                                        <option value="00014">Folio #00014</option>
-                                                        <option value="00015">Folio #00015</option>
-                                                        <option value="00016">Folio #00016</option
-                                                    </select>
+                                                 
                                                 </div>
 
                                                 <div class="mb-3 mt-3">
