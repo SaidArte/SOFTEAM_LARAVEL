@@ -34,7 +34,11 @@
             z-index: 9999;
         }
     </style>
-
+    <style>
+        body {
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+        }
+    </style>
     <style>
         /* Boton Nuevo */
         .Btn {
@@ -384,11 +388,6 @@
                                          <h5 class="modal-title">Actualizar Datos</h5>
                                              </div>
                                              <div class="modal-body">
-                                               @if(session('success'))
-                                               <div class="alert alert-success">
-                                                {{ session('success') }}
-                                                </div>
-                                                 @endif
                                                 <p>Ingresa los Nuevos Datos</p>
                                           <form action="{{ url('fierro/actualizar') }}" method="post" enctype="multipart/form-data">
                                                    @csrf
@@ -427,7 +426,7 @@
                                                        </div>
                                                        <div class="form-group">
                                                             <label for="IMG_FIERRO">Imagen del Fierro:</label>
-                                                            <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*">
+                                                            <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" >
                                                         </div>
                                                         <!-- Mostrar imagen actual -->
                                                         <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
@@ -470,11 +469,33 @@
             <script> console.log('Hi!'); </script>
             <script>
             <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-            <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-            <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-            <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
-            <script>
+           <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="sweetalert2.all.min.js"></script>
+
+<script>
+        @if(session('update_success'))
+            Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
+        @endif
+
+        @if(session('update_error'))
+            Swal.fire('¡Error!', '{{ session('update_error') }}', 'error');
+        @endif
+
+        @if(session('success'))
+            Swal.fire('¡Éxito!', '{{ session('success') }}', 'success');
+        @endif
+
+        @if(session('error'))
+            Swal.fire('¡Error!', '{{ session('error') }}', 'error');
+        @endif
                 $(document).ready(function() {
                     $('#Rfierro').DataTable({
                         responsive: true,
@@ -577,7 +598,7 @@ var imgContainer = doc.content[1].table.body;
             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
             <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
-
+            <script src="sweetalert2.all.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
         @stop

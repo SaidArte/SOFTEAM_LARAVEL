@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Alcaldia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class FierroController extends Controller
 {
@@ -22,38 +23,40 @@ class FierroController extends Controller
     }
 
     public function nuevo_fierro(Request $request)
-{
-    $request->validate([
-        'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-
-    $imagen = $request->file('IMG_FIERRO');
-
-    if ($imagen->isValid()) {
-        $extension = $imagen->getClientOriginalExtension();
-        $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $extension;
-
-        $imagen->move(public_path('imagenes/fierros'), $nombreImagen);
-
-        $rutaImagen = '/imagenes/fierros/' . $nombreImagen; // Ruta relativa
-
-        // Ahora, convertimos la ruta relativa en una ruta absoluta utilizando la función url()
-        $rutaImagenAbsoluta = url($rutaImagen);
-
-        $nuevo_fierro = Http::post(self::urlapi.'FIERROS/INSERTAR', [
-            "COD_PERSONA"            => $request->input("COD_PERSONA"),
-            "FEC_TRAMITE_FIERRO"     => $request->input("FEC_TRAMITE_FIERRO"),
-            "NUM_FOLIO_FIERRO"       => $request->input("NUM_FOLIO_FIERRO"),
-            "TIP_FIERRO"             => $request->input("TIP_FIERRO"),
-            "MON_CERTIFICO_FIERRO"   => $request->input("MON_CERTIFICO_FIERRO"),
-            "IMG_FIERRO"             => $rutaImagenAbsoluta, // Utilizamos la ruta absoluta
+    {
+        $request->validate([
+            'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        return redirect('/fierro');
-    } else {
-        return redirect()->back()->with('error', 'Invalid image file');
+    
+        $imagen = $request->file('IMG_FIERRO');
+    
+        if ($imagen->isValid()) {
+            $extension = $imagen->getClientOriginalExtension();
+            $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $extension;
+    
+            $imagen->move(public_path('imagenes/fierros'), $nombreImagen);
+    
+            $rutaImagen = '/imagenes/fierros/' . $nombreImagen; // Ruta relativa
+    
+            // Ahora, convertimos la ruta relativa en una ruta absoluta utilizando la función url()
+            $rutaImagenAbsoluta = url($rutaImagen);
+    
+            $nuevo_fierro = Http::post(self::urlapi.'FIERROS/INSERTAR', [
+                "COD_PERSONA"            => $request->input("COD_PERSONA"),
+                "FEC_TRAMITE_FIERRO"     => $request->input("FEC_TRAMITE_FIERRO"),
+                "NUM_FOLIO_FIERRO"       => $request->input("NUM_FOLIO_FIERRO"),
+                "TIP_FIERRO"             => $request->input("TIP_FIERRO"),
+                "MON_CERTIFICO_FIERRO"   => $request->input("MON_CERTIFICO_FIERRO"),
+                "IMG_FIERRO"             => $rutaImagenAbsoluta, // Utilizamos la ruta absoluta
+            ]);
+    
+            if ($nuevo_fierro->successful()) {
+                return redirect('/fierro')->with('success', 'Registro creado exitosamente.');
+            } else {
+                return redirect()->back()->with('error', 'Hubo un problema al crear el registro.');
+            }
+        }
     }
-}
 
 public function actualizar_fierro(Request $request)
 {
@@ -84,9 +87,9 @@ public function actualizar_fierro(Request $request)
     $actualizar_fierro_response = Http::put(self::urlapi.'FIERROS/ACTUALIZAR/'.$request->input("COD_FIERRO"), $updateData);
     
     if ($actualizar_fierro_response->successful()) {
-        return redirect('/fierro')->with('success', 'Datos actualizados exitosamente.');
+        return redirect('/fierro')->with('update_success', 'Datos actualizados exitosamente.');
     } else {
-        return redirect('/fierro')->with('error', 'Error al actualizar los datos.');
+        return redirect('/fierro')->with('update_error', 'Error al actualizar los datos.');
     }
 }
 
