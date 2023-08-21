@@ -422,26 +422,7 @@
 
         @stop
 
-        @section('js')
-
-            <script>
-                // Agregar una función para mostrar una ventana emergente de SweetAlert2 para el mensaje de registro exitoso
-                function showSuccessMessage() {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Registro Exitoso',
-                        text: 'El registro ha sido guardado exitosamente.',
-                        showConfirmButton: false,
-                        timer: 6000,
-                    });
-                }
-
-                // Función que se ejecutará después de enviar el formulario
-                function formSubmitHandler() {
-                    showSuccessMessage();
-                }
-                document.querySelector('.psacrificio-form').addEventListener('submit', formSubmitHandler);
-            </script>                        
+        @section('js')                    
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script> console.log('Hi!'); </script>
@@ -451,7 +432,28 @@
             <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
             <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
             <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
-            <script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+            <script src="sweetalert2.all.min.js"></script>
+
+<script>
+        @if(session('update_success'))
+            Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
+        @endif
+
+        @if(session('update_error'))
+            Swal.fire('¡Error!', '{{ session('update_error') }}', 'error');
+        @endif
+
+        @if(session('success'))
+            Swal.fire('¡Éxito!', '{{ session('success') }}', 'success');
+        @endif
+
+        @if(session('error'))
+            Swal.fire('¡Error!', '{{ session('error') }}', 'error');
+        @endif
                 $(document).ready(function() {
                     $('#sacrificio').DataTable({
                         responsive: true,
