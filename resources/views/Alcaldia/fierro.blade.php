@@ -109,19 +109,27 @@
 @section('content_header')
     @if(session()->has('user_data'))
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+        <?php
+            $authController = app(\App\Http\Controllers\AuthController::class);
+            $objeto = 'Fierros'; // Por ejemplo, el objeto deseado
+            $rol = session('user_data')['NOM_ROL'];
+            $tienePermiso = $authController->tienePermiso($rol, $objeto);
+        ?>
+        @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
        <center><br>
             <h1>Información de Fierros</h1>
         </center></br>
 
         @section('content')
             <!-- Boton Nuevo -->
-            <p align="right">
-                <button type="button" class="Btn" data-toggle="modal" data-target="#fierro">
-                    <div class="sign">+</div>
-                    <div class="text">Nuevo</div>
-                </button>
-            </p>
+            @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
+                <p align="right">
+                    <button type="button" class="Btn" data-toggle="modal" data-target="#fierro">
+                        <div class="sign">+</div>
+                        <div class="text">Nuevo</div>
+                    </button>
+                </p>
+            @endif
             
             <div class="modal fade bd-example-modal-sm" id="fierro" tabindex="-1">
                 <div class="modal-dialog">
@@ -357,9 +365,11 @@
                                         </td>
                                     <td>
                                         <!-- Boton de Editar -->
-                                        <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#fierro-edit-{{ $fierro['COD_FIERRO'] }}">
-                                         <i class="fa-solid fa-pen-to-square" style="font-size: 15px"></i>
-                                        </button>
+                                        @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
+                                            <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#fierro-edit-{{ $fierro['COD_FIERRO'] }}">
+                                            <i class="fa-solid fa-pen-to-square" style="font-size: 15px"></i>
+                                            </button>
+                                        @endif
                                         <!-- Boton de PDF -->
                                         <a href="{{ route('fierro.pdf', ['fierroId' => $fierro['COD_FIERRO']]) }}" class="btn btn-sm btn-danger" data-target="#fierro-edit-{{ $fierro['COD_FIERRO'] }}" target="_blank">
                                         <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
@@ -575,6 +585,9 @@ var imgContainer = doc.content[1].table.body;
         @section('css')
             <link rel="stylesheet" href="/css/admin_custom.css">
         @stop
+        @else
+            <p>No tiene autorización para visualizar esta sección</p>
+        @endif
     @else
         <!-- Contenido para usuarios no autenticados -->
         <script>

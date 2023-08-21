@@ -105,6 +105,13 @@
 <!-- ENCABEZADO -->
 @section('content_header')
     @if(session()->has('user_data'))
+        <?php
+            $authController = app(\App\Http\Controllers\AuthController::class);
+            $objeto = 'Personas'; // Por ejemplo, el objeto deseado
+            $rol = session('user_data')['NOM_ROL'];
+            $tienePermiso = $authController->tienePermiso($rol, $objeto);
+        ?>
+        @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
             
             <center><br>
@@ -113,12 +120,14 @@
         
         @section('content')
             <!-- Pantalla para Insertar PERSONAS -->
+            @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
             <p align="right">
                 <button type="button" class="Btn" data-toggle="modal" data-target="#Personas">
                     <div class="sign">+</div>     
                     <div class="text">Nuevo</div>
                 </button>   
             </p>
+            @endif
             <div class="modal fade bd-example-modal-sm" id="Personas" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -446,10 +455,12 @@
                                     <td>{{$personas['DIR_EMAIL']}}</td>   
                                     <td>{{$personas['NUM_TELEFONO']}}</td>   
                                     <td>
+                                    @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                       <!-- Boton de Editar -->
                                       <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#personas-edit-{{$personas['COD_PERSONA']}}">
                                         <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                                       </button>
+                                    @endif
                                     </td>
                                 </tr>
                                 <!-- Pantalla para ACTUALIZAR la tabla PERSONAS -->
@@ -651,6 +662,9 @@
         @section('css')
             <link rel="stylesheet" href="/css/admin_custom.css">
         @stop
+        @else
+            <p>No tiene autorización para visualizar esta sección</p>
+        @endif
     @else
     <!-- Contenido para usuarios no autenticados -->
     <script>

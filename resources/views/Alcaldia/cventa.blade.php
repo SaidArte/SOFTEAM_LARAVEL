@@ -93,6 +93,13 @@
     @if(session()->has('user_data'))
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <?php
+                $authController = app(\App\Http\Controllers\AuthController::class);
+                $objeto = 'Expedientes CV'; // Por ejemplo, el objeto deseado
+                $rol = session('user_data')['NOM_ROL'];
+                $tienePermiso = $authController->tienePermiso($rol, $objeto);
+            ?>
+             @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
             <center><br>
                 <h1>Información de Expedientes Cartas De Ventas</h1>
             </center></br>
@@ -100,14 +107,14 @@
            
 
         @section('content')
-
+        @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
         <p align="right">
             <button type="button" class="Btn" data-toggle="modal" data-target="#Cventa">
                 <div class="sign">+</div>
                 <div class="text">Nuevo</div>
             </button>
         </p>
-
+        @endif
        
             <div class="modal fade bd-example-modal-sm" id="Cventa" tabindex="-1">
                 <div class="modal-dialog">
@@ -354,11 +361,11 @@
                             <td>{{$Cventa['FOL_CVENTA']}}</td> 
                             <td>{{$Cventa['ANT_CVENTA']}}</td>
                             <td>
-                               
-                                <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Cventa-edit-{{$Cventa['COD_CVENTA']}}">
+                            @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
+                                    <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Cventa-edit-{{$Cventa['COD_CVENTA']}}">
                                         <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
-                                </button>
-                       
+                                    </button>
+                            @endif
                             </td>   
                                
                         </tr>
@@ -520,6 +527,9 @@
         @section('js')
         <script> console.log('Hi!'); </script>
         @stop
+        @else
+            <p>No tiene autorización para visualizar esta sección</p>
+        @endif
     @else
         <!-- Contenido para usuarios no autenticados -->
         <script>

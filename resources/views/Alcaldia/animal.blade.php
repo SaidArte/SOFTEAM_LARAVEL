@@ -88,7 +88,13 @@
 @section('content_header')
     @if(session()->has('user_data'))
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-            
+    <?php
+        $authController = app(\App\Http\Controllers\AuthController::class);
+        $objeto = 'Animales'; // Por ejemplo, el objeto deseado.
+        $rol = session('user_data')['NOM_ROL'];
+        $tienePermiso = $authController->tienePermiso($rol, $objeto);
+    ?>
+    @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
             <center>
                 <h1>Información de Animales</h1>
             </center>
@@ -102,15 +108,15 @@
             
 
         @section('content')
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <p align="right">
-            <button type="button" class="Btn" data-toggle="modal" data-target="#Animal">
-                <div class="sign">+</div>
-                <div class="text">Nuevo</div>
-            </button>
-        </p>
-
-        
+        @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <p align="right">
+                <button type="button" class="Btn" data-toggle="modal" data-target="#Animal">
+                    <div class="sign">+</div>
+                    <div class="text">Nuevo</div>
+                </button>
+            </p>
+        @endif
             
             <div class="modal fade bd-example-modal-sm" id="Animal" tabindex="-1">
                 <div class="modal-dialog">
@@ -332,10 +338,11 @@
 
 
                             <td>
-                                
+                            @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                 <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Animal-edit-{{$Animal['COD_ANIMAL']}}">
                                     <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
-                            </button>
+                                </button>
+                            @endif
                                 <!--
                                 <button value="Eliminar" title="Eliminar" class="btn btn-outline-danger" type="button" onclick="confirmDelete({{$Animal['COD_ANIMAL']}})">
                                     <i class='fas fa-trash-alt' style='font-size:13px;color:Red'></i> Eliminar
@@ -517,6 +524,9 @@
         @section('js')
         <script> console.log('Hi!'); </script>
         @stop
+    @else
+            <p>No tiene autorización para visualizar esta sección</p>
+    @endif
     @else
         <!-- Contenido para usuarios no autenticados -->
         <script>

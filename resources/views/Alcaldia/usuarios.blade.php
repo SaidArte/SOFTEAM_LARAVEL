@@ -85,9 +85,14 @@
 
     @section('content_header')
         @if(session()->has('user_data'))
-
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+            <?php
+                $authController = app(\App\Http\Controllers\AuthController::class);
+                $objeto = 'Usuarios'; // Por ejemplo, el objeto deseado
+                $rol = session('user_data')['NOM_ROL'];
+                $tienePermiso = $authController->tienePermiso($rol, $objeto);
+            ?>
+             @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
                 <center>
                     <h1>Información de Usuarios</h1>
                 </center>
@@ -97,220 +102,222 @@
             @stop
 
             @section('content')
-                <p align="right">
-                    <button type="button" class="Btn" data-toggle="modal" data-target="#Usuarios">
-                        <div class="sign">+</div>
-            
-                        <div class="text">Nuevo</div>
-                    </button>
-                </p>
-                <div class="modal fade bd-example-modal-sm" id="Usuarios" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Ingresar un nuevo usuario</h5>
-                                <!-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
-                            </div>
-                            <div class="modal-body">
-                                <p>Favor, ingrese los datos solicitados:</p>
-                                <form action="{{ url('Usuarios/insertar') }}" method="post">
-                                    @csrf
-                                        
-                                        <div class="mb-3 mt-3">
-                                            <label for="NOM_ROL">Rol</label>
-                                            <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL" required>
-                                                <option value="" disabled selected>Seleccione una opción</option>
-                                                @foreach ($rolesArreglo as $roles)
-                                                    <option value="{{$roles['NOM_ROL']}}">{{$roles['NOM_ROL']}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                
-                                        <div class="mb-3">
-                                            <label for="COD_PERSONA">Código de la persona</label>
-                                            <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA" placeholder="Ingresar el código de la persona" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="NOM_USUARIO">Usuario</label>
-                                            <input type="text" id="NOM_USUARIO" class="form-control" name="NOM_USUARIO" placeholder="Ingresar el alias del usuario" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="PAS_USUARIO" class="form-label">Contraseña</label>
-                                            <input type="password" id="PAS_USUARIO" class="form-control" name="PAS_USUARIO" placeholder="Ingresar una contraseña" required>
-                                            <div id="password-feedback" class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="IND_USUARIO">Estado del usuario</label>
-                                            <select class="form-select custom-select" id="IND_USUARIO" name="IND_USUARIO" required>
-                                                <option value="" disabled selected>Seleccione una opción</option>
-                                                <option value="ACTIVO">ACTIVO</option>
-                                                <option value="INACTIVO">INACTIVO</option>
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="FEC_VENCIMIENTO">Fecha de Vencimiento de contraseña</label>
-                                            <input type="date" id="FEC_VENCIMIENTO" class="form-control" name="FEC_VENCIMIENTO" placeholder="Ingrese la fecha de vencimiento." required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="PREGUNTA">Pregunta de seguridad</label>
-                                            <select class="form-select custom-select" id="PREGUNTA" name="PREGUNTA" required>
-                                                <option value="" disabled selected>Seleccione una opción</option>
-                                                @foreach ($preguntasArreglo as $preguntas)
-                                                    <option value="{{$preguntas['PREGUNTA']}}">{{$preguntas['PREGUNTA']}}</option>
-                                                @endforeach
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="RESPUESTA">Respuesta</label>
-                                            <input type="text" id="RESPUESTA" class="form-control" name="RESPUESTA" placeholder="Ingrese la respuesta a la pregunta elegida" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <button class="btn btn-primary" type="submit">Guardar</button>
-                                            <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                        </div>
-                                </form>
-                                <script>
-                                    $(document).ready(function() {
-                                        //Validaciones del campo DNI el cual no permite el ingreso de letras (las bloquea y no se muestra)
-                                        //y solo permite el ingreso de numeros
-                                        $('#COD_PERSONA').on('input', function() {
-                                            var id = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
-                                            $(this).val(id); // Actualizar el valor del campo solo con números
-                                            var errorMessage = 'Favor, ingrese un código de usuario valido';
-                                            if (id.length == '') {
-                                                $(this).addClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text(errorMessage);
-                                            } else {
-                                                $(this).removeClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('');
-                                            }
-                                        });
-                                         //Validaciones de la Contraseña
-                                         const passwordInput = document.getElementById('PAS_USUARIO');
-                                        const passwordFeedback = document.getElementById('password-feedback');
-
-                                        passwordInput.addEventListener('input', () => {
-                                            const password = passwordInput.value;
-                                            let isValid = true;
-
-                                            // Validaciones
-                                            if (password.length < 8) {
-                                                isValid = false;
-                                                passwordFeedback.textContent = 'La contraseña debe tener al menos 8 caracteres.';
-                                            } else if (!/[A-Z]/.test(password)) {
-                                                isValid = false;
-                                                passwordFeedback.textContent = 'La contraseña debe contener al menos una letra mayúscula.';
-                                            } else if (!/[0-9]/.test(password)) {
-                                                isValid = false;
-                                                passwordFeedback.textContent = 'La contraseña debe contener al menos un número.';
-                                            } else if (!/[!@#$%^&*]/.test(password)) {
-                                                isValid = false;
-                                                passwordFeedback.textContent = 'La contraseña debe contener al menos un carácter especial (!@#$%^&*).';
-                                            } else if (/\s/.test(password)) {
-                                                isValid = false;
-                                                passwordFeedback.textContent = 'La contraseña no debe contener espacios.';
-                                            } else {
-                                                passwordFeedback.textContent = '';
-                                            }
-
-                                            // Agregar o quitar clase 'is-invalid' en el campo de contraseña
-                                            if (isValid) {
-                                                passwordInput.classList.remove('is-invalid');
-                                            } else {
-                                                passwordInput.classList.add('is-invalid');
-                                            }
-
-                                            // Habilitar o deshabilitar el botón de envío según la validez de la contraseña
-                                            const submitButton = document.querySelector('button[type="submit"]');
-                                            if (submitButton) {
-                                                submitButton.disabled = !isValid;
-                                            }
-                                        });
-                                        //Validaciones del campo Fecha Registro el cual no permitira el ingreso de una fecha anterior al dia de registro
-                                        $('#FEC_VENCIMIENTO').on('input', function() {
-                                            var fechaVencimiento = $(this).val();
-                                            var currentDate = new Date().toISOString().split('T')[0];
-                                            var errorMessage = 'La fecha debe ser válida y no puede ser anterior a hoy';
+                @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
+                    <p align="right">
+                        <button type="button" class="Btn" data-toggle="modal" data-target="#Usuarios">
+                            <div class="sign">+</div>
+                
+                            <div class="text">Nuevo</div>
+                        </button>
+                    </p>
+                    @endif
+                    <div class="modal fade bd-example-modal-sm" id="Usuarios" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Ingresar un nuevo usuario</h5>
+                                    <!-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
+                                </div>
+                                <div class="modal-body">
+                                    <p>Favor, ingrese los datos solicitados:</p>
+                                    <form action="{{ url('Usuarios/insertar') }}" method="post">
+                                        @csrf
                                             
-                                            if (!fechaVencimiento || fechaVencimiento < currentDate) {
-                                                $(this).addClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text(errorMessage);
-                                            } else {
-                                                $(this).removeClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('');
-                                            }
-                                        });
-                                        $('#RESPUESTA').on('input', function() {
-                                            var respuestaSacrificio = $(this).val();
-                                            var errorMessage = 'La respuesta no debe ser mayor a 50 carácteres';
-                                            
-                                            if (respuestaSacrificio.length > 50) {
-                                                $(this).addClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text(errorMessage);
-                                            } else {
-                                                $(this).removeClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('');
-                                            }
-                                        });
-                                    });
-                                    //Deshabilitar el envio de formularios si hay campos no validos
-                                    (function () {
-                                        'use strict'
-                                        //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
-                                        var forms = document.querySelectorAll('.needs-validation')
-                                        //Bucle sobre ellos y evitar el envio
-                                        Array.prototype.slice.call(forms)
-                                            .forEach(function (form) {
-                                                form.addEventListener('submit', function (event) {
-                                                    if (!form.checkValidity()) {
-                                                        event.preventDefault()
-                                                        event.stopPropagation()
-                                                    }
+                                            <div class="mb-3 mt-3">
+                                                <label for="NOM_ROL">Rol</label>
+                                                <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL" required>
+                                                    <option value="" disabled selected>Seleccione una opción</option>
+                                                    @foreach ($rolesArreglo as $roles)
+                                                        <option value="{{$roles['NOM_ROL']}}">{{$roles['NOM_ROL']}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                    
+                                            <div class="mb-3">
+                                                <label for="COD_PERSONA">Código de la persona</label>
+                                                <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA" placeholder="Ingresar el código de la persona" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="NOM_USUARIO">Usuario</label>
+                                                <input type="text" id="NOM_USUARIO" class="form-control" name="NOM_USUARIO" placeholder="Ingresar el alias del usuario" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="PAS_USUARIO" class="form-label">Contraseña</label>
+                                                <input type="password" id="PAS_USUARIO" class="form-control" name="PAS_USUARIO" placeholder="Ingresar una contraseña" required>
+                                                <div id="password-feedback" class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="IND_USUARIO">Estado del usuario</label>
+                                                <select class="form-select custom-select" id="IND_USUARIO" name="IND_USUARIO" required>
+                                                    <option value="" disabled selected>Seleccione una opción</option>
+                                                    <option value="ACTIVO">ACTIVO</option>
+                                                    <option value="INACTIVO">INACTIVO</option>
+                                                </select>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="FEC_VENCIMIENTO">Fecha de Vencimiento de contraseña</label>
+                                                <input type="date" id="FEC_VENCIMIENTO" class="form-control" name="FEC_VENCIMIENTO" placeholder="Ingrese la fecha de vencimiento." required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="PREGUNTA">Pregunta de seguridad</label>
+                                                <select class="form-select custom-select" id="PREGUNTA" name="PREGUNTA" required>
+                                                    <option value="" disabled selected>Seleccione una opción</option>
+                                                    @foreach ($preguntasArreglo as $preguntas)
+                                                        <option value="{{$preguntas['PREGUNTA']}}">{{$preguntas['PREGUNTA']}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="RESPUESTA">Respuesta</label>
+                                                <input type="text" id="RESPUESTA" class="form-control" name="RESPUESTA" placeholder="Ingrese la respuesta a la pregunta elegida" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button class="btn btn-primary" type="submit">Guardar</button>
+                                                <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                    </form>
+                                    <script>
+                                        $(document).ready(function() {
+                                            //Validaciones del campo DNI el cual no permite el ingreso de letras (las bloquea y no se muestra)
+                                            //y solo permite el ingreso de numeros
+                                            $('#COD_PERSONA').on('input', function() {
+                                                var id = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
+                                                $(this).val(id); // Actualizar el valor del campo solo con números
+                                                var errorMessage = 'Favor, ingrese un código de usuario valido';
+                                                if (id.length == '') {
+                                                    $(this).addClass('is-invalid');
+                                                    $(this).siblings('.invalid-feedback').text(errorMessage);
+                                                } else {
+                                                    $(this).removeClass('is-invalid');
+                                                    $(this).siblings('.invalid-feedback').text('');
+                                                }
+                                            });
+                                            //Validaciones de la Contraseña
+                                            const passwordInput = document.getElementById('PAS_USUARIO');
+                                            const passwordFeedback = document.getElementById('password-feedback');
 
-                                                    form.classList.add('was-validated')
-                                                }, false)
-                                            })
-                                    })()
-                                    //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
-                                    function limpiarFormulario() {
-                                        document.getElementById("NOM_ROL").value = "";
-                                        document.getElementById("COD_PERSONA").value = "";
-                                        document.getElementById("NOM_USUARIO").value = "";
-                                        document.getElementById("PAS_USUARIO").value = "";
-                                        document.getElementById("IND_USUARIO").value = "";
-                                        document.getElementById("FEC_VENCIMIENTO").value = "";
-                                        document.getElementById("PREGUNTA").value = "";
-                                        document.getElementById("RESPUESTA").value = "";
+                                            passwordInput.addEventListener('input', () => {
+                                                const password = passwordInput.value;
+                                                let isValid = true;
 
-                                        const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
-                                        invalidFeedbackElements.forEach(element => {
-                                            element.textContent = "";
+                                                // Validaciones
+                                                if (password.length < 8) {
+                                                    isValid = false;
+                                                    passwordFeedback.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+                                                } else if (!/[A-Z]/.test(password)) {
+                                                    isValid = false;
+                                                    passwordFeedback.textContent = 'La contraseña debe contener al menos una letra mayúscula.';
+                                                } else if (!/[0-9]/.test(password)) {
+                                                    isValid = false;
+                                                    passwordFeedback.textContent = 'La contraseña debe contener al menos un número.';
+                                                } else if (!/[!@#$%^&*]/.test(password)) {
+                                                    isValid = false;
+                                                    passwordFeedback.textContent = 'La contraseña debe contener al menos un carácter especial (!@#$%^&*).';
+                                                } else if (/\s/.test(password)) {
+                                                    isValid = false;
+                                                    passwordFeedback.textContent = 'La contraseña no debe contener espacios.';
+                                                } else {
+                                                    passwordFeedback.textContent = '';
+                                                }
+
+                                                // Agregar o quitar clase 'is-invalid' en el campo de contraseña
+                                                if (isValid) {
+                                                    passwordInput.classList.remove('is-invalid');
+                                                } else {
+                                                    passwordInput.classList.add('is-invalid');
+                                                }
+
+                                                // Habilitar o deshabilitar el botón de envío según la validez de la contraseña
+                                                const submitButton = document.querySelector('button[type="submit"]');
+                                                if (submitButton) {
+                                                    submitButton.disabled = !isValid;
+                                                }
+                                            });
+                                            //Validaciones del campo Fecha Registro el cual no permitira el ingreso de una fecha anterior al dia de registro
+                                            $('#FEC_VENCIMIENTO').on('input', function() {
+                                                var fechaVencimiento = $(this).val();
+                                                var currentDate = new Date().toISOString().split('T')[0];
+                                                var errorMessage = 'La fecha debe ser válida y no puede ser anterior a hoy';
+                                                
+                                                if (!fechaVencimiento || fechaVencimiento < currentDate) {
+                                                    $(this).addClass('is-invalid');
+                                                    $(this).siblings('.invalid-feedback').text(errorMessage);
+                                                } else {
+                                                    $(this).removeClass('is-invalid');
+                                                    $(this).siblings('.invalid-feedback').text('');
+                                                }
+                                            });
+                                            $('#RESPUESTA').on('input', function() {
+                                                var respuestaSacrificio = $(this).val();
+                                                var errorMessage = 'La respuesta no debe ser mayor a 50 carácteres';
+                                                
+                                                if (respuestaSacrificio.length > 50) {
+                                                    $(this).addClass('is-invalid');
+                                                    $(this).siblings('.invalid-feedback').text(errorMessage);
+                                                } else {
+                                                    $(this).removeClass('is-invalid');
+                                                    $(this).siblings('.invalid-feedback').text('');
+                                                }
+                                            });
                                         });
+                                        //Deshabilitar el envio de formularios si hay campos no validos
+                                        (function () {
+                                            'use strict'
+                                            //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
+                                            var forms = document.querySelectorAll('.needs-validation')
+                                            //Bucle sobre ellos y evitar el envio
+                                            Array.prototype.slice.call(forms)
+                                                .forEach(function (form) {
+                                                    form.addEventListener('submit', function (event) {
+                                                        if (!form.checkValidity()) {
+                                                            event.preventDefault()
+                                                            event.stopPropagation()
+                                                        }
 
-                                        const invalidFields = document.querySelectorAll(".form-control.is-invalid");
-                                        invalidFields.forEach(field => {
-                                            field.classList.remove("is-invalid");
+                                                        form.classList.add('was-validated')
+                                                    }, false)
+                                                })
+                                        })()
+                                        //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
+                                        function limpiarFormulario() {
+                                            document.getElementById("NOM_ROL").value = "";
+                                            document.getElementById("COD_PERSONA").value = "";
+                                            document.getElementById("NOM_USUARIO").value = "";
+                                            document.getElementById("PAS_USUARIO").value = "";
+                                            document.getElementById("IND_USUARIO").value = "";
+                                            document.getElementById("FEC_VENCIMIENTO").value = "";
+                                            document.getElementById("PREGUNTA").value = "";
+                                            document.getElementById("RESPUESTA").value = "";
+
+                                            const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
+                                            invalidFeedbackElements.forEach(element => {
+                                                element.textContent = "";
+                                            });
+
+                                            const invalidFields = document.querySelectorAll(".form-control.is-invalid");
+                                            invalidFields.forEach(field => {
+                                                field.classList.remove("is-invalid");
+                                            });
+                                        }
+
+                                        document.getElementById("btnCancelar").addEventListener("click", function() {
+                                            limpiarFormulario();
                                         });
-                                    }
-
-                                    document.getElementById("btnCancelar").addEventListener("click", function() {
-                                        limpiarFormulario();
-                                    });
-                                    // Mostrar el modal de registro exitoso cuando se envíe el formulario
-                                    $('#Usuarios form').submit(function() {
-                                        $('#registroExitosoModal').modal('show');
-                                    });    
-                                </script>
+                                        // Mostrar el modal de registro exitoso cuando se envíe el formulario
+                                        $('#Usuarios form').submit(function() {
+                                            $('#registroExitosoModal').modal('show');
+                                        });    
+                                    </script>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
                 <div class="card">
                     <div class="card-body">
@@ -343,10 +350,12 @@
                                         <td>{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}</td>
                                         <td>{{date('d-m-y', strtotime($Usuarios['FEC_VENCIMIENTO']))}}</td>
                                         <td>
-                                            <!-- Boton de Editar -->
-                                            <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Usuarios-edit-{{$Usuarios['COD_USUARIO']}}">
-                                                <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
-                                            </button>
+                                            @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
+                                                <!-- Boton de Editar -->
+                                                <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Usuarios-edit-{{$Usuarios['COD_USUARIO']}}">
+                                                    <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
                                     <!-- Modal for editing goes here -->
@@ -424,6 +433,9 @@
             @section('css')
                 <link rel="stylesheet" href="/css/admin_custom.css">
             @stop
+    @else
+            <p>No tiene autorización para visualizar esta sección</p>
+    @endif
     @else
             <!-- Contenido para usuarios no autenticados -->
             <script>

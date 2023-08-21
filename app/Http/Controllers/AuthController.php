@@ -259,4 +259,28 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Favor, ingrese su contraseña correctamente')->withInput();
         }
     }
+
+    public function tienePermiso($rol, $objeto)
+    {
+
+        $response = Http::post('http://localhost:3000/SEGURIDAD/GETONE_SOLOPERMISOS', [
+            'NOM_ROL' => $rol,
+            'OBJETO' => $objeto,
+            // Otras posibles variables que tu API necesita
+        ]);
+
+            $permisos = $response->json();
+        if (!empty($permisos)) {
+
+            // Almacena los valores de permisos en la sesión
+            Session::put([
+                'PRM_INSERTAR' => $permisos[0]['PRM_INSERTAR'],
+                'PRM_ACTUALIZAR' => $permisos[0]['PRM_ACTUALIZAR'],
+                'PRM_CONSULTAR' => $permisos[0]['PRM_CONSULTAR'],
+            ]);
+        }else{
+            Session::forget(['PRM_INSERTAR', 'PRM_ACTUALIZAR', 'PRM_CONSULTAR']);
+        }
+    }
+
 }

@@ -7,6 +7,14 @@
 
 @section('content_header')
     @if(session()->has('user_data'))
+        <?php
+            $authController = app(\App\Http\Controllers\AuthController::class);
+            $objeto = 'Preguntas'; // Por ejemplo, el objeto deseado
+            $rol = session('user_data')['NOM_ROL'];
+            $tienePermiso = $authController->tienePermiso($rol, $objeto);
+        ?>
+
+        @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
             <center>
                 <h1>Preguntas Almacenadas</h1>
             </center>
@@ -16,7 +24,9 @@
             </blockquote>
 
         @section('content')
+        @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Preguntas">+ Nueva Pregunta</button>
+        @endif
             <div class="modal fade bd-example-modal-sm" id="Preguntas" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -94,12 +104,11 @@
                             <td>{{$Preguntas['COD_PREGUNTA']}}</td>
                             <td>{{$Preguntas['PREGUNTA']}}</td>
                             <td>
+                            @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                 <button value="Editar" title="Editar" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#Preguntas-edit-{{$Preguntas['COD_PREGUNTA']}}">
                                     <i class='fas fa-edit' style='font-size:13px;color:Orange'></i> Editar
                                 </button>
-                                <button value="Eliminar" title="Eliminar" class="btn btn-outline-danger" type="button" onclick="confirmDelete({{$Preguntas['COD_PREGUNTA']}})">
-                                    <i class='fas fa-trash-alt' style='font-size:13px;color:Red'></i> Eliminar
-                                </button>
+                            @endif
                             </td>
                         </tr>
                         <!-- Modal for editing goes here -->
@@ -142,6 +151,9 @@
         @section('js')
         <script> console.log('Hi!'); </script>
         @stop
+        @else
+            <p>No tiene autorización para visualizar esta sección</p>
+        @endif
     @else
         <!-- Contenido para usuarios no autenticados -->
         <script>

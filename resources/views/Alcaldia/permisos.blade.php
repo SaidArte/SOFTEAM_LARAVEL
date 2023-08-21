@@ -7,6 +7,13 @@
 
 @section('content_header')
     @if(session()->has('user_data'))
+    <?php
+        $authController = app(\App\Http\Controllers\AuthController::class);
+        $objeto = 'Permisos'; // Por ejemplo, el objeto deseado
+        $rol = session('user_data')['NOM_ROL'];
+        $tienePermiso = $authController->tienePermiso($rol, $objeto);
+    ?>
+    @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
         <center>
             <h1>Información de Permisos</h1>
         </center>
@@ -14,12 +21,13 @@
             <p class="mb-0">Registro de Permisos.</p>
             <footer class="blockquote-footer">Permisos <cite title="Source Title">Registrados</cite></footer>
         </blockquote>
-    @endif
+
 @stop
 
 @section('content')
-    @if(session()->has('user_data'))
+    @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Permisos">+ Nuevo</button>
+    @endif
         <div class="modal fade bd-example-modal-sm" id="Permisos" tabindex="-1">
         <div class="modal-dialog">
                     <div class="modal-content">
@@ -197,12 +205,11 @@
                         </td>
                         <td>
                             <!-- Esta vez se llamaran dos parametros para poder ser actualizados -->
-                            <button value="Editar" title="Editar" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#Permisos-edit-{{$Permisos['COD_ROL']}}-{{$Permisos['COD_OBJETO']}}">
-                                <i class='fas fa-edit' style='font-size:13px;color:Orange'></i> Editar
-                            </button>
-                            <button value="Eliminar" title="Eliminar" class="btn btn-outline-danger" type="button" onclick="confirmDelete({{$Permisos['COD_OBJETO']}})">
-                                <i class='fas fa-trash-alt' style='font-size:13px;color:Red'></i> Eliminar
-                            </button>
+                            @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
+                                <button value="Editar" title="Editar" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#Permisos-edit-{{$Permisos['COD_ROL']}}-{{$Permisos['COD_OBJETO']}}">
+                                    <i class='fas fa-edit' style='font-size:13px;color:Orange'></i> Editar
+                                </button>
+                            @endif
                         </td>
                     </tr>
                    <!-- Modal que esta vez toma dos parametros primarios -->
@@ -273,6 +280,9 @@
                 @endforeach
             </tbody>
         </table>
+        @else
+            <p>No tiene autorización para visualizar esta sección</p>
+        @endif
     @else
         <!-- Contenido para usuarios no autenticados -->
         <script>
