@@ -398,7 +398,7 @@ return [
                 [
                     'icon' => 'fa fa-folder-open',
                     //'icon' => 'fa fa-briefcase',
-                    'text' => 'Expediente de Carta de ventas',
+                    'text' => 'Expediente de Cventas',
                     //'icon_color' => 'indigo',
                     'url' => 'Cventa',
                     'icon_color' => 'green',

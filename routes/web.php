@@ -27,6 +27,12 @@ Route::get('fierro/pdfFierro' , function () {
     return $pdf->stream('Fierro.pdf');
 })->name('fierro.pdfFierro');
 
+//pdf cventa
+Route::get('Cventa/pdfc' , function () {
+    $pdf = PDF ::loadView('Alcaldia.pdfc'); 
+    return $pdf->stream('Cventa.pdfc');
+})->name('Cventa.pdfc');
+
 
 
 

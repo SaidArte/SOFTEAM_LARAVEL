@@ -366,6 +366,13 @@
                                         <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                                     </button>
                             @endif
+
+                             <!-- Boton de PDF -->
+                              <a href="{{ route('Cventa.pdfc') }}" class="btn btn-sm btn-danger" data-target="#Cventa-edit-{{$Cventa['COD_CVENTA']}}" target="_blank">
+                                    <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
+                             </a>
+    
+
                             </td>   
                                
                         </tr>
