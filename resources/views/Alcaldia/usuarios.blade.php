@@ -93,12 +93,10 @@
                 $tienePermiso = $authController->tienePermiso($rol, $objeto);
             ?>
              @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
-                <center>
+                <center><br>
                     <h1>Información de Usuarios</h1>
-                </center>
-                <blockquote class="blockquote text-center">
-                    <p class="mb-0">Registro de Usuarios.</p>
-                </blockquote>
+                </center></br>
+                
             @stop
 
             @section('content')
@@ -321,10 +319,10 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <table width=100% cellspacing="8" cellpadding="8" class="table table-hover table-responsive table-verde-claro table-striped mt-1" id="usuarios">
+                        <table width=100% cellspacing="8" cellpadding="8" class="table table-hover ttable-bordered mt-1" id="usuarios">
                             <thead>
                                 <tr>
-                                    <th><center>Código de Usuario</center></th>
+                                    <th><center>Nº</center></th>
                                     <th><center>Usuario</center></th>
                                     <th><center>Nombre</center></th>
                                     <th><center>Rol</center></th>
@@ -333,7 +331,7 @@
                                     <th><center>Límite de Intentos</center></th>
                                     <th><center>Intentos Fallidos</center></th>
                                     <th><center>Vencimiento de contraseña</center></th>
-                                    <th></th>
+                                    <th>Opciones de la Tabla</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -411,9 +409,26 @@
                         </table>
                     </div>
                 </div>
+                <!-- MENSAJE BAJO -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            2023 &copy; SOFTEAM  
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-md-right footer-links d-none d-sm-block">
+                                <a>Version 1.0</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- FIN MENSAJE -->
 
             @section('js')
             <script> console.log('Hi!'); </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script>
                     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
                     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -423,11 +438,48 @@
                     <script>
                         $(document).ready(function() {
                             $('#usuarios').DataTable({
-                                responsive: true
+                                responsive: true,
+                                lengthMenu : [10, 20, 30, 40, 50],
+                                language: {
+                            processing: "Procesando...",
+                            lengthMenu: "Mostrar _MENU_ registros",
+                            zeroRecords: "No se encontraron resultados",
+                            emptyTable: "Ningún dato disponible en esta tabla",
+                            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                            search: "Buscar:",
+                            infoThousands: ",",
+                            loadingRecords: "Cargando...",
+                            paginate: {
+                                first: "Primero",
+                                last: "Último",
+                                next: "Siguiente",
+                                previous: "Anterior",
+                            },
+                            buttons: {
+                                copy: "Copiar",
+                                colvis: "Visibilidad",
+                                collection: "Colección",
+                                colvisRestore: "Restaurar visibilidad",
+                                copyKeys: "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                                copySuccess: {
+                                    1: "Copiada 1 fila al portapapeles",
+                                    _: "Copiadas %ds fila al portapapeles",
+                                },
+                                pdf: "PDF",
+                                print: "Imprimir",
+                            },
+                        },
+                        
                             });
                         });
                     </script>
                 </script>   
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
             @stop
 
             @section('css')

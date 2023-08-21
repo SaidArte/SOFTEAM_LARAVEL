@@ -506,8 +506,10 @@
                                 text: "<i class='fa-solid fa-file-excel'></i>",
                                 tittleAttr: "Exportar a Excel",
                                 className: "btn btn-success",
+                                footer: true,
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                    columns: [0, 1, 2, 3, 4, 5, 6], //exportar solo la primera hasta las sexta tabla
+                                    stripHtml: false,
                                 },
                             },
                             {
@@ -515,43 +517,26 @@
     text: "<i class='fa-solid fa-file-pdf'></i>",
     titleAttr: "Exportar a PDF", // Corrected property name
     className: "btn btn-danger",
+    footer: true,
     exportOptions: {
-        columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+        columns: [0, 1, 2, 3, 4, 5, 6], //exportar solo la primera hasta las sexta tabla
+        stripHtml: false,
     },
-   /* customize: function(doc) {
-    // Add images to the PDF
-    var imgUrls = [];
-
-    // Collect image URLs from the table cells
-    $('#Rfierro tbody tr').each(function() {
-        var imgSrc = $(this).find('td:eq(7)').find('img').attr('src');
-        imgUrls.push(imgSrc);
-    });
-
-    // Embed the images in the PDF
-    if (imgUrls.length > 0) {
-        
-       
-var imgContainer = doc.content[1].table.body;
-
-        for (var i = 0; i < imgUrls.length; i++) {
-            imgContainer[i].splice(7, 1, {
-                image: imgUrls[i],
-                width: 50
-            });
-        }
-    }
-}*/
 },
                             {
                                 extend: "print",
                                 text: "<i class='fa-solid fa-print'></i>",
                                 tittleAttr: "Imprimir",
                                 className: "btn btn-secondary",
+                                footer: true,
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                    columns: [0, 1, 2, 3, 4, 5, 6] ,//exportar solo la primera hasta las sexta tabla
+                                    stripHtml: false,
                                 },
+                            
+                                
                             },
+                            
                         ],
                         lengthMenu : [10, 20, 30, 40, 50],
                         columnDefs: [
