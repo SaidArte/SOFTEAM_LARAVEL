@@ -461,29 +461,36 @@
                         buttons: [//Botones de Excel, PDF, Imprimir
                             {
                                 extend: "excelHtml5",
+                                filename: "Permisos de Sacrificio",
+                                title: "Permisos de Sacrificio",
                                 text: "<i class='fa-solid fa-file-excel'></i>",
                                 tittleAttr: "Exportar a Excel",
                                 className: "btn btn-success",
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                    columns: [0, 1, 2, 3, 4, 5, 6], //exportar solo la primera hasta las sexta tabla
                                 },
                             },
-                            {
+                            
+                                {
                 extend: "pdfHtml5",
+                filename: "Permisos de Sacrificio",
+                title: "Permisos de Sacrificio",
                 text: "<i class='fa-solid fa-file-pdf'></i>",
                 titleAttr: "Exportar a PDF",
                 className: "btn btn-danger",
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6] // Export the specified columns
+                    columns: [0, 1, 2, 3, 4, 5, 6],
                 },
-               
-            },             {
+            },  
+            {
                                 extend: "print",
+                                filename: "Permisos de Sacrificio",
+                                title: "Permisos de Sacrificio",
                                 text: "<i class='fa-solid fa-print'></i>",
                                 tittleAttr: "Imprimir",
                                 className: "btn btn-secondary",
                                 exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                    columns: [0, 1, 2, 3, 4, 5, 6], //exportar solo la primera hasta las sexta tabla
                                 },
                             },
                         ],
