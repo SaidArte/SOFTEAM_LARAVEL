@@ -11,12 +11,23 @@ use App\Http\Controllers\HomeController; // Agrega esta importación
 // Rutas generadas por Auth::routes()
 Auth::routes();
 // Ruta para el pdf
+//pdf Sacrificio
 Route::get('psacrificio/pdf' , function () {
     $pdf = PDF ::loadView('Alcaldia.pdf'); 
     return $pdf->stream('Permiso.pdf');
 })->name('psacrificio.pdf');
+//pdf Traslado
+Route::get('PTraslado/pdfTraslado' , function () {
+    $pdf = PDF ::loadView('Alcaldia.pdfTraslado'); 
+    return $pdf->stream('Traslado.pdf');
+})->name('PTraslado.pdfTraslado');
+//pdf Fierro
+Route::get('fierro/pdfFierro' , function () {
+    $pdf = PDF ::loadView('Alcaldia.pdfFierro'); 
+    return $pdf->stream('Fierro.pdf');
+})->name('fierro.pdfFierro');
 
-Route::get('fierro/pdf/{fierroId}', 'PDFController@generateFierroPDF')->name('fierro.pdf');
+
 
 
 // Rutas adicionales

@@ -375,7 +375,7 @@
                                             </button>
                                         @endif
                                         <!-- Boton de PDF -->
-                                        <a href="{{ route('fierro.pdf', ['fierroId' => $fierro['COD_FIERRO']]) }}" class="btn btn-sm btn-danger" data-target="#fierro-edit-{{ $fierro['COD_FIERRO'] }}" target="_blank">
+                                        <a href="{{ route('fierro.pdfFierro') }}" class="btn btn-sm btn-danger" data-target="#fierro-edit-{{ $fierro['COD_FIERRO'] }}" target="_blank">
                                         <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
                                         </a>
                                     </td>

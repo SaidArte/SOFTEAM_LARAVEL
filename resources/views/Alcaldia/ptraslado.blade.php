@@ -428,6 +428,10 @@
                         <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                         </button>
                     @endif
+                    <a href="{{ route('PTraslado.pdfTraslado') }}" class="btn btn-sm btn-danger" data-target="#PTraslado-edit-{{ $PTraslado['COD_PTRASLADO'] }}" target="_blank">
+
+                                        <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
+                                        </a>
                         
                     </td>
                 </tr>
