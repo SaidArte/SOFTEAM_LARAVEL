@@ -179,7 +179,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="MOD_VEHICULO"> MOdelo del Vehiculo</label>
+                                <label for="MOD_VEHICULO"> Modelo del Vehiculo</label>
                                 <input type="text" id="MOD_VEHICULO" class="form-control" name="MOD_VEHICULO" placeholder="Ingresar el modelo del vehiculo" required>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -221,7 +221,7 @@
 
                     <script>
                         $(document).ready(function() {
-                             //Validaciones del campo Fecha de Sacrificio el cual no permitira el ingreso de una fecha anterior al dia de registro
+                             //Validaciones del campo Fecha de Traslado el cual no permitira el ingreso de una fecha anterior al dia de registro
                             $('#FEC_TRASLADO').on('input', function() {
                                 var fechaTraslado = $(this).val();
                                 var currentDate = new Date().toISOString().split('T')[0];
@@ -266,15 +266,15 @@
                             
                             //Validaciones del nombre del Trasnportista, no permite que se ingrese numeros solo letras
                             $('#NOM_TRANSPORTISTA').on('input', function() {
-                                var nombreTransp = $(this).val();
-                                var errorMessage = 'El nombre debe tener al menos 3 letras';
-                                if (nombreTransp.length < 3 || !/^[a-zA-Z]+$/.test(nombreTransp)) {
-                                    $(this).addClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text(errorMessage);
-                                } else {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('');
-                                }
+                                        var nombre = $(this).val();
+                                        var errorMessage = 'El nombre debe tener al menos 5 letras';
+                                        if (nombre.length < 5 || !/^[a-zA-Z\s]+$/.test(nombre)) {
+                                            $(this).addClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text(errorMessage);
+                                        } else {
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('');
+                                        }
                             });
 
                             //Validaciones del campo DNI el cual no permite el ingreso de letras (las bloquea y no se muestra)
@@ -445,7 +445,7 @@
                             </div>
                             <div class="modal-body">
                                 <p>Ingresa los Nuevos Datos</p>
-                                <form action="{{ url('PTRASLADO/ACTUALIZAR') }}" method="post" class="row g-3 needs-validation" novalidate>
+                                <form action="{{ url('ptraslado/actualizar') }}" method="post" class="row g-3 needs-validation" novalidate>
                                     @csrf
                                         <input type="hidden" class="form-control" name="COD_PTRASLADO" value="{{$PTraslado['COD_PTRASLADO']}}">
 
@@ -454,6 +454,17 @@
                                             <input type="date" class="form-control" id="FEC_TRASLADO" name="FEC_TRASLADO" placeholder="Inserte la fecha del Traslado" value="{{$PTraslado['FEC_TRASLADO']}}" required>
                                             <div class="valid-feedback"></div>
                                         </div>
+
+                                        <div class="mb-3 mt-3">
+                                            <label for="COD_PERSONA" class="form-label">Persona: </label>
+                                            <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" required>
+                                            <option value="" disabled selected>Seleccione una Persona</option>
+                                           @foreach ($personasArreglo as $persona)
+                                            <option value="{{ $persona['COD_PERSONA'] }}">{{ $persona['NOM_PERSONA'] }} </option>
+                                            @endforeach
+                                        </select>
+                                       </div>
+                                        
 
                                         <div class="mb-3">
                                             <label for="PTraslado">Direccion de Origen</label>
@@ -502,20 +513,6 @@
                                             <label for="PTraslado">Monto del Traslado</label>
                                             <input type="text" class="form-control" id="MON_TRASLADO" name="MON_TRASLADO" placeholder="Ingresar el monto del traslado" value="{{$PTraslado['MON_TRASLADO']}}">
                                         </div>
-
-                                        <div class="mb-3">
-                                            <label for="COD_DTRASLADO">Codigo de detalle de Traslado</label>
-                                           <input type="text" id="COD_DTRASLADO" class="form-control" name="COD_DTRASLADO" placeholder="Ingresar el codigo del detalle de traslado" required>                                        
-                                        </div>
-                                        <div class="mb-3">                        
-                                           <label for="COD_FIERRO">Codigo del fierro</label>
-                                           <input type="text" id="COD_FIERRO" class="form-control" name="COD_FIERRO" placeholder="Ingresar el codigo del Fierro" required>
-                                        </div>
-                                        <div class="mb-3">
-                                           <label for="CAN_GANADO">Cantidad de Animales</label>
-                                           <input type="text" id="CAN_GANADO" class="form-control" name="CAN_GANADO" placeholder="Ingresar la cantidad de animales" required>                   
-                                        </div>
-
                                     
                                         <div class="mb-3">
                                             <button type="submit" class="btn btn-primary">Editar</button>

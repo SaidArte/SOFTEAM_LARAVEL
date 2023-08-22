@@ -50,10 +50,11 @@ class PTrasladoController extends Controller
 
    public function actualizar_PermisoTraslado(Request $request){
             
-    $actualizar_PermisoTraslado = Http::put('http://localhost:3000/PTRASLADO/ACTUALIZAR/'.$request->input("COD_PTRASLADO"),[
+    $actualizar_PermisoTraslado = Http::put('http://localhost:3000/PTRASLADO/ACTUALIZAR/',[
         "COD_PTRASLADO" => $request -> input("COD_PTRASLADO"),
 
         "FEC_TRASLADO" => $request -> input("FEC_TRASLADO"),
+        "COD_PERSONA" => $request -> input("COD_PERSONA"),
         "DIR_ORIG_PTRASLADO" => $request -> input("DIR_ORIG_PTRASLADO"),
         "DIR_DEST_TRASLADO" => $request -> input("DIR_DEST_TRASLADO"),
         "NOM_TRANSPORTISTA" => $request -> input("NOM_TRANSPORTISTA"),
