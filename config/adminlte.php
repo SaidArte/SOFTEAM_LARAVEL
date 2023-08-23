@@ -356,13 +356,13 @@ return [
                     'icon_color' => 'green',
                 ],
 
-                [
+               /* [
                     'text' => 'Mostrar Fierros',
                     'icon' => 'fa fa-search',
                     //'icon_color' => 'indigo',
                     'url' => 'comparar',
                     'icon_color' => 'green',
-                ]
+                ]*/
             ]
         ],
         [
