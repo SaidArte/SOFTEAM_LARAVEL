@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 class PSacrificioController extends Controller
 {
 
-    const urlapi='http://localhost:3000/';
+    const urlapi='https://softeam-production.up.railway.app/';
 
     public function psacrificio()
 {

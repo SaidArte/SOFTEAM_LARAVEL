@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 class CventaController extends Controller
 {
 
-    const urlapi='http://localhost:3000/';
+    const urlapi='https://softeam-production.up.railway.app/';
 
    public function Cventa(){
       $Cventa = Http::get(self::urlapi.'CVENTA/GETALL');

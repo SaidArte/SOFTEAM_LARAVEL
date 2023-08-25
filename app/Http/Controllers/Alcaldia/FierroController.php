@@ -8,7 +8,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class FierroController extends Controller
 {
-    const urlapi = 'http://localhost:3000/';
+    const urlapi = 'https://softeam-production.up.railway.app/';
 
     public function fierro()
     {
