@@ -50,7 +50,7 @@ class AuthController extends Controller
         $PAS_USUARIO = $request->input('PAS_USUARIO');
         $CONTADOR = 0;
 
-        $response = Http::post('http://localhost:3000/api/login', [
+        $response = Http::post('https://softeam-production.up.railway.app/api/login', [
             'NOM_USUARIO' => $NOM_USUARIO,
             'PAS_USUARIO' => $PAS_USUARIO
         ]);
@@ -67,11 +67,11 @@ class AuthController extends Controller
                 'message' => 'Inicio de sesión exitoso'
             ];
             $CONTADOR = 0;
-            $response2 = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
+            $response2 = Http::put('https://softeam-production.up.railway.app/SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
                 'COD_USUARIO' => $COD_USUARIO,
                 'NUM_INTENTOS_FALLIDOS' => $CONTADOR,
             ]);
-            $response3 = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_FECHA_ACCESO', [
+            $response3 = Http::put('https://softeam-production.up.railway.app/SEGURIDAD/ACTUALIZAR_FECHA_ACCESO', [
                 'COD_USUARIO' => $COD_USUARIO
             ]);
             return redirect()->route('home')->with('notification', $notification); // Redirigir al home y muestra un mensaje de bienvenida.
