@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
+    const urlapi = 'http://82.180.133.39:4000/';
+
     public function showLoginForm()
     {
         return view('auth.login');
@@ -50,7 +52,7 @@ class AuthController extends Controller
         $PAS_USUARIO = $request->input('PAS_USUARIO');
         $CONTADOR = 0;
 
-        $response = Http::post('https://softeam-production.up.railway.app/api/login', [
+        $response = Http::post(self::urlapi.'api/login', [
             'NOM_USUARIO' => $NOM_USUARIO,
             'PAS_USUARIO' => $PAS_USUARIO
         ]);
@@ -67,11 +69,11 @@ class AuthController extends Controller
                 'message' => 'Inicio de sesión exitoso'
             ];
             $CONTADOR = 0;
-            $response2 = Http::put('https://softeam-production.up.railway.app/SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
+            $response2 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
                 'COD_USUARIO' => $COD_USUARIO,
                 'NUM_INTENTOS_FALLIDOS' => $CONTADOR,
             ]);
-            $response3 = Http::put('https://softeam-production.up.railway.app/SEGURIDAD/ACTUALIZAR_FECHA_ACCESO', [
+            $response3 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_FECHA_ACCESO', [
                 'COD_USUARIO' => $COD_USUARIO
             ]);
             return redirect()->route('home')->with('notification', $notification); // Redirigir al home y muestra un mensaje de bienvenida.
@@ -79,7 +81,7 @@ class AuthController extends Controller
             if ($data['error_type'] === 'inactive') {
                 return redirect()->back()->with('error', 'Este usuario está inactivo. Favor, contactar con el administrador');
             } else {
-                $response4 = Http::post('http://localhost:3000/SEGURIDAD/GETONE_USUARIOS', [
+                $response4 = Http::post(self::urlapi.'SEGURIDAD/GETONE_USUARIOS', [
                     'NOM_USUARIO' => $NOM_USUARIO,
                 ]);
                 
@@ -87,7 +89,7 @@ class AuthController extends Controller
 
                 if (!empty($data2)) {
                     $CONTADOR = $data2[0]['NUM_INTENTOS_FALLIDOS'];
-                    $response4 = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
+                    $response4 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
                         'COD_USUARIO' => $data2[0]['COD_USUARIO'],
                         'NUM_INTENTOS_FALLIDOS' => $CONTADOR + 1,
                     ]);
@@ -110,7 +112,7 @@ class AuthController extends Controller
         $oldPassword = $request->input('PAS_USUARIO');
         $newPassword = $request->input('newPassword');
         $confPassword = $request->input('confPassword');
-        $response = Http::post('http://localhost:3000/api/login', [
+        $response = Http::post(self::urlapi.'api/login', [
             'NOM_USUARIO' => $NOM_USUARIO,
             'PAS_USUARIO' => $oldPassword,
         ]);
@@ -125,7 +127,7 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Favor, ingrese una contraseña y confirmela')->withInput();
         }
 
-        $response2 = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [
+        $response2 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [
             'COD_USUARIO' => $COD_USUARIO,
             'PAS_USUARIO' => $newPassword,
         ]);
@@ -148,7 +150,7 @@ class AuthController extends Controller
     {
         $NOM_USUARIO = $request->input('NOM_USUARIO');
 
-        $response = Http::post('http://localhost:3000/SEGURIDAD/GETONE_PREGUNTA_USUARIOS', [
+        $response = Http::post(self::urlapi.'SEGURIDAD/GETONE_PREGUNTA_USUARIOS', [
             'NOM_USUARIO' => $NOM_USUARIO,
         ]);
 
@@ -165,7 +167,7 @@ class AuthController extends Controller
     {
         $RESPUESTA = $request->input('RESPUESTA');
         
-        $response = Http::post('http://localhost:3000/SEGURIDAD/GETONE_RESPUESTAS', [
+        $response = Http::post(self::urlapi.'SEGURIDAD/GETONE_RESPUESTAS', [
             'RESPUESTA' => $RESPUESTA,
         ]);
         $data = $response->json();
@@ -185,7 +187,7 @@ class AuthController extends Controller
         $CONF_PAS = $request->input('CONF_PAS');
 
         if ($PAS_USUARIO == $CONF_PAS && $PAS_USUARIO != ""){
-            $response = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [
+            $response = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [
                 'COD_USUARIO' => $COD_USUARIO,
                 'PAS_USUARIO' => $PAS_USUARIO,
             ]);
@@ -212,15 +214,15 @@ class AuthController extends Controller
         $NOM_USUARIO = Session::get('user_data')['NOM_USUARIO'];
         $PAS_USUARIO = $request->input('PAS_USUARIO');
 
-        $response = Http::post('http://localhost:3000/api/login', [
+        $response = Http::post(self::urlapi.'api/login', [
             'NOM_USUARIO' => $NOM_USUARIO,
             'PAS_USUARIO' => $PAS_USUARIO
         ]);
         
         if ($response->successful()) {
-            $preguntas = Http::get('http://localhost:3000/SEGURIDAD/GETALL_PREGUNTAS');
+            $preguntas = Http::get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
             $preguntasArreglo = json_decode($preguntas->body(), true);
-            $response2 = Http::post('http://localhost:3000/SEGURIDAD/GETONE_PREGUNTA_USUARIOS', [
+            $response2 = Http::post(self::urlapi.'SEGURIDAD/GETONE_PREGUNTA_USUARIOS', [
                 'NOM_USUARIO' => $NOM_USUARIO,
             ]);
             $data2 = $response2->json();
@@ -239,7 +241,7 @@ class AuthController extends Controller
         $PREGUNTA = $request->input('PREGUNTA');
         $RESPUESTA = $request->input('RESPUESTA');
 
-        $response = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_RESPUESTAS', [
+        $response = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_RESPUESTAS', [
             'COD_USUARIO' => $COD_USUARIO,
             'PREGUNTA' => $PREGUNTA,
             'RESPUESTA' => $RESPUESTA
@@ -263,7 +265,7 @@ class AuthController extends Controller
     public function tienePermiso($rol, $objeto)
     {
 
-        $response = Http::post('http://localhost:3000/SEGURIDAD/GETONE_SOLOPERMISOS', [
+        $response = Http::post(self::urlapi.'SEGURIDAD/GETONE_SOLOPERMISOS', [
             'NOM_ROL' => $rol,
             'OBJETO' => $objeto,
             // Otras posibles variables que tu API necesita

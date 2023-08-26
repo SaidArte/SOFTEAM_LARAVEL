@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Http;
 
 class ObjetosController extends Controller
 {
+    const urlapi = 'http://82.180.133.39:4000/';
 
     public function Objetos(){
-    $Objetos = Http::get('http://localhost:3000/SEGURIDAD/GETALL_OBJETOS');
+    $Objetos = Http::get(self::urlapi.'SEGURIDAD/GETALL_OBJETOS');
     $citaArreglo = json_decode($Objetos->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
@@ -20,7 +21,7 @@ class ObjetosController extends Controller
 
     public function nuevo_objeto(Request $request){
 
-        $nuevo_objeto = Http::post('http://localhost:3000/SEGURIDAD/INSERTAR_OBJETOS',[
+        $nuevo_objeto = Http::post(self::urlapi.'SEGURIDAD/INSERTAR_OBJETOS',[
             "OBJETO"  => $request -> input("OBJETO"),
             "DES_OBJETO"   => $request -> input("DES_OBJETO"),
             "TIP_OBJETO"   => $request -> input("TIP_OBJETO")
@@ -31,7 +32,7 @@ class ObjetosController extends Controller
 
     public function actualizar_objeto(Request $request){
 
-        $actualizar_objeto = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_OBJETOS',[
+        $actualizar_objeto = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_OBJETOS',[
             "COD_OBJETO"       => $request -> input("COD_OBJETO"),
             "OBJETO"  => $request -> input("OBJETO"),
             "DES_OBJETO"   => $request -> input("DES_OBJETO"),
@@ -40,12 +41,6 @@ class ObjetosController extends Controller
         return redirect('/Objetos');
 
     }
-
-    /*public function eliminar_objeto(Request $request, $id){
-
-        $eliminar_objeto = Http::delete('http://localhost:3000/SEGURIDAD/ELIMINAR_OBJETO/' . $id);
-        return redirect('/Objetos');
-    } */
 
 
 }

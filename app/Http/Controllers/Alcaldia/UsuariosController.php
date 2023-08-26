@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Http;
 
 class UsuariosController extends Controller
 {
+    const urlapi = 'http://82.180.133.39:4000/';
 
     public function Usuarios(){
-    $Usuarios = Http::get('http://localhost:3000/SEGURIDAD/GETALL_USUARIOS');
+    $Usuarios = Http::get(self::urlapi.'SEGURIDAD/GETALL_USUARIOS');
     $citaArreglo = json_decode($Usuarios->body(), true);
-    $roles = Http::get('http://localhost:3000/SEGURIDAD/GETALL_ROLES');
+    $roles = Http::get(self::urlapi.'SEGURIDAD/GETALL_ROLES');
     $rolesArreglo = json_decode($roles->body(), true);
-    $preguntas = Http::get('http://localhost:3000/SEGURIDAD/GETALL_PREGUNTAS');
+    $preguntas = Http::get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
     $preguntasArreglo = json_decode($preguntas->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
@@ -27,7 +28,7 @@ class UsuariosController extends Controller
 
     public function nuevo_usuario(Request $request){
 
-        $nuevo_usuario = Http::post('http://localhost:3000/SEGURIDAD/INSERTAR_USUARIOS',[
+        $nuevo_usuario = Http::post(self::urlapi.'SEGURIDAD/INSERTAR_USUARIOS',[
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "COD_PERSONA"  => $request -> input("COD_PERSONA"),
             "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
@@ -43,7 +44,7 @@ class UsuariosController extends Controller
 
     public function actualizar_usuario(Request $request){
 
-        $actualizar_usuario = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_USUARIOS',[
+        $actualizar_usuario = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_USUARIOS',[
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
             "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
             "NOM_ROL"   => $request -> input("NOM_ROL"),
@@ -56,7 +57,7 @@ class UsuariosController extends Controller
 
     public function actualizar_pass_usuarios(Request $request){ //Este código es innesesario.
 
-        $actualizar_pass_usuario = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_PASS_USUARIOS',[
+        $actualizar_pass_usuario = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PASS_USUARIOS',[
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
             "PAS_USUARIO"       => $request -> input("PAS_USUARIO"),
         ]);

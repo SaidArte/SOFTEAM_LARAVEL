@@ -167,7 +167,7 @@
         <table class="table table-hover table-bordered mt-1" id="permitir">
             <thead>
                 <tr>
-                    <th>Nº</th>
+                    <th>No. Rol</th>
                     <th>Rol</th>
                     <th>Código del Objeto</th>
                     <th>Objeto</th>

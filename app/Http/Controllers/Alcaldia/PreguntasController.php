@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Http;
 
 class PreguntasController extends Controller
 {
+    const urlapi = 'http://82.180.133.39:4000/';
 
     public function Preguntas(){
-    $Preguntas = Http::get('http://localhost:3000/SEGURIDAD/GETALL_PREGUNTAS');
+    $Preguntas = Http::get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
     $PreguntasArreglo = json_decode($Preguntas->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
@@ -20,7 +21,7 @@ class PreguntasController extends Controller
 
     public function nueva_pregunta(Request $request){
 
-        $nuevo_pregunta = Http::post('http://localhost:3000/SEGURIDAD/INSERTAR_PREGUNTAS',[
+        $nuevo_pregunta = Http::post(self::urlapi.'SEGURIDAD/INSERTAR_PREGUNTAS',[
             "PREGUNTA"    => $request -> input("PREGUNTA")
         ]);
         return redirect('/Preguntas');
@@ -29,19 +30,13 @@ class PreguntasController extends Controller
 
     public function actualizar_pregunta(Request $request){
 
-        $actualizar_pregunta = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_PREGUNTAS',[
+        $actualizar_pregunta = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PREGUNTAS',[
             "COD_PREGUNTA"       => $request -> input("COD_PREGUNTA"),
             "PREGUNTA"    => $request -> input("PREGUNTA")
         ]);
         return redirect('/Preguntas');
 
     }
-
-    /*public function eliminar_usuario(Request $request, $id){
-
-        $eliminar_psacrificio = Http::delete('http://localhost:3000/SEGURIDAD/ELIMINAR_USUARIO/' . $id);
-        return redirect('/Usuarios');
-    } */
 
 
 }

@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Http;
 
 class PermisosController extends Controller
 {
+    const urlapi = 'http://82.180.133.39:4000/';
 
     public function Permisos(){
-    $Permisos = Http::get('http://localhost:3000/SEGURIDAD/GETALL_PERMISOS');
+    $Permisos = Http::get(self::urlapi.'SEGURIDAD/GETALL_PERMISOS');
     $citaArreglo = json_decode($Permisos->body(), true);
-    $roles = Http::get('http://localhost:3000/SEGURIDAD/GETALL_ROLES');
+    $roles = Http::get(self::urlapi.'SEGURIDAD/GETALL_ROLES');
     $rolesArreglo = json_decode($roles->body(), true);
-    $objetos = Http::get('http://localhost:3000/SEGURIDAD/GETALL_OBJETOS');
+    $objetos = Http::get(self::urlapi.'SEGURIDAD/GETALL_OBJETOS');
     $objetosArreglo = json_decode($objetos->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
@@ -28,7 +29,7 @@ class PermisosController extends Controller
 
     public function nuevo_permiso(Request $request){
 
-        $nuevo_permiso = Http::post('http://localhost:3000/SEGURIDAD/INSERTAR_PERMISOS',[
+        $nuevo_permiso = Http::post(self::urlapi.'SEGURIDAD/INSERTAR_PERMISOS',[
             "NOM_ROL"  => $request -> input("NOM_ROL"),
             "OBJETO"   => $request -> input("OBJETO"),
             "PRM_INSERTAR"   => $request -> input("PRM_INSERTAR"),
@@ -41,7 +42,7 @@ class PermisosController extends Controller
 
     public function actualizar_permiso(Request $request){
 
-        $actualizar_permiso = Http::put('http://localhost:3000/SEGURIDAD/ACTUALIZAR_PERMISOS',[
+        $actualizar_permiso = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PERMISOS',[
             "COD_ROL"  => $request -> input("COD_ROL"),
             "COD_OBJETO"   => $request -> input("COD_OBJETO"),
             "PRM_INSERTAR"   => $request -> input("PRM_INSERTAR"),
@@ -51,12 +52,5 @@ class PermisosController extends Controller
         return redirect('/Permisos');
 
     }
-
-    /*public function eliminar_permiso(Request $request, $id){
-
-        $eliminar_permiso = Http::delete('http://localhost:3000/SEGURIDAD/ELIMINAR_PERMISOS/' . $id);
-        return redirect('/Permisos');
-    } */
-
 
 }

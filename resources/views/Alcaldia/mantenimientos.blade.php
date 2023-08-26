@@ -158,9 +158,9 @@
                                                 <input type="hidden" class="form-control" name="COD_MANTENIMIENTO" value="{{$Mantenimientos['COD_MANTENIMIENTO']}}">
                                                 
                                                 <div class="mb-3">
-                                                    <label for="Mantenimientos">Fecha y hora de mantenimiento</label>
-                                                    <?php $fecha_formateada = date('d-m-Y h:i:s', strtotime($Mantenimientos['FEC_HR_MANTENIMIENTO'])); ?>
-                                                    <input type="datetime-local" class="form-control" id="FEC_HR_MANTENIMIENTO" name="FEC_HR_MANTENIMIENTO" value="{{$fecha_formateada}}">
+                                                <label for="FEC_HR_MANTENIMIENTO">Fecha y hora de mantenimiento</label>
+                                                <?php $fecha_formateada = date('Y-m-d\TH:i', strtotime($Mantenimientos['FEC_HR_MANTENIMIENTO'])); ?>    
+                                                <input type="datetime-local" class="form-control" id="FEC_HR_MANTENIMIENTO" name="FEC_HR_MANTENIMIENTO" value="{{ $fecha_formateada }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="LTIP_MANTENIMIENTO">Tipo de Mantenimiento</label>
