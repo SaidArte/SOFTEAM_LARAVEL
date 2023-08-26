@@ -9,14 +9,16 @@ use Illuminate\Support\Facades\Http;
 class PTrasladoController extends Controller
 {
 
+    const urlapi='http://82.180.133.39:4000/' ;
+
     public function ptraslado(){
 
   // Obtener los datos de personas desde el controlador PersonasController
    $personasController = new PersonasController();
-   $personas = Http::get('http://localhost:3000/PERSONAS/GETALL');
+   $personas = Http::get(self::urlapi.'PERSONAS/GETALL');
    $personasArreglo = json_decode($personas, true);
 
-    $ptraslado = Http::get('http://localhost:3000/PTRASLADO/GETALL');
+    $ptraslado = Http::get(self::urlapi.'PTRASLADO/GETALL');
     $citaArreglo = json_decode($ptraslado->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
@@ -27,7 +29,7 @@ class PTrasladoController extends Controller
     //Con esta funcion se podrán insertar nuevos Permisos de Traslado
     public function nuevo_PermisoTraslado(Request $request){
             
-        $nuevo_PermisoTraslado = Http::post('http://localhost:3000/PTRASLADO/INSERTAR',[
+        $nuevo_PermisoTraslado = Http::post(self::urlapi.'PTRASLADO/INSERTAR',[
             "FEC_TRASLADO" => $request -> input("FEC_TRASLADO"),
             "COD_PERSONA" => $request -> input("COD_PERSONA"),            
             "DIR_ORIG_PTRASLADO" => $request -> input("DIR_ORIG_PTRASLADO"),
@@ -50,7 +52,7 @@ class PTrasladoController extends Controller
 
    public function actualizar_PermisoTraslado(Request $request){
             
-    $actualizar_PermisoTraslado = Http::put('http://localhost:3000/PTRASLADO/ACTUALIZAR/',[
+    $actualizar_PermisoTraslado = Http::put(self::urlapi.'PTRASLADO/ACTUALIZAR/',[
         "COD_PTRASLADO" => $request -> input("COD_PTRASLADO"),
 
         "FEC_TRASLADO" => $request -> input("FEC_TRASLADO"),
@@ -69,4 +71,5 @@ class PTrasladoController extends Controller
     ]);
     return redirect('/ptraslado');
 }
+
 }

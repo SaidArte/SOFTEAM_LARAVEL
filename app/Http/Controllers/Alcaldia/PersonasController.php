@@ -9,7 +9,7 @@ use App\Models\Personas;
 
 class PersonasController extends Controller
 {
-    const urlapi='https://softeam-production.up.railway.app/';
+    const urlapi= 'http://82.180.133.39:4000/';
 
     public function personas(){
     $personas = Http::get(self::urlapi.'PERSONAS/GETALL');

@@ -378,7 +378,7 @@
                                     document.getElementById("FEC_NAC_PERSONA").value = "";
                                     document.getElementById("IMG_PERSONA").value = "";
                                     document.getElementById("DES_DIRECCION").value = "";
-                                    document.getElementById("TIP_DIRECCION").value = "";
+                                    document.getElementById("DIR_EMAILP_DIRECCION").value = "";
                                     document.getElementById("DIR_EMAIL").value = "";
                                     document.getElementById("NUM_TELEFONO").value = "";
                                     document.getElementById("TIP_TELEFONO").value = "";
