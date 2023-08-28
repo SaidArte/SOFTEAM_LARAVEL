@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
-    const urlapi = 'http://localhost:4000/';
+    const urlapi = 'http://82.180.133.39:4000/';
 
     public function showLoginForm()
     {
