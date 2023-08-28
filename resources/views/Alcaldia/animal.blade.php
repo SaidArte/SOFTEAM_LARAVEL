@@ -127,7 +127,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Favor, ingrese los datos solicitados:</p>
-                            <form action="{{ url('Animal/insertar') }}" method="post"  class="needs-validation Animal-form">
+                            <form action="{{ url('animal/insertar') }}" method="post"  class="needs-validation Animal-form">
                                 @csrf
                                 <div class="mb-3 mt-3">
                                     <label for="CLAS_ANIMAL" >clases de Animal</label>
@@ -364,7 +364,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <p>Ingresar Nuevos Datos</p>
-                                        <form action="{{ url('Animal/actualizar') }}" method="post">
+                                        <form action="{{ url('animal/actualizar') }}" method="post">
                                             @csrf
                                                 <input type="hidden" class="form-control" name="COD_ANIMAL" value="{{$Animal['COD_ANIMAL']}}">
                                                 <!--
