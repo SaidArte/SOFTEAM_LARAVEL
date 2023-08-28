@@ -305,7 +305,7 @@
                                     $(this).siblings('.invalid-feedback').text('');
                                 }
                             });
-
+                        });
                         //Deshabilitar el envio de formularios si hay campos no validos
                         (function () {
                             'use strict'
