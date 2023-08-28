@@ -20,7 +20,7 @@ class MantenimientosController extends Controller
         $citaArreglo = json_decode($Mantenimientos->body(), true);
         // Imprime los datos para verificar si están llegando correctamente.
 
-    return view('Alcaldia.Mantenimientos', compact('citaArreglo'));
+    return view('Alcaldia.mantenimientos', compact('citaArreglo'));
     }
 
     public function nuevo_mantenimiento(Request $request){
@@ -35,7 +35,7 @@ class MantenimientosController extends Controller
             "COD_USUARIO"   => $request -> input("COD_USUARIO"),
             "MON_MANTENIMIENTO"   => $request -> input("MON_MANTENIMIENTO")
         ]);
-        return redirect('/Mantenimientos');
+        return redirect('/mantenimientos');
 
     }
 
@@ -52,7 +52,7 @@ class MantenimientosController extends Controller
             "COD_USUARIO"   => $request -> input("COD_USUARIO"),
             "MON_MANTENIMIENTO"   => $request -> input("MON_MANTENIMIENTO")
         ]);
-        return redirect('/Mantenimientos');
+        return redirect('/mantenimientos');
 
     }
 

@@ -24,7 +24,7 @@ class UsuariosController extends Controller
         // Imprime los datos para verificar si están llegando correctamente
         // dd($citaArreglo);
 
-        return view('Alcaldia.Usuarios')
+        return view('Alcaldia.usuarios')
         ->with('citaArreglo', $citaArreglo)
         ->with('rolesArreglo', $rolesArreglo)
         ->with('preguntasArreglo', $preguntasArreglo);
@@ -45,7 +45,7 @@ class UsuariosController extends Controller
             "PREGUNTA"    => $request -> input("PREGUNTA"),
             "RESPUESTA"   => $request -> input("RESPUESTA")
         ]);
-        return redirect('/Usuarios');
+        return redirect('/usuarios');
 
     }
 
@@ -61,7 +61,7 @@ class UsuariosController extends Controller
             "IND_USUARIO"           => $request -> input("IND_USUARIO"),
             "FEC_VENCIMIENTO"       => $request -> input("FEC_VENCIMIENTO")
         ]);
-        return redirect('/Usuarios');
+        return redirect('/usuarios');
 
     }
 
@@ -71,7 +71,7 @@ class UsuariosController extends Controller
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
             "PAS_USUARIO"       => $request -> input("PAS_USUARIO"),
         ]);
-        return redirect('/Usuarios');
+        return redirect('/usuarios');
 
     }
 

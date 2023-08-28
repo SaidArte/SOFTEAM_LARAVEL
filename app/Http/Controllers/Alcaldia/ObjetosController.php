@@ -19,7 +19,7 @@ class ObjetosController extends Controller
         $citaArreglo = json_decode($Objetos->body(), true);
         // Imprime los datos para verificar si están llegando correctamente.
 
-    return view('Alcaldia.Objetos', compact('citaArreglo'));
+    return view('Alcaldia.objetos', compact('citaArreglo'));
     }
 
     public function nuevo_objeto(Request $request){
@@ -31,7 +31,7 @@ class ObjetosController extends Controller
             "DES_OBJETO"   => $request -> input("DES_OBJETO"),
             "TIP_OBJETO"   => $request -> input("TIP_OBJETO")
         ]);
-        return redirect('/Objetos');
+        return redirect('/objetos');
 
     }
 
@@ -45,7 +45,7 @@ class ObjetosController extends Controller
             "DES_OBJETO"   => $request -> input("DES_OBJETO"),
             "TIP_OBJETO"   => $request -> input("TIP_OBJETO")
         ]);
-        return redirect('/Objetos');
+        return redirect('/objetos');
 
     }
 

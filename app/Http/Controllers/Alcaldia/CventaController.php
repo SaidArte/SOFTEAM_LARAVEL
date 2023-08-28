@@ -66,7 +66,7 @@ class CventaController extends Controller
 
 
        
-       return redirect('/Cventa');
+       return redirect('/cventa');
    }
 
    public function actualizar_cventa(request $request)
@@ -95,7 +95,7 @@ class CventaController extends Controller
        ]);
 
        
-       return redirect('/Cventa');
+       return redirect('/cventa');
    }
 
 

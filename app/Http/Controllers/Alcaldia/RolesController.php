@@ -19,7 +19,7 @@ class RolesController extends Controller
         $citaArreglo = json_decode($Roles->body(), true);
         // Imprime los datos para verificar si están llegando correctamente
 
-        return view('Alcaldia.Roles', compact('citaArreglo'));
+        return view('Alcaldia.roles', compact('citaArreglo'));
     }
 
     public function nuevo_rol(Request $request){
@@ -31,7 +31,7 @@ class RolesController extends Controller
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "DES_ROL"  => $request -> input("DES_ROL")
         ]);
-        return redirect('/Roles');
+        return redirect('/roles');
 
     }
 
@@ -45,7 +45,7 @@ class RolesController extends Controller
             "NOM_ROL"  => $request -> input("NOM_ROL"),
             "DES_ROL"  => $request -> input("DES_ROL")
         ]);
-        return redirect('/Roles');
+        return redirect('/roles');
 
     }
 

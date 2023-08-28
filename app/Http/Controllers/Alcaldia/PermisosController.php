@@ -24,7 +24,7 @@ class PermisosController extends Controller
         // Imprime los datos para verificar si están llegando correctamente
 
         //return view('Alcaldia.Permisos', compact('citaArreglo'));
-        return view('Alcaldia.Permisos')
+        return view('Alcaldia.permisos')
         ->with('citaArreglo', $citaArreglo)
         ->with('rolesArreglo', $rolesArreglo)
         ->with('objetosArreglo', $objetosArreglo);                          
@@ -42,7 +42,7 @@ class PermisosController extends Controller
             "PRM_ACTUALIZAR"   => $request -> input("PRM_ACTUALIZAR"),
             "PRM_CONSULTAR"   => $request -> input("PRM_CONSULTAR")
         ]);
-        return redirect('/Permisos');
+        return redirect('/permisos');
 
     }
 
@@ -58,7 +58,7 @@ class PermisosController extends Controller
             "PRM_ACTUALIZAR"   => $request -> input("PRM_ACTUALIZAR"),
             "PRM_CONSULTAR"   => $request -> input("PRM_CONSULTAR")
         ]);
-        return redirect('/Permisos');
+        return redirect('/permisos');
 
     }
 

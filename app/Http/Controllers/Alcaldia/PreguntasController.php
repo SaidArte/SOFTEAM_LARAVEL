@@ -19,7 +19,7 @@ class PreguntasController extends Controller
         $PreguntasArreglo = json_decode($Preguntas->body(), true);
         // Imprime los datos para verificar si están llegando correctamente
 
-        return view('Alcaldia.Preguntas', compact('PreguntasArreglo'));
+        return view('Alcaldia.preguntas', compact('PreguntasArreglo'));
     }
 
     public function nueva_pregunta(Request $request){
@@ -30,7 +30,7 @@ class PreguntasController extends Controller
         $nuevo_pregunta = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/INSERTAR_PREGUNTAS',[
             "PREGUNTA"    => $request -> input("PREGUNTA")
         ]);
-        return redirect('/Preguntas');
+        return redirect('/preguntas');
 
     }
 
@@ -43,7 +43,7 @@ class PreguntasController extends Controller
             "COD_PREGUNTA"       => $request -> input("COD_PREGUNTA"),
             "PREGUNTA"    => $request -> input("PREGUNTA")
         ]);
-        return redirect('/Preguntas');
+        return redirect('/preguntas');
 
     }
 
