@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Alcaldia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class CventaController extends Controller
 {
@@ -12,13 +13,16 @@ class CventaController extends Controller
     const urlapi= 'http://82.180.133.39:4000/' ;
 
    public function Cventa(){
-      $Cventa = Http::get(self::urlapi.'CVENTA/GETALL');
+      $headers = [
+        'Authorization' => 'Bearer ' . Session::get('token'),
+      ];
+      $Cventa = Http::withHeaders($headers)->get(self::urlapi.'CVENTA/GETALL');
       $citaArreglo = json_decode($Cventa->body(), true);
       // Imprime los datos para verificar si están llegando correctamente
       // dd($citaArreglo);
-      $Animal = Http::get(self::urlapi.'ANIMAL/GETALL');
+      $Animal = Http::withHeaders($headers)->get(self::urlapi.'ANIMAL/GETALL');
       $AnimalArreglo = json_decode($Animal->body(), true);
-      $personas = Http::get(self::urlapi.'PERSONAS/GETALL');
+      $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
       $personasArreglo = json_decode($personas->body(), true);
       // Imprime los datos para verificar si están llegando correctamente
      // dd($citaArreglo);
@@ -36,8 +40,11 @@ class CventaController extends Controller
 
    public function nuevo_cventa(request $request)
    {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
        //
-       $nuevo_cventa = Http::post(self::urlapi.'CVENTA/INSERTAR',[
+       $nuevo_cventa = Http::withHeaders($headers)->post(self::urlapi.'CVENTA/INSERTAR',[
        //"TABLA_NOMBRE"=>$request->input("TABLA_NOMBRE"),
        
        // "COD_CVENTA"=> $request->input("COD_CVENTA"),
@@ -64,8 +71,11 @@ class CventaController extends Controller
 
    public function actualizar_cventa(request $request)
    {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
        //
-       $actualizar_cventa = Http::put(self::urlapi.'CVENTA/ACTUALIZAR/' .$request->input("COD_CVENTA"),[
+       $actualizar_cventa = Http::withHeaders($headers)->put(self::urlapi.'CVENTA/ACTUALIZAR/' .$request->input("COD_CVENTA"),[
        //"TABLA_NOMBRE"=>$request->input("TABLA_NOMBRE"),
        
         "COD_CVENTA"=>$request->input("COD_CVENTA") ,

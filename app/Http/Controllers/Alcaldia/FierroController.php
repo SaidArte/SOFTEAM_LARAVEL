@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Session;
 
 class FierroController extends Controller
 {
@@ -12,11 +13,14 @@ class FierroController extends Controller
 
     public function fierro()
     {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
         $personasController = new PersonasController();
-        $personas = Http::get(self::urlapi.'PERSONAS/GETALL');
+        $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
         $personasArreglo = json_decode($personas->body(), true);
 
-        $fierro = Http::get(self::urlapi.'FIERROS/GETALL');
+        $fierro = Http::withHeaders($headers)->get(self::urlapi.'FIERROS/GETALL');
         $citaArreglo = json_decode($fierro->body(), true);
 
         return view('Alcaldia.fierro', compact('citaArreglo', 'personasArreglo'));
@@ -24,6 +28,9 @@ class FierroController extends Controller
 
     public function nuevo_fierro(Request $request)
     {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
         $request->validate([
             'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -41,7 +48,7 @@ class FierroController extends Controller
             // Ahora, convertimos la ruta relativa en una ruta absoluta utilizando la función url()
             $rutaImagenAbsoluta = url($rutaImagen);
     
-            $nuevo_fierro = Http::post(self::urlapi.'FIERROS/INSERTAR', [
+            $nuevo_fierro = Http::withHeaders($headers)->post(self::urlapi.'FIERROS/INSERTAR', [
                 "COD_PERSONA"            => $request->input("COD_PERSONA"),
                 "FEC_TRAMITE_FIERRO"     => $request->input("FEC_TRAMITE_FIERRO"),
                 "NUM_FOLIO_FIERRO"       => $request->input("NUM_FOLIO_FIERRO"),
@@ -60,6 +67,9 @@ class FierroController extends Controller
 
 public function actualizar_fierro(Request $request)
 {
+    $headers = [
+        'Authorization' => 'Bearer ' . Session::get('token'),
+    ];
     $updateData = [
        
         "FEC_TRAMITE_FIERRO"   => $request->input("FEC_TRAMITE_FIERRO"),
@@ -84,7 +94,7 @@ public function actualizar_fierro(Request $request)
     }
    // dd($updateData);
     // Perform the update request
-    $actualizar_fierro_response = Http::put(self::urlapi.'FIERROS/ACTUALIZAR/'.$request->input("COD_FIERRO"), $updateData);
+    $actualizar_fierro_response = Http::withHeaders($headers)->put(self::urlapi.'FIERROS/ACTUALIZAR/'.$request->input("COD_FIERRO"), $updateData);
     
     if ($actualizar_fierro_response->successful()) {
         return redirect('/fierro')->with('update_success', 'Datos actualizados exitosamente.');
@@ -97,6 +107,9 @@ public function actualizar_fierro(Request $request)
 
     public function subirImagen(Request $request)
 {
+    $headers = [
+        'Authorization' => 'Bearer ' . Session::get('token'),
+    ];
     $request->validate([
         'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
@@ -108,7 +121,7 @@ public function actualizar_fierro(Request $request)
     // Almacena la ruta de la imagen en la base de datos
     $rutaImagen = '/imagenes/fierros/' . $nombreImagen;
     
-    $nuevo_fierro = Http::post(self::urlapi.'FIERROS/INSERTAR', [
+    $nuevo_fierro = Http::withHeaders($headers)->post(self::urlapi.'FIERROS/INSERTAR', [
         // ... otros campos ...
         "IMG_FIERRO" => $rutaImagen,
     ]);

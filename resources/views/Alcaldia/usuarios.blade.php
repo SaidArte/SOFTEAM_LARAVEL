@@ -377,9 +377,10 @@
                                                             <div class="mb-3 mt-3">
                                                                 <label for="Usuarios">Rol</label>
                                                                 <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL" value="{{$Usuarios['NOM_ROL']}}" required>
-                                                                    <option value="Administrador" @if($Usuarios['NOM_ROL'] === 'Administrador') selected @endif>Administrador</option>
-                                                                    <option value="Usuario" @if($Usuarios['NOM_ROL'] === 'Usuario') selected @endif>Usuario</option>
-                                                                    <option value="Secretario" @if($Usuarios['NOM_ROL'] === 'Secretario') selected @endif>Secretario</option>
+                                                                    <option value="" disabled selected>Seleccione una opción</option>
+                                                                    @foreach ($rolesArreglo as $roles)
+                                                                        <option value="{{$roles['NOM_ROL']}}">{{$roles['NOM_ROL']}}</option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3 mt-3">

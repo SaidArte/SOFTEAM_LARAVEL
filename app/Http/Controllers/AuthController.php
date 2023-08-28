@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
-    const urlapi = 'http://82.180.133.39:4000/';
+    const urlapi = 'http://localhost:4000/';
 
     public function showLoginForm()
     {
@@ -61,7 +61,9 @@ class AuthController extends Controller
 
         if ($response->successful()) {
             $user = $data['user'];
-            Session::put('user_data', $user); //Almacena datos del usuario
+            $token = $data['token'];
+            Session::put('user_data', $user); //Almacena datos del usuario.
+            Session::put('token', $token);
             $COD_USUARIO = Session::get('user_data')['COD_USUARIO'];
             $notification = [
                 'type' => 'success',
@@ -73,6 +75,7 @@ class AuthController extends Controller
                 'COD_USUARIO' => $COD_USUARIO,
                 'NUM_INTENTOS_FALLIDOS' => $CONTADOR,
             ]);
+
             $response3 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_FECHA_ACCESO', [
                 'COD_USUARIO' => $COD_USUARIO
             ]);
@@ -86,13 +89,13 @@ class AuthController extends Controller
                 ]);
                 
                 $data2 = $response4->json();
-
                 if (!empty($data2)) {
                     $CONTADOR = $data2[0]['NUM_INTENTOS_FALLIDOS'];
-                    $response4 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
+                    $response5 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
                         'COD_USUARIO' => $data2[0]['COD_USUARIO'],
                         'NUM_INTENTOS_FALLIDOS' => $CONTADOR + 1,
                     ]);
+
                 }
                 return redirect()->back()->with('error', 'Usuario o Contraseña incorrectos');
             }
@@ -211,18 +214,21 @@ class AuthController extends Controller
 
     public function authUsuarioPregunta(Request $request)
     {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
         $NOM_USUARIO = Session::get('user_data')['NOM_USUARIO'];
         $PAS_USUARIO = $request->input('PAS_USUARIO');
 
-        $response = Http::post(self::urlapi.'api/login', [
+        $response = Http::withHeaders($headers)->post(self::urlapi.'api/login', [
             'NOM_USUARIO' => $NOM_USUARIO,
             'PAS_USUARIO' => $PAS_USUARIO
         ]);
         
         if ($response->successful()) {
-            $preguntas = Http::get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
+            $preguntas = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
             $preguntasArreglo = json_decode($preguntas->body(), true);
-            $response2 = Http::post(self::urlapi.'SEGURIDAD/GETONE_PREGUNTA_USUARIOS', [
+            $response2 = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/GETONE_PREGUNTA_USUARIOS', [
                 'NOM_USUARIO' => $NOM_USUARIO,
             ]);
             $data2 = $response2->json();
@@ -237,11 +243,15 @@ class AuthController extends Controller
 
     public function respuestaSeguridad(Request $request)
     {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
+
         $COD_USUARIO = Session::get('user_data')['COD_USUARIO'];
         $PREGUNTA = $request->input('PREGUNTA');
         $RESPUESTA = $request->input('RESPUESTA');
 
-        $response = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_RESPUESTAS', [
+        $response = Http::withHeaders($headers)->put(self::urlapi.'SEGURIDAD/ACTUALIZAR_RESPUESTAS', [
             'COD_USUARIO' => $COD_USUARIO,
             'PREGUNTA' => $PREGUNTA,
             'RESPUESTA' => $RESPUESTA
@@ -264,8 +274,11 @@ class AuthController extends Controller
 
     public function tienePermiso($rol, $objeto)
     {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
 
-        $response = Http::post(self::urlapi.'SEGURIDAD/GETONE_SOLOPERMISOS', [
+        $response = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/GETONE_SOLOPERMISOS', [
             'NOM_ROL' => $rol,
             'OBJETO' => $objeto,
             // Otras posibles variables que tu API necesita

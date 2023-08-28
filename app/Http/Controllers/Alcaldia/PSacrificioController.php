@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Alcaldia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class PSacrificioController extends Controller
 {
@@ -13,12 +14,15 @@ class PSacrificioController extends Controller
 
     public function psacrificio()
 {
-    $psacrificio = Http::get(self::urlapi.'PSACRIFICIO/GETALL');
+    $headers = [
+        'Authorization' => 'Bearer ' . Session::get('token'),
+    ];
+    $psacrificio = Http::withHeaders($headers)->get(self::urlapi.'PSACRIFICIO/GETALL');
     $citaArreglo = json_decode($psacrificio->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
     $animalController = new AnimalController();
-    $Animal = Http::get(self::urlapi.'ANIMAL/GETALL');
+    $Animal = Http::withHeaders($headers)->get(self::urlapi.'ANIMAL/GETALL');
     $AnimalArreglo = json_decode($Animal->body(), true);
 
     return view('Alcaldia.psacrificio', compact('citaArreglo', 'AnimalArreglo'));
@@ -29,7 +33,10 @@ class PSacrificioController extends Controller
 
 public function nuevo_psacrificio(Request $request)
 {
-    $nuevo_psacrificio = Http::post(self::urlapi.'PSACRIFICIO/INSERTAR', [
+    $headers = [
+        'Authorization' => 'Bearer ' . Session::get('token'),
+    ];
+    $nuevo_psacrificio = Http::withHeaders($headers)->post(self::urlapi.'PSACRIFICIO/INSERTAR', [
         "FEC_REG_PSACRIFICIO"   => $request->input("FEC_REG_PSACRIFICIO"),
         "NOM_PERSONA"           => $request->input("NOM_PERSONA"),
         "DNI_PERSONA"           => $request->input("DNI_PERSONA"),
@@ -49,7 +56,10 @@ public function nuevo_psacrificio(Request $request)
 
         public function actualizar_psacrificio(Request $request)
         {
-            $actualizar_psacrificio = Http::put(self::urlapi.'PSACRIFICIO/ACTUALIZAR/'.$request->input("COD_PSACRIFICIO"), [
+            $headers = [
+                'Authorization' => 'Bearer ' . Session::get('token'),
+            ];
+            $actualizar_psacrificio = Http::withHeaders($headers)->put(self::urlapi.'PSACRIFICIO/ACTUALIZAR/'.$request->input("COD_PSACRIFICIO"), [
                 "COD_PSACRIFICIO"       => $request->input("COD_PSACRIFICIO"),
                 "FEC_REG_PSACRIFICIO"   => $request->input("FEC_REG_PSACRIFICIO"),
                 "NOM_PERSONA"           => $request->input("NOM_PERSONA"),

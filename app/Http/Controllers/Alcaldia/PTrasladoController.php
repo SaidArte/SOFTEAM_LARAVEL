@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Alcaldia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class PTrasladoController extends Controller
 {
@@ -12,13 +13,16 @@ class PTrasladoController extends Controller
     const urlapi='http://82.180.133.39:4000/' ;
 
     public function ptraslado(){
+    $headers = [
+        'Authorization' => 'Bearer ' . Session::get('token'),
+    ];
 
   // Obtener los datos de personas desde el controlador PersonasController
    $personasController = new PersonasController();
-   $personas = Http::get(self::urlapi.'PERSONAS/GETALL');
+   $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
    $personasArreglo = json_decode($personas, true);
 
-    $ptraslado = Http::get(self::urlapi.'PTRASLADO/GETALL');
+    $ptraslado = Http::withHeaders($headers)->get(self::urlapi.'PTRASLADO/GETALL');
     $citaArreglo = json_decode($ptraslado->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
     // dd($citaArreglo);
@@ -28,8 +32,10 @@ class PTrasladoController extends Controller
 
     //Con esta funcion se podrán insertar nuevos Permisos de Traslado
     public function nuevo_PermisoTraslado(Request $request){
-            
-        $nuevo_PermisoTraslado = Http::post(self::urlapi.'PTRASLADO/INSERTAR',[
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
+        $nuevo_PermisoTraslado = Http::withHeaders($headers)->post(self::urlapi.'PTRASLADO/INSERTAR',[
             "FEC_TRASLADO" => $request -> input("FEC_TRASLADO"),
             "COD_PERSONA" => $request -> input("COD_PERSONA"),            
             "DIR_ORIG_PTRASLADO" => $request -> input("DIR_ORIG_PTRASLADO"),
@@ -51,8 +57,11 @@ class PTrasladoController extends Controller
    //La siguiente funcion permite actualizar los permisos de traslado
 
    public function actualizar_PermisoTraslado(Request $request){
+    $headers = [
+        'Authorization' => 'Bearer ' . Session::get('token'),
+    ];
             
-    $actualizar_PermisoTraslado = Http::put(self::urlapi.'PTRASLADO/ACTUALIZAR/',[
+    $actualizar_PermisoTraslado = Http::withHeaders($headers)->put(self::urlapi.'PTRASLADO/ACTUALIZAR/',[
         "COD_PTRASLADO" => $request -> input("COD_PTRASLADO"),
 
         "FEC_TRASLADO" => $request -> input("FEC_TRASLADO"),

@@ -5,30 +5,37 @@ namespace App\Http\Controllers\Alcaldia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class UsuariosController extends Controller
 {
     const urlapi = 'http://82.180.133.39:4000/';
 
     public function Usuarios(){
-    $Usuarios = Http::get(self::urlapi.'SEGURIDAD/GETALL_USUARIOS');
-    $citaArreglo = json_decode($Usuarios->body(), true);
-    $roles = Http::get(self::urlapi.'SEGURIDAD/GETALL_ROLES');
-    $rolesArreglo = json_decode($roles->body(), true);
-    $preguntas = Http::get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
-    $preguntasArreglo = json_decode($preguntas->body(), true);
-    // Imprime los datos para verificar si están llegando correctamente
-    // dd($citaArreglo);
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
+        $Usuarios = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_USUARIOS');
+        $citaArreglo = json_decode($Usuarios->body(), true);
+        $roles = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_ROLES');
+        $rolesArreglo = json_decode($roles->body(), true);
+        $preguntas = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
+        $preguntasArreglo = json_decode($preguntas->body(), true);
+        // Imprime los datos para verificar si están llegando correctamente
+        // dd($citaArreglo);
 
-    return view('Alcaldia.Usuarios')
-    ->with('citaArreglo', $citaArreglo)
-    ->with('rolesArreglo', $rolesArreglo)
-    ->with('preguntasArreglo', $preguntasArreglo);
+        return view('Alcaldia.Usuarios')
+        ->with('citaArreglo', $citaArreglo)
+        ->with('rolesArreglo', $rolesArreglo)
+        ->with('preguntasArreglo', $preguntasArreglo);
     }
 
     public function nuevo_usuario(Request $request){
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
 
-        $nuevo_usuario = Http::post(self::urlapi.'SEGURIDAD/INSERTAR_USUARIOS',[
+        $nuevo_usuario = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/INSERTAR_USUARIOS',[
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "COD_PERSONA"  => $request -> input("COD_PERSONA"),
             "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
@@ -43,8 +50,11 @@ class UsuariosController extends Controller
     }
 
     public function actualizar_usuario(Request $request){
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
 
-        $actualizar_usuario = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_USUARIOS',[
+        $actualizar_usuario = Http::withHeaders($headers)->put(self::urlapi.'SEGURIDAD/ACTUALIZAR_USUARIOS',[
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
             "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
             "NOM_ROL"   => $request -> input("NOM_ROL"),

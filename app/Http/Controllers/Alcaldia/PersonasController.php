@@ -6,19 +6,27 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use App\Models\Personas;
+use Illuminate\Support\Facades\Session;
 
 class PersonasController extends Controller
 {
     const urlapi= 'http://82.180.133.39:4000/';
 
     public function personas(){
-    $personas = Http::get(self::urlapi.'PERSONAS/GETALL');
+    //Codigo para la cabezera
+    $headers = [
+        'Authorization' => 'Bearer ' . Session::get('token'),
+    ];
+    $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
     $citaArreglo = json_decode($personas->body(), true);
 
     return view('Alcaldia.personas', compact('citaArreglo'));
     }
     
     public function nueva_persona(Request $request){
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
         //Codigo para las imagenes
         $request->validate([
             'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -36,7 +44,7 @@ class PersonasController extends Controller
             // Ahora, convertimos la ruta relativa en una ruta absoluta utilizando la función url()
             $rutaImagenAbsoluta = url($rutaImagen);
     
-            $nueva_persona = Http::post(self::urlapi.'PERSONAS/INSERTAR',[
+            $nueva_persona = Http::withHeaders($headers)->post(self::urlapi.'PERSONAS/INSERTAR',[
                 "DNI_PERSONA" => $request->input("DNI_PERSONA"),
                 "NOM_PERSONA" => $request->input("NOM_PERSONA"),
                 "GEN_PERSONA" => $request->input("GEN_PERSONA"),
@@ -61,6 +69,9 @@ class PersonasController extends Controller
     }
     
     public function actualizar_persona(Request $request){
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
         $actualizar_personas = [
             "COD_PERSONA" => $request->input("COD_PERSONA"),
             "DNI_PERSONA" => $request->input("DNI_PERSONA"),
@@ -97,7 +108,7 @@ class PersonasController extends Controller
         }
     
         // Realizar la solicitud HTTP para actualizar los datos
-        $actualizar_persona = Http::put('http://localhost:3000/PERSONAS/ACTUALIZAR/'.$request->input("COD_PERSONA"), $actualizar_personas);
+        $actualizar_persona = Http::withHeaders($headers)->put(self::urlapi.'PERSONAS/ACTUALIZAR/'.$request->input("COD_PERSONA"), $actualizar_personas);
     
         return redirect('/personas');
     }
@@ -105,6 +116,9 @@ class PersonasController extends Controller
     
 
     public function subirImagen(Request $request){
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
         $request->validate([
             'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -116,7 +130,7 @@ class PersonasController extends Controller
         // Almacena la ruta de la imagen en la base de datos
         $rutaImagen = '/imagenes/personas/' . $nombreImagen;
         
-        $nueva_persona = Http::post(self::urlapi.'PERSONAS/INSERTAR', [
+        $nueva_persona = Http::withHeaders($headers)->post(self::urlapi.'PERSONAS/INSERTAR', [
             // ... otros campos ...
             "IMG_PERSONA" => $rutaImagen,
         ]);

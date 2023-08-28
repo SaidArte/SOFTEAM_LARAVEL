@@ -5,17 +5,21 @@ namespace App\Http\Controllers\Alcaldia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class AnimalController extends Controller
 {
     const urlapi= 'http://82.180.133.39:4000/'; 
 
    public function Animal(){
-      $Animal = Http::get(self::urlapi.'ANIMAL/GETALL');
+    //Obtiene el bearer token.
+      $headers = [
+          'Authorization' => 'Bearer ' . Session::get('token'),
+      ];
+      $Animal = Http::withHeaders($headers)->get(self::urlapi.'ANIMAL/GETALL');
       $citaArreglo = json_decode($Animal->body(), true);
       // Imprime los datos para verificar si están llegando correctamente
-      // dd($citaArreglo);
-      $fierro = Http::get(self::urlapi.'FIERROS/GETALL');
+      $fierro = Http::withHeaders($headers)->get(self::urlapi.'FIERROS/GETALL');
       $fierroArreglo = json_decode($fierro->body(), true);
      
 
@@ -29,8 +33,11 @@ class AnimalController extends Controller
 
    public function nuevo_animal(request $request)
    {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
        //
-       $nuevo_animal = Http::post(self::urlapi.'ANIMAL/INSERTAR',[
+       $nuevo_animal = Http::withHeaders($headers)->post(self::urlapi.'ANIMAL/INSERTAR',[
        //"TABLA_NOMBRE"=>$request->input("TABLA_NOMBRE"),
        
         //"COD_CVENTA"=> $request->input("COD_CVENTA"),
@@ -57,8 +64,12 @@ class AnimalController extends Controller
 
    public function actualizar_animal(request $request)
    {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
+
        //
-       $actualizar_animal = Http::put(self::urlapi.'ANIMAL/ACTUALIZAR/'.$request->input("COD_ANIMAL"), [
+       $actualizar_animal = Http::withHeaders($headers)->put(self::urlapi.'ANIMAL/ACTUALIZAR/'.$request->input("COD_ANIMAL"), [
        //"TABLA_NOMBRE"=>$request->input("TABLA_NOMBRE"),
        
         //"COD_CVENTA"=>$request->input("COD_CVENTA") ,
