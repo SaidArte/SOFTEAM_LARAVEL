@@ -78,7 +78,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/Cventa.php'));
 
             Route::middleware('web')
-                ->prefix('animal')
+                ->prefix('Animal')
                 ->group(base_path('routes/Animal.php'));
                 
                 Route::middleware('web')
