@@ -24,7 +24,7 @@ class AnimalController extends Controller
      
 
      
-      return view('Alcaldia.Animal')
+      return view('Alcaldia.animal')
       ->with('citaArreglo', $citaArreglo)
       ->with('fierroArreglo', $fierroArreglo);
   
@@ -57,7 +57,7 @@ class AnimalController extends Controller
         "DET_ANIMAL"=> $request->input("DET_ANIMAL"),
        ]);
        
-       return redirect('/Animal');
+       return redirect('/animal');
    }
 
    
@@ -88,7 +88,7 @@ class AnimalController extends Controller
        ]);
 
        
-       return redirect('/Animal');
+       return redirect('/animal');
    }
 
 

@@ -49,36 +49,36 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/psacrificio.php'));
             
             Route::middleware('web')
-                ->prefix('Usuarios')
+                ->prefix('usuarios')
                 ->group(base_path('routes/Usuarios.php'));
     
             Route::middleware('web')
-                ->prefix('Preguntas')
+                ->prefix('preguntas')
                 ->group(base_path('routes/Preguntas.php'));
     
             Route::middleware('web')
-                ->prefix('Roles')
+                ->prefix('roles')
                 ->group(base_path('routes/Roles.php'));
     
             Route::middleware('web')
-                ->prefix('Objetos')
+                ->prefix('objetos')
                 ->group(base_path('routes/Objetos.php'));
     
             Route::middleware('web')
-                ->prefix('Permisos')
+                ->prefix('permisos')
                 ->group(base_path('routes/Permisos.php'));
     
             Route::middleware('web')
-                ->prefix('Mantenimientos')
+                ->prefix('mantenimientos')
                 ->group(base_path('routes/Mantenimientos.php'));
 
 
             Route::middleware('web')
-                 ->prefix('Cventa')
+                 ->prefix('cventa')
                 ->group(base_path('routes/Cventa.php'));
 
             Route::middleware('web')
-                ->prefix('Animal')
+                ->prefix('animal')
                 ->group(base_path('routes/Animal.php'));
                 
                 Route::middleware('web')

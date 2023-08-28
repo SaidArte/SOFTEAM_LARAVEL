@@ -28,7 +28,7 @@ class CventaController extends Controller
      // dd($citaArreglo);
 
      
-      return view('Alcaldia.Cventa')
+      return view('Alcaldia.cventa')
       ->with('citaArreglo', $citaArreglo)
       ->with('AnimalArreglo', $AnimalArreglo)
      ->with('personasArreglo', $personasArreglo); 
