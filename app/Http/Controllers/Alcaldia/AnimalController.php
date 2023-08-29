@@ -57,7 +57,7 @@ class AnimalController extends Controller
         "DET_ANIMAL"=> $request->input("DET_ANIMAL"),
        ]);
        
-       return redirect('/animal');
+       return redirect('/Animal');
    }
 
    
@@ -88,7 +88,7 @@ class AnimalController extends Controller
        ]);
 
        
-       return redirect('/animal');
+       return redirect('/Animal');
    }
 
 
