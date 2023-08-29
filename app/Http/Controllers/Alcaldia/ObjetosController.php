@@ -31,7 +31,7 @@ class ObjetosController extends Controller
             "DES_OBJETO"   => $request -> input("DES_OBJETO"),
             "TIP_OBJETO"   => $request -> input("TIP_OBJETO")
         ]);
-        return redirect('/objetos');
+        return redirect('/Objetos');
 
     }
 
@@ -45,7 +45,7 @@ class ObjetosController extends Controller
             "DES_OBJETO"   => $request -> input("DES_OBJETO"),
             "TIP_OBJETO"   => $request -> input("TIP_OBJETO")
         ]);
-        return redirect('/objetos');
+        return redirect('/Objetos');
 
     }
 

@@ -135,9 +135,6 @@
                                     <div class="invalid-feedback">Ingresar a Clases del Animal</div>
 
                                 </div>
-                                  
-
-                                </div>
 
                                 <div class="mb-3 mt-3">
                                     <label for="RAZ_ANIMAL" >Raza de Animal</label>

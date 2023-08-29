@@ -45,7 +45,7 @@ class UsuariosController extends Controller
             "PREGUNTA"    => $request -> input("PREGUNTA"),
             "RESPUESTA"   => $request -> input("RESPUESTA")
         ]);
-        return redirect('/usuarios');
+        return redirect('/Usuarios');
 
     }
 
@@ -61,7 +61,7 @@ class UsuariosController extends Controller
             "IND_USUARIO"           => $request -> input("IND_USUARIO"),
             "FEC_VENCIMIENTO"       => $request -> input("FEC_VENCIMIENTO")
         ]);
-        return redirect('/usuarios');
+        return redirect('/Usuarios');
 
     }
 
@@ -71,7 +71,7 @@ class UsuariosController extends Controller
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
             "PAS_USUARIO"       => $request -> input("PAS_USUARIO"),
         ]);
-        return redirect('/usuarios');
+        return redirect('/Usuarios');
 
     }
 

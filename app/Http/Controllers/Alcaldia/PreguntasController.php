@@ -30,7 +30,7 @@ class PreguntasController extends Controller
         $nuevo_pregunta = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/INSERTAR_PREGUNTAS',[
             "PREGUNTA"    => $request -> input("PREGUNTA")
         ]);
-        return redirect('/preguntas');
+        return redirect('/Preguntas');
 
     }
 
@@ -43,7 +43,7 @@ class PreguntasController extends Controller
             "COD_PREGUNTA"       => $request -> input("COD_PREGUNTA"),
             "PREGUNTA"    => $request -> input("PREGUNTA")
         ]);
-        return redirect('/preguntas');
+        return redirect('/Preguntas');
 
     }
 

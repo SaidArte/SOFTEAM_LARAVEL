@@ -35,7 +35,7 @@ class MantenimientosController extends Controller
             "COD_USUARIO"   => $request -> input("COD_USUARIO"),
             "MON_MANTENIMIENTO"   => $request -> input("MON_MANTENIMIENTO")
         ]);
-        return redirect('/mantenimientos');
+        return redirect('/Mantenimientos');
 
     }
 
@@ -52,7 +52,7 @@ class MantenimientosController extends Controller
             "COD_USUARIO"   => $request -> input("COD_USUARIO"),
             "MON_MANTENIMIENTO"   => $request -> input("MON_MANTENIMIENTO")
         ]);
-        return redirect('/mantenimientos');
+        return redirect('/Mantenimientos');
 
     }
 

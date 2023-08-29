@@ -42,7 +42,7 @@ class PermisosController extends Controller
             "PRM_ACTUALIZAR"   => $request -> input("PRM_ACTUALIZAR"),
             "PRM_CONSULTAR"   => $request -> input("PRM_CONSULTAR")
         ]);
-        return redirect('/permisos');
+        return redirect('/Permisos');
 
     }
 
@@ -58,7 +58,7 @@ class PermisosController extends Controller
             "PRM_ACTUALIZAR"   => $request -> input("PRM_ACTUALIZAR"),
             "PRM_CONSULTAR"   => $request -> input("PRM_CONSULTAR")
         ]);
-        return redirect('/permisos');
+        return redirect('/Permisos');
 
     }
 

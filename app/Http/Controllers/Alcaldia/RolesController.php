@@ -31,7 +31,7 @@ class RolesController extends Controller
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "DES_ROL"  => $request -> input("DES_ROL")
         ]);
-        return redirect('/roles');
+        return redirect('/Roles');
 
     }
 
@@ -45,7 +45,7 @@ class RolesController extends Controller
             "NOM_ROL"  => $request -> input("NOM_ROL"),
             "DES_ROL"  => $request -> input("DES_ROL")
         ]);
-        return redirect('/roles');
+        return redirect('/Roles');
 
     }
 
