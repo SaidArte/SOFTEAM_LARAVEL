@@ -49,5 +49,24 @@
             </div>
         </div>
     </div>
+    <!-- Función en javascript para no permitir dar "submit" si los campos de contraseña y confirmación no son iguales -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const newPasswordInput = document.getElementById("PAS_USUARIO");
+        const confirmPasswordInput = document.getElementById("CONF_PAS");
+        const submitButton = document.querySelector("button[type='submit']");
+
+        function updateSubmitButtonState() {
+            if (newPasswordInput.value === confirmPasswordInput.value) {
+                submitButton.removeAttribute("disabled");
+            } else {
+                submitButton.setAttribute("disabled", "disabled");
+            }
+        }
+
+        newPasswordInput.addEventListener("input", updateSubmitButtonState);
+        confirmPasswordInput.addEventListener("input", updateSubmitButtonState);
+    });
+</script>
 </body>
 </html>

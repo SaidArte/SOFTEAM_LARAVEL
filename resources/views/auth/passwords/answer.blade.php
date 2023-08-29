@@ -15,6 +15,7 @@
             @csrf
             <div class="mb-3">
                 <label for="PREGUNTA" class="form-label">Pregunta Secreta:</label>
+                <input type="hidden" id="NOM_USUARIO" name="NOM_USUARIO" class="form-control" value="{{ $NOM_USUARIO }}" required>
                 <input type="text" readonly id="PREGUNTA" name="PREGUNTA" class="form-control" value="{{ $PREGUNTA }}" required>
             </div>
 

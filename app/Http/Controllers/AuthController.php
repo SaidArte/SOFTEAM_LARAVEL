@@ -160,7 +160,7 @@ class AuthController extends Controller
         $data = $response->json();
         if (!empty($data)) {
             $PREGUNTA = $data[0]['PREGUNTA'];
-            return view('auth.passwords.answer')->with('PREGUNTA', $PREGUNTA);
+            return view('auth.passwords.answer')->with('PREGUNTA', $PREGUNTA)->with('NOM_USUARIO', $NOM_USUARIO);
         } else {
             return redirect()->back()->with('error', 'Favor, ingrese un usuario valido')->withInput();
         }
@@ -169,9 +169,11 @@ class AuthController extends Controller
     public function answerResetPassword(Request $request)
     {
         $RESPUESTA = $request->input('RESPUESTA');
+        $NOM_USUARIO = $request->input('NOM_USUARIO');
         
         $response = Http::post(self::urlapi.'SEGURIDAD/GETONE_RESPUESTAS', [
             'RESPUESTA' => $RESPUESTA,
+            'NOM_USUARIO' => $NOM_USUARIO,
         ]);
         $data = $response->json();
 
@@ -194,6 +196,8 @@ class AuthController extends Controller
                 'COD_USUARIO' => $COD_USUARIO,
                 'PAS_USUARIO' => $PAS_USUARIO,
             ]);
+
+            $data = $response->json();
 
             if ($response->successful()) {
                 $notification = [
