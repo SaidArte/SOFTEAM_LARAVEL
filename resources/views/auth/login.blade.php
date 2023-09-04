@@ -2,6 +2,12 @@
 <html lang="en">
 
 <head>
+  @if(session()->has('user_data'))
+    <script>
+    window.location.href = "{{ route('home') }}"; // Cambia a 'home' si la sessión sigue activa.
+    </script>
+  @endif
+  
   <title>Inicio de Sesión</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
