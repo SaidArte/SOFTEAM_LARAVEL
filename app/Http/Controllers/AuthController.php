@@ -408,11 +408,12 @@ class AuthController extends Controller
                 'title' => 'Cambio de contraseña',
                 'message' => 'Su contraseña ha sido actualizada con éxito, puede iniciar sesión.'
             ];
-            
+            Session::flush();
             return redirect()->route('login')
                 ->with('notification', $notification);
         } else {
-            return redirect()->back()->with('error', 'Error interno de servidor')->withInput();
+            Session::flush();
+            return redirect()->route('login')->with('error', 'Error interno de servidor')->withInput();
         }
     }
 
