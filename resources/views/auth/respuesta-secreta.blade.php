@@ -14,6 +14,7 @@
 
         <form method="POST" action="{{ route('auth.respuesta-secreta.submit') }}">
             @csrf
+            <input type="hidden" class="form-control" id='COD_USUARIO' name="COD_USUARIO" value="{{ $COD_USUARIO }}" required>
             <div class="mb-3">
                 <label for="PREGUNTA">Pregunta de seguridad: </label>
                 <select class="form-select custom-select" id="PREGUNTA" name="PREGUNTA" required>
@@ -32,6 +33,7 @@
 
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary" id="guardarButton" disabled>Guardar</button>
+                <a href="{{ route('auth.login') }}" class="btn btn-secondary">Cancelar</a>
             </div>
             <br>
             @if(session('error'))

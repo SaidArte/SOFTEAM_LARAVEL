@@ -79,3 +79,5 @@ Route::get('/respuestas', [AuthController::class, 'showAuthRespuestas'])->name('
 Route::post('/respuestas', [AuthController::class, 'respuestaSeguridad'])->name('Alcaldia.respuestas.submit');
 Route::get('/mi-respuesta', [AuthController::class, 'showRespuestaForm'])->name('auth.respuesta-secreta');
 Route::post('/mi-respuesta', [AuthController::class, 'InsertarRespuestaSeguridad'])->name('auth.respuesta-secreta.submit');
+Route::get('/vencimiento', [AuthController::class, 'showVencimientoForm'])->name('auth.passwords.expired');
+Route::post('/vencimiento', [AuthController::class, 'RenovacionVencimiento'])->name('auth.passwords.expired.submit');
