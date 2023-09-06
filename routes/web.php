@@ -77,3 +77,5 @@ Route::get('/preguntas-auth', [AuthController::class, 'showAuthRespuestas'])->na
 Route::post('/preguntas-auth', [AuthController::class, 'authUsuarioPregunta'])->name('Alcaldia.auth-respuestas-secretas.redirect');
 Route::get('/respuestas', [AuthController::class, 'showAuthRespuestas'])->name('Alcaldia.respuestas');
 Route::post('/respuestas', [AuthController::class, 'respuestaSeguridad'])->name('Alcaldia.respuestas.submit');
+Route::get('/mi-respuesta', [AuthController::class, 'showRespuestaForm'])->name('auth.respuesta-secreta');
+Route::post('/mi-respuesta', [AuthController::class, 'InsertarRespuestaSeguridad'])->name('auth.respuesta-secreta.submit');

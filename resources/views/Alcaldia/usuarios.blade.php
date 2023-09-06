@@ -156,33 +156,13 @@
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="FEC_VENCIMIENTO">Fecha de Vencimiento de contraseña</label>
-                                                <input type="date" id="FEC_VENCIMIENTO" class="form-control" name="FEC_VENCIMIENTO" placeholder="Ingrese la fecha de vencimiento." required>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="PREGUNTA">Pregunta de seguridad</label>
-                                                <select class="form-select custom-select" id="PREGUNTA" name="PREGUNTA" required>
-                                                    <option value="" disabled selected>Seleccione una opción</option>
-                                                    @foreach ($preguntasArreglo as $preguntas)
-                                                        <option value="{{$preguntas['PREGUNTA']}}">{{$preguntas['PREGUNTA']}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="RESPUESTA">Respuesta</label>
-                                                <input type="text" id="RESPUESTA" class="form-control" name="RESPUESTA" placeholder="Ingrese la respuesta a la pregunta elegida" required>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
-                                            <div class="mb-3">
                                                 <button class="btn btn-primary" type="submit">Guardar</button>
                                                 <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                             </div>
                                     </form>
                                     <script>
                                         $(document).ready(function() {
-                                            //Validaciones del campo DNI el cual no permite el ingreso de letras (las bloquea y no se muestra)
+                                            //Validaciones del campo COD_PERSONA el cual no permite el ingreso de letras (las bloquea y no se muestra)
                                             //y solo permite el ingreso de numeros
                                             $('#COD_PERSONA').on('input', function() {
                                                 var id = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
@@ -237,32 +217,6 @@
                                                     submitButton.disabled = !isValid;
                                                 }
                                             });
-                                            //Validaciones del campo Fecha Registro el cual no permitira el ingreso de una fecha anterior al dia de registro
-                                            $('#FEC_VENCIMIENTO').on('input', function() {
-                                                var fechaVencimiento = $(this).val();
-                                                var currentDate = new Date().toISOString().split('T')[0];
-                                                var errorMessage = 'La fecha debe ser válida y no puede ser anterior a hoy';
-                                                
-                                                if (!fechaVencimiento || fechaVencimiento < currentDate) {
-                                                    $(this).addClass('is-invalid');
-                                                    $(this).siblings('.invalid-feedback').text(errorMessage);
-                                                } else {
-                                                    $(this).removeClass('is-invalid');
-                                                    $(this).siblings('.invalid-feedback').text('');
-                                                }
-                                            });
-                                            $('#RESPUESTA').on('input', function() {
-                                                var respuestaSacrificio = $(this).val();
-                                                var errorMessage = 'La respuesta no debe ser mayor a 50 carácteres';
-                                                
-                                                if (respuestaSacrificio.length > 50) {
-                                                    $(this).addClass('is-invalid');
-                                                    $(this).siblings('.invalid-feedback').text(errorMessage);
-                                                } else {
-                                                    $(this).removeClass('is-invalid');
-                                                    $(this).siblings('.invalid-feedback').text('');
-                                                }
-                                            });
                                         });
                                         //Deshabilitar el envio de formularios si hay campos no validos
                                         (function () {
@@ -289,9 +243,6 @@
                                             document.getElementById("NOM_USUARIO").value = "";
                                             document.getElementById("PAS_USUARIO").value = "";
                                             document.getElementById("IND_USUARIO").value = "";
-                                            document.getElementById("FEC_VENCIMIENTO").value = "";
-                                            document.getElementById("PREGUNTA").value = "";
-                                            document.getElementById("RESPUESTA").value = "";
 
                                             const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
                                             invalidFeedbackElements.forEach(element => {
@@ -343,7 +294,7 @@
                                         <td>{{$Usuarios['NOM_PERSONA']}}</td>   
                                         <td>{{$Usuarios['NOM_ROL']}}</td> 
                                         <td>{{$Usuarios['IND_USUARIO']}}</td>
-                                        <td>{{date('d-m-y', strtotime($Usuarios['FEC_ULTIMO_ACCESO']))}}</td>
+                                        <td>{{date('d-m-Y h:i:s', strtotime($Usuarios['FEC_ULTIMO_ACCESO']))}}</td>
                                         <td>{{$Usuarios['LIM_INTENTOS']}}</td>
                                         <td>{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}</td>
                                         <td>{{date('d-m-y', strtotime($Usuarios['FEC_VENCIMIENTO']))}}</td>
@@ -390,11 +341,6 @@
                                                                     <option value="ACTIVO" @if($Usuarios['IND_USUARIO'] === 'ACTIVO') selected @endif>ACTIVO</option>
                                                                     <option value="INACTIVO" @if($Usuarios['IND_USUARIO'] === 'INACTIVO') selected @endif>INACTIVO</option>
                                                                 </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="Usuarios">Fecha de vencimiento de contraseña</label>
-                                                                <?php $fecha_formateadaV = date('Y-m-d', strtotime($Usuarios['FEC_VENCIMIENTO'])); ?>
-                                                                <input type="date" class="form-control" id="FEC_VENCIMIENTO" name="FEC_VENCIMIENTO" value="{{$fecha_formateadaV}}">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <button type="submit" class="btn btn-primary">Editar</button>

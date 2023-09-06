@@ -19,15 +19,11 @@ class UsuariosController extends Controller
         $citaArreglo = json_decode($Usuarios->body(), true);
         $roles = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_ROLES');
         $rolesArreglo = json_decode($roles->body(), true);
-        $preguntas = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
-        $preguntasArreglo = json_decode($preguntas->body(), true);
-        // Imprime los datos para verificar si están llegando correctamente
-        // dd($citaArreglo);
+        // Imprime los datos para verificar si están llegando correctamente.
 
         return view('Alcaldia.usuarios')
         ->with('citaArreglo', $citaArreglo)
-        ->with('rolesArreglo', $rolesArreglo)
-        ->with('preguntasArreglo', $preguntasArreglo);
+        ->with('rolesArreglo', $rolesArreglo);
     }
 
     public function nuevo_usuario(Request $request){
@@ -40,10 +36,7 @@ class UsuariosController extends Controller
             "COD_PERSONA"  => $request -> input("COD_PERSONA"),
             "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
             "PAS_USUARIO"   => $request -> input("PAS_USUARIO"),
-            "IND_USUARIO"   => $request -> input("IND_USUARIO"),
-            "FEC_VENCIMIENTO"    => $request -> input("FEC_VENCIMIENTO"),
-            "PREGUNTA"    => $request -> input("PREGUNTA"),
-            "RESPUESTA"   => $request -> input("RESPUESTA")
+            "IND_USUARIO"   => $request -> input("IND_USUARIO")
         ]);
         return redirect('/Usuarios');
 
@@ -58,8 +51,7 @@ class UsuariosController extends Controller
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
             "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
             "NOM_ROL"   => $request -> input("NOM_ROL"),
-            "IND_USUARIO"           => $request -> input("IND_USUARIO"),
-            "FEC_VENCIMIENTO"       => $request -> input("FEC_VENCIMIENTO")
+            "IND_USUARIO"           => $request -> input("IND_USUARIO")
         ]);
         return redirect('/Usuarios');
 

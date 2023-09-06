@@ -46,6 +46,16 @@ class AuthController extends Controller
         return view('Alcaldia.respuestas');
     }
 
+    public function showRespuestaForm()
+    {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
+        $preguntas = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
+        $preguntasArreglo = json_decode($preguntas->body(), true);
+        return view('auth.respuesta-secreta')->with('preguntasArreglo', $preguntasArreglo);
+    }
+
     public function login(Request $request)
     {
         $NOM_USUARIO = $request->input('NOM_USUARIO');
@@ -63,8 +73,9 @@ class AuthController extends Controller
             $user = $data['user'];
             $token = $data['token'];
             Session::put('user_data', $user); //Almacena datos del usuario.
-            Session::put('token', $token);
+            Session::put('token', $token); //Almacena el token.
             $COD_USUARIO = Session::get('user_data')['COD_USUARIO'];
+            $NOM_USUARIO = Session::get('user_data')['NOM_USUARIO'];
             $notification = [
                 'type' => 'success',
                 'title' => '¡Bienvenido(a)!',
@@ -79,6 +90,14 @@ class AuthController extends Controller
             $response3 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_FECHA_ACCESO', [
                 'COD_USUARIO' => $COD_USUARIO
             ]);
+            $tienePregunta = Http::post(self::urlapi.'SEGURIDAD/GETONE_PREGUNTA_USUARIOS', [
+                'NOM_USUARIO' => $NOM_USUARIO
+            ]);
+            
+            $dataPregunta = $tienePregunta->json();
+            if(empty($dataPregunta)){
+                return redirect()->route('auth.respuesta-secreta');
+            }
             return redirect()->route('home')->with('notification', $notification); // Redirigir al home y muestra un mensaje de bienvenida.
         } else {
             if ($data['error_type'] === 'inactive') {
@@ -250,7 +269,6 @@ class AuthController extends Controller
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
-
         $COD_USUARIO = Session::get('user_data')['COD_USUARIO'];
         $PREGUNTA = $request->input('PREGUNTA');
         $RESPUESTA = $request->input('RESPUESTA');
@@ -272,7 +290,7 @@ class AuthController extends Controller
             return redirect()->route('home')
                 ->with('notification', $notification);
         } else {
-            return redirect()->back()->with('error', 'Favor, ingrese su contraseña correctamente')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese su respuesta correctamente')->withInput();
         }
     }
 
@@ -299,6 +317,31 @@ class AuthController extends Controller
             ]);
         }else{
             Session::forget(['PRM_INSERTAR', 'PRM_ACTUALIZAR', 'PRM_CONSULTAR']);
+        }
+    }
+
+    public function InsertarRespuestaSeguridad(Request $request)
+    {
+        $COD_USUARIO = Session::get('user_data')['COD_USUARIO'];
+        $PREGUNTA = $request->input('PREGUNTA');
+        $RESPUESTA = $request->input('RESPUESTA');
+
+        $response = Http::post(self::urlapi.'SEGURIDAD/INSERTAR_RESPUESTAS', [
+            'COD_USUARIO' => $COD_USUARIO,
+            'PREGUNTA' => $PREGUNTA,
+            'RESPUESTA' => $RESPUESTA
+        ]);
+
+        if ($response->successful()) {
+            $notification = [
+                'type' => 'success',
+                'title' => '¡Respuesta Guardada!',
+                'message' => 'Puede volver a iniciar sesión'
+            ];
+            Session::flush();
+            return redirect()->route('login')->with('notification', $notification);
+        } else {
+            return redirect()->route('login')->with('error', 'Favor, ingrese su respuesta correctamente');
         }
     }
 
