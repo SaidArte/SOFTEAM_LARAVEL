@@ -18,13 +18,13 @@
                             @csrf
                             <input type="hidden" class="form-control" id='COD_USUARIO' name="COD_USUARIO" value="{{ $COD_USUARIO }}" required>
                             <div class="form-group row">
-                                <label for="new_password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
+                                <label for="new_password" class="col-md-4 col-form-label text-md-right">Contraseña: </label>
                                 <div class="col-md-6">
                                     <input id="PAS_USUARIO" type="password" name="PAS_USUARIO" required autocomplete="PAS_USUARIO">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="new_password_confirmation" class="col-md-4 col-form-label text-md-right">Confirmar Contraseña</label>
+                                <label for="new_password_confirmation" class="col-md-4 col-form-label text-md-right">Confirmar Contraseña: </label>
                                 <div class="col-md-6">
                                     <input id="CONF_PAS" type="password" name="CONF_PAS" required autocomplete="CONF_PAS">
                                 </div>

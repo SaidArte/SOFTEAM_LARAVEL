@@ -37,8 +37,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
 
             Route::middleware('web')
-            ->prefix('personas')
-            ->group(base_path('routes/personas.php'));
+                ->prefix('personas')
+                ->group(base_path('routes/personas.php'));
         
             Route::middleware('web')
                 ->prefix('fierro')
@@ -81,9 +81,13 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('Animal')
                 ->group(base_path('routes/Animal.php'));
                 
-                Route::middleware('web')
+            Route::middleware('web')
                 ->prefix('ptraslado')
                 ->group(base_path('routes/PTraslado.php'));
+
+            Route::middleware('web')
+                ->prefix('Bitacora')
+                ->group(base_path('routes/Bitacora.php'));
 
                             
         });

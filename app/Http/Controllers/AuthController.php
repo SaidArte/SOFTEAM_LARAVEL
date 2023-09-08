@@ -52,19 +52,28 @@ class AuthController extends Controller
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
-        $preguntas = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
-        $preguntasArreglo = json_decode($preguntas->body(), true);
-        $COD_USUARIO = Session::get('COD_USUARIO');
-        Session::forget('user_data');
-        return view('auth.respuesta-secreta')->with('preguntasArreglo', $preguntasArreglo)->with('COD_USUARIO', $COD_USUARIO);
+
+        if (Session::has('user_data')){
+            $preguntas = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_PREGUNTAS');
+            $preguntasArreglo = json_decode($preguntas->body(), true);
+            $COD_USUARIO = Session::get('COD_USUARIO');
+            Session::forget('user_data');
+            return view('auth.respuesta-secreta')->with('preguntasArreglo', $preguntasArreglo)->with('COD_USUARIO', $COD_USUARIO);
+        }else{
+            return redirect()->route('login')->with('error', 'Error interno de servidor')->withInput();
+        }
     }
 
     public function showVencimientoForm()
     {
-        $COD_USUARIO = Session::get('COD_USUARIO');
-        $NOM_USUARIO = Session::get('NOM_USUARIO');
-        Session::forget('user_data');
-        return view('auth.passwords.expired')->with('COD_USUARIO', $COD_USUARIO)->with('NOM_USUARIO', $NOM_USUARIO);
+        if (Session::has('user_data')){
+            $COD_USUARIO = Session::get('COD_USUARIO');
+            $NOM_USUARIO = Session::get('NOM_USUARIO');
+            Session::forget('user_data');
+            return view('auth.passwords.expired')->with('COD_USUARIO', $COD_USUARIO)->with('NOM_USUARIO', $NOM_USUARIO);
+        }else{
+            return redirect()->route('login')->with('error', 'Error interno de servidor')->withInput();
+        }
     }
 
     //Funciones del controlador de autorización y autenticación.

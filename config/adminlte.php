@@ -477,6 +477,13 @@ return [
                     //'icon_color' => 'indigo',
                     'url' => 'Mantenimientos',
                     'icon_color' => 'green',
+                ],
+                [
+                    'text' => 'Bitácora',
+                    'icon' => 'fas fa-book',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Bitacora',
+                    'icon_color' => 'green',
                 ]
             ]
         ],

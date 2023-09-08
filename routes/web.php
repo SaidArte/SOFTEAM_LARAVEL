@@ -54,14 +54,14 @@ use App\Http\Controllers\Alcaldia\ObjetosController;
 use App\Http\Controllers\Alcaldia\PermisosController;
 use App\Http\Controllers\Alcaldia\MantenimientosController;
 use App\Http\Controllers\Alcaldia\PTrasladoController;
+use App\Http\Controllers\Alcaldia\BitacoraController;
 
-
-// Resto de tus rutas...
-// Aquí puedes agregar las rutas para tus otros controladores
+//Ruta inicial de acceso de usuarios.
 Route::get('/', function () {
     return view('auth.login');
 });
-// Rutas de autenticación personalizadas
+
+// Rutas de autenticación personalizadas.
 //Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
