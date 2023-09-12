@@ -238,7 +238,7 @@ class AuthController extends Controller
 
         if (!empty($data)) {
             $COD_USUARIO = $data[0]['COD_USUARIO'];
-            return view('auth.passwords.reset')->with('COD_USUARIO', $COD_USUARIO);
+            return view('auth.passwords.reset')->with('COD_USUARIO', $COD_USUARIO)->with('NOM_USUARIO', $NOM_USUARIO);
         } else {
             return redirect()->back()->with('error', 'Favor, ingrese su respuesta secreta')->withInput();
         }
@@ -246,9 +246,23 @@ class AuthController extends Controller
 
     public function resetPassword(Request $request)
     {
+        $NOM_USUARIO = $request->input('NOM_USUARIO');
         $COD_USUARIO = $request->input('COD_USUARIO');
         $PAS_USUARIO = $request->input('PAS_USUARIO');
         $CONF_PAS = $request->input('CONF_PAS');
+
+        $response = Http::post(self::urlapi.'api/login', [
+            'NOM_USUARIO' => $NOM_USUARIO,
+            'PAS_USUARIO' => $PAS_USUARIO
+        ]);
+
+        $data = $response->json();
+
+        //dd($data);
+
+        if ($response->successful()) {
+            return redirect()->route('login')->with('error', 'Favor, ingrese una nueva contraseña')->withInput();
+        }
 
         if ($PAS_USUARIO == $CONF_PAS && $PAS_USUARIO != ""){
             $response = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [

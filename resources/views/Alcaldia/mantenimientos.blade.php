@@ -42,11 +42,11 @@
                             <form action="{{ url('Mantenimientos/insertar') }}" method="post" class="needs-validation">
                                 @csrf
                                     
-                                    <div class="mb-3">
-                                        <label for="FEC_HR_MANTENIMIENTO">Fecha y Hora de mantenimiento</label>
-                                        <input type="datetime-local" id="FEC_HR_MANTENIMIENTO" class="form-control" name="FEC_HR_MANTENIMIENTO" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
+                                <div class="mb-3">
+                                    <label for="FEC_HR_MANTENIMIENTO">Fecha y Hora de mantenimiento</label>
+                                    <input type="datetime-local" id="FEC_HR_MANTENIMIENTO" class="form-control" name="FEC_HR_MANTENIMIENTO" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
                                     <div class="mb-3 mt-3">
                                         <label for="TIP_MANTENIMIENTO">Tipo de Mantenimiento</label>
                                         <select class="form-select custom-select" id="TIP_MANTENIMIENTO" name="TIP_MANTENIMIENTO" required>
@@ -75,12 +75,53 @@
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <button class="btn btn-primary" type="submit">Guardar</button>
+                                    <button class="btn btn-primary" id="btnGuardar" type="submit" disabled>Guardar</button>
                                         <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                     </div>
                             </form>
                             <script>
-                                //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
+                                var fechaHoraInput = document.getElementById("FEC_HR_MANTENIMIENTO");
+                                var codigoUsuarioInput = document.getElementById("COD_USUARIO");
+                                var btnGuardar = document.getElementById("btnGuardar");
+
+                                codigoUsuarioInput.addEventListener("input", function() {
+                                    // Utilizar una expresión regular para verificar si solo contiene números enteros
+                                    var regex = /^[0-9]+$/;
+                                    var inputValue = this.value;
+
+                                    if (!regex.test(inputValue)) {
+                                        // Si contiene caracteres no numéricos, mostrar un mensaje de error
+                                        this.classList.add("is-invalid");
+                                        this.nextElementSibling.textContent = "Solo se permiten números enteros.";
+                                        btnGuardar.disabled = true; // Deshabilitar el botón de guardar
+                                    } else {
+                                        // Si es un número entero válido, eliminar cualquier mensaje de error
+                                        this.classList.remove("is-invalid");
+                                        this.nextElementSibling.textContent = "";
+                                        btnGuardar.disabled = false; // Habilitar el botón de guardar
+                                    }
+                                });
+
+                                fechaHoraInput.addEventListener("change", function() {
+                                    // Obtener la fecha y hora actual
+                                    var currentDate = new Date();
+                                    // Obtener el valor del campo FEC_HR_MANTENIMIENTO
+                                    var selectedDate = new Date(this.value);
+                                    
+                                    // Comparar con la fecha y hora actual
+                                    if (selectedDate < currentDate) {
+                                        // Si la fecha seleccionada es anterior a la actual, mostrar un mensaje de error
+                                        this.classList.add("is-invalid");
+                                        this.nextElementSibling.textContent = "La fecha y hora no puede ser anterior a la actual.";
+                                        btnGuardar.disabled = true; // Deshabilitar el botón de guardar
+                                    } else {
+                                        // Si la fecha seleccionada es válida, eliminar cualquier mensaje de error
+                                        this.classList.remove("is-invalid");
+                                        this.nextElementSibling.textContent = "";
+                                        btnGuardar.disabled = false; // Habilitar el botón de guardar
+                                    }
+                                });
+                                //Funcion de limpiar el formulario al momento que le demos al botón de cancelar
                                 function limpiarFormulario() {
                                     document.getElementById("FEC_HR_MANTENIMIENTO").value = "";
                                     document.getElementById("TIP_MANTENIMIENTO").value = "";
@@ -160,11 +201,11 @@
                                                 <div class="mb-3">
                                                 <label for="FEC_HR_MANTENIMIENTO">Fecha y hora de mantenimiento</label>
                                                 <?php $fecha_formateada = date('Y-m-d\TH:i', strtotime($Mantenimientos['FEC_HR_MANTENIMIENTO'])); ?>    
-                                                <input type="datetime-local" class="form-control" id="FEC_HR_MANTENIMIENTO" name="FEC_HR_MANTENIMIENTO" value="{{ $fecha_formateada }}">
+                                                <input type="datetime-local" class="form-control" id="FEC_HR_MANTENIMIENTO" name="FEC_HR_MANTENIMIENTO" value="{{ $fecha_formateada }}" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="LTIP_MANTENIMIENTO">Tipo de Mantenimiento</label>
-                                                    <select class="form-select custom-select"  id="TIP_MANTENIMIENTO" name="TIP_MANTENIMIENTO"  value="{{$Mantenimientos['TIP_MANTENIMIENTO']}}">
+                                                    <select class="form-select custom-select"  id="TIP_MANTENIMIENTO" name="TIP_MANTENIMIENTO"  value="{{$Mantenimientos['TIP_MANTENIMIENTO']}}" required>
                                                         <option value="Mantenimiento predictivo" @if($Mantenimientos['TIP_MANTENIMIENTO'] === 'Mantenimiento_predictivo') selected @endif>Mantenimiento predictivo</option>
                                                         <option value="Mantenimiento preventivo" @if($Mantenimientos['TIP_MANTENIMIENTO'] === 'Mantenimiento_preventivo') selected @endif>Mantenimiento preventivo</option>
                                                         <option value="Mantenimiento correctivo" @if($Mantenimientos['TIP_MANTENIMIENTO'] === 'Mantenimiento_correctivo') selected @endif>Mantenimiento correctivo</option>
@@ -173,19 +214,19 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="LDES_MANTENIMIENTO">Descripción del Mantenimiento</label>
-                                                    <input type="text" class="form-control" id="DES_MANTENIMIENTO" name="DES_MANTENIMIENTO" value="{{$Mantenimientos['DES_MANTENIMIENTO']}}">
+                                                    <input type="text" class="form-control" id="DES_MANTENIMIENTO" name="DES_MANTENIMIENTO" value="{{$Mantenimientos['DES_MANTENIMIENTO']}}" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="LCOD_USUARIO">Código de Usuario</label>
-                                                    <input type="text" class="form-control" id="COD_USUARIO" name="COD_USUARIO" value="{{$Mantenimientos['COD_USUARIO']}}">
+                                                    <input type="text" class="form-control" id="COD_USUARIO" name="COD_USUARIO" value="{{$Mantenimientos['COD_USUARIO']}}" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="LMON_MANTENIMIENTO">Monto del Mantenimiento</label>
-                                                    <input type="number" prefix="L. " class="form-control" id="MON_MANTENIMIENTO" name="MON_MANTENIMIENTO" value="{{$Mantenimientos['MON_MANTENIMIENTO']}}" min="1" step="any">
+                                                    <input type="number" prefix="L. " class="form-control" id="MON_MANTENIMIENTO" name="MON_MANTENIMIENTO" value="{{$Mantenimientos['MON_MANTENIMIENTO']}}" min="1" step="any" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <button type="submit" class="btn btn-primary">Editar</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                    <a href="{{ url('Mantenimientos') }}" class="btn btn-danger">Cancelar</a>
                                             </div>
                                         </form>
                                     </div>

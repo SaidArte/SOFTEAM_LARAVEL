@@ -16,11 +16,15 @@
 
                         <form method="POST" action="{{ route('auth.passwords.reset.submit') }}">
                             @csrf
+                            <input type="hidden" class="form-control" id='NOM_USUARIO' name="NOM_USUARIO" value="{{ $NOM_USUARIO }}" required>
                             <input type="hidden" class="form-control" id='COD_USUARIO' name="COD_USUARIO" value="{{ $COD_USUARIO }}" required>
                             <div class="form-group row">
                                 <label for="new_password" class="col-md-4 col-form-label text-md-right">Contraseña: </label>
                                 <div class="col-md-6">
                                     <input id="PAS_USUARIO" type="password" name="PAS_USUARIO" required autocomplete="PAS_USUARIO">
+                                    <input type="hidden" name="password_valid" id="passwordValid" value="0">
+                                    <br>
+                                    <span id="passwordError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -31,10 +35,66 @@
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="submit" class="btn btn-primary" id="submitButton" disabled>Cambiar Contraseña</button>
                                     <a href="{{ route('auth.login') }}" class="btn btn-secondary">Cancelar</a>
                                 </div>
                             </div>
+                            <!-- Función en javascript para no permitir dar "submit" si los campos de contraseña y confirmación no son iguales y cumplen con los requisitos -->
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var newPasswordInput = document.getElementById("PAS_USUARIO");
+                                    var confirmPasswordInput = document.getElementById("CONF_PAS");
+                                    var passwordValidInput = document.getElementById("passwordValid");
+                                    var passwordErrorSpan = document.getElementById("passwordError");
+                                    var submitButton = document.getElementById("submitButton");
+
+                                    function updateSubmitButtonState() {
+                                        var password = newPasswordInput.value;
+                                        var confirmPassword = confirmPasswordInput.value;
+
+                                        // Validar si la contraseña es válida
+                                        var isValid = validatePassword(password);
+
+                                        if (isValid) {
+                                            passwordValidInput.value = "1";
+                                            passwordErrorSpan.textContent = "";
+
+                                            // Verificar si las contraseñas coinciden
+                                            if (password === confirmPassword && confirmPassword !== "") {
+                                                submitButton.disabled = false;
+                                            } else {
+                                                passwordErrorSpan.textContent = "Confirme su nueva contraseña.";
+                                                submitButton.disabled = true;
+                                            }
+                                        } else {
+                                            passwordValidInput.value = "0";
+                                            passwordErrorSpan.textContent = "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número, un simbolo especial (@$!%*?&) y no tener espacios en blanco.";
+                                            submitButton.disabled = true;
+                                        }
+                                    }
+
+                                    newPasswordInput.addEventListener("input", updateSubmitButtonState);
+                                    confirmPasswordInput.addEventListener("input", updateSubmitButtonState);
+
+                                    function validatePassword(password) {
+                                        // Realiza aquí las verificaciones necesarias y devuelve true si la contraseña es válida, de lo contrario, devuelve false
+                                        // Por ejemplo, puedes usar expresiones regulares y otros métodos de validación aquí
+                                        var minLength = 8;
+                                        var containsUpperCase = /[A-Z]/.test(password);
+                                        var containsNumber = /\d/.test(password);
+                                        var containsSpecialCharacter = /[@$!%*?&]/.test(password);
+                                        var containsNoSpaces = !/\s/.test(password);
+
+                                        return (
+                                            password.length >= minLength &&
+                                            containsUpperCase &&
+                                            containsNumber &&
+                                            containsSpecialCharacter &&
+                                            containsNoSpaces
+                                        );
+                                    }
+                                });
+                                </script>
                             <br>
                             @if(session('error'))
                                 <div class="alert alert-danger" role="alert">
@@ -49,24 +109,5 @@
             </div>
         </div>
     </div>
-    <!-- Función en javascript para no permitir dar "submit" si los campos de contraseña y confirmación no son iguales -->
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const newPasswordInput = document.getElementById("PAS_USUARIO");
-        const confirmPasswordInput = document.getElementById("CONF_PAS");
-        const submitButton = document.querySelector("button[type='submit']");
-
-        function updateSubmitButtonState() {
-            if (newPasswordInput.value === confirmPasswordInput.value) {
-                submitButton.removeAttribute("disabled");
-            } else {
-                submitButton.setAttribute("disabled", "disabled");
-            }
-        }
-
-        newPasswordInput.addEventListener("input", updateSubmitButtonState);
-        confirmPasswordInput.addEventListener("input", updateSubmitButtonState);
-    });
-</script>
 </body>
 </html>

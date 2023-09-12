@@ -150,11 +150,11 @@
                                                 
                                                 <div class="mb-3">
                                                     <label for="OBJETO">Nombre del objeto</label>
-                                                    <input type="text" class="form-control" id="OBJETO" name="OBJETO" value="{{$Objetos['OBJETO']}}">
+                                                    <input type="text" class="form-control" id="OBJETO" name="OBJETO" value="{{$Objetos['OBJETO']}}" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="DES_OBJETO">Descripción del objeto</label>
-                                                    <input type="text" class="form-control" id="DES_OBJETO" name="DES_OBJETO" value="{{$Objetos['DES_OBJETO']}}">
+                                                    <input type="text" class="form-control" id="DES_OBJETO" name="DES_OBJETO" value="{{$Objetos['DES_OBJETO']}}" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="TIP_OBJETO">Tipo de objeto</label>
@@ -166,7 +166,7 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <button type="submit" class="btn btn-primary">Editar</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                    <a href="{{ url('Objetos') }}" class="btn btn-danger">Cancelar</a>
                                             </div>
                                         </form>
                                     </div>

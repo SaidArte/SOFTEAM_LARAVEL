@@ -313,24 +313,25 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Actualizar datos del usuario</h5>
-                                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Ingresar nuevos datos</p>
-                                                    <form action="{{ url('Usuarios/actualizar') }}" method="post" class="row g-3 needs-validation" novalidate>
+                                                    <form action="{{ url('Usuarios/actualizar') }}" method="post" class="row g-3 needs-validation">
                                                         @csrf
                                                             <input type="hidden" class="form-control" name="COD_USUARIO" value="{{$Usuarios['COD_USUARIO']}}">
                                                             
                                                             <div class="mb-3">
                                                                 <label for="Usuarios">Usuario</label>
-                                                                <input type="text" class="form-control" id="NOM_USUARIO" name="NOM_USUARIO" placeholder="Ingrese el alias del usuario" value="{{$Usuarios['NOM_USUARIO']}}">
+                                                                <input type="text" class="form-control" id="NOM_USUARIO" name="NOM_USUARIO" placeholder="Ingrese el alias del usuario" value="{{$Usuarios['NOM_USUARIO']}}" required>
                                                             </div>
                                                             <div class="mb-3 mt-3">
                                                                 <label for="Usuarios">Rol</label>
-                                                                <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL" value="{{$Usuarios['NOM_ROL']}}" required>
+                                                                <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL" required>
                                                                     <option value="" disabled selected>Seleccione una opción</option>
                                                                     @foreach ($rolesArreglo as $roles)
-                                                                        <option value="{{$roles['NOM_ROL']}}">{{$roles['NOM_ROL']}}</option>
+                                                                        <option value="{{$roles['NOM_ROL']}}" @if ($roles['NOM_ROL'] == $Usuarios['NOM_ROL']) selected @endif>
+                                                                            {{$roles['NOM_ROL']}}
+                                                                        </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -344,8 +345,8 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <button type="submit" class="btn btn-primary">Editar</button>
-                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                                        </div>
+                                                                <a href="{{ url('Usuarios') }}" class="btn btn-danger">Cancelar</a>
+                                                            </div>
                                                     </form>
                                                 </div>
                                             </div>
