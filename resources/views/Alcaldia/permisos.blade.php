@@ -64,99 +64,73 @@
                                     <div class="form-group">
                                         <!-- Insertar -->
                                         <div class="mb-3">
-                                            <p>Seleccione las funciones que desea que realice este permiso</p>
-                                            <label for="PRM_INSERTAR">Permiso de Insertar</label>
+                                            <label for="LPRM_INSERTAR">Permiso de Insertar</label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="PRM_INSERTAR" name="PRM_INSERTAR" value="S" onclick="updateValue()">
+                                                <input class="form-check-input" type="checkbox" id="PRM_INSERTAR" name="PRM_INSERTAR" onchange="updateValue(this)">
                                                 <input type="hidden" id="PRM_INSERTAR_HIDDEN" name="PRM_INSERTAR" value="N">
-                                                    <script>
-                                                        function updateValue() {
-                                                            var checkbox = document.getElementById("PRM_INSERTAR");
-                                                            var hiddenInput = document.getElementById("PRM_INSERTAR_HIDDEN");
-
-                                                            if (checkbox.checked) {
-                                                                hiddenInput.value = "S";
-                                                            } else {
-                                                                hiddenInput.value = "N";
-                                                            }
-                                                        }
-                                                    </script>
                                             </div>
                                         </div>
+
                                         <!-- Actualizar -->
                                         <div class="mb-3">
-                                            <label for="PRM_ACTUALIZAR">Permiso de Actualizar</label>
+                                            <label for="LPRM_ACTUALIZAR">Permiso de Actualizar</label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="PRM_ACTUALIZAR" name="PRM_ACTUALIZAR" value="S" onclick="updateValue()">
+                                                <input class="form-check-input" type="checkbox" id="PRM_ACTUALIZAR" name="PRM_ACTUALIZAR" onchange="updateValue(this)">
                                                 <input type="hidden" id="PRM_ACTUALIZAR_HIDDEN" name="PRM_ACTUALIZAR" value="N">
-                                                    <script>
-                                                        function updateValue() {
-                                                            var checkbox = document.getElementById("PRM_ACTUALIZAR");
-                                                            var hiddenInput = document.getElementById("PRM_ACTUALIZAR_HIDDEN");
-
-                                                            if (checkbox.checked) {
-                                                                hiddenInput.value = "S";
-                                                            } else {
-                                                                hiddenInput.value = "N";
-                                                            }
-                                                        }
-                                                    </script>
                                             </div>
                                         </div>
 
                                         <!-- Consultar -->
                                         <div class="mb-3">
-                                            <label for="PRM_CONSULTAR">Permiso de Consultar</label>
+                                            <label for="LPRM_CONSULTAR">Permiso de Consultar</label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" value="S" onclick="updateValue()">
+                                                <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" onchange="updateValue(this)">
                                                 <input type="hidden" id="PRM_CONSULTAR_HIDDEN" name="PRM_CONSULTAR" value="N">
-                                                    <script>
-                                                        function updateValue() {
-                                                            var checkbox = document.getElementById("PRM_CONSULTAR");
-                                                            var hiddenInput = document.getElementById("PRM_CONSULTAR_HIDDEN");
-
-                                                            if (checkbox.checked) {
-                                                                hiddenInput.value = "S";
-                                                            } else {
-                                                                hiddenInput.value = "N";
-                                                            }
-                                                        }
-                                                    </script>
                                             </div>
                                         </div>
-                                    </div>
-                                    <br>
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary" type="submit">Guardar</button>
-                                        <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                    </div>
-                            </form>
-                            <script>
-                                // Funcion de limpiar el formulario al momento que le demos al boton de cancelar
-                                function limpiarFormulario() {
-                                    document.getElementById("NOM_ROL").value = "";
-                                    document.getElementById("OBJETO").value = "";
-                                    
-                                    const checkboxes = document.querySelectorAll(".form-check-input");
-                                    checkboxes.forEach(checkbox => { //limpiando los check
-                                        checkbox.checked = false;
-                                    });
+                                        <br>
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary" type="submit">Guardar</button>
+                                            <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                    </form>
 
-                                    const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
-                                    invalidFeedbackElements.forEach(element => {
-                                        element.textContent = "";
-                                    });
+                                    <script>
+                                        function updateValue(checkbox) {
+                                            var hiddenInput = checkbox.nextElementSibling;
 
-                                    const invalidFields = document.querySelectorAll(".form-control.is-invalid");
-                                    invalidFields.forEach(field => {
-                                        field.classList.remove("is-invalid");
-                                    });
-                                }
+                                            if (checkbox.checked) {
+                                                hiddenInput.value = "S";
+                                            } else {
+                                                hiddenInput.value = "N";
+                                            }
+                                        }
 
-                                document.getElementById("btnCancelar").addEventListener("click", function() {
-                                    limpiarFormulario();
-                                });
-                            </script>
+                                        // Funcion de limpiar el formulario al momento que le demos al boton de cancelar
+                                        function limpiarFormulario() {
+                                            document.getElementById("NOM_ROL").value = "";
+                                            document.getElementById("OBJETO").value = "";
+                                            
+                                            const checkboxes = document.querySelectorAll(".form-check-input");
+                                            checkboxes.forEach(checkbox => { //limpiando los check
+                                                checkbox.checked = false;
+                                            });
+
+                                            const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
+                                            invalidFeedbackElements.forEach(element => {
+                                                element.textContent = "";
+                                            });
+
+                                            const invalidFields = document.querySelectorAll(".form-control.is-invalid");
+                                            invalidFields.forEach(field => {
+                                                field.classList.remove("is-invalid");
+                                            });
+                                        }
+
+                                        document.getElementById("btnCancelar").addEventListener("click", function() {
+                                            limpiarFormulario();
+                                        });
+                                    </script>
                         </div>
                     </div>
                 </div>
@@ -230,6 +204,12 @@
                         <input type="hidden" class="form-control" name="COD_ROL" value="{{$Permisos['COD_ROL']}}"> 
                         <input type="hidden" class="form-control" name="COD_OBJETO" value="{{$Permisos['COD_OBJETO']}}">
                         
+                        <div class="mb-3">
+                            <label for="NROL">Rol: </label>
+                            <input type="text" readonly class="form-control" name="NOM_ROL" value="{{$Permisos['NOM_ROL']}}">
+                            <label for="NROL">Objeto: </label>
+                            <input type="text" readonly class="form-control" name="OBJETO" value="{{$Permisos['OBJETO']}}">
+                        </div>
                         <!-- Insertar -->
                         <div class="mb-3">
                             <label for="LPRM_INSERTAR">Permiso de Insertar</label>
