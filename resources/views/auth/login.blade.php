@@ -168,6 +168,33 @@
                     @endif
                   </form>
 
+                  <script>
+                      //Validaciones para el usuario
+                      document.addEventListener("DOMContentLoaded", function() {
+                          const nomUsuarioInput = document.getElementById("NOM_USUARIO");
+                          nomUsuarioInput.addEventListener("input", function() {
+                            // Convertir a mayúsculas
+                            this.value = this.value.toUpperCase();
+                                                
+                            // Quitar espacios y caracteres especiales
+                            this.value = this.value.replace(/[^A-Z0-9]/g, "");
+                          });
+                      });
+
+                      //Validaciones para la contraseña
+                      // Validación para quitar espacios en blanco del campo de contraseña
+                      const passwordInput = document.getElementById('PAS_USUARIO');
+                      passwordInput.addEventListener('input', () => {
+                          const password = passwordInput.value;
+
+                          // Eliminar espacios en blanco
+                          const cleanedPassword = password.replace(/\s/g, '');
+
+                          // Actualizar el valor del campo con los espacios eliminados
+                          passwordInput.value = cleanedPassword;
+                      });
+                  </script>
+
                 </div>
               </div>
               <div class="col-lg-6 d-flex align-items-center gradient-environmental">

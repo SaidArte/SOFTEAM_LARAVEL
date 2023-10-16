@@ -27,8 +27,8 @@
 
             <div class="mb-3">
                 <label for="secret_answer" class="form-label">Respuesta secreta: </label>
-                <input type="password" id="RESPUESTA" class="form-control" name="RESPUESTA"
-                    placeholder="Ingrese la respuesta a la pregunta elegida" required>
+                <input type="password" id="RESPUESTA" class="form-control" name="RESPUESTA" placeholder="Ingrese la respuesta a la pregunta elegida" required>
+                <div id="respuestaError" class="text-danger"></div>
             </div>
 
             <div class="mb-3">
@@ -49,11 +49,6 @@
     <!-- Agrega el enlace al archivo de script de Bootstrap (si es necesario) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        // Habilita el botón "Guardar" cuando se selecciona una pregunta.
-        document.getElementById('PREGUNTA').addEventListener('change', function () {
-            document.getElementById('guardarButton').disabled = false;
-        });
-    </script>
+    
 </body>
 </html>

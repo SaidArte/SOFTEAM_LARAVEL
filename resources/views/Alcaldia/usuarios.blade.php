@@ -161,6 +161,18 @@
                                             </div>
                                     </form>
                                     <script>
+                                        //Validaciones para el usuario
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            const nomUsuarioInput = document.getElementById("NOM_USUARIO");
+                                            nomUsuarioInput.addEventListener("input", function() {
+                                                // Convertir a mayúsculas
+                                                this.value = this.value.toUpperCase();
+                                                
+                                                // Quitar espacios y caracteres especiales
+                                                this.value = this.value.replace(/[^A-Z0-9]/g, "");
+                                            });
+                                        });
+
                                         $(document).ready(function() {
                                             //Validaciones del campo COD_PERSONA el cual no permite el ingreso de letras (las bloquea y no se muestra)
                                             //y solo permite el ingreso de numeros
@@ -214,7 +226,7 @@
                                                 // Habilitar o deshabilitar el botón de envío según la validez de la contraseña
                                                 const submitButton = document.querySelector('button[type="submit"]');
                                                 if (submitButton) {
-                                                    submitButton.disabled = !isValid;
+                                                    submitButton.disabled = !isValid; // Deshabilita el botón si isValid es falso
                                                 }
                                             });
                                         });
