@@ -88,7 +88,7 @@
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
             <?php
                 $authController = app(\App\Http\Controllers\AuthController::class);
-                $objeto = 'Usuarios'; // Por ejemplo, el objeto deseado
+                $objeto = 'USUARIOS'; // Por ejemplo, el objeto deseado
                 $rol = session('user_data')['NOM_ROL'];
                 $tienePermiso = $authController->tienePermiso($rol, $objeto);
             ?>

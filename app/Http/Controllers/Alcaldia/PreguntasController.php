@@ -22,26 +22,34 @@ class PreguntasController extends Controller
         return view('Alcaldia.preguntas', compact('PreguntasArreglo'));
     }
 
-    public function nueva_pregunta(Request $request){
+    public function nueva_pregunta(Request $request) {
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
-
-        $nuevo_pregunta = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/INSERTAR_PREGUNTAS',[
-            "PREGUNTA"    => $request -> input("PREGUNTA")
+    
+        $pregunta = $request->input("PREGUNTA");
+    
+        $pregunta = "¿" . $pregunta . "?";  // Se utilizan puntos (.) para concatenar cadenas.
+    
+        $nueva_pregunta = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/INSERTAR_PREGUNTAS', [
+            "PREGUNTA" => $pregunta,
         ]);
+    
         return redirect('/Preguntas');
-
-    }
+    }    
 
     public function actualizar_pregunta(Request $request){
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
 
+        $pregunta = $request->input("PREGUNTA");
+
+        $pregunta = "¿" . $pregunta . "?";  // Se utilizan puntos (.) para concatenar cadenas.
+
         $actualizar_pregunta = Http::withHeaders($headers)->put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PREGUNTAS',[
             "COD_PREGUNTA"       => $request -> input("COD_PREGUNTA"),
-            "PREGUNTA"    => $request -> input("PREGUNTA")
+            "PREGUNTA"    => $pregunta,
         ]);
         return redirect('/Preguntas');
 

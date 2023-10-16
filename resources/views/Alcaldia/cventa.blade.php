@@ -95,7 +95,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <?php
                 $authController = app(\App\Http\Controllers\AuthController::class);
-                $objeto = 'Expedientes CV'; // Por ejemplo, el objeto deseado
+                $objeto = 'EXPEDIENTECV'; // Por ejemplo, el objeto deseado
                 $rol = session('user_data')['NOM_ROL'];
                 $tienePermiso = $authController->tienePermiso($rol, $objeto);
             ?>

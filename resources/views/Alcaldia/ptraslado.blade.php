@@ -91,7 +91,7 @@
 @if(session()->has('user_data'))
         <?php
             $authController = app(\App\Http\Controllers\AuthController::class);
-            $objeto = 'Permisos de Traslado'; // Por ejemplo, el objeto deseado
+            $objeto = 'PTRASLADO'; // Por ejemplo, el objeto deseado
             $rol = session('user_data')['NOM_ROL'];
             $tienePermiso = $authController->tienePermiso($rol, $objeto);
         ?>

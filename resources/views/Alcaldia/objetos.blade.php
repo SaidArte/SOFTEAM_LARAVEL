@@ -7,27 +7,21 @@
 
 @section('content_header')
     @if(session()->has('user_data'))
-        <?php
-            $authController = app(\App\Http\Controllers\AuthController::class);
-            $objeto = 'Objetos'; // Por ejemplo, el objeto deseado
-            $rol = session('user_data')['NOM_ROL'];
-            $tienePermiso = $authController->tienePermiso($rol, $objeto);
-        ?>
 
-        @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
+        @if(session('user_data')['NOM_ROL'] == "ADMINISTRADOR")
             <center><br>
                 <h1>Información de Objetos</h1>
             </center></br>
 
         @section('content')
-        @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
+
         <p align="right">
                 <button type="button" class="Btn" data-toggle="modal" data-target="#Objetos">
                     <div class="sign">+</div>
                     <div class="text">Nuevo</div>
                 </button>
             </p>
-        @endif
+
             <div class="modal fade bd-example-modal-sm" id="Objetos" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -41,7 +35,7 @@
                                 @csrf              
                                     <div class="mb-3">
                                         <label for="OBJETO">Nombre del objeto</label>
-                                        <input type="text" id="OBJETO" class="form-control" name="OBJETO" placeholder="Ingresar el nombre del objeto" required>
+                                        <input type="text" id="OBJETO" class="form-control" name="OBJETO" placeholder="Ingresar el nombre del objeto" oninput="this.value = this.value.toUpperCase()" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
@@ -127,11 +121,11 @@
                             <td>{{$Objetos['DES_OBJETO']}}</td> 
                             <td>{{$Objetos['TIP_OBJETO']}}</td>
                             <td>
-                            @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
+                            
                                 <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Objetos-edit-{{$Objetos['COD_OBJETO']}}">
                                 <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                                 </button>
-                            @endif
+                            
                             </td>
                         </tr>
                         <!-- Modal for editing goes here -->

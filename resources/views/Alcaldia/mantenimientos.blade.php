@@ -9,7 +9,7 @@
     @if(session()->has('user_data'))
             <?php
                 $authController = app(\App\Http\Controllers\AuthController::class);
-                $objeto = 'Mantenimientos'; // Por ejemplo, el objeto deseado
+                $objeto = 'MANTENIMIENTOS'; // Por ejemplo, el objeto deseado
                 $rol = session('user_data')['NOM_ROL'];
                 $tienePermiso = $authController->tienePermiso($rol, $objeto);
             ?>

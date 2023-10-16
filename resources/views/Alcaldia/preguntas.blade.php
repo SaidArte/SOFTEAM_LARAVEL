@@ -9,7 +9,7 @@
     @if(session()->has('user_data'))
         <?php
             $authController = app(\App\Http\Controllers\AuthController::class);
-            $objeto = 'Preguntas'; // Por ejemplo, el objeto deseado
+            $objeto = 'PREGUNTAS'; // Por ejemplo, el objeto deseado
             $rol = session('user_data')['NOM_ROL'];
             $tienePermiso = $authController->tienePermiso($rol, $objeto);
         ?>
@@ -41,7 +41,7 @@
                                 @csrf
                                     <div class="mb-3 mt-3">
                                         <label for="PREGUNTA">Pregunta</label>
-                                        <input type="text" id="PREGUNTA" class="form-control" name="PREGUNTA" placeholder="Ingrese una breve pregunta" required>
+                                        <input type="text" id="PREGUNTA" class="form-control" name="PREGUNTA" placeholder="Ingrese una breve pregunta" oninput="this.value = this.value.toUpperCase()" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
@@ -131,7 +131,7 @@
                                                 
                                                 <div class="mb-3">
                                                     <label for="PREGUNTA">PREGUNTA</label>
-                                                    <input type="text" class="form-control" id="PREGUNTA" name="PREGUNTA" placeholder="Ingrese una breve pregunta" value="{{$Preguntas['PREGUNTA']}}" required>
+                                                    <input type="text" class="form-control" id="PREGUNTA" name="PREGUNTA" placeholder="Ingrese una breve pregunta" value="{{$Preguntas['PREGUNTA']}}" oninput="this.value = this.value.toUpperCase()" required>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
                                                 <div class="mb-3">

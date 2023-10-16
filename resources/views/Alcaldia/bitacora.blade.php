@@ -86,7 +86,7 @@
     @section('content_header')
         @if(session()->has('user_data'))
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-             @if(session('user_data')['NOM_ROL'] == "Administrador")
+             @if(session('user_data')['NOM_ROL'] == "ADMINISTRADOR")
                 <center><br>
                     <h1>Bitácora del Sistema</h1>
                 </center></br>

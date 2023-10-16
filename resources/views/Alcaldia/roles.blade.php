@@ -9,7 +9,7 @@
     @if(session()->has('user_data'))
         <?php
             $authController = app(\App\Http\Controllers\AuthController::class);
-            $objeto = 'Roles'; // Por ejemplo, el objeto deseado
+            $objeto = 'ROLES'; // Por ejemplo, el objeto deseado
             $rol = session('user_data')['NOM_ROL'];
             $tienePermiso = $authController->tienePermiso($rol, $objeto);
         ?>
@@ -43,7 +43,7 @@
                                 
                                 <div class="mb-3 mt-3">
                                     <label for="NOM_ROL">Rol</label>
-                                    <input type="text" id="NOM_ROL" class="form-control" name="NOM_ROL" placeholder="Ingresar el nombre del rol" required>
+                                    <input type="text" id="NOM_ROL" class="form-control" name="NOM_ROL" placeholder="Ingresar el nombre del rol" oninput="this.value = this.value.toUpperCase()" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="mb-3">

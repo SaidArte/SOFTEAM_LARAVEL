@@ -91,73 +91,77 @@ class AuthController extends Controller
 
         $data = $response->json();
 
-        if ($response->successful()) {
-            $user = $data['user'];
-            $token = $data['token'];
-            Session::put('user_data', $user); //Almacena datos del usuario.
-            Session::put('token', $token); //Almacena el token.
-            $COD_USUARIO = Session::get('user_data')['COD_USUARIO']; //Extrae la variable de código de usuario de la sesión.
-            $FEC_VENCIMIENTO = Session::get('user_data')['FEC_VENCIMIENTO'];
-
-            $vencimiento = date("Y-m-d", strtotime($FEC_VENCIMIENTO)); //Adaptamos la fecha almacenada a un formato más simple.
-
-            //En caso que ya se haya alcanzado o sobrepasado la
-            //fecha de vencimiento de la contraseña.
-            if ($vencimiento < $fechaActual) {
-                Session::put('COD_USUARIO', $COD_USUARIO); //Almacena el código de Usuario.
-                Session::put('NOM_USUARIO', $NOM_USUARIO); //Almacena el nombre de Usuario.
-                return redirect()->route('auth.passwords.expired');
-            }
-
-            $notification = [
-                'type' => 'success',
-                'title' => '¡Bienvenido(a)!',
-                'message' => 'Inicio de sesión exitoso'
-            ];
-            $CONTADOR = 0;
-            //Resetea los intentos fallidos.
-            $response2 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
-                'COD_USUARIO' => $COD_USUARIO,
-                'NUM_INTENTOS_FALLIDOS' => $CONTADOR,
-            ]);
-            //Actualiza la fecha y hora de ingreso.
-            $response3 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_FECHA_ACCESO', [
-                'COD_USUARIO' => $COD_USUARIO
-            ]);
-            //Verifica si el usuario tiene o no ingresada su pregunta de seguridad con su respuesta secreta.
-            $tienePregunta = Http::post(self::urlapi.'SEGURIDAD/GETONE_PREGUNTA_USUARIOS', [
-                'NOM_USUARIO' => $NOM_USUARIO
-            ]);
-            
-            $dataPregunta = $tienePregunta->json();
-
-            //En caso que el usuario no tenga su pregunta de seguridad.
-            if(empty($dataPregunta)){
-                Session::put('COD_USUARIO', $COD_USUARIO); //Almacena el código de Usuario.
-                return redirect()->route('auth.respuesta-secreta');
-            }
-
-            //Si todo marcha según lo esperado, redirige a la vista "home".
-            return redirect()->route('home')->with('notification', $notification); // Redirigir al home y muestra un mensaje de bienvenida.
-        } else {
-            if ($data['error_type'] === 'inactive') {
-                return redirect()->back()->with('error', 'Este usuario está inactivo. Favor, contactar con el administrador');
-            } else {
-                $response4 = Http::post(self::urlapi.'SEGURIDAD/GETONE_USUARIOS', [
-                    'NOM_USUARIO' => $NOM_USUARIO,
+        if(!empty($data)){
+            if ($response->successful()) {
+                $user = $data['user'];
+                $token = $data['token'];
+                Session::put('user_data', $user); //Almacena datos del usuario.
+                Session::put('token', $token); //Almacena el token.
+                $COD_USUARIO = Session::get('user_data')['COD_USUARIO']; //Extrae la variable de código de usuario de la sesión.
+                $FEC_VENCIMIENTO = Session::get('user_data')['FEC_VENCIMIENTO'];
+    
+                $vencimiento = date("Y-m-d", strtotime($FEC_VENCIMIENTO)); //Adaptamos la fecha almacenada a un formato más simple.
+    
+                //En caso que ya se haya alcanzado o sobrepasado la
+                //fecha de vencimiento de la contraseña.
+                if ($vencimiento < $fechaActual) {
+                    Session::put('COD_USUARIO', $COD_USUARIO); //Almacena el código de Usuario.
+                    Session::put('NOM_USUARIO', $NOM_USUARIO); //Almacena el nombre de Usuario.
+                    return redirect()->route('auth.passwords.expired');
+                }
+    
+                $notification = [
+                    'type' => 'success',
+                    'title' => '¡Bienvenido(a)!',
+                    'message' => 'Inicio de sesión exitoso'
+                ];
+                $CONTADOR = 0;
+                //Resetea los intentos fallidos.
+                $response2 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
+                    'COD_USUARIO' => $COD_USUARIO,
+                    'NUM_INTENTOS_FALLIDOS' => $CONTADOR,
+                ]);
+                //Actualiza la fecha y hora de ingreso.
+                $response3 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_FECHA_ACCESO', [
+                    'COD_USUARIO' => $COD_USUARIO
+                ]);
+                //Verifica si el usuario tiene o no ingresada su pregunta de seguridad con su respuesta secreta.
+                $tienePregunta = Http::post(self::urlapi.'SEGURIDAD/GETONE_PREGUNTA_USUARIOS', [
+                    'NOM_USUARIO' => $NOM_USUARIO
                 ]);
                 
-                $data2 = $response4->json();
-                if (!empty($data2)) {
-                    $CONTADOR = $data2[0]['NUM_INTENTOS_FALLIDOS'];
-                    $response5 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
-                        'COD_USUARIO' => $data2[0]['COD_USUARIO'],
-                        'NUM_INTENTOS_FALLIDOS' => $CONTADOR + 1,
-                    ]);
-
+                $dataPregunta = $tienePregunta->json();
+    
+                //En caso que el usuario no tenga su pregunta de seguridad.
+                if(empty($dataPregunta)){
+                    Session::put('COD_USUARIO', $COD_USUARIO); //Almacena el código de Usuario.
+                    return redirect()->route('auth.respuesta-secreta');
                 }
-                return redirect()->back()->with('error', 'Usuario o Contraseña incorrectos');
+    
+                //Si todo marcha según lo esperado, redirige a la vista "home".
+                return redirect()->route('home')->with('notification', $notification); // Redirigir al home y muestra un mensaje de bienvenida.
+            } else {
+                if ($data['error_type'] === 'inactive') {
+                    return redirect()->back()->with('error', 'Este usuario está inactivo. Favor, contactar con el administrador');
+                } else {
+                    $response4 = Http::post(self::urlapi.'SEGURIDAD/GETONE_USUARIOS', [
+                        'NOM_USUARIO' => $NOM_USUARIO,
+                    ]);
+                    
+                    $data2 = $response4->json();
+                    if (!empty($data2)) {
+                        $CONTADOR = $data2[0]['NUM_INTENTOS_FALLIDOS'];
+                        $response5 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_INT_FALLIDOS', [
+                            'COD_USUARIO' => $data2[0]['COD_USUARIO'],
+                            'NUM_INTENTOS_FALLIDOS' => $CONTADOR + 1,
+                        ]);
+    
+                    }
+                    return redirect()->back()->with('error', 'Usuario o Contraseña incorrectos');
+                }
             }
+        }else{
+            return redirect()->back()->with('error', 'Error interno del servidor');
         }
     }
 
@@ -256,23 +260,17 @@ class AuthController extends Controller
             'PAS_USUARIO' => $PAS_USUARIO
         ]);
 
-        $data = $response->json();
-
-        //dd($data);
-
         if ($response->successful()) {
             return redirect()->route('login')->with('error', 'Favor, ingrese una nueva contraseña')->withInput();
         }
 
         if ($PAS_USUARIO == $CONF_PAS && $PAS_USUARIO != ""){
-            $response = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [
+            $response1 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [
                 'COD_USUARIO' => $COD_USUARIO,
                 'PAS_USUARIO' => $PAS_USUARIO,
             ]);
 
-            $data = $response->json();
-
-            if ($response->successful()) {
+            if ($response1->successful()) {
                 $notification = [
                     'type' => 'success',
                     'title' => 'Cambio de contraseña',
@@ -379,7 +377,7 @@ class AuthController extends Controller
         $COD_USUARIO = $request->input('COD_USUARIO');
         $PREGUNTA = $request->input('PREGUNTA');
         $RESPUESTA = $request->input('RESPUESTA');
-
+        
         $response = Http::post(self::urlapi.'SEGURIDAD/INSERTAR_RESPUESTAS', [
             'COD_USUARIO' => $COD_USUARIO,
             'PREGUNTA' => $PREGUNTA,
