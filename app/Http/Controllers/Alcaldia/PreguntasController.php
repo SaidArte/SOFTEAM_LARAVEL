@@ -43,7 +43,7 @@ class PreguntasController extends Controller
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
 
-        $pregunta = $request->input("PREGUNTA");
+        $pregunta = $request->input("PREGUNTAE");
 
         $pregunta = "¿" . $pregunta . "?";  // Se utilizan puntos (.) para concatenar cadenas.
 

@@ -39,36 +39,35 @@
                             <p>Favor, ingrese la nueva pregunta:</p>
                             <form action="{{ url('Preguntas/insertar') }}" method="post" class="needs-validation preguntas-form">
                                 @csrf
-                                <div class="mb-3 mt-3">
-                                    <label for="PREGUNTA">Pregunta</label>
-                                    <input type="text" id="PREGUNTA" class="form-control" name="PREGUNTA" placeholder="Ingrese una breve pregunta" required>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="mb-3">
-                                    <button class="btn btn-primary" type="submit">Guardar</button>
-                                    <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                </div>
+                                    <div class="mb-3 mt-3">
+                                        <label for="PREGUNTA">Pregunta</label>
+                                        <input type="text" id="PREGUNTA" class="form-control" name="PREGUNTA" placeholder="Ingrese una breve pregunta" oninput="validarPregunta(this.value); this.value = this.value.toUpperCase()" required>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button type="submit" class="btn btn-primary" id="submitButton" disabled>Guardar</button>
+                                        <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                    </div>
                             </form>
-
                             <script>
-                                document.getElementById("PREGUNTA").addEventListener("input", function () {
-        let input = this.value;
-        let indexOfQuestionMark = input.indexOf('?');
-        if (indexOfQuestionMark !== -1) {
-            // Si se encuentra el signo de interrogación, no permitir escribir más allá
-            input = input.substring(0, indexOfQuestionMark + 1);
-        }
-        // Reemplazar caracteres especiales no deseados, excepto el signo de interrogación
-        input = input.replace(/[^a-zA-Z?¿]/g, " ");
-        // Convertir la primera letra a mayúscula y el resto a minúscula
-        if (input.indexOf('¿') !== -1) {
-            let parts = input.split('¿');
-            if (parts.length === 2) {
-                input = parts[0] + '¿' + parts[1].charAt(0).toUpperCase() + parts[1].slice(1).toLowerCase();
-            }
-        }
-        this.value = input;
-    });
+                                //Función para hacer validaciones en tiempo real sobre el ingreso de preguntas.
+                                function validarPregunta(pregunta) {
+                                    // Expresión regular para permitir solo letras y números (puedes ajustarla según tus necesidades)
+                                    var regex = /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚüÜñÑÁÉÍÓÚáéíóú]+$/;
+                                    var btnGuardar = document.getElementById("submitButton");  // Obtener el botón de guardar
+
+                                    if (!regex.test(pregunta) || pregunta.trim() === '') { //Condicional que no permite guardar si hay símbolos está vacía.
+                                        // Si la pregunta contiene símbolos, muestra un mensaje de error
+                                        document.getElementById("PREGUNTA").classList.add("is-invalid");
+                                        document.querySelector(".invalid-feedback").textContent = "Ingrese una pregunta que no contenga símbolos.";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        // Si la pregunta es válida, elimina el mensaje de error
+                                        document.getElementById("PREGUNTA").classList.remove("is-invalid");
+                                        document.querySelector(".invalid-feedback").textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
                                 //Deshabilitar el envio de formularios si hay campos no validos
                                 (function () {
                                     'use strict'
@@ -140,33 +139,48 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Editar pregunta</h5>
-                                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <p>Ingresar nuevos datos</p>
                                         <form action="{{ url('Preguntas/actualizar') }}" method="post">
                                             @csrf
-                                                <input type="hidden" class="form-control" name="COD_PREGUNTA" value="{{$Preguntas['COD_PREGUNTA']}}">
-                                                
-                                                <div class="mb-3">
-                                                    <label for="PREGUNTA">PREGUNTA</label>
-                                                    <input type="text" class="form-control" id="PREGUNTA" name="PREGUNTA" placeholder="Ingrese una breve pregunta" value="{{$Preguntas['PREGUNTA']}}" oninput="this.value = this.value.toUpperCase()" required>
-                                                    <div class="invalid-feedback"></div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <button type="submit" class="btn btn-primary">Editar</button>
-                                                    <a href="{{ url('Preguntas') }}" class="btn btn-danger">Cancelar</a>
+                                            <input type="hidden" class="form-control" name="COD_PREGUNTA" value="{{$Preguntas['COD_PREGUNTA']}}">
+                                            
+                                            <div class="mb-3">
+                                                <label for="PREGUNTAX">PREGUNTA</label>
+                                                <input type="text" class="form-control" id="PREGUNTAE-{{$Preguntas['COD_PREGUNTA']}}" name="PREGUNTAE" placeholder="Ingrese una breve pregunta" value="{{$Preguntas['PREGUNTA']}}" oninput="validarPregunta2('{{$Preguntas['COD_PREGUNTA']}}', this.value); this.value = this.value.toUpperCase()" required>
+                                                <div class="invalid-feedback" id="invalid-feedback-{{$Preguntas['COD_PREGUNTA']}}"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button type="submit" class="btn btn-primary" id="submitButton-{{$Preguntas['COD_PREGUNTA']}}" disabled>Editar</button>
+                                                <a href="{{ url('Preguntas') }}" class="btn btn-danger">Cancelar</a>
                                             </div>
                                         </form>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </tbody>
+                                    <script>
+                                        function validarPregunta2(id, pregunta) {
+                                            var regex = /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚüÜñÑÁÉÍÓÚáéíóú]+$/;
+                                            var btnGuardar = document.getElementById("submitButton-" + id);
+                                            var inputElement = document.getElementById("PREGUNTAE-" + id);
+                                            var invalidFeedback = document.getElementById("invalid-feedback-" + id);
+
+                                            if (!regex.test(pregunta) || pregunta.trim() === '') {
+                                                inputElement.classList.add("is-invalid");
+                                                invalidFeedback.textContent = "Ingrese una pregunta que no contenga símbolos.";
+                                                btnGuardar.disabled = true;
+                                            } else {
+                                                inputElement.classList.remove("is-invalid");
+                                                invalidFeedback.textContent = "";
+                                                btnGuardar.disabled = false;
+                                            }
+                                        }
+                                    </script>
+                                @endforeach
+                            </tbody>
             </table>
             </div>
             </div>
+            
             <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">
