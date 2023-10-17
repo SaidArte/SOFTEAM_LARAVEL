@@ -39,17 +39,36 @@
                             <p>Favor, ingrese la nueva pregunta:</p>
                             <form action="{{ url('Preguntas/insertar') }}" method="post" class="needs-validation preguntas-form">
                                 @csrf
-                                    <div class="mb-3 mt-3">
-                                        <label for="PREGUNTA">Pregunta</label>
-                                        <input type="text" id="PREGUNTA" class="form-control" name="PREGUNTA" placeholder="Ingrese una breve pregunta" oninput="this.value = this.value.toUpperCase()" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary" type="submit">Guardar</button>
-                                        <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                    </div>
+                                <div class="mb-3 mt-3">
+                                    <label for="PREGUNTA">Pregunta</label>
+                                    <input type="text" id="PREGUNTA" class="form-control" name="PREGUNTA" placeholder="Ingrese una breve pregunta" required>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <button class="btn btn-primary" type="submit">Guardar</button>
+                                    <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                </div>
                             </form>
+
                             <script>
+                                document.getElementById("PREGUNTA").addEventListener("input", function () {
+        let input = this.value;
+        let indexOfQuestionMark = input.indexOf('?');
+        if (indexOfQuestionMark !== -1) {
+            // Si se encuentra el signo de interrogación, no permitir escribir más allá
+            input = input.substring(0, indexOfQuestionMark + 1);
+        }
+        // Reemplazar caracteres especiales no deseados, excepto el signo de interrogación
+        input = input.replace(/[^a-zA-Z?¿]/g, " ");
+        // Convertir la primera letra a mayúscula y el resto a minúscula
+        if (input.indexOf('¿') !== -1) {
+            let parts = input.split('¿');
+            if (parts.length === 2) {
+                input = parts[0] + '¿' + parts[1].charAt(0).toUpperCase() + parts[1].slice(1).toLowerCase();
+            }
+        }
+        this.value = input;
+    });
                                 //Deshabilitar el envio de formularios si hay campos no validos
                                 (function () {
                                     'use strict'
