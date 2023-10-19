@@ -109,6 +109,13 @@
                         </button>
                     </p>
                     @endif
+                    @if(session('error'))
+                    <div class="alert alert-danger" role="alert">
+                        <div class="text-center">
+                            <strong>Error:</strong> {{ session('error') }}
+                        </div>
+                    </div>
+                    @endif
                     <div class="modal fade bd-example-modal-sm" id="Usuarios" tabindex="-1">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -156,7 +163,7 @@
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="mb-3">
-                                                <button class="btn btn-primary" type="submit">Guardar</button>
+                                                <button type="submit" class="btn btn-primary" id="submitButton" disabled>Guardar</button>
                                                 <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                             </div>
                                     </form>
@@ -194,39 +201,33 @@
 
                                             passwordInput.addEventListener('input', () => {
                                                 const password = passwordInput.value;
-                                                let isValid = true;
+                                                var btnGuardar = document.getElementById("submitButton");  // Obtener el botón de guardar
 
                                                 // Validaciones
-                                                if (password.length < 8) {
-                                                    isValid = false;
-                                                    passwordFeedback.textContent = 'La contraseña debe tener al menos 8 caracteres.';
-                                                } else if (!/[A-Z]/.test(password)) {
-                                                    isValid = false;
-                                                    passwordFeedback.textContent = 'La contraseña debe contener al menos una letra mayúscula.';
-                                                } else if (!/[0-9]/.test(password)) {
-                                                    isValid = false;
-                                                    passwordFeedback.textContent = 'La contraseña debe contener al menos un número.';
-                                                } else if (!/[!@#$%^&*]/.test(password)) {
-                                                    isValid = false;
-                                                    passwordFeedback.textContent = 'La contraseña debe contener al menos un carácter especial (!@#$%^&*).';
-                                                } else if (/\s/.test(password)) {
-                                                    isValid = false;
-                                                    passwordFeedback.textContent = 'La contraseña no debe contener espacios.';
-                                                } else {
-                                                    passwordFeedback.textContent = '';
-                                                }
-
-                                                // Agregar o quitar clase 'is-invalid' en el campo de contraseña
-                                                if (isValid) {
-                                                    passwordInput.classList.remove('is-invalid');
-                                                } else {
+                                                if (password.length < 8 || password.length > 20) {
                                                     passwordInput.classList.add('is-invalid');
-                                                }
-
-                                                // Habilitar o deshabilitar el botón de envío según la validez de la contraseña
-                                                const submitButton = document.querySelector('button[type="submit"]');
-                                                if (submitButton) {
-                                                    submitButton.disabled = !isValid; // Deshabilita el botón si isValid es falso
+                                                    passwordFeedback.textContent = 'La contraseña debe tener al menos 8 caracteres, y no más de 20.';
+                                                    btnGuardar.disabled = true;
+                                                } else if (!/[A-Z]/.test(password)) {
+                                                    passwordInput.classList.add('is-invalid');
+                                                    passwordFeedback.textContent = 'La contraseña debe contener al menos una letra mayúscula.';
+                                                    btnGuardar.disabled = true;
+                                                } else if (!/[0-9]/.test(password)) {
+                                                    passwordInput.classList.add('is-invalid');
+                                                    passwordFeedback.textContent = 'La contraseña debe contener al menos un número.';
+                                                    btnGuardar.disabled = true;
+                                                } else if (!/[!@#$%^&*]/.test(password)) {
+                                                    passwordInput.classList.add('is-invalid');
+                                                    passwordFeedback.textContent = 'La contraseña debe contener al menos un carácter especial (!@#$%^&*).';
+                                                    btnGuardar.disabled = true;
+                                                } else if (/\s/.test(password)) {
+                                                    passwordInput.classList.add('is-invalid');
+                                                    passwordFeedback.textContent = 'La contraseña no debe contener espacios.';
+                                                    btnGuardar.disabled = true;
+                                                } else {
+                                                    passwordInput.classList.remove('is-invalid');
+                                                    passwordFeedback.textContent = '';
+                                                    btnGuardar.disabled = false;
                                                 }
                                             });
                                         });
@@ -369,6 +370,16 @@
                         </table>
                     </div>
                 </div>
+                @if(session('notification'))
+                          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                              <script>
+                                  Swal.fire({
+                                      icon: '{{ session('notification')['type'] }}',
+                                      title: '{{ session('notification')['title'] }}',
+                                      text: '{{ session('notification')['message'] }}',
+                                  });
+                              </script>
+                    @endif
                 <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">

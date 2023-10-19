@@ -31,6 +31,37 @@ class UsuariosController extends Controller
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
 
+        $codPersona = $request -> input('COD_PERSONA');
+        //Probamos que el nombre de usuario no este registrado.
+        $response = Http::post(self::urlapi.'SEGURIDAD/GETONE_USUARIOS', [
+            "NOM_USUARIO" => $request -> input("NOM_USUARIO")
+        ]);
+
+        $data = $response->json();
+        if (!empty($data)) {
+            return redirect()->back()->with('error', 'Este nombre de usuario ya está registrado. Favor, ingrese uno diferente.')->withInput();
+        }
+
+        //Probamos que la persona no tenga ya un usuario.
+        $response = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/GETONE_PERSONA-USUARIOS',[
+            'COD_PERSONA' => $codPersona,
+        ]);
+
+        $data = $response->json();
+        if (!empty($data)) {
+            return redirect()->back()->with('error', 'Esta persona ya tiene un usuario registrado.')->withInput();
+        }
+
+        //Probamos que la persona este debidamente registrada.
+        $response = Http::withHeaders($headers)->post(self::urlapi.'PERSONAS/GETONE',[
+            'COD_PERSONA' => $codPersona,
+        ]);
+
+        $data = $response->json();
+        if (empty($data)) {
+            return redirect()->back()->with('error', 'Este código de persona no existe en la base de datos.')->withInput();
+        }
+
         $nuevo_usuario = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/INSERTAR_USUARIOS',[
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "COD_PERSONA"  => $request -> input("COD_PERSONA"),
@@ -38,7 +69,18 @@ class UsuariosController extends Controller
             "PAS_USUARIO"   => $request -> input("PAS_USUARIO"),
             "IND_USUARIO"   => $request -> input("IND_USUARIO")
         ]);
-        return redirect('/Usuarios');
+
+        if ($nuevo_usuario->successful()) {
+            $notification = [
+                'type' => 'success',
+                'title' => '¡Registro exitoso!',
+                'message' => 'El usuario ha sido ingresado.'
+            ];
+            return redirect('/Usuarios')
+                ->with('notification', $notification);
+        } else {
+            return redirect()->route('login')->with('error', 'Error interno de servidor')->withInput();
+        }
 
     }
 
