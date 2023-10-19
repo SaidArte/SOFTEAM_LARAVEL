@@ -322,7 +322,7 @@
                                         var destelefono = $(this).val();
                                         var errorMessage = 'La descripción debe tener entre 5 y 100 letras y no contener carácteres especiales.';
                                         
-                                        if (destelefono.length < 5 || destelefono.length > 100 || !/^[a-zA-Z]+$/.test(destelefono)) {
+                                        if (destelefono.length < 5 || destelefono.length > 100 || !/^[a-zA-Z ]+$/.test(destelefono)) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {

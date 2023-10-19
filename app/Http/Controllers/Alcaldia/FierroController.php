@@ -32,7 +32,7 @@ class FierroController extends Controller
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
         $request->validate([
-            'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
     
         $imagen = $request->file('IMG_FIERRO');
@@ -80,7 +80,7 @@ public function actualizar_fierro(Request $request)
 
     if ($request->hasFile('IMG_FIERRO')) {
         $request->validate([
-            'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $imagen = $request->file('IMG_FIERRO');
@@ -111,7 +111,7 @@ public function actualizar_fierro(Request $request)
         'Authorization' => 'Bearer ' . Session::get('token'),
     ];
     $request->validate([
-        'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg|max:2048',
     ]);
 
     $imagen = $request->file('IMG_FIERRO');

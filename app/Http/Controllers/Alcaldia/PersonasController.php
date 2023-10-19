@@ -29,7 +29,7 @@ class PersonasController extends Controller
         ];
         //Codigo para las imagenes
         $request->validate([
-            'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         $imagen = $request->file('IMG_PERSONA');
 
@@ -96,7 +96,7 @@ class PersonasController extends Controller
         // Manejar la imagen si se proporciona
         if ($request->hasFile('IMG_PERSONA')) {
             $request->validate([
-                'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ]);
     
             $imagen = $request->file('IMG_PERSONA');
@@ -125,7 +125,7 @@ class PersonasController extends Controller
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
         $request->validate([
-            'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
     
         $imagen = $request->file('IMG_PERSONA');
