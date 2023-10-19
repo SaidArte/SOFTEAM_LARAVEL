@@ -145,7 +145,7 @@
                                     </div>
                                     <div class="mb-3 mt-3">
                                         <label for="NOM_PERSONA">Nombre de la Persona:</label>
-                                        <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el Nombre Completo de la persona" required>
+                                        <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
@@ -165,7 +165,7 @@
                                     <form action="{{ route('personas.guardar-imagen') }}" method="POST" enctype="multipart/form-data">
                                       @csrf
                                       <div class="form-group">
-                                          <label for="IMG_PERSONA">Imagen de la Persona:</label>
+                                          <label for="IMG_PERSONA">Imágen de la Persona:</label>
                                           <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
                                       </div>
                                     <div class="mb-3">
@@ -182,17 +182,17 @@
                                         </select>  
                                     </div>                          
                                     <div class="mb-3">
-                                        <label for="DIR_EMAIL">Direccion de Correo Electronico:</label>
+                                        <label for="DIR_EMAIL">Direccion de Correo Electrónico:</label>
                                         <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="NUM_TELEFONO">Número de Telefono:</label>
+                                        <label for="NUM_TELEFONO">Número de Teléfono:</label>
                                         <input type="text" id="NUM_TELEFONO" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="TIP_TELEFONO">Tipo de Telefono:</label>
+                                        <label for="TIP_TELEFONO">Tipo de Teléfono:</label>
                                         <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" required>
                                             <option value="" disabled selected>Seleccione una opción</option>
                                             <option value="FI">FIJO</option>
@@ -201,13 +201,13 @@
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="DES_TELEFONO">Descripción del Telefono:</label>
-                                        <input type="text" id="DES_TELEFONO" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del telefono" required>
+                                        <label for="DES_TELEFONO">Descripción del Teléfono:</label>
+                                        <input type="text" id="DES_TELEFONO" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="OPE_TELEFONO">Operadora de Telefono:</label>
-                                        <input type="text" id="OPE_TELEFONO" class="form-control" name="OPE_TELEFONO" placeholder="Ingresar una descripción del telefono" required>
+                                        <label for="OPE_TELEFONO">Operadora de Teléfono:</label>
+                                        <input type="text" id="OPE_TELEFONO" class="form-control" name="OPE_TELEFONO" placeholder="Ingresar una descripción del teléfono" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
@@ -229,8 +229,9 @@
                                     //Validaciones del nombre persona, no permite que se ingrese numeros solo letras
                                     $('#NOM_PERSONA').on('input', function() {
                                         var nombre = $(this).val();
-                                        var errorMessage = 'El nombre debe tener al menos 5 letras';
-                                        if (nombre.length < 5 || !/^[a-zA-Z\s]+$/.test(nombre)) {
+                                        var errorMessage = 'El nombre debe tener al menos 5 carácteres y no más de 100, sin números';
+                                        // Verificar si el nombre tiene al menos 5 letras, no contiene números y no tiene más de 100 caracteres
+                                        if (nombre.length < 5 || nombre.length > 100 || !/^[a-zA-Z\s]+$/.test(nombre)) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {
@@ -260,7 +261,6 @@
                                             }
                                         }
                                     });
-        
                                     //Validaciones del campo DNI el cual no permite el ingreso de letras (las bloquea y no se muestra)
                                     //y solo permite el ingreso de numeros
                                     $('#DNI_PERSONA').on('input', function() {
@@ -291,38 +291,26 @@
                                     });
                                     $('#DES_DIRECCION').on('input', function() {
                                         var direccionpersona = $(this).val();
-                                        var errorMessage = 'La dirección debe tener al menos 5 caracteres';
-                                        
+                                        var errorMessage = '';
+
                                         if (direccionpersona.length < 5) {
+                                            errorMessage = 'La dirección debe tener al menos 5 carácteres.';
+                                        } else if (direccionpersona.length > 100) {
+                                            errorMessage = 'La dirección no puede tener más de 100 carácteres.';
+                                        }
+                                        if (errorMessage) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {
                                             $(this).removeClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text('');
                                         }
-                                    });
+                                    });                                
                                     $('#DIR_EMAIL').on('input', function() {
                                         var correopersona = $(this).val();
-                                        var errorMessage = 'La dirección de Correo debe tener al menos 5 caracteres';
+                                        var errorMessage = 'La dirección de correo debe tener entre 5 y 50 caraácteres, sin espacios y contener letras minúsculas, "@" y "."';
                                         
-                                        if (correopersona.length < 5) {
-                                            $(this).addClass('is-invalid');
-                                            $(this).siblings('.invalid-feedback').text(errorMessage);
-                                        } else {
-                                            // Verificar si contiene el símbolo "@"
-                                            if (correopersona.indexOf('@') === -1) {
-                                                $(this).addClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('El correo electrónico debe contener "@"');
-                                            } else {
-                                                $(this).removeClass('is-invalid');
-                                                $(this).siblings('.invalid-feedback').text('');
-                                            }
-                                        }
-                                    });
-                                    $('#NOM_PERSONA').on('input', function() {
-                                        var nombre = $(this).val();
-                                        var errorMessage = 'El nombre debe tener al menos 5 letras';
-                                        if (nombre.length < 5 || !/^[a-zA-Z\s]+$/.test(nombre)) {
+                                        if (correopersona.length < 5 || correopersona.length > 50 || correopersona.indexOf(' ') !== -1 || correopersona.indexOf('@') === -1 || !/^[a-z0-9@.]+$/.test(correopersona)) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {
@@ -332,19 +320,21 @@
                                     });
                                     $('#DES_TELEFONO').on('input', function() {
                                         var destelefono = $(this).val();
-                                        var errorMessage = 'La descripción debe tener al menos 5 letras';
-                                        if (destelefono.length < 5 || !/^[a-zA-Z\s]+$/.test(destelefono)) {
+                                        var errorMessage = 'La descripción debe tener entre 5 y 100 letras y no contener carácteres especiales.';
+                                        
+                                        if (destelefono.length < 5 || destelefono.length > 100 || !/^[a-zA-Z]+$/.test(destelefono)) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {
                                             $(this).removeClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text('');
                                         }
-                                    });
+                                    });                                 
                                     $('#OPE_TELEFONO').on('input', function() {
                                         var opetelefono = $(this).val();
-                                        var errorMessage = 'La descripción debe tener al menos 4 letras';
-                                        if (opetelefono.length < 4 || !/^[a-zA-Z\s]+$/.test(opetelefono)) {
+                                        var errorMessage = 'La descripción debe tener entre 4 y 20 letras, sin carácteres especiales ni números.';
+                                        
+                                        if (opetelefono.length < 4 || opetelefono.length > 20 || !/^[a-zA-Z\s]+$/.test(opetelefono)) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {
@@ -352,7 +342,6 @@
                                             $(this).siblings('.invalid-feedback').text('');
                                         }
                                     });
-        
                                 });
                                 // Deshabilita el botón de enviar inicialmente
                                 $('form.needs-validation').find('button[type="submit"]').prop('disabled', true);
@@ -378,7 +367,6 @@
                                     document.getElementById("FEC_NAC_PERSONA").value = "";
                                     document.getElementById("IMG_PERSONA").value = "";
                                     document.getElementById("DES_DIRECCION").value = "";
-                                    document.getElementById("DIR_EMAILP_DIRECCION").value = "";
                                     document.getElementById("DIR_EMAIL").value = "";
                                     document.getElementById("NUM_TELEFONO").value = "";
                                     document.getElementById("TIP_TELEFONO").value = "";
@@ -434,10 +422,10 @@
                             <th><center>Nombre</center></th>
                             <th><center>Género</center></th>
                             <th><center>Fecha de Nacimiento</center></th>
-                            <th><center>Imagen Persona</center></th>
+                            <th><center>Imágen Persona</center></th>
                             <th><center>Descripción Dirección</center></th>
                             <th><center>Dirección Correo</center></th>
-                            <th><center>Número Telefono</center></th>
+                            <th><center>Número Teléfono</center></th>
                             <th><center>Opciones de la Tabla</center></th>
                         </thead>
                         <tbody>
@@ -449,7 +437,7 @@
                                     <td>{{$generos[$personas['GEN_PERSONA']]}}</td>
                                     <td>{{ Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d') }}</td>
                                     <td><center>
-                                        <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen de la persona" class="img-fluid" style="max-height: 100px;">
+                                        <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imágen de la persona" class="img-fluid" style="max-height: 100px;">
                                     </center></td> 
                                     <td>{{$personas['DES_DIRECCION']}}</td>   
                                     <td>{{$personas['DIR_EMAIL']}}</td>   
@@ -476,12 +464,12 @@
                                                         <input type="hidden" class="form-control" name="COD_PERSONA" value="{{$personas['COD_PERSONA']}}">
                                                         <div class="mb-3">
                                                             <label for="personas">Número de Identidad:</label>
-                                                            <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" value="{{$personas['DNI_PERSONA']}}">
+                                                            <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" value="{{$personas['DNI_PERSONA']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3 mt-3">
                                                             <label for="personas">Nombre de la Persona:</label>
-                                                            <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el Nombre Completo de la persona" value="{{$personas['NOM_PERSONA']}}">
+                                                            <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" value="{{$personas['NOM_PERSONA']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
@@ -496,21 +484,21 @@
                                                             <label for="personas" class="form-laabel">Fecha de Nacimiento:</label>
                                                             <!-- Codigo para que me muestre la fecha ya registrada al momento de actualizar --->
                                                             <?php $fecha_formateada = Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d'); ?>
-                                                            <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$fecha_formateada}}">                                    
+                                                            <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$fecha_formateada}}" required>                                    
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="IMG_PERSONA">Imagen de la Persona:</label>
+                                                            <label for="IMG_PERSONA">Imágen de la Persona:</label>
                                                             <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
                                                         </div>
                                                         <!-- Mostrar imagen actual -->
                                                         <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
                                                         <div class="mb-3 mt-3">
-                                                            <label for="personas" class="form-label">Codigo Dirección:</label>
-                                                            <input type="text" id="COD_DIRECCION" class="form-control" name="COD_DIRECCION" placeholder="Ingrese el codigo de la dirección" value="{{$personas['COD_DIRECCION']}}" readonly>
+                                                            <label for="personas" class="form-label">Código Dirección:</label>
+                                                            <input type="text" id="COD_DIRECCION" class="form-control" name="COD_DIRECCION" placeholder="Ingrese el código de la dirección" value="{{$personas['COD_DIRECCION']}}" readonly>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Descripción de la Dirección:</label>
-                                                            <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" value="{{$personas['DES_DIRECCION']}}">
+                                                            <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" value="{{$personas['DES_DIRECCION']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
@@ -522,26 +510,26 @@
                                                             <div class="invalid-feedback"></div>
                                                         </div>  
                                                         <div class="mb-3 mt-3">
-                                                            <label for="personas" class="form-label">Codigo Email:</label>
-                                                            <input type="text" id="COD_EMAIL" class="form-control" name="COD_EMAIL" placeholder="Ingrese el codigo del Correo" value="{{$personas['COD_EMAIL']}}" readonly>
+                                                            <label for="personas" class="form-label">Código Email:</label>
+                                                            <input type="text" id="COD_EMAIL" class="form-control" name="COD_EMAIL" placeholder="Ingrese el código del Correo" value="{{$personas['COD_EMAIL']}}" readonly>
                                                             
                                                         </div>                        
                                                         <div class="mb-3">
-                                                            <label for="personas">Direccion de Correo Electronico:</label>
-                                                            <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" value="{{$personas['DIR_EMAIL']}}">
+                                                            <label for="personas">Direccion de Correo Electrónico:</label>
+                                                            <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" value="{{$personas['DIR_EMAIL']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3 mt-3">
-                                                            <label for="personas" class="form-label">Codigo Teléfono:</label>
-                                                            <input type="text" id="COD_TELEFONO" class="form-control" name="COD_TELEFONO" placeholder="Ingrese el codigo del teléfono" value="{{$personas['COD_TELEFONO']}}" readonly>
+                                                            <label for="personas" class="form-label">Código Teléfono:</label>
+                                                            <input type="text" id="COD_TELEFONO" class="form-control" name="COD_TELEFONO" placeholder="Ingrese el código del teléfono" value="{{$personas['COD_TELEFONO']}}" readonly>
                                                         </div>   
                                                         <div class="mb-3">
-                                                            <label for="personas">Número de Telefono:</label>
-                                                            <input type="text" id="NUM_TELEFONO" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" value="{{$personas['NUM_TELEFONO']}}">
+                                                            <label for="personas">Número de Teléfono:</label>
+                                                            <input type="text" id="NUM_TELEFONO" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" value="{{$personas['NUM_TELEFONO']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="personas">Tipo de Telefono:</label>
+                                                            <label for="personas">Tipo de Teléfono:</label>
                                                             <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" value="{{$personas['TIP_TELEFONO']}}" required>
                                                                 <option value="FI" @if($personas['TIP_TELEFONO'] === 'FI') selected @endif>FIJO</option>
                                                                 <option value="MO" @if($personas['TIP_TELEFONO'] === 'MO') selected @endif>MOVIL</option>
@@ -549,13 +537,13 @@
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="personas">Descripción del Telefono:</label>
-                                                            <input type="text" id="DES_TELEFONO" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del telefono" value="{{$personas['DES_TELEFONO']}}">
+                                                            <label for="personas">Descripción del Teléfono:</label>
+                                                            <input type="text" id="DES_TELEFONO" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" value="{{$personas['DES_TELEFONO']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="personas">Operadora de Telefono:</label>
-                                                            <input type="text" id="OPE_TELEFONO" class="form-control" name="OPE_TELEFONO" placeholder="Ingresar una descripción del telefono" value="{{$personas['OPE_TELEFONO']}}">
+                                                            <label for="personas">Operadora de Teléfono:</label>
+                                                            <input type="text" id="OPE_TELEFONO" class="form-control" name="OPE_TELEFONO" placeholder="Ingresar una descripción del teléfono" value="{{$personas['OPE_TELEFONO']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
@@ -570,10 +558,9 @@
                                                             <button type="submit" class="btn btn-primary">Editar</button>
                                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                                     </div>
-                                                </form>  
+                                                </form> 
                                             </div>
-                                        </div>
-        
+                                        </div>       
                                     </div>
                                 </div>
                             @endforeach
@@ -599,24 +586,7 @@
                 <!-- FIN MENSAJE -->
             @stop
         @section('js')
-            <script>
-                // Agregar una función para mostrar una ventana emergente de SweetAlert2 para el mensaje de registro exitoso
-                function showSuccessMessage() {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Registro Exitoso',
-                        text: 'El registro ha sido guardado exitosamente.',
-                        showConfirmButton: false,
-                        timer: 6000,
-                    });
-                }
-
-                // Función que se ejecutará después de enviar el formulario
-                function formSubmitHandler() {
-                    showSuccessMessage();
-                }
-                document.querySelector('.personas-form').addEventListener('submit', formSubmitHandler);
-            </script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script> console.log('Hi!'); </script>
             <script>
                 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -624,7 +594,27 @@
                 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
                 <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
                 <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+                <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+                <script src="sweetalert2.all.min.js"></script>
                 <script>
+                        @if(session('update_success'))
+                            Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
+                        @endif
+
+                        @if(session('update_error'))
+                            Swal.fire('¡Error!', '{{ session('update_error') }}', 'error');
+                        @endif
+
+                        @if(session('success'))
+                            Swal.fire('¡Éxito!', '{{ session('success') }}', 'success');
+                        @endif
+
+                        @if(session('error'))
+                            Swal.fire('¡Error!', '{{ session('error') }}', 'error');
+                        @endif
                     $(document).ready(function() {
                         $('#persona').DataTable({
                             responsive: true,

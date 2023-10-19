@@ -62,10 +62,12 @@ class PersonasController extends Controller
                 "OPE_TELEFONO" => $request->input("OPE_TELEFONO"),
                 "IND_TELEFONO" => $request->input("IND_TELEFONO"),
             ]);
-            return redirect('/personas');
-        } else {
-            return redirect()->back()->with('error', 'Invalid image file');
-        }
+            if ($nueva_persona->successful()) {
+                return redirect('/personas')->with('success', 'Registro creado exitosamente.');
+            } else {
+                return redirect()->back()->with('error', 'Hubo un problema al crear el registro.');
+            }
+        }  
     }
     
     public function actualizar_persona(Request $request){
@@ -108,9 +110,12 @@ class PersonasController extends Controller
         }
     
         // Realizar la solicitud HTTP para actualizar los datos
-        $actualizar_persona = Http::withHeaders($headers)->put(self::urlapi.'PERSONAS/ACTUALIZAR/'.$request->input("COD_PERSONA"), $actualizar_personas);
-    
-        return redirect('/personas');
+        $actualizar_personas = Http::withHeaders($headers)->put(self::urlapi.'PERSONAS/ACTUALIZAR/'.$request->input("COD_PERSONA"), $actualizar_personas);
+        if ($actualizar_personas->successful()) {
+            return redirect('/personas')->with('update_success', 'Datos actualizados exitosamente.');
+        } else {
+            return redirect('/personas')->with('update_error', 'Error al actualizar los datos.');
+        }
     }
     
     
