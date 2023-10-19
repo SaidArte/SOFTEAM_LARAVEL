@@ -79,7 +79,7 @@ class UsuariosController extends Controller
             return redirect('/Usuarios')
                 ->with('notification', $notification);
         } else {
-            return redirect()->route('login')->with('error', 'Error interno de servidor')->withInput();
+            return redirect()->back()->with('error', 'Error interno de servidor')->withInput();
         }
 
     }
