@@ -68,7 +68,7 @@
                                             }
                                         } else {
                                             passwordValidInput.value = "0";
-                                            passwordErrorSpan.textContent = "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número, un simbolo especial (@$!%*?&) y no tener espacios en blanco.";
+                                            passwordErrorSpan.textContent = "La contraseña debe tener al menos 8 caracteres o no mayor de 40, una letra mayúscula, un número, un simbolo especial (@$!%*?&) y no tener espacios en blanco.";
                                             submitButton.disabled = true;
                                         }
                                     }
@@ -80,6 +80,7 @@
                                         // Realiza aquí las verificaciones necesarias y devuelve true si la contraseña es válida, de lo contrario, devuelve false
                                         // Por ejemplo, puedes usar expresiones regulares y otros métodos de validación aquí
                                         var minLength = 8;
+                                        var maxLength = 40;
                                         var containsUpperCase = /[A-Z]/.test(password);
                                         var containsNumber = /\d/.test(password);
                                         var containsSpecialCharacter = /[@$!%*?&]/.test(password);
@@ -87,6 +88,7 @@
 
                                         return (
                                             password.length >= minLength &&
+                                            password.length <= maxLength &&
                                             containsUpperCase &&
                                             containsNumber &&
                                             containsSpecialCharacter &&

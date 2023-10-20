@@ -171,28 +171,54 @@
                                         //Validaciones para el usuario
                                         document.addEventListener("DOMContentLoaded", function() {
                                             const nomUsuarioInput = document.getElementById("NOM_USUARIO");
+                                            var btnGuardar = document.getElementById("submitButton");  // Obtener el botón de guardar.
+                                            
                                             nomUsuarioInput.addEventListener("input", function() {
                                                 // Convertir a mayúsculas
                                                 this.value = this.value.toUpperCase();
                                                 
                                                 // Quitar espacios y caracteres especiales
                                                 this.value = this.value.replace(/[^A-Z0-9]/g, "");
+
+                                                // Validar la longitud y mostrar mensajes de error
+                                                if (this.value.length === 0) {
+                                                    $(this).addClass('is-invalid');
+                                                    $(this).siblings('.invalid-feedback').text('Favor, ingrese un nombre de usuario.');
+                                                    btnGuardar.disabled = true;
+                                                } else if (this.value.length < 4 || this.value.length > 20) {
+                                                    $(this).addClass('is-invalid');
+                                                    $(this).siblings('.invalid-feedback').text('Favor, ingrese un nombre de usuario no menor de 5 caracteres y no mayor de 20.');
+                                                    btnGuardar.disabled = true;
+                                                } else {
+                                                    $(this).removeClass('is-invalid');
+                                                    $(this).siblings('.invalid-feedback').text('');
+                                                    btnGuardar.disabled = false;
+                                                }
                                             });
                                         });
+
 
                                         $(document).ready(function() {
                                             //Validaciones del campo COD_PERSONA el cual no permite el ingreso de letras (las bloquea y no se muestra)
                                             //y solo permite el ingreso de numeros
                                             $('#COD_PERSONA').on('input', function() {
+                                                var btnGuardar = document.getElementById("submitButton");  // Obtener el botón de guardar.
                                                 var id = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
                                                 $(this).val(id); // Actualizar el valor del campo solo con números
                                                 var errorMessage = 'Favor, ingrese un código de usuario valido';
                                                 if (id.length == '') {
                                                     $(this).addClass('is-invalid');
                                                     $(this).siblings('.invalid-feedback').text(errorMessage);
+                                                    btnGuardar.disabled = true;
+                                                } else if(id.length > 3) {
+                                                    errorMessage = 'Favor, ingrese un número no mayor de 3 cifras.';
+                                                    $(this).addClass('is-invalid');
+                                                    $(this).siblings('.invalid-feedback').text(errorMessage);
+                                                    btnGuardar.disabled = true;
                                                 } else {
                                                     $(this).removeClass('is-invalid');
                                                     $(this).siblings('.invalid-feedback').text('');
+                                                    btnGuardar.disabled = false;
                                                 }
                                             });
                                             //Validaciones de la Contraseña
@@ -204,9 +230,9 @@
                                                 var btnGuardar = document.getElementById("submitButton");  // Obtener el botón de guardar
 
                                                 // Validaciones
-                                                if (password.length < 8 || password.length > 20) {
+                                                if (password.length < 8 || password.length > 40) {
                                                     passwordInput.classList.add('is-invalid');
-                                                    passwordFeedback.textContent = 'La contraseña debe tener al menos 8 caracteres, y no más de 20.';
+                                                    passwordFeedback.textContent = 'La contraseña debe tener al menos 8 caracteres, y no más de 40.';
                                                     btnGuardar.disabled = true;
                                                 } else if (!/[A-Z]/.test(password)) {
                                                     passwordInput.classList.add('is-invalid');
@@ -335,7 +361,8 @@
                                                             
                                                             <div class="mb-3">
                                                                 <label for="Usuarios">Usuario</label>
-                                                                <input type="text" class="form-control" id="NOM_USUARIO" name="NOM_USUARIO" placeholder="Ingrese el alias del usuario" value="{{$Usuarios['NOM_USUARIO']}}" required>
+                                                                <input type="text" class="form-control" id="NOM_USUARIO-{{$Usuarios['COD_USUARIO']}}" name="NOM_USUARIO" placeholder="Ingrese el alias del usuario" value="{{$Usuarios['NOM_USUARIO']}}" oninput="validarUsuario('{{$Usuarios['COD_USUARIO']}}', this.value)" required>
+                                                                <div class="invalid-feedback" id="invalid-feedback-{{$Usuarios['COD_USUARIO']}}"></div>
                                                             </div>
                                                             <div class="mb-3 mt-3">
                                                                 <label for="Usuarios">Rol</label>
@@ -357,10 +384,35 @@
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <button type="submit" class="btn btn-primary">Editar</button>
+                                                                <button type="submit" class="btn btn-primary" id="submitButton-{{$Usuarios['COD_USUARIO']}}" disabled>Guardar</button>
                                                                 <a href="{{ url('Usuarios') }}" class="btn btn-danger">Cancelar</a>
                                                             </div>
                                                     </form>
+                                                    <script>
+                                                        function validarUsuario(id, usuario) {
+                                                            var btnGuardar = document.getElementById("submitButton-" + id);
+                                                            var inputElement = document.getElementById("NOM_USUARIO-" + id);
+                                                            var invalidFeedback = document.getElementById("invalid-feedback-" + id);
+
+                                                            // Convertir a mayúsculas
+                                                            inputElement.value = inputElement.value.toUpperCase();
+                                                            // Quitar espacios y caracteres especiales
+                                                            inputElement.value = inputElement.value.replace(/[^A-Z0-9]/g, "");
+                                                            if (usuario.length === 0) {
+                                                                inputElement.classList.add("is-invalid");
+                                                                invalidFeedback.textContent = "Favor, ingrese un nombre de usuario.";
+                                                                btnGuardar.disabled = true;
+                                                            } else if (usuario.length < 4 || usuario.length > 20) {
+                                                                inputElement.classList.add("is-invalid");
+                                                                invalidFeedback.textContent = "Favor, ingrese un nombre de usuario no menor de 5 caracteres y no mayor de 20.";
+                                                                btnGuardar.disabled = true;
+                                                            } else {
+                                                                inputElement.classList.remove("is-invalid");
+                                                                invalidFeedback.textContent = "";
+                                                                btnGuardar.disabled = false;
+                                                            }
+                                                        }
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>

@@ -32,6 +32,7 @@ class UsuariosController extends Controller
         ];
 
         $codPersona = $request -> input('COD_PERSONA');
+
         //Probamos que el nombre de usuario no este registrado.
         $response = Http::post(self::urlapi.'SEGURIDAD/GETONE_USUARIOS', [
             "NOM_USUARIO" => $request -> input("NOM_USUARIO")
@@ -89,14 +90,33 @@ class UsuariosController extends Controller
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
 
+        $response = Http::post(self::urlapi.'SEGURIDAD/GETONE_USUARIOS', [
+            "NOM_USUARIO" => $request -> input("NOM_USUARIO")
+        ]);
+
+        $data = $response->json();
+        if (!empty($data)) {
+            return redirect()->back()->with('error', 'Este nombre de usuario ya está registrado. Favor, ingrese uno diferente.')->withInput();
+        }
+
         $actualizar_usuario = Http::withHeaders($headers)->put(self::urlapi.'SEGURIDAD/ACTUALIZAR_USUARIOS',[
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
             "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "IND_USUARIO"           => $request -> input("IND_USUARIO")
         ]);
-        return redirect('/Usuarios');
 
+        if ($actualizar_usuario->successful()) {
+            $notification = [
+                'type' => 'success',
+                'title' => '¡Registro actualizado!',
+                'message' => 'El usuario ha sido modificado.'
+            ];
+            return redirect('/Usuarios')
+                ->with('notification', $notification);
+        } else {
+            return redirect()->back()->with('error', 'Error interno de servidor')->withInput();
+        }
     }
 
     public function actualizar_pass_usuarios(Request $request){ //Este código es innesesario.

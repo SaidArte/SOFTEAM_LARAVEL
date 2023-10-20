@@ -28,6 +28,13 @@
                 </button>
             </p>
         @endif
+        @if(session('error'))
+            <div class="alert alert-danger" role="alert">
+                <div class="text-center">
+                    <strong>Error:</strong> {{ session('error') }}
+                </div>
+            </div>
+        @endif
             <div class="modal fade bd-example-modal-sm" id="Preguntas" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -56,10 +63,14 @@
                                     var regex = /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚüÜñÑÁÉÍÓÚáéíóú]+$/;
                                     var btnGuardar = document.getElementById("submitButton");  // Obtener el botón de guardar
 
-                                    if (!regex.test(pregunta) || pregunta.trim() === '') { //Condicional que no permite guardar si hay símbolos está vacía.
+                                    if (!regex.test(pregunta) || pregunta.trim() === '') { //Condicional que no permite guardar si hay símbolos y si está vacía.
                                         // Si la pregunta contiene símbolos, muestra un mensaje de error
                                         document.getElementById("PREGUNTA").classList.add("is-invalid");
                                         document.querySelector(".invalid-feedback").textContent = "Ingrese una pregunta que no contenga símbolos.";
+                                        btnGuardar.disabled = true;
+                                    } else if (pregunta.length < 10 || pregunta.length > 60){
+                                        document.getElementById("PREGUNTA").classList.add("is-invalid");
+                                        document.querySelector(".invalid-feedback").textContent = "La pregunta debe ser mayor de 10 caracteres y no mayor de 60.";
                                         btnGuardar.disabled = true;
                                     } else {
                                         // Si la pregunta es válida, elimina el mensaje de error
@@ -168,6 +179,10 @@
                                                 inputElement.classList.add("is-invalid");
                                                 invalidFeedback.textContent = "Ingrese una pregunta que no contenga símbolos.";
                                                 btnGuardar.disabled = true;
+                                            } else if (pregunta.length < 10 || pregunta.length > 60){
+                                                inputElement.classList.add("is-invalid");
+                                                invalidFeedback.textContent = "La pregunta debe ser mayor de 10 caracteres y no mayor de 60.";
+                                                btnGuardar.disabled = true;
                                             } else {
                                                 inputElement.classList.remove("is-invalid");
                                                 invalidFeedback.textContent = "";
@@ -180,7 +195,16 @@
             </table>
             </div>
             </div>
-            
+            @if(session('notification'))
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <script>
+                            Swal.fire({
+                                icon: '{{ session('notification')['type'] }}',
+                                title: '{{ session('notification')['title'] }}',
+                                text: '{{ session('notification')['message'] }}',
+                            });
+                        </script>
+            @endif
             <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">
