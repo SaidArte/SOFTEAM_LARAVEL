@@ -32,7 +32,46 @@ class PersonasController extends Controller
             'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         $imagen = $request->file('IMG_PERSONA');
+        $dni = $request->input("DNI_PERSONA");
+        $nombrePersona = $request->input("NOM_PERSONA");
+        $email = $request->input("DIR_EMAIL");
+        $numeroTelefono = $request->input("NUM_TELEFONO");
+        $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
 
+        if ($personas->successful()){
+            $personas_todas = $personas->json();
+    
+            foreach ($personas_todas as $persona){
+                if ($persona["DNI_PERSONA"] === $dni){
+                    return redirect('/personas')->with('message', [
+                        'type' => 'error',
+                        'text' => 'El DNI ingresado ya existe'
+                    ])->withInput();
+                } else {
+                    if ($persona["NOM_PERSONA"] === $nombrePersona){
+                        return redirect('personas')->with('message', [
+                            'type' => 'error',
+                            'text' => 'El nombre ingresado ya existe'
+                        ])->withInput();
+                    }
+                } 
+                if ($persona["DIR_EMAIL"] === $email){
+                    return redirect('personas')->with('message', [
+                        'type' => 'error',
+                        'text' => 'El correo electrónico ingresado ya existe'
+                    ])->withInput();
+                } else {
+                    if ($persona["NUM_TELEFONO"] === $numeroTelefono) {
+                        return redirect('personas')->with('message', [
+                            'type' => 'error',
+                            'text' => 'El número de teléfono ingresado ya existe'
+                        ])->withInput();
+                    }
+                }
+                
+            }
+        }
+    
         if ($imagen->isValid()) {
             $extension = $imagen->getClientOriginalExtension();
             $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $extension;

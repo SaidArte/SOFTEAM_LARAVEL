@@ -128,6 +128,12 @@
                 </button>   
             </p>
             @endif
+            <!-- Mensaje de error cuando el DNI este repetido -->
+            @if(session('message'))
+                <div class="alert alert-danger">
+                    {{ session('message')['text'] }}
+                </div>
+            @endif
             <div class="modal fade bd-example-modal-sm" id="Personas" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">

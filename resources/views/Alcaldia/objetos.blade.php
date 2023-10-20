@@ -31,7 +31,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Favor, ingrese los datos solicitados:</p>
-                            <form action="{{ url('Objetos/insertar') }}" method="post">
+                            <form action="{{ url('Objetos/insertar') }}" method="post" class="needs-validation objetos-form">
                                 @csrf              
                                     <div class="mb-3">
                                         <label for="OBJETO">Nombre del objeto</label>
@@ -59,24 +59,55 @@
                                     </div>
                             </form>
                             <script>
-                                //Deshabilitar el envio de formularios si hay campos no validos
-                                (function () {
-                                    'use strict'
-                                    //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
-                                    var forms = document.querySelectorAll('.needs-validation')
-                                    //Bucle sobre ellos y evitar el envio
-                                    Array.prototype.slice.call(forms)
-                                        .forEach(function (form) {
-                                            form.addEventListener('submit', function (event) {
-                                                if (!form.checkValidity()) {
-                                                    event.preventDefault()
-                                                    event.stopPropagation()
-                                                }
-        
-                                                form.classList.add('was-validated')
-                                            }, false)
-                                        })
-                                })()
+                                $(document).ready(function(){
+                                    //Validaciones del nombre rol, no permite que se ingrese numeros ni caracteres especiales, solo letras
+                                    $('#OBJETO').on('input', function() {
+                                        var objeto = $(this).val();
+                                        var errorMessage = 'El nombre del objeto no debe ser mayor a 100 letras y no debe incluir carácteres especiales ni números';
+                                        // Verificar si el nombre de rol no incluye carácteres especiales ni números
+                                        if (objeto.length < 5 || objeto.length > 100 || !/^[a-zA-Z\s]+$/.test(objeto)) {
+                                            $(this).addClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text(errorMessage);
+                                        } else {
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('');
+                                        }
+                                    });
+                                    //Validaciones del nombre rol, no permite que se ingrese numeros ni caracteres especiales, solo letras
+                                    $('#DES_OBJETO').on('input', function() {
+                                        var des_objeto = $(this).val();
+                                        var errorMessage = '';
+
+                                        if (des_objeto.length < 5) {
+                                            errorMessage = 'La descripción debe tener al menos 5 carácteres.';
+                                        } else if (des_objeto.length > 100) {
+                                            errorMessage = 'La descripción no puede tener más de 100 carácteres.';
+                                        }
+                                        if (errorMessage) {
+                                            $(this).addClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text(errorMessage);
+                                        } else {
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('');
+                                        }
+                                    });                                
+                                });
+                                // Deshabilita el botón de enviar inicialmente
+                                $('form.needs-validation').find('button[type="submit"]').prop('disabled', true);
+
+                                // Habilita o deshabilita el botón de enviar según la validez del formulario
+                                $('form.needs-validation').on('input change', function() {
+                                    var esValido = true;
+
+                                    $(this).find('.form-control').each(function() {
+                                        if ($(this).hasClass('is-invalid') || $(this).val().trim() === '') {
+                                            esValido = false;
+                                            return false; // Sale del bucle si encuentra un campo no válido
+                                        }
+                                    });
+
+                                    $(this).find('button[type="submit"]').prop('disabled', !esValido);
+                                });  
                                 //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                                 function limpiarFormulario() {
                                     document.getElementById("OBJETO").value = "";
@@ -97,6 +128,11 @@
                                 document.getElementById("btnCancelar").addEventListener("click", function() {
                                     limpiarFormulario();
                                 });
+                                    // Función que se ejecutará después de enviar el formulario
+                                    function formSubmitHandler() {
+                                    showSuccessMessage();
+                                }
+                                document.querySelector('.objetos-form').addEventListener('submit', formSubmitHandler);
                             </script>
                         </div>
                     </div>
@@ -191,6 +227,7 @@
         @stop
 
         @section('css')
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="/css/admin_custom.css">
         <style>
         /* Boton Nuevo */

@@ -26,6 +26,22 @@ class RolesController extends Controller
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
+        //Codigo para que no acepte nombres de roles repetidos
+        $rol = $request->input("NOM_ROL");
+        $Roles = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_ROLES');
+
+        if ($Roles->successful()){
+            $roles_todos = $Roles->json();
+    
+            foreach ($roles_todos as $roles){
+                if ($roles["NOM_ROL"] === $rol){
+                    return redirect('/Roles')->with('message', [
+                        'type' => 'error',
+                        'text' => 'El rol ingresado ya existe'
+                    ])->withInput();
+                }
+            }
+        }
 
         $nuevo_rol = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/INSERTAR_ROLES',[
             "NOM_ROL"   => $request -> input("NOM_ROL"),

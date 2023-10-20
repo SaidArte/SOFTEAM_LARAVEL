@@ -6,29 +6,35 @@
 @section('title', 'Alcaldia')
 
 @section('content_header')
-    @if(session()->has('user_data'))
-        <?php
-            $authController = app(\App\Http\Controllers\AuthController::class);
-            $objeto = 'ROLES'; // Por ejemplo, el objeto deseado
-            $rol = session('user_data')['NOM_ROL'];
-            $tienePermiso = $authController->tienePermiso($rol, $objeto);
-        ?>
+        @if(session()->has('user_data'))
+            <?php
+                $authController = app(\App\Http\Controllers\AuthController::class);
+                $objeto = 'ROLES'; // Por ejemplo, el objeto deseado
+                $rol = session('user_data')['NOM_ROL'];
+                $tienePermiso = $authController->tienePermiso($rol, $objeto);
+            ?>
 
-        @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
-        <center><br>
-            <h1>Información de Roles</h1>
-        </center></br>
-    @stop
+            @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
+            <center><br>
+                <h1>Información de Roles</h1>
+            </center></br>
+        @stop
 
-    @section('content')
-    @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
-    <p align="right">
-                <button type="button" class="Btn" data-toggle="modal" data-target="#Roles">
-                    <div class="sign">+</div>
-                    <div class="text">Nuevo</div>
-                </button>
-            </p>
-    @endif
+        @section('content')
+        @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
+        <p align="right">
+                    <button type="button" class="Btn" data-toggle="modal" data-target="#Roles">
+                        <div class="sign">+</div>
+                        <div class="text">Nuevo</div>
+                    </button>
+                </p>
+        @endif
+        <!-- Mensaje de error cuando el rol este repetido -->
+        @if(session('message'))
+            <div class="alert alert-danger">
+                {{ session('message')['text'] }}
+            </div>
+        @endif
         <div class="modal fade bd-example-modal-sm" id="Roles" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -38,7 +44,7 @@
                     </div>
                     <div class="modal-body">
                         <p>Favor, ingrese los datos solicitados:</p>
-                        <form action="{{ url('Roles/insertar') }}" method="post">
+                        <form action="{{ url('Roles/insertar') }}" method="post" class="needs-validation roles-form">
                             @csrf
                                 
                                 <div class="mb-3 mt-3">
@@ -57,6 +63,55 @@
                                 </div>
                         </form>
                         <script>
+                            $(document).ready(function(){
+                                //Validaciones del nombre rol, no permite que se ingrese numeros ni caracteres especiales, solo letras
+                                $('#NOM_ROL').on('input', function() {
+                                    var rol = $(this).val();
+                                    var errorMessage = 'El nombre de rol no debe ser mayor a 15 letras y no debe incluir carácteres especiales ni números';
+                                    // Verificar si el nombre de rol no incluye carácteres especiales ni números
+                                    if (rol.length < 5 || rol.length > 15 || !/^[a-zA-Z\s]+$/.test(rol)) {
+                                        $(this).addClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text(errorMessage);
+                                    } else {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('');
+                                    }
+                                });
+                                //Validaciones de la descrpcion de rol, que no sea mayor a 100 carácteres
+                                $('#DES_ROL').on('input', function() {
+                                    var des_rol = $(this).val();
+                                    var errorMessage = '';
+
+                                    if (des_rol.length < 5) {
+                                        errorMessage = 'La descripción debe tener al menos 5 carácteres.';
+                                    } else if (des_rol.length > 100) {
+                                        errorMessage = 'La descripción no puede tener más de 100 carácteres.';
+                                    }
+                                    if (errorMessage) {
+                                        $(this).addClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text(errorMessage);
+                                    } else {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('');
+                                    }
+                                });                                
+                            });
+                            // Deshabilita el botón de enviar inicialmente
+                            $('form.needs-validation').find('button[type="submit"]').prop('disabled', true);
+
+                            // Habilita o deshabilita el botón de enviar según la validez del formulario
+                            $('form.needs-validation').on('input change', function() {
+                                var esValido = true;
+
+                                $(this).find('.form-control').each(function() {
+                                    if ($(this).hasClass('is-invalid') || $(this).val().trim() === '') {
+                                        esValido = false;
+                                        return false; // Sale del bucle si encuentra un campo no válido
+                                    }
+                                });
+
+                                $(this).find('button[type="submit"]').prop('disabled', !esValido);
+                            });  
                             //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                             function limpiarFormulario() {
                                     document.getElementById("NOM_ROL").value = "";
@@ -76,6 +131,11 @@
                                 document.getElementById("btnCancelar").addEventListener("click", function() {
                                     limpiarFormulario();
                                 });
+                                // Función que se ejecutará después de enviar el formulario
+                                function formSubmitHandler() {
+                                    showSuccessMessage();
+                                }
+                                document.querySelector('.roles-form').addEventListener('submit', formSubmitHandler); 
                         </script>
                     </div>
                 </div>
@@ -158,6 +218,7 @@
             </footer>
             <!-- FIN MENSAJE -->
     @section('css')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="/css/admin_custom.css">
     <style>
         /* Boton Nuevo */
@@ -231,15 +292,35 @@
     @stop
 
     @section('js')
-    <script> console.log('Hi!'); </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script> console.log('Hi!'); </script>
     <script>
             <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
             <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
             <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
             <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
             <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+            <script src="sweetalert2.all.min.js"></script>
             <script>
+                    @if(session('update_success'))
+                        Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
+                    @endif
+
+                    @if(session('update_error'))
+                        Swal.fire('¡Error!', '{{ session('update_error') }}', 'error');
+                    @endif
+
+                    @if(session('success'))
+                        Swal.fire('¡Éxito!', '{{ session('success') }}', 'success');
+                    @endif
+
+                    @if(session('error'))
+                        Swal.fire('¡Error!', '{{ session('error') }}', 'error');
+                    @endif
                 $(document).ready(function() {
                     $('#rol').DataTable({
                         responsive: true,
@@ -280,13 +361,11 @@
                         ],
                     });
                 });
-                </script>
-                </script> 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-            <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
-
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+            </script>
+    </script> 
+    @stop
+    @section('css')
+        <link rel="stylesheet" href="/css/admin_custom.css">
     @stop
     @else
        <p>No tiene autorización para visualizar esta sección</p>
