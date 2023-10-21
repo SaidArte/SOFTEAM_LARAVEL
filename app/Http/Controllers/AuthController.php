@@ -411,7 +411,7 @@ class AuthController extends Controller
         ]);
 
         if ($response->successful()) {
-            return redirect()->back()->with('error', 'Favor, ingrese una nueva contraseña.')->withInput();
+            return redirect()->route('login')->with('error', 'Favor, ingrese una nueva contraseña.')->withInput();
         }
 
        if ($PAS_USUARIO != $CONF_PAS || $PAS_USUARIO == "") {

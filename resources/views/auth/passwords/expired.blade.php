@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cambio de Contraseña</title>
+    <!-- Agrega los enlaces a los archivos de estilo de Bootstrap y Font Awesome (este último 
+    para darle estilos al botón de ver respuestas secretas y contraseñas). -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container mt-5">
@@ -23,6 +26,7 @@
                                 <label for="new_password" class="col-md-4 col-form-label text-md-right">Nueva Contraseña: </label>
                                 <div class="col-md-6">
                                     <input id="PAS_USUARIO" type="password" name="PAS_USUARIO" required autocomplete="PAS_USUARIO">
+                                    <div id="error-container" style="margin-top: 10px;"></div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -30,6 +34,9 @@
                                 <div class="col-md-6">
                                     <input id="CONF_PAS" type="password" name="CONF_PAS" required autocomplete="CONF_PAS">
                                 </div>
+                            </div>
+                            <div class="col-md-4 col-form-label text-md-right">
+                            <span class="toggle-password" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i> Ver Contraseña</span>
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -53,22 +60,95 @@
     </div>
     <!-- Función en javascript para no permitir dar "submit" si los campos de contraseña y confirmación no son iguales -->
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const newPasswordInput = document.getElementById("PAS_USUARIO");
-        const confirmPasswordInput = document.getElementById("CONF_PAS");
-        const submitButton = document.querySelector("button[type='submit']");
+        document.addEventListener("DOMContentLoaded", function () {
+            const newPasswordInput = document.getElementById("PAS_USUARIO");
+            const confirmPasswordInput = document.getElementById("CONF_PAS");
+            const submitButton = document.querySelector("button[type='submit']");
+            const errorContainer = document.getElementById("error-container");
 
-        function updateSubmitButtonState() {
-            if (newPasswordInput.value === confirmPasswordInput.value) {
-                submitButton.removeAttribute("disabled");
+            function updateSubmitButtonState() {
+                const password = newPasswordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                // Verificar que la contraseña no sea menor de 8 caracteres
+                const isPasswordValidLength = password.length >= 8 && password.length <= 40;
+
+                // Verificar que la contraseña incluya al menos un número
+                const containsNumber = /\d/.test(password);
+
+                // Verificar que la contraseña incluya al menos una letra mayúscula
+                const containsUppercase = /[A-Z]/.test(password);
+
+                // Verificar que la contraseña incluya al menos un símbolo especial
+                const containsSpecialCharacter = /[!@#$%^&*]/.test(password);
+
+                // Verificar que no se puedan ingresar espacios en blanco
+                const hasNoSpaces = !/\s/.test(password);
+
+                // Limpiar los mensajes de error anteriores
+                errorContainer.innerHTML = "";
+
+                // Comprobar cada restricción y mostrar mensajes de error apropiados
+                if (!isPasswordValidLength) {
+                    addErrorMessage("- La contraseña debe ser mayor de 8 caracteres y no mayor de 40.");
+                }
+
+                if (!containsNumber) {
+                    addErrorMessage("- La contraseña debe contener al menos un número.");
+                }
+
+                if (!containsUppercase) {
+                    addErrorMessage("- La contraseña debe contener al menos una letra mayúscula.");
+                }
+
+                if (!containsSpecialCharacter) {
+                    addErrorMessage("- La contraseña debe contener al menos un símbolo especial (!@#$%^&*).");
+                }
+
+                if (!hasNoSpaces) {
+                    addErrorMessage("- La contraseña no puede contener espacios en blanco.");
+                }
+
+                // Habilitar el botón si todas las restricciones se cumplen
+                if (
+                    isPasswordValidLength &&
+                    containsNumber &&
+                    containsUppercase &&
+                    containsSpecialCharacter &&
+                    hasNoSpaces &&
+                    password === confirmPassword
+                ) {
+                    submitButton.removeAttribute("disabled");
+                } else {
+                    submitButton.setAttribute("disabled", "disabled");
+                }
+            }
+
+            function addErrorMessage(message) {
+                const errorElement = document.createElement("div");
+                errorElement.className = "alert alert-danger"; // Aplicar una clase CSS para estilo de alerta roja
+                errorElement.textContent = message;
+                errorContainer.appendChild(errorElement);
+            }
+
+            newPasswordInput.addEventListener("input", updateSubmitButtonState);
+            confirmPasswordInput.addEventListener("input", updateSubmitButtonState);
+        });
+
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("PAS_USUARIO");
+            var toggleIcon = document.querySelector(".toggle-password i");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
             } else {
-                submitButton.setAttribute("disabled", "disabled");
+                passwordInput.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
             }
         }
-
-        newPasswordInput.addEventListener("input", updateSubmitButtonState);
-        confirmPasswordInput.addEventListener("input", updateSubmitButtonState);
-    });
-</script>
+    </script>
 </body>
 </html>

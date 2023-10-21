@@ -4,22 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperación de Contraseña</title>
-    <!-- Agrega los enlaces a los archivos de estilo de Bootstrap y Font Awesome -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Agrega los enlaces a los archivos de estilo de Bootstrap y Font Awesome (este último 
+    para darle estilos al botón de ver respuestas secretas y contraseñas). -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .password-container {
-            position: relative;
-        }
 
-        .toggle-password {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-        </style>
 </head>
 <body>
     <div class="container mt-5">
@@ -34,7 +23,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="secret_answer" class="form-label">Respuesta Secreta:</label>
+                <label for="secret_answer" class="form-label">Respuesta secreta: </label>
                 <input type="password" id="RESPUESTA" name="RESPUESTA" class="form-control" oninput="validarRespuesta(this.value)" required>
                 <div class="invalid-feedback" id="invalid-feedback"></div>
             </div>
@@ -44,7 +33,7 @@
             </div>
 
             <div class="mb-3">
-                <button type="submit" class="btn btn-primary" id="submitButton">Enviar</button>
+                <button type="submit" class="btn btn-primary" id="submitButton" disabled>Enviar</button>
                 <a href="{{ route('auth.login') }}" class="btn btn-secondary">Cancelar</a>
             </div>
             <br>
@@ -56,50 +45,49 @@
                 </div>
             @endif
         </form>
-        <script>
-            function validarRespuesta(respuesta) {
-                var btnGuardar = document.getElementById("submitButton");
-                var inputElement = document.getElementById("RESPUESTA");
-                var invalidFeedback = document.getElementById("invalid-feedback");
-
-                // Quitar simbolos.
-                inputElement.value = inputElement.value.replace(/[^a-zA-Z0-9 ]/g, "");
-                /*Al agregar un espacio en la expresión regular (junto con a-zA-Z0-9), se permite 
-                que se ingresen espacios en la respuesta secreta mientras aún se eliminan otros 
-                caracteres no deseados. Esto debería funcionar para permitir espacios en la entrada.*/
-                if (respuesta.length === 0) {
-                    inputElement.classList.add("is-invalid");
-                    invalidFeedback.textContent = "Favor, escriba su respuesta secreta.";
-                    btnGuardar.disabled = true;
-                } else if (respuesta.length > 100) {
-                    inputElement.classList.add("is-invalid");
-                    invalidFeedback.textContent = "Error, desbordamiento del campo. Las respuestas son menores de 100 caracteres.";
-                    btnGuardar.disabled = true;
-                } else {
-                    inputElement.classList.remove("is-invalid");
-                    invalidFeedback.textContent = "";
-                    btnGuardar.disabled = false;
-                }
-            }
-
-            function togglePasswordVisibility() {
-                var passwordInput = document.getElementById("RESPUESTA");
-                var toggleIcon = document.querySelector(".toggle-password i");
-
-                if (passwordInput.type === "password") {
-                    passwordInput.type = "text";
-                    toggleIcon.classList.remove("fa-eye");
-                    toggleIcon.classList.add("fa-eye-slash");
-                } else {
-                    passwordInput.type = "password";
-                    toggleIcon.classList.remove("fa-eye-slash");
-                    toggleIcon.classList.add("fa-eye");
-                }
-            }
-        </script>
     </div>
 
     <!-- Agrega el enlace al archivo de script de Bootstrap (si es necesario) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function validarRespuesta(respuesta) {
+            var btnGuardar = document.getElementById("submitButton");
+            var inputElement = document.getElementById("RESPUESTA");
+            var invalidFeedback = document.getElementById("invalid-feedback");
+
+            // Quitar caracteres no deseados.
+            inputElement.value = inputElement.value.replace(/[^a-zA-Z0-9 ]/g, "");
+
+            if (respuesta.trim().length === 0) {
+                inputElement.classList.add("is-invalid");
+                invalidFeedback.textContent = "Por favor, escriba su respuesta secreta.";
+                btnGuardar.disabled = true;
+            } else if (respuesta.length > 100) {
+                inputElement.classList.add("is-invalid");
+                invalidFeedback.textContent = "Error: longitud máxima excedida (100 caracteres).";
+                btnGuardar.disabled = true;
+            } else {
+                inputElement.classList.remove("is-invalid");
+                invalidFeedback.textContent = "";
+                btnGuardar.disabled = false;
+            }
+        }
+
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("RESPUESTA");
+            var toggleIcon = document.querySelector(".toggle-password i");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
 </body>
 </html>
