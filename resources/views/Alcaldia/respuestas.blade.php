@@ -63,9 +63,9 @@
                 //Validaciones del nombre rol, no permite que se ingrese numeros ni caracteres especiales, solo letras
                 $('#RESPUESTA').on('input', function() {
                     var respuesta = $(this).val();
-                    var errorMessage = 'La respuesta no debe ser mayor a 50 letras y no debe incluir carácteres especiales ni números';
+                    var errorMessage = 'Ingrese su respuesta secreta no mayor de 100 caracteres y sin simbolos.';
                     // Verificar si el nombre de rol no incluye carácteres especiales ni números
-                    if (respuesta.length < 5 || respuesta.length > 50 || !/^[a-zA-Z\s]+$/.test(respuesta)) {
+                    if (respuesta.length === 0 || respuesta.length > 100 || !/^[a-zA-Z0-9\s]+$/.test(respuesta)) {
                         $(this).addClass('is-invalid');
                         $(this).siblings('.invalid-feedback').text(errorMessage);
                     } else {

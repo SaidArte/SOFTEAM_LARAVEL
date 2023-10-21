@@ -184,13 +184,13 @@ class AuthController extends Controller
         ]);
 
         if (!$response->successful()) {
-            return redirect()->back()->with('error', 'Favor, ingrese su contraseña actual')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese su contraseña actual.')->withInput();
         }
 
         if ($oldPassword == $newPassword) {
-            return redirect()->back()->with('error', 'Favor, ingrese una contraseña diferente a la actual')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese una contraseña diferente a la actual.')->withInput();
         } elseif ($newPassword != $confPassword || $newPassword == "") {
-            return redirect()->back()->with('error', 'Favor, ingrese una contraseña y confirmela')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese una contraseña y confirmela.')->withInput();
         }
 
         $response2 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [
@@ -225,7 +225,7 @@ class AuthController extends Controller
             $PREGUNTA = $data[0]['PREGUNTA'];
             return view('auth.passwords.answer')->with('PREGUNTA', $PREGUNTA)->with('NOM_USUARIO', $NOM_USUARIO);
         } else {
-            return redirect()->back()->with('error', 'Favor, ingrese un usuario valido')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese un usuario valido.')->withInput();
         }
     }
 
@@ -244,7 +244,7 @@ class AuthController extends Controller
             $COD_USUARIO = $data[0]['COD_USUARIO'];
             return view('auth.passwords.reset')->with('COD_USUARIO', $COD_USUARIO)->with('NOM_USUARIO', $NOM_USUARIO);
         } else {
-            return redirect()->back()->with('error', 'Favor, ingrese su respuesta secreta')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese su respuesta secreta.')->withInput();
         }
     }
 
@@ -261,7 +261,7 @@ class AuthController extends Controller
         ]);
 
         if ($response->successful()) {
-            return redirect()->route('login')->with('error', 'Favor, ingrese una nueva contraseña')->withInput();
+            return redirect()->route('login')->with('error', 'Favor, ingrese una nueva contraseña.')->withInput();
         }
 
         if ($PAS_USUARIO == $CONF_PAS && $PAS_USUARIO != ""){
@@ -280,10 +280,10 @@ class AuthController extends Controller
                 return redirect()->route('login')
                     ->with('notification', $notification);
             } else {
-                return redirect()->back()->with('error', 'Error interno del servidor')->withInput();
+                return redirect()->back()->with('error', 'Error interno del servidor.')->withInput();
             }
         } else {
-            return redirect()->back()->with('error', 'Favor, ingrese una contraseña y confirmela')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese una contraseña y confirmela.')->withInput();
         }
     }
 
@@ -312,7 +312,7 @@ class AuthController extends Controller
             }
             return view('Alcaldia.respuestas')->with('preguntasArreglo', $preguntasArreglo)->with('PREGUNTA', $PREGUNTA);
         } else {
-            return redirect()->back()->with('error', 'Favor, ingrese su contraseña correctamente')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese su contraseña correctamente.')->withInput();
         }
     }
 
@@ -342,7 +342,7 @@ class AuthController extends Controller
             return redirect()->route('home')
                 ->with('notification', $notification);
         } else {
-            return redirect()->back()->with('error', 'Favor, ingrese su respuesta correctamente')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese su respuesta correctamente.')->withInput();
         }
     }
 
@@ -394,7 +394,7 @@ class AuthController extends Controller
             return redirect()->route('login')->with('notification', $notification);
         } else {
             Session::flush();
-            return redirect()->route('login')->with('error', 'Favor, ingrese su respuesta correctamente');
+            return redirect()->route('login')->with('error', 'Favor, ingrese su respuesta correctamente.');
         }
     }
 
@@ -411,11 +411,11 @@ class AuthController extends Controller
         ]);
 
         if ($response->successful()) {
-            return redirect()->back()->with('error', 'Favor, ingrese una nueva contraseña')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese una nueva contraseña.')->withInput();
         }
 
        if ($PAS_USUARIO != $CONF_PAS || $PAS_USUARIO == "") {
-            return redirect()->back()->with('error', 'Favor, ingrese una contraseña y confirmela')->withInput();
+            return redirect()->back()->with('error', 'Favor, ingrese una contraseña y confirmela.')->withInput();
         }
 
         $response2 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [

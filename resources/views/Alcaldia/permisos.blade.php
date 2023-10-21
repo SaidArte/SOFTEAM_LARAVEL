@@ -30,241 +30,257 @@
                 </button>
             </p>
     @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger" role="alert">
+            <div class="text-center">
+                <strong>Error:</strong> {{ session('error') }}
+            </div>
+        </div>
+    @endif
         <div class="modal fade bd-example-modal-sm" id="Permisos" tabindex="-1">
-        <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Ingresar un nuevo permiso</h5>
-                            <!--<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
-                        </div>
-                        <div class="modal-body">
-                            <p>Favor, ingrese los datos solicitados:</p>
-                            <form action="{{ url('Permisos/insertar') }}" method="post">
-                                @csrf              
-                                    <div class="mb-3">
-                                        <label for="NOM_ROL">Rol</label>
-                                        <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL"required>
-                                            <option value="" disabled selected>Seleccione una opción</option>
-                                            @foreach ($rolesArreglo as $roles)
-                                                <option value="{{$roles['NOM_ROL']}}">{{$roles['NOM_ROL']}}</option>
-                                            @endforeach 
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="OBJETO">OBJETO</label>
-                                        <select class="form-select custom-select" id="OBJETO" name="OBJETO" required>
-                                            <option value="" disabled selected>Seleccione una opción</option>
-                                            @foreach ($objetosArreglo as $objetos)
-                                                <option value="{{$objetos['OBJETO']}}">{{$objetos['OBJETO']}}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <!-- Insertar -->
+            <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Ingresar un nuevo permiso</h5>
+                                <!--<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
+                            </div>
+                            <div class="modal-body">
+                                <p>Favor, ingrese los datos solicitados:</p>
+                                <form action="{{ url('Permisos/insertar') }}" method="post">
+                                    @csrf              
                                         <div class="mb-3">
-                                            <label for="LPRM_INSERTAR">Permiso de Insertar</label>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="PRM_INSERTAR" name="PRM_INSERTAR" onchange="updateValue(this)">
-                                                <input type="hidden" id="PRM_INSERTAR_HIDDEN" name="PRM_INSERTAR" value="N">
+                                            <label for="NOM_ROL">Rol</label>
+                                            <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL"required>
+                                                <option value="" disabled selected>Seleccione una opción</option>
+                                                @foreach ($rolesArreglo as $roles)
+                                                    <option value="{{$roles['NOM_ROL']}}">{{$roles['NOM_ROL']}}</option>
+                                                @endforeach 
+                                            </select>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="OBJETO">OBJETO</label>
+                                            <select class="form-select custom-select" id="OBJETO" name="OBJETO" required>
+                                                <option value="" disabled selected>Seleccione una opción</option>
+                                                @foreach ($objetosArreglo as $objetos)
+                                                    <option value="{{$objetos['OBJETO']}}">{{$objetos['OBJETO']}}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- Insertar -->
+                                            <div class="mb-3">
+                                                <label for="LPRM_INSERTAR">Permiso de Insertar</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="PRM_INSERTAR" name="PRM_INSERTAR" onchange="updateValue(this)">
+                                                    <input type="hidden" id="PRM_INSERTAR_HIDDEN" name="PRM_INSERTAR" value="N">
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <!-- Actualizar -->
-                                        <div class="mb-3">
-                                            <label for="LPRM_ACTUALIZAR">Permiso de Actualizar</label>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="PRM_ACTUALIZAR" name="PRM_ACTUALIZAR" onchange="updateValue(this)">
-                                                <input type="hidden" id="PRM_ACTUALIZAR_HIDDEN" name="PRM_ACTUALIZAR" value="N">
+                                            <!-- Actualizar -->
+                                            <div class="mb-3">
+                                                <label for="LPRM_ACTUALIZAR">Permiso de Actualizar</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="PRM_ACTUALIZAR" name="PRM_ACTUALIZAR" onchange="updateValue(this)">
+                                                    <input type="hidden" id="PRM_ACTUALIZAR_HIDDEN" name="PRM_ACTUALIZAR" value="N">
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <!-- Consultar -->
-                                        <div class="mb-3">
-                                            <label for="LPRM_CONSULTAR">Permiso de Consultar</label>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" onchange="updateValue(this)">
-                                                <input type="hidden" id="PRM_CONSULTAR_HIDDEN" name="PRM_CONSULTAR" value="N">
+                                            <!-- Consultar -->
+                                            <div class="mb-3">
+                                                <label for="LPRM_CONSULTAR">Permiso de Consultar</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" onchange="updateValue(this)">
+                                                    <input type="hidden" id="PRM_CONSULTAR_HIDDEN" name="PRM_CONSULTAR" value="N">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <br>
-                                        <div class="mb-3">
-                                            <button class="btn btn-primary" type="submit">Guardar</button>
-                                            <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                        </div>
-                                    </form>
+                                            <br>
+                                            <div class="mb-3">
+                                                <button class="btn btn-primary" type="submit">Guardar</button>
+                                                <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </form>
 
-                                    <script>
-                                        function updateValue(checkbox) {
-                                            var hiddenInput = checkbox.nextElementSibling;
+                                        <script>
+                                            function updateValue(checkbox) {
+                                                var hiddenInput = checkbox.nextElementSibling;
 
-                                            if (checkbox.checked) {
-                                                hiddenInput.value = "S";
-                                            } else {
-                                                hiddenInput.value = "N";
+                                                if (checkbox.checked) {
+                                                    hiddenInput.value = "S";
+                                                } else {
+                                                    hiddenInput.value = "N";
+                                                }
                                             }
-                                        }
 
-                                        // Funcion de limpiar el formulario al momento que le demos al boton de cancelar
-                                        function limpiarFormulario() {
-                                            document.getElementById("NOM_ROL").value = "";
-                                            document.getElementById("OBJETO").value = "";
-                                            
-                                            const checkboxes = document.querySelectorAll(".form-check-input");
-                                            checkboxes.forEach(checkbox => { //limpiando los check
-                                                checkbox.checked = false;
+                                            // Funcion de limpiar el formulario al momento que le demos al boton de cancelar
+                                            function limpiarFormulario() {
+                                                document.getElementById("NOM_ROL").value = "";
+                                                document.getElementById("OBJETO").value = "";
+                                                
+                                                const checkboxes = document.querySelectorAll(".form-check-input");
+                                                checkboxes.forEach(checkbox => { //limpiando los check
+                                                    checkbox.checked = false;
+                                                });
+
+                                                const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
+                                                invalidFeedbackElements.forEach(element => {
+                                                    element.textContent = "";
+                                                });
+
+                                                const invalidFields = document.querySelectorAll(".form-control.is-invalid");
+                                                invalidFields.forEach(field => {
+                                                    field.classList.remove("is-invalid");
+                                                });
+                                            }
+
+                                            document.getElementById("btnCancelar").addEventListener("click", function() {
+                                                limpiarFormulario();
                                             });
-
-                                            const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
-                                            invalidFeedbackElements.forEach(element => {
-                                                element.textContent = "";
-                                            });
-
-                                            const invalidFields = document.querySelectorAll(".form-control.is-invalid");
-                                            invalidFields.forEach(field => {
-                                                field.classList.remove("is-invalid");
-                                            });
-                                        }
-
-                                        document.getElementById("btnCancelar").addEventListener("click", function() {
-                                            limpiarFormulario();
-                                        });
-                                    </script>
+                                        </script>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card">
+            <div class="card">
                 <div class="card-body">
-        <table class="table table-hover table-bordered mt-1" id="permitir">
-            <thead>
-                <tr>
-                    <th>No. Rol</th>
-                    <th>Rol</th>
-                    <th>Código del Objeto</th>
-                    <th>Objeto</th>
-                    <th>Permisos Insertar</th>
-                    <th>Permisos Actualizar</th>
-                    <th>Permisos Consultar</th>
-                    <th>Opciones de la Tabla</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Loop through $citaArreglo and show data -->
-                @foreach($citaArreglo as $Permisos)
-                    <tr>
-                        <td>{{$Permisos['COD_ROL']}}</td>
-                        <td>{{$Permisos['NOM_ROL']}}</td>
-                        <td>{{$Permisos['COD_OBJETO']}}</td>
-                        <td>{{$Permisos['OBJETO']}}</td>
-                        <td>
-                            @if ($Permisos['PRM_INSERTAR'] === 'S')
-                                <span class="badge bg-success">Sí</span>
-                            @else
-                                <span class="badge bg-danger">No</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if ($Permisos['PRM_ACTUALIZAR'] === 'S')
-                                <span class="badge bg-success">Sí</span>
-                            @else
-                                <span class="badge bg-danger">No</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if ($Permisos['PRM_CONSULTAR'] === 'S')
-                                <span class="badge bg-success">Sí</span>
-                            @else
-                                <span class="badge bg-danger">No</span>
-                            @endif
-                        </td>
-                        <td>
-                            <!-- Esta vez se llamaran dos parametros para poder ser actualizados -->
-                            @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
-                                <button value="Editar" title="Editar" class="btn btn-sm btn-warning"type="button" data-toggle="modal" data-target="#Permisos-edit-{{$Permisos['COD_ROL']}}-{{$Permisos['COD_OBJETO']}}">
-                                <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
-                                </button>
-                            @endif
-                        </td>
-                    </tr>
-                   <!-- Modal que esta vez toma dos parametros primarios -->
-                   <div class="modal fade bd-example-modal-sm" id="Permisos-edit-{{$Permisos['COD_ROL']}}-{{$Permisos['COD_OBJETO']}}" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Actualizar datos del permiso</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                    <p>Si desea agregar un permiso, marque la casilla; en caso contrario, déjela desmarcada.</p>
-                    <form action="{{ url('Permisos/actualizar') }}" method="post">
-                        @csrf
-                        <input type="hidden" class="form-control" name="COD_ROL" value="{{$Permisos['COD_ROL']}}"> 
-                        <input type="hidden" class="form-control" name="COD_OBJETO" value="{{$Permisos['COD_OBJETO']}}">
-                        
-                        <div class="mb-3">
-                            <label for="NROL">Rol: </label>
-                            <input type="text" readonly class="form-control" name="NOM_ROL" value="{{$Permisos['NOM_ROL']}}">
-                            <label for="NROL">Objeto: </label>
-                            <input type="text" readonly class="form-control" name="OBJETO" value="{{$Permisos['OBJETO']}}">
-                        </div>
-                        <!-- Insertar -->
-                        <div class="mb-3">
-                            <label for="LPRM_INSERTAR">Permiso de Insertar</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="PRM_INSERTAR" name="PRM_INSERTAR" {{$Permisos['PRM_INSERTAR'] === 'S' ? 'checked' : ''}} onchange="updateValue(this)">
-                                <input type="hidden" id="PRM_INSERTAR_HIDDEN" name="PRM_INSERTAR" value="{{$Permisos['PRM_INSERTAR']}}">
-                            </div>
-                        </div>
+                    <table class="table table-hover table-bordered mt-1" id="permitir">
+                        <thead>
+                            <tr>
+                                <th class="hidden"><center>No. Rol</center></th>
+                                <th><center>Rol</center></th>
+                                <th class="hidden"><center>No. Objeto</center></th>
+                                <th><center>Objeto</center></th>
+                                <th><center>Permisos Insertar</center></th>
+                                <th><center>Permisos Actualizar</center></th>
+                                <th><center>Permisos Consultar</center></th>
+                                <th><center>Opciones</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loop through $citaArreglo and show data -->
+                            @foreach($citaArreglo as $Permisos)
+                                <tr>
+                                    <td class="hidden">{{$Permisos['COD_ROL']}}</td>
+                                    <td>{{$Permisos['NOM_ROL']}}</td>
+                                    <td class="hidden">{{$Permisos['COD_OBJETO']}}</td>
+                                    <td>{{$Permisos['OBJETO']}}</td>
+                                    <td>
+                                        @if ($Permisos['PRM_INSERTAR'] === 'S')
+                                            <span class="badge bg-success">Sí</span>
+                                        @else
+                                            <span class="badge bg-danger">No</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($Permisos['PRM_ACTUALIZAR'] === 'S')
+                                            <span class="badge bg-success">Sí</span>
+                                        @else
+                                            <span class="badge bg-danger">No</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($Permisos['PRM_CONSULTAR'] === 'S')
+                                            <span class="badge bg-success">Sí</span>
+                                        @else
+                                            <span class="badge bg-danger">No</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <!-- Esta vez se llamaran dos parametros para poder ser actualizados -->
+                                        @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
+                                            <button value="Editar" title="Editar" class="btn btn-sm btn-warning"type="button" data-toggle="modal" data-target="#Permisos-edit-{{$Permisos['COD_ROL']}}-{{$Permisos['COD_OBJETO']}}">
+                                            <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            <!-- Modal que esta vez toma dos parametros primarios -->
+                            <div class="modal fade bd-example-modal-sm" id="Permisos-edit-{{$Permisos['COD_ROL']}}-{{$Permisos['COD_OBJETO']}}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Actualizar datos del permiso</h5>
+                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                            <p>Si desea agregar un permiso, marque la casilla; en caso contrario, déjela desmarcada.</p>
+                                            <form action="{{ url('Permisos/actualizar') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" class="form-control" name="COD_ROL" value="{{$Permisos['COD_ROL']}}"> 
+                                                <input type="hidden" class="form-control" name="COD_OBJETO" value="{{$Permisos['COD_OBJETO']}}">
+                                                
+                                                <div class="mb-3">
+                                                    <label for="NROL">Rol: </label>
+                                                    <input type="text" readonly class="form-control" name="NOM_ROL" value="{{$Permisos['NOM_ROL']}}">
+                                                    <label for="NROL">Objeto: </label>
+                                                    <input type="text" readonly class="form-control" name="OBJETO" value="{{$Permisos['OBJETO']}}">
+                                                </div>
+                                                <!-- Insertar -->
+                                                <div class="mb-3">
+                                                    <label for="LPRM_INSERTAR">Permiso de Insertar</label>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="PRM_INSERTAR" name="PRM_INSERTAR" {{$Permisos['PRM_INSERTAR'] === 'S' ? 'checked' : ''}} onchange="updateValue(this)">
+                                                        <input type="hidden" id="PRM_INSERTAR_HIDDEN" name="PRM_INSERTAR" value="{{$Permisos['PRM_INSERTAR']}}">
+                                                    </div>
+                                                </div>
 
-                        <!-- Actualizar -->
-                        <div class="mb-3">
-                            <label for="LPRM_ACTUALIZAR">Permiso de Actualizar</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="PRM_ACTUALIZAR" name="PRM_ACTUALIZAR" {{$Permisos['PRM_ACTUALIZAR'] === 'S' ? 'checked' : ''}} onchange="updateValue(this)">
-                                <input type="hidden" id="PRM_ACTUALIZAR_HIDDEN" name="PRM_ACTUALIZAR" value="{{$Permisos['PRM_ACTUALIZAR']}}">
-                            </div>
-                        </div>
+                                                <!-- Actualizar -->
+                                                <div class="mb-3">
+                                                    <label for="LPRM_ACTUALIZAR">Permiso de Actualizar</label>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="PRM_ACTUALIZAR" name="PRM_ACTUALIZAR" {{$Permisos['PRM_ACTUALIZAR'] === 'S' ? 'checked' : ''}} onchange="updateValue(this)">
+                                                        <input type="hidden" id="PRM_ACTUALIZAR_HIDDEN" name="PRM_ACTUALIZAR" value="{{$Permisos['PRM_ACTUALIZAR']}}">
+                                                    </div>
+                                                </div>
 
-                        <!-- Consultar -->
-                        <div class="mb-3">
-                            <label for="LPRM_CONSULTAR">Permiso de Consultar</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" {{$Permisos['PRM_CONSULTAR'] === 'S' ? 'checked' : ''}} onchange="updateValue(this)">
-                                <input type="hidden" id="PRM_CONSULTAR_HIDDEN" name="PRM_CONSULTAR" value="{{$Permisos['PRM_CONSULTAR']}}">
-                            </div>
-                        </div>
-                        <br>
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Editar</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        </div>
-                    </form>
+                                                <!-- Consultar -->
+                                                <div class="mb-3">
+                                                    <label for="LPRM_CONSULTAR">Permiso de Consultar</label>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" {{$Permisos['PRM_CONSULTAR'] === 'S' ? 'checked' : ''}} onchange="updateValue(this)">
+                                                        <input type="hidden" id="PRM_CONSULTAR_HIDDEN" name="PRM_CONSULTAR" value="{{$Permisos['PRM_CONSULTAR']}}">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="mb-3">
+                                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                </div>
+                                            </form>
 
-                    <script>
-                        function updateValue(checkbox) {
-                            var hiddenInput = checkbox.nextElementSibling;
+                                            <script>
+                                                function updateValue(checkbox) {
+                                                    var hiddenInput = checkbox.nextElementSibling;
 
-                            if (checkbox.checked) {
-                                hiddenInput.value = "S";
-                            } else {
-                                hiddenInput.value = "N";
-                            }
-                        }
-                    </script>
-
-
+                                                    if (checkbox.checked) {
+                                                        hiddenInput.value = "S";
+                                                    } else {
+                                                        hiddenInput.value = "N";
+                                                    }
+                                                }
+                                            </script>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                @endforeach
-            </tbody>
-        </table>
-        </div>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            @if(session('notification'))
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <script>
+                            Swal.fire({
+                                icon: '{{ session('notification')['type'] }}',
+                                title: '{{ session('notification')['title'] }}',
+                                text: '{{ session('notification')['message'] }}',
+                            });
+                        </script>
+            @endif
             <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">
@@ -354,6 +370,11 @@
         /* button click effect*/
         .Btn:active {
             transform: translate(2px ,2px);
+        }
+
+        /*Con esta instruccion css funcionaran nuestras class hidden.*/
+        .hidden {
+            display: none;
         }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">

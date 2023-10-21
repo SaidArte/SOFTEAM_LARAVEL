@@ -35,6 +35,17 @@ class PermisosController extends Controller
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
 
+        //Probamos si ya hay un conjunto de permisos igual.
+        $response = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/GETONE_SOLOPERMISOS',[
+            "NOM_ROL"  => $request -> input("NOM_ROL"),
+            "OBJETO"   => $request -> input("OBJETO"),
+        ]);
+
+        $data = $response->json();
+        if (!empty($data)) {
+            return redirect()->back()->with('error', 'Este conjunto de permisos ya existe.')->withInput();
+        }
+
         $nuevo_permiso = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/INSERTAR_PERMISOS',[
             "NOM_ROL"  => $request -> input("NOM_ROL"),
             "OBJETO"   => $request -> input("OBJETO"),
@@ -42,8 +53,18 @@ class PermisosController extends Controller
             "PRM_ACTUALIZAR"   => $request -> input("PRM_ACTUALIZAR"),
             "PRM_CONSULTAR"   => $request -> input("PRM_CONSULTAR")
         ]);
-        return redirect('/Permisos');
 
+        if ($nuevo_permiso->successful()) {
+            $notification = [
+                'type' => 'success',
+                'title' => '¡Registro exitoso!',
+                'message' => 'El conjunto de permisos ha sido registrado.'
+            ];
+            return redirect('/Permisos')
+                ->with('notification', $notification);
+        } else {
+            return redirect()->back()->with('error', 'Error interno de servidor')->withInput();
+        }
     }
 
     public function actualizar_permiso(Request $request){
@@ -58,8 +79,17 @@ class PermisosController extends Controller
             "PRM_ACTUALIZAR"   => $request -> input("PRM_ACTUALIZAR"),
             "PRM_CONSULTAR"   => $request -> input("PRM_CONSULTAR")
         ]);
-        return redirect('/Permisos');
 
+        if ($actualizar_permiso->successful()) {
+            $notification = [
+                'type' => 'success',
+                'title' => '¡Registro actualizado!',
+                'message' => 'El conjunto de permisos ha sido modificado.'
+            ];
+            return redirect('/Permisos')
+                ->with('notification', $notification);
+        } else {
+            return redirect()->back()->with('error', 'Error interno de servidor')->withInput();
+        }
     }
-
 }

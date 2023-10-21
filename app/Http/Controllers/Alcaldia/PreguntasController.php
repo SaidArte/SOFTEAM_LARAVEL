@@ -71,8 +71,14 @@ class PreguntasController extends Controller
         ]);
 
         $data = $response->json();
-        if (!empty($data)) {
-            return redirect()->back()->with('error', 'Esta pregunta ya está registrada.')->withInput();
+        //Se verifica si "$data" no viene vacia, si es realmente un arreglo y si trae mas de una tupla.
+        if (!empty($data) && is_array($data) && count($data) > 0) {
+            foreach ($data as $pregunta) { //Hacemos un ciclo para recorrer el arreglo, importante.
+                //Aqui vemos si exite el campo "COD_PREGUNTA" dentro de "$pregunta" y luego lo comparamos con el del formulario.
+                if (isset($pregunta['COD_PREGUNTA']) && $pregunta['COD_PREGUNTA'] != $request->input("COD_PREGUNTA")) {
+                    return redirect()->back()->with('error', 'Esta pregunta ya está registrada.')->withInput();
+                }
+            }
         }
 
         $actualizar_pregunta = Http::withHeaders($headers)->put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PREGUNTAS',[

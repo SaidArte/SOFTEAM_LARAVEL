@@ -21,7 +21,19 @@
                     <div class="text">Nuevo</div>
                 </button>
             </p>
-
+        <!-- Mensaje de error cuando el rol este repetido -->
+        @if(session('message'))
+            <div class="alert alert-danger">
+                {{ session('message')['text'] }}
+            </div>
+        @endif
+        @if(session('error'))
+        <div class="alert alert-danger" role="alert">
+            <div class="text-center">
+                <strong>Error:</strong> {{ session('error') }}
+            </div>
+        </div>
+        @endif
             <div class="modal fade bd-example-modal-sm" id="Objetos" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -63,9 +75,9 @@
                                     //Validaciones del nombre rol, no permite que se ingrese numeros ni caracteres especiales, solo letras
                                     $('#OBJETO').on('input', function() {
                                         var objeto = $(this).val();
-                                        var errorMessage = 'El nombre del objeto no debe ser mayor a 100 letras y no debe incluir carácteres especiales ni números';
+                                        var errorMessage = 'El nombre del objeto debe contener al menos 5 letras, no debe ser mayor a 15 letras, espacios en blanco y no debe incluir caracteres especiales ni números';
                                         // Verificar si el nombre de rol no incluye carácteres especiales ni números
-                                        if (objeto.length < 5 || objeto.length > 100 || !/^[a-zA-Z\s]+$/.test(objeto)) {
+                                        if (objeto.length < 5 || objeto.length > 15 || !/^[a-zA-Z]+$/.test(objeto)) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {
@@ -79,9 +91,9 @@
                                         var errorMessage = '';
 
                                         if (des_objeto.length < 5) {
-                                            errorMessage = 'La descripción debe tener al menos 5 carácteres.';
+                                            errorMessage = 'La descripción debe tener al menos 5 caracteres.';
                                         } else if (des_objeto.length > 100) {
-                                            errorMessage = 'La descripción no puede tener más de 100 carácteres.';
+                                            errorMessage = 'La descripción no puede tener más de 100 caracteres.';
                                         }
                                         if (errorMessage) {
                                             $(this).addClass('is-invalid');
@@ -180,11 +192,13 @@
                                                 
                                                 <div class="mb-3">
                                                     <label for="OBJETO">Nombre del objeto</label>
-                                                    <input type="text" class="form-control" id="OBJETO" name="OBJETO" value="{{$Objetos['OBJETO']}}" required>
+                                                    <input type="text" class="form-control" id="OBJETO-{{$Objetos['COD_OBJETO']}}" name="OBJETO" value="{{$Objetos['OBJETO']}}" oninput="validarObjeto('{{$Objetos['COD_OBJETO']}}', this.value)" required>
+                                                    <div class="invalid-feedback" id="invalid-feedback-{{$Objetos['COD_OBJETO']}}"></div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="DES_OBJETO">Descripción del objeto</label>
-                                                    <input type="text" class="form-control" id="DES_OBJETO" name="DES_OBJETO" value="{{$Objetos['DES_OBJETO']}}" required>
+                                                    <input type="text" class="form-control" id="DES_OBJETO-{{$Objetos['COD_OBJETO']}}" name="DES_OBJETO" value="{{$Objetos['DES_OBJETO']}}" oninput="validarDesObjeto('{{$Objetos['COD_OBJETO']}}', this.value)" required>
+                                                    <div class="invalid-feedback" id="invalid-feedback2-{{$Objetos['COD_OBJETO']}}"></div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="TIP_OBJETO">Tipo de objeto</label>
@@ -195,10 +209,49 @@
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                                    <button type="submit" class="btn btn-primary" id="submitButton-{{$Objetos['COD_OBJETO']}}">Editar</button>
                                                     <a href="{{ url('Objetos') }}" class="btn btn-danger">Cancelar</a>
                                             </div>
                                         </form>
+                                        <script>
+                                            function validarObjeto(id, objeto) {
+                                                var btnGuardar = document.getElementById("submitButton-" + id);
+                                                var inputElement = document.getElementById("OBJETO-" + id);
+                                                var invalidFeedback = document.getElementById("invalid-feedback-" + id);
+
+                                                // Convertir a mayúsculas.
+                                                inputElement.value = inputElement.value.toUpperCase();
+                                                if (objeto.length < 5 || objeto.length > 15 || !/^[a-zA-Z]+$/.test(objeto)) {
+                                                    inputElement.classList.add("is-invalid");
+                                                    invalidFeedback.textContent = "El nombre del objeto debe contener al menos 5 letras, no debe ser mayor a 15 letras, espacios en blanco y no debe incluir caracteres especiales ni números";
+                                                    btnGuardar.disabled = true;
+                                                } else {
+                                                    inputElement.classList.remove("is-invalid");
+                                                    invalidFeedback.textContent = "";
+                                                    btnGuardar.disabled = false;
+                                                }
+                                            }
+
+                                            function validarDesObjeto(id, des_objeto) {
+                                                var btnGuardar = document.getElementById("submitButton-" + id);
+                                                var inputElement = document.getElementById("DES_OBJETO-" + id);
+                                                var invalidFeedback = document.getElementById("invalid-feedback2-" + id);
+
+                                                if (des_objeto.length < 5) {
+                                                    inputElement.classList.add("is-invalid");
+                                                    invalidFeedback.textContent = "La descripción debe tener al menos 5 caracteres.";
+                                                    btnGuardar.disabled = true;
+                                                } else if (des_objeto.length > 100) {
+                                                    inputElement.classList.add("is-invalid");
+                                                    invalidFeedback.textContent = "La descripción no puede tener más de 100 carácteres.";
+                                                    btnGuardar.disabled = true;
+                                                } else {
+                                                    inputElement.classList.remove("is-invalid");
+                                                    invalidFeedback.textContent = "";
+                                                    btnGuardar.disabled = false;
+                                                }
+                                            }
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -208,6 +261,16 @@
             </table>
             </div>
             </div>
+            @if(session('notification'))
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script>
+                        Swal.fire({
+                            icon: '{{ session('notification')['type'] }}',
+                            title: '{{ session('notification')['title'] }}',
+                            text: '{{ session('notification')['message'] }}',
+                        });
+                    </script>
+            @endif
             <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">

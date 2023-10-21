@@ -384,7 +384,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <button type="submit" class="btn btn-primary" id="submitButton-{{$Usuarios['COD_USUARIO']}}" disabled>Guardar</button>
+                                                                <button type="submit" class="btn btn-primary" id="submitButton-{{$Usuarios['COD_USUARIO']}}">Guardar</button>
                                                                 <a href="{{ url('Usuarios') }}" class="btn btn-danger">Cancelar</a>
                                                             </div>
                                                     </form>
@@ -423,15 +423,15 @@
                     </div>
                 </div>
                 @if(session('notification'))
-                          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                              <script>
-                                  Swal.fire({
-                                      icon: '{{ session('notification')['type'] }}',
-                                      title: '{{ session('notification')['title'] }}',
-                                      text: '{{ session('notification')['message'] }}',
-                                  });
-                              </script>
-                    @endif
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                            <script>
+                                Swal.fire({
+                                    icon: '{{ session('notification')['type'] }}',
+                                    title: '{{ session('notification')['title'] }}',
+                                    text: '{{ session('notification')['message'] }}',
+                                });
+                            </script>
+                @endif
                 <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">

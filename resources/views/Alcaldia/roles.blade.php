@@ -30,6 +30,13 @@
                 </p>
         @endif
         <!-- Mensaje de error cuando el rol este repetido -->
+        @if(session('error'))
+        <div class="alert alert-danger" role="alert">
+            <div class="text-center">
+                <strong>Error:</strong> {{ session('error') }}
+            </div>
+        </div>
+        @endif
         @if(session('message'))
             <div class="alert alert-danger">
                 {{ session('message')['text'] }}
@@ -181,17 +188,60 @@
                                             
                                             <div class="mb-3 mt-3">
                                                 <label for="NOM_ROL" class="form-label">Rol</label>
-                                                <input type="text" class="form-control" id="NOM_ROL" name="NOM_ROL" value="{{$Roles['NOM_ROL']}}" required>
+                                                <input type="text" class="form-control" id="NOM_ROL-{{$Roles['COD_ROL']}}" name="NOM_ROL" value="{{$Roles['NOM_ROL']}}" oninput="validarRol('{{$Roles['COD_ROL']}}', this.value)" required>
+                                                <div class="invalid-feedback" id="invalid-feedback-{{$Roles['COD_ROL']}}"></div>
                                             </div>
                                             <div class="mb-3 mt-3">
                                                 <label for="DES_ROL" class="form-label">Descripción del rol</label>
-                                                <input type="text" class="form-control" id="DES_ROL" name="DES_ROL" value="{{$Roles['DES_ROL']}}" required>
+                                                <input type="text" class="form-control" id="DES_ROL-{{$Roles['COD_ROL']}}" name="DES_ROL" value="{{$Roles['DES_ROL']}}" oninput="validarDescripcion('{{$Roles['COD_ROL']}}', this.value)" required>
+                                                <div class="invalid-feedback" id="invalid-feedback2-{{$Roles['COD_ROL']}}"></div>
                                             </div>
                                             <div class="mb-3">
-                                                <button type="submit" class="btn btn-primary">Editar</button>
+                                            <button type="submit" class="btn btn-primary" id="submitButton-{{$Roles['COD_ROL']}}">Editar</button>
                                                 <a href="{{ url('Roles') }}" class="btn btn-danger">Cancelar</a>
                                         </div>
                                     </form>
+                                    <script>
+                                        function validarRol(id, rol) {
+                                            var btnGuardar = document.getElementById("submitButton-" + id);
+                                            var inputElement = document.getElementById("NOM_ROL-" + id);
+                                            var invalidFeedback = document.getElementById("invalid-feedback-" + id);
+
+                                            // Convertir a mayúsculas
+                                            inputElement.value = inputElement.value.toUpperCase();
+                                            // Quitar espacios y caracteres especiales
+                                            inputElement.value = inputElement.value.replace(/[^A-Z0-9]/g, "");
+                                            if (rol.length < 5 || rol.length > 15 || !/^[a-zA-Z\s]+$/.test(rol)) {
+                                                inputElement.classList.add("is-invalid");
+                                                invalidFeedback.textContent = "El nombre de rol debe ser mayor a 5 letras y no mayor de 15, tampoco debe incluir caracteres especiales ni números";
+                                                btnGuardar.disabled = true;
+                                            } else {
+                                                inputElement.classList.remove("is-invalid");
+                                                invalidFeedback.textContent = "";
+                                                btnGuardar.disabled = false;
+                                            }
+                                        }
+
+                                        function validarDescripcion(id, des_rol) {
+                                            var btnGuardar = document.getElementById("submitButton-" + id);
+                                            var inputElement = document.getElementById("DES_ROL-" + id);
+                                            var invalidFeedback = document.getElementById("invalid-feedback2-" + id);
+
+                                            if (des_rol.length < 5) {
+                                                inputElement.classList.add("is-invalid");
+                                                invalidFeedback.textContent = "La descripción debe tener al menos 5 caracteres.";
+                                                btnGuardar.disabled = true;
+                                            } else if (des_rol.length > 100) {
+                                                inputElement.classList.add("is-invalid");
+                                                invalidFeedback.textContent = "La descripción no puede tener más de 100 carácteres.";
+                                                btnGuardar.disabled = true;
+                                            } else {
+                                                inputElement.classList.remove("is-invalid");
+                                                invalidFeedback.textContent = "";
+                                                btnGuardar.disabled = false;
+                                            }
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -201,6 +251,16 @@
         </table>
         </div>
             </div>
+            @if(session('notification'))
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <script>
+                            Swal.fire({
+                                icon: '{{ session('notification')['type'] }}',
+                                title: '{{ session('notification')['title'] }}',
+                                text: '{{ session('notification')['message'] }}',
+                            });
+                        </script>
+            @endif
             <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">

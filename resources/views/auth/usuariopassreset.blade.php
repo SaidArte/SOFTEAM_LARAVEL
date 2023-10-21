@@ -16,7 +16,7 @@
             <div class="mb-3 row">
                 <label for="NOM_USUARIO" class="col-sm-3 col-form-label">Ingrese su usuario:</label>
                 <div class="col-sm-3">
-                    <input type="text" id="NOM_USUARIO" name="NOM_USUARIO" class="form-control" required>
+                    <input type="text" id="NOM_USUARIO" name="NOM_USUARIO" class="form-control" oninput="this.value = this.value.toUpperCase()" required>
             </div>
             
             <div class="mb-3">

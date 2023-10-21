@@ -95,8 +95,14 @@ class UsuariosController extends Controller
         ]);
 
         $data = $response->json();
-        if (!empty($data)) {
-            return redirect()->back()->with('error', 'Este nombre de usuario ya está registrado. Favor, ingrese uno diferente.')->withInput();
+        //Se verifica si "$data" no viene vacia, si es realmente un arreglo y si trae mas de una tupla.
+        if (!empty($data) && is_array($data) && count($data) > 0) {
+            foreach ($data as $usuario) { //Hacemos un ciclo para recorrer el arreglo, importante.
+                //Aqui vemos si exite el campo "COD_USUARIO" dentro de "$usuario" y luego lo comparamos con el del formulario.
+                if (isset($usuario['COD_USUARIO']) && $usuario['COD_USUARIO'] != $request->input("COD_USUARIO")) {
+                    return redirect()->back()->with('error', 'Este nombre de usuario ya está registrado. Favor, ingrese uno diferente.')->withInput();
+                }
+            }
         }
 
         $actualizar_usuario = Http::withHeaders($headers)->put(self::urlapi.'SEGURIDAD/ACTUALIZAR_USUARIOS',[

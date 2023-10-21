@@ -37,7 +37,7 @@ class RolesController extends Controller
                 if ($roles["NOM_ROL"] === $rol){
                     return redirect('/Roles')->with('message', [
                         'type' => 'error',
-                        'text' => 'El rol ingresado ya existe'
+                        'text' => 'El rol ingresado ya existe.'
                     ])->withInput();
                 }
             }
@@ -47,8 +47,18 @@ class RolesController extends Controller
             "NOM_ROL"   => $request -> input("NOM_ROL"),
             "DES_ROL"  => $request -> input("DES_ROL")
         ]);
-        return redirect('/Roles');
 
+        if ($nuevo_rol->successful()){
+            $notification = [
+                'type' => 'success',
+                'title' => '¡Registro exitoso!',
+                'message' => 'El rol ha sido ingresado.'
+            ];
+            return redirect('/Roles')
+                ->with('notification', $notification);
+        } else {
+            return redirect()->back()->with('error', 'Error interno de servidor')->withInput();
+        }
     }
 
     public function actualizar_rol(Request $request){
@@ -56,13 +66,39 @@ class RolesController extends Controller
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
 
+        //Código para verficar si no se ingresa un rol repetido (sin tomar en cuenta el que se edita).
+        $response = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/GETONE_ROLES',[
+            "NOM_ROL"  => $request -> input("NOM_ROL"),
+        ]);
+
+        $data = $response->json();
+        //Se verifica si "$data" no viene vacia, si es realmente un arreglo y si trae mas de una tupla.
+        if (!empty($data) && is_array($data) && count($data) > 0) {
+            foreach ($data as $roles) { //Hacemos un ciclo para recorrer el arreglo, importante.
+                //Aqui vemos si exite el campo "COD_ROL" dentro de "$roles" y luego lo comparamos con el del formulario.
+                if (isset($roles['COD_ROL']) && $roles['COD_ROL'] != $request->input("COD_ROL")) {
+                    return redirect()->back()->with('error', 'El rol ingresado ya existe.')->withInput();
+                }
+            }
+        }
+
         $actualizar_rol = Http::withHeaders($headers)->put(self::urlapi.'SEGURIDAD/ACTUALIZAR_ROLES',[
             "COD_ROL"  => $request -> input("COD_ROL"),
             "NOM_ROL"  => $request -> input("NOM_ROL"),
             "DES_ROL"  => $request -> input("DES_ROL")
         ]);
-        return redirect('/Roles');
 
+        if ($actualizar_rol->successful()){
+            $notification = [
+                'type' => 'success',
+                'title' => '¡Registro actualizado!',
+                'message' => 'El rol ha sido modificado.'
+            ];
+            return redirect('/Roles')
+                ->with('notification', $notification);
+        } else {
+            return redirect()->back()->with('error', 'Error interno de servidor')->withInput();
+        }
     }
 
 
