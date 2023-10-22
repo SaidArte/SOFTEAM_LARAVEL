@@ -131,6 +131,13 @@
                 </button>
             </p>
         @endif
+        @if(session('error'))
+        <div class="alert alert-danger" role="alert">
+            <div class="text-center">
+                <strong>Error:</strong> {{ session('error') }}
+            </div>
+        </div>
+        @endif
             <div class="modal fade bd-example-modal-sm" id="Mantenimientos" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -247,7 +254,7 @@
                                 });
                                 montoInput.addEventListener("input", function() {
                                     // Utilizar una expresión regular para validar números con hasta 8 dígitos y 2 decimales
-                                    var regex = /^\d{1,8}(?:\.\d{1,2})?$/;
+                                    var regex = /^\d{1,6}(?:\.\d{1,2})?$/;
                                     var inputValue = this.value;
 
                                     if (!regex.test(inputValue)) {
@@ -301,23 +308,6 @@
                                 document.getElementById("btnCancelar").addEventListener("click", function() {
                                     limpiarFormulario();
                                 });
-                                 // Agregar una clase de CSS para mostrar la notificación flotante
-                                 function showSuccessMessage() {
-                                    const successMessage = document.createElement('div');
-                                    successMessage.className = 'success-message';
-                                    successMessage.textContent = 'Registro Exitoso';
-
-                                    document.body.appendChild(successMessage);
-
-                                    setTimeout(() => {
-                                        successMessage.remove();
-                                    }, 4000); // La notificación desaparecerá después de 4 segundos (puedes ajustar este valor)
-                                }
-                                // Función que se ejecutará después de enviar el formulario
-                                function formSubmitHandler() {
-                                    showSuccessMessage();
-                                }
-                                document.querySelector('.mantenimiento-form').addEventListener('submit', formSubmitHandler);
                             </script>
                         </div>
                     </div>
@@ -390,7 +380,7 @@
                                                         <div class="mb-3">
                                                             <label for="LDES_MANTENIMIENTO">Descripción del Mantenimiento</label>
                                                             <input type="text" class="form-control" id="LDES_MANTENIMIENTO-{{$Mantenimientos['COD_MANTENIMIENTO']}}" name="DES_MANTENIMIENTO" value="{{$Mantenimientos['DES_MANTENIMIENTO']}}" oninput="validarDescripcion('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value)" required>
-                                                            <div class="invalid-feedback" id="invalid-feedback2-{{$Mantenimientos['COD_MANTENIMIENTO']}}"></div>
+                                                            <div class="invalid-feedback" id="invalid-feedback-{{$Mantenimientos['COD_MANTENIMIENTO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="COD_USUARIO">Código de Usuario</label>
@@ -399,8 +389,8 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="LMON_MANTENIMIENTO">Monto del Mantenimiento</label>
-                                                            <input type="number" prefix="L. " class="form-control" id="MON_MANTENIMIENTO" name="MON_MANTENIMIENTO" value="{{$Mantenimientos['MON_MANTENIMIENTO']}}" min="1" step="any" required>
-                                                            <div class="invalid-feedback"></div>
+                                                            <input type="number" prefix="L. " class="form-control" id="MON_MANTENIMIENTO-{{$Mantenimientos['COD_MANTENIMIENTO']}}" name="MON_MANTENIMIENTO" value="{{$Mantenimientos['MON_MANTENIMIENTO']}}" oninput="validarMonto('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value)" min="1" step="any" required>
+                                                            <div class="invalid-feedback" id="invalid-feedback3-{{$Mantenimientos['COD_MANTENIMIENTO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <button class="btn btn-primary" id="submitButton-{{$Mantenimientos['COD_MANTENIMIENTO']}}" type="submit">Editar</button>
@@ -411,7 +401,7 @@
                                                     function validarDescripcion(id, des_mantenimiento) {
                                                         var btnGuardar = document.getElementById("submitButton-" + id);
                                                         var inputElement = document.getElementById("LDES_MANTENIMIENTO-" + id);
-                                                        var invalidFeedback = document.getElementById("invalid-feedback2-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback-" + id);
 
                                                         if (des_mantenimiento.length < 5) {
                                                             inputElement.classList.add("is-invalid");
@@ -429,15 +419,33 @@
                                                     }
                                                     function validarCodUsuario(id, codUsuario) {
                                                         var btnGuardar = document.getElementById("submitButton-" + id);
-                                                        var inputElement = document.getElementById("COD_USUARIO-" + id);
+                                                        var inputElement  = document.getElementById("COD_USUARIO-" + id);
                                                         var invalidFeedback = document.getElementById("invalid-feedback2-" + id);
 
                                                         // Quitar espacios y caracteres especiales excepto números
-                                                        var cleanedcodUsuario = codUsuario.replace(/[^0-9]/g, "");
+                                                        //var inputElement = inputElement.replace(/[^0-9]/g, "");
 
-                                                        if (cleanedcodUsuario.length > 3) {
+                                                        if (!/^\d{1,3}$/.test(codUsuario)) {
                                                             inputElement.classList.add("is-invalid");
-                                                            invalidFeedback.textContent = "El codigo usuario no debe tener más de 3 números.";
+                                                            invalidFeedback.textContent = "El código usuario no debe tener más de 3 números.";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+
+                                                    function validarMonto(id, monto) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement  = document.getElementById("MON_MANTENIMIENTO-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback3-" + id);
+                                                        
+                                                        // Utilizar una expresión regular para validar números con hasta 8 dígitos y 2 decimales
+                                                        var regex = /^\d{1,6}(?:\.\d{1,2})?$/;
+                                                        if (!regex.test(monto)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "Ingrese un monto válido con hasta 8 dígitos y 2 decimales.";
                                                             btnGuardar.disabled = true;
                                                         } else {
                                                             inputElement.classList.remove("is-invalid");
@@ -498,21 +506,6 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
                 <script src="sweetalert2.all.min.js"></script>
                 <script>
-                        @if(session('update_success'))
-                            Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
-                        @endif
-
-                        @if(session('update_error'))
-                            Swal.fire('¡Error!', '{{ session('update_error') }}', 'error');
-                        @endif
-
-                        @if(session('success'))
-                            Swal.fire('¡Éxito!', '{{ session('success') }}', 'success');
-                        @endif
-
-                        @if(session('error'))
-                            Swal.fire('¡Error!', '{{ session('error') }}', 'error');
-                        @endif
                     $(document).ready(function() {
                         $('#ajustes').DataTable({
                             responsive: true,

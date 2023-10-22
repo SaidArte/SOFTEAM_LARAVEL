@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperación de Contraseña</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -32,6 +33,9 @@
                                 <div class="col-md-6">
                                     <input id="CONF_PAS" type="password" name="CONF_PAS" required autocomplete="CONF_PAS">
                                 </div>
+                            </div>
+                            <div class="col-md-4 col-form-label text-md-right">
+                                <span class="toggle-password" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i> Ver Contraseña</span>
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -96,7 +100,21 @@
                                         );
                                     }
                                 });
-                                </script>
+                                function togglePasswordVisibility() {
+                                    var passwordInput = document.getElementById("PAS_USUARIO");
+                                    var toggleIcon = document.querySelector(".toggle-password i");
+
+                                    if (passwordInput.type === "password") {
+                                        passwordInput.type = "text";
+                                        toggleIcon.classList.remove("fa-eye");
+                                        toggleIcon.classList.add("fa-eye-slash");
+                                    } else {
+                                        passwordInput.type = "password";
+                                        toggleIcon.classList.remove("fa-eye-slash");
+                                        toggleIcon.classList.add("fa-eye");
+                                    }
+                                }
+                            </script>
                             <br>
                             @if(session('error'))
                                 <div class="alert alert-danger" role="alert">
