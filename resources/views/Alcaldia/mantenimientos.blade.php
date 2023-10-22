@@ -355,8 +355,6 @@
                                             <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                                         </button>
                                     @endif
-
-
                                     </td>
                                 </tr>
                                 <!-- Modal for editing goes here -->
@@ -391,14 +389,13 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="LDES_MANTENIMIENTO">Descripción del Mantenimiento</label>
-                                                            <input type="text" class="form-control" id="DES_MANTENIMIENTO" name="DES_MANTENIMIENTO" value="{{$Mantenimientos['DES_MANTENIMIENTO']}}" required>
+                                                            <input type="text" class="form-control" id="LDES_MANTENIMIENTO-{{$Mantenimientos['COD_MANTENIMIENTO']}}" name="DES_MANTENIMIENTO" value="{{$Mantenimientos['DES_MANTENIMIENTO']}}" oninput="validarDescripcion('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value)" required>
+                                                            <div class="invalid-feedback" id="invalid-feedback2-{{$Mantenimientos['COD_MANTENIMIENTO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="LCOD_USUARIO">Código de Usuario</label>
-                                                            <input type="text" class="form-control" id="COD_USUARIO" name="COD_USUARIO" value="{{$Mantenimientos['COD_USUARIO']}}" pattern="\d+" title="El código de usuario debe ser un número entero positivo." required>
-                                                            <!-- La etiqueta "pattern" es útil para validar el ingreso de solo números enteros positivos, 
-                                                            se apoya también de la etiqueta "title" para una mejor retroalimentación. -->
-                                                            <div class="invalid-feedback"></div>
+                                                            <label for="COD_USUARIO">Código de Usuario</label>
+                                                            <input type="text" class="form-control" id="COD_USUARIO-{{$Mantenimientos['COD_MANTENIMIENTO']}}"  name="COD_USUARIO" value="{{$Mantenimientos['COD_USUARIO']}}" oninput="validarCodUsuario('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value)" required>
+                                                            <div class="invalid-feedback"  id="invalid-feedback2-{{$Mantenimientos['COD_MANTENIMIENTO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="LMON_MANTENIMIENTO">Monto del Mantenimiento</label>
@@ -406,10 +403,49 @@
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <button class="btn btn-primary" id="btnGuardar" type="submit">Editar</button>
+                                                            <button class="btn btn-primary" id="submitButton-{{$Mantenimientos['COD_MANTENIMIENTO']}}" type="submit">Editar</button>
                                                             <a href="{{ url('Mantenimientos') }}" class="btn btn-danger">Cancelar</a>
                                                         </div>
                                                 </form>
+                                                <script>
+                                                    function validarDescripcion(id, des_mantenimiento) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("LDES_MANTENIMIENTO-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback2-" + id);
+
+                                                        if (des_mantenimiento.length < 5) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "La descripción debe tener al menos 5 caracteres.";
+                                                            btnGuardar.disabled = true;
+                                                        } else if (des_mantenimiento.length > 100) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "La descripción no puede tener más de 100 carácteres.";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                    function validarCodUsuario(id, codUsuario) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("COD_USUARIO-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback2-" + id);
+
+                                                        // Quitar espacios y caracteres especiales excepto números
+                                                        var cleanedcodUsuario = codUsuario.replace(/[^0-9]/g, "");
+
+                                                        if (cleanedcodUsuario.length > 3) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "El codigo usuario no debe tener más de 3 números.";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                </script>
                                             </div>
                                         </div>
                                     </div>
@@ -419,6 +455,16 @@
                     </table>
                 </div>
             </div>
+            @if(session('notification'))
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <script>
+                            Swal.fire({
+                                icon: '{{ session('notification')['type'] }}',
+                                title: '{{ session('notification')['title'] }}',
+                                text: '{{ session('notification')['message'] }}',
+                            });
+                        </script>
+            @endif
             <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">
@@ -441,38 +487,43 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script> console.log('Hi!'); </script>
             <script>
-            <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-           <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-            <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-            <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-            <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-            <script src="sweetalert2.all.min.js"></script>
+                <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+                <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+                <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+                <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+                <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+                <script src="sweetalert2.all.min.js"></script>
+                <script>
+                        @if(session('update_success'))
+                            Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
+                        @endif
 
-            <script>
-                    @if(session('update_success'))
-                        Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
-                    @endif
+                        @if(session('update_error'))
+                            Swal.fire('¡Error!', '{{ session('update_error') }}', 'error');
+                        @endif
 
-                    @if(session('update_error'))
-                        Swal.fire('¡Error!', '{{ session('update_error') }}', 'error');
-                    @endif
+                        @if(session('success'))
+                            Swal.fire('¡Éxito!', '{{ session('success') }}', 'success');
+                        @endif
 
-                    @if(session('success'))
-                        Swal.fire('¡Éxito!', '{{ session('success') }}', 'success');
-                    @endif
-
-                    @if(session('error'))
-                        Swal.fire('¡Error!', '{{ session('error') }}', 'error');
-                    @endif
+                        @if(session('error'))
+                            Swal.fire('¡Error!', '{{ session('error') }}', 'error');
+                        @endif
                     $(document).ready(function() {
                         $('#ajustes').DataTable({
                             responsive: true,
                             lengthMenu : [10, 20, 30, 40, 50],
+                            columnDefs: [
+                                { orderable: false, target: [0, 2, 3, 6, 7]},
+                                { searchable: false, target: [0, 3, 6, 7]},
+                                { width: '25%', target: [1] },
+                                { width: '10%', target: [2, 3, 4, 6, 7] }, 
+                                { width: '25%', target: [5] },
+                            ],
                             language: {
                                 processing: "Procesando...",
                                 lengthMenu: "Mostrar _MENU_ registros",
@@ -487,36 +538,15 @@
                                     first: "Primero",
                                     last: "Último",
                                     next: "Siguiente",
-                                    previous: "Anterior",
+                                    previous: "Anterior"
                                 },
-                                buttons: {
-                                    copy: "Copiar",
-                                    colvis: "Visibilidad",
-                                    collection: "Colección",
-                                    colvisRestore: "Restaurar visibilidad",
-                                    copyKeys: "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
-                                    copySuccess: {
-                                        1: "Copiada 1 fila al portapapeles",
-                                        _: "Copiadas %ds fila al portapapeles",
-                                    },
-                                    pdf: "PDF",
-                                    print: "Imprimir",
-                                },
-                            },
-                            columnDefs: [
-                                { width: '5%', target: [0] },
-                                { width: '10%', target: [8] },
-                            ],
+                            } 
                         });
                     });
                 </script>
             </script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-            <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
-            <script src="sweetalert2.all.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> 
         @stop
+        
         @section('css')
             <link rel="stylesheet" href="/css/admin_custom.css">
         @stop
@@ -524,10 +554,11 @@
             <p>No tiene autorización para visualizar esta sección</p>
         @endif
     @else
-        <!-- Contenido para usuarios no autenticados -->
-        <script>
-            window.location.href = "{{ route('login') }}"; // Cambia 'login' con la ruta correcta
-        </script>
+    <!-- Contenido para usuarios no autenticados -->
+    <script>
+        window.location.href = "{{ route('login') }}"; // Cambia 'login' con la ruta correcta
+    </script>
     @endif
 @stop
+
 
