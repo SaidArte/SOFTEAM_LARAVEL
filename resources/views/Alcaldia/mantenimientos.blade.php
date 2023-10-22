@@ -5,8 +5,109 @@
 
 @section('title', 'Alcaldia')
 
+@section('css')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Clase CSS personalizada aquí -->
+    <style>
+        /* CSS personalizado */
+        .custom-delete-button:hover .fas.fa-trash-alt {
+            color: white !important;
+        }
+    </style>
+    <!-- Estilos del mensaje de registro exitoso -->
+    <style>
+        .success-message {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+    </style>
+    <style>
+        body {
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+        }
+    </style>
+    <style>
+    /* Boton Nuevo */
+    .Btn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 40px;
+        height: 40px;
+        border-radius: calc(45px/2);
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition-duration: .3s;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+        background-color: rgb(0, 143, 0);
+        }
+
+    /* plus sign */
+    .sign {
+        width: 100%;
+        font-size: 2.0em;
+        color: white;
+        transition-duration: .3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    /* text */
+    .text {
+        position: absolute;
+        right: 0%;
+        width: 0%;
+        opacity: 0;
+        color: white;
+        font-size: 1.0em;
+        font-weight: 300;
+        transition-duration: .3s;
+    }
+    /* hover effect on button width */
+    .Btn:hover {
+        width: 125px;
+        transition-duration: .3s;
+    }
+
+    .Btn:hover .sign {
+        width: 30%;
+        transition-duration: .3s;
+        padding-left: 15px;
+    }
+    /* hover effect button's text */
+    .Btn:hover .text {
+        opacity: 1;
+        width: 70%;
+        transition-duration: .3s;
+        padding-right: 15px;
+    }
+    /* button click effect*/
+    .Btn:active {
+        transform: translate(2px ,2px);
+    }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+@stop
+
 @section('content_header')
     @if(session()->has('user_data'))
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
             <?php
                 $authController = app(\App\Http\Controllers\AuthController::class);
                 $objeto = 'MANTENIMIENTOS'; // Por ejemplo, el objeto deseado
@@ -39,7 +140,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Favor, ingrese los datos solicitados:</p>
-                            <form action="{{ url('Mantenimientos/insertar') }}" method="post" class="needs-validation">
+                            <form action="{{ url('Mantenimientos/insertar') }}" method="post" class="needs-validation mantenimiento-form">
                                 @csrf
                                     
                                 <div class="mb-3">
@@ -80,22 +181,45 @@
                                     </div>
                             </form>
                             <script>
+                                //VALIDACIONES
                                 var fechaHoraInput = document.getElementById("FEC_HR_MANTENIMIENTO");
                                 var codigoUsuarioInput = document.getElementById("COD_USUARIO");
+                                var desMantenimientoInput = document.getElementById("DES_MANTENIMIENTO");
+                                var montoInput = document.getElementById("MON_MANTENIMIENTO");
                                 var btnGuardar = document.getElementById("btnGuardar");
 
+                                desMantenimientoInput.addEventListener("input", function() {
+                                    var descripcion = this.value;
+                                    var errorMessage = '';
+
+                                    if (descripcion.length < 5) {
+                                        errorMessage = 'La descripción debe tener al menos 5 carácteres.';
+                                    } else if (descripcion.length > 100) {
+                                        errorMessage = 'La descripción no puede tener más de 100 carácteres.';
+                                    }
+
+                                    if (errorMessage) {
+                                        this.classList.add("is-invalid");
+                                        this.nextElementSibling.textContent = errorMessage;
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        this.classList.remove("is-invalid");
+                                        this.nextElementSibling.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                });
                                 codigoUsuarioInput.addEventListener("input", function() {
-                                    // Utilizar una expresión regular para verificar si solo contiene números enteros
-                                    var regex = /^[0-9]+$/;
+                                    // Utilizar una expresión regular para verificar si solo contiene números enteros y máximo 3 dígitos
+                                    var regex = /^\d{1,3}$/;
                                     var inputValue = this.value;
 
                                     if (!regex.test(inputValue)) {
-                                        // Si contiene caracteres no numéricos, mostrar un mensaje de error
+                                        // Si contiene caracteres no numéricos o tiene más de 3 dígitos, mostrar un mensaje de error
                                         this.classList.add("is-invalid");
-                                        this.nextElementSibling.textContent = "Solo se permiten números enteros.";
+                                        this.nextElementSibling.textContent = "Solo se permiten números enteros de hasta 3 dígitos.";
                                         btnGuardar.disabled = true; // Deshabilitar el botón de guardar
                                     } else {
-                                        // Si es un número entero válido, eliminar cualquier mensaje de error
+                                        // Si es un número entero válido y tiene máximo 3 dígitos, eliminar cualquier mensaje de error
                                         this.classList.remove("is-invalid");
                                         this.nextElementSibling.textContent = "";
                                         btnGuardar.disabled = false; // Habilitar el botón de guardar
@@ -121,6 +245,40 @@
                                         btnGuardar.disabled = false; // Habilitar el botón de guardar
                                     }
                                 });
+                                montoInput.addEventListener("input", function() {
+                                    // Utilizar una expresión regular para validar números con hasta 8 dígitos y 2 decimales
+                                    var regex = /^\d{1,8}(?:\.\d{1,2})?$/;
+                                    var inputValue = this.value;
+
+                                    if (!regex.test(inputValue)) {
+                                        // Si no coincide con el patrón, mostrar un mensaje de error
+                                        this.classList.add("is-invalid");
+                                        this.nextElementSibling.textContent = "Ingrese un monto válido con hasta 8 dígitos y 2 decimales.";
+                                        btnGuardar.disabled = true; // Deshabilitar el botón de guardar
+                                    } else {
+                                        // Si es un número válido, eliminar cualquier mensaje de error
+                                        this.classList.remove("is-invalid");
+                                        this.nextElementSibling.textContent = "";
+                                        btnGuardar.disabled = false; // Habilitar el botón de guardar
+                                    }
+                                });
+                                (function () {
+                                    'use strict'
+                                    //Obtener todos los formularios a los que queremos aplicar estilos de validacion de Bootstrap
+                                    var forms = document.querySelectorAll('.needs-validation')
+                                    //Bucle sobre ellos y evitar el envio
+                                    Array.prototype.slice.call(forms)
+                                        .forEach(function (form) {
+                                            form.addEventListener('submit', function (event) {
+                                                if (!form.checkValidity()) {
+                                                    event.preventDefault()
+                                                    event.stopPropagation()
+                                                }
+
+                                                form.classList.add('was-validated')
+                                            }, false)
+                                        })
+                                })()
                                 //Funcion de limpiar el formulario al momento que le demos al botón de cancelar
                                 function limpiarFormulario() {
                                     document.getElementById("FEC_HR_MANTENIMIENTO").value = "";
@@ -143,6 +301,23 @@
                                 document.getElementById("btnCancelar").addEventListener("click", function() {
                                     limpiarFormulario();
                                 });
+                                 // Agregar una clase de CSS para mostrar la notificación flotante
+                                 function showSuccessMessage() {
+                                    const successMessage = document.createElement('div');
+                                    successMessage.className = 'success-message';
+                                    successMessage.textContent = 'Registro Exitoso';
+
+                                    document.body.appendChild(successMessage);
+
+                                    setTimeout(() => {
+                                        successMessage.remove();
+                                    }, 4000); // La notificación desaparecerá después de 4 segundos (puedes ajustar este valor)
+                                }
+                                // Función que se ejecutará después de enviar el formulario
+                                function formSubmitHandler() {
+                                    showSuccessMessage();
+                                }
+                                document.querySelector('.mantenimiento-form').addEventListener('submit', formSubmitHandler);
                             </script>
                         </div>
                     </div>
@@ -244,157 +419,107 @@
                     </table>
                 </div>
             </div>
-                        <!-- MENSAJE BAJO -->
-                        <footer class="footer">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        2023 &copy; SOFTEAM  
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="text-md-right footer-links d-none d-sm-block">
-                                            <a>Version 1.0</a>
-                                        </div>
-                                    </div>
-                                </div>
+            <!-- MENSAJE BAJO -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            2023 &copy; SOFTEAM  
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-md-right footer-links d-none d-sm-block">
+                                <a>Version 1.0</a>
                             </div>
-                        </footer>
-                        <!-- FIN MENSAJE -->
-                    @stop
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- FIN MENSAJE -->
+        @stop
 
-            @section('css')
-                    <link rel="stylesheet" href="/css/admin_custom.css">
-                    <style>
-                    /* Boton Nuevo */
-                    .Btn {
-                        display: flex;
-                        align-items: center;
-                        justify-content: flex-start;
-                        width: 40px;
-                        height: 40px;
-                        border-radius: calc(45px/2);
-                        border: none;
-                        cursor: pointer;
-                        position: relative;
-                        overflow: hidden;
-                        transition-duration: .3s;
-                        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-                        background-color: rgb(0, 143, 0);
-                        }
+        @section('js')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script> console.log('Hi!'); </script>
+            <script>
+            <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+           <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+            <script src="sweetalert2.all.min.js"></script>
 
-                    /* plus sign */
-                    .sign {
-                        width: 100%;
-                        font-size: 2.0em;
-                        color: white;
-                        transition-duration: .3s;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
-                    /* text */
-                    .text {
-                        position: absolute;
-                        right: 0%;
-                        width: 0%;
-                        opacity: 0;
-                        color: white;
-                        font-size: 1.0em;
-                        font-weight: 300;
-                        transition-duration: .3s;
-                    }
-                    /* hover effect on button width */
-                    .Btn:hover {
-                        width: 125px;
-                        transition-duration: .3s;
-                    }
+            <script>
+                    @if(session('update_success'))
+                        Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
+                    @endif
 
-                    .Btn:hover .sign {
-                        width: 30%;
-                        transition-duration: .3s;
-                        padding-left: 15px;
-                    }
-                    /* hover effect button's text */
-                    .Btn:hover .text {
-                        opacity: 1;
-                        width: 70%;
-                        transition-duration: .3s;
-                        padding-right: 15px;
-                    }
-                    /* button click effect*/
-                    .Btn:active {
-                        transform: translate(2px ,2px);
-                    }
-                </style>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
-                <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                    @if(session('update_error'))
+                        Swal.fire('¡Error!', '{{ session('update_error') }}', 'error');
+                    @endif
 
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-                <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-                <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
-                    @stop
+                    @if(session('success'))
+                        Swal.fire('¡Éxito!', '{{ session('success') }}', 'success');
+                    @endif
 
-                    @section('js')
-                    <script> console.log('Hi!'); </script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                        <script> console.log('Hi!'); </script>
-                        <script>
-                        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-                        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-                        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-                        <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-                        <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
-                        <script>
-                            $(document).ready(function() {
-                                $('#ajustes').DataTable({
-                                    responsive: true,
-                                    lengthMenu : [10, 20, 30, 40, 50],
-                                    language: {
-                                        processing: "Procesando...",
-                                        lengthMenu: "Mostrar _MENU_ registros",
-                                        zeroRecords: "No se encontraron resultados",
-                                        emptyTable: "Ningún dato disponible en esta tabla",
-                                        infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                                        infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                                        search: "Buscar:",
-                                        infoThousands: ",",
-                                        loadingRecords: "Cargando...",
-                                        paginate: {
-                                            first: "Primero",
-                                            last: "Último",
-                                            next: "Siguiente",
-                                            previous: "Anterior",
-                                        },
-                                        buttons: {
-                                            copy: "Copiar",
-                                            colvis: "Visibilidad",
-                                            collection: "Colección",
-                                            colvisRestore: "Restaurar visibilidad",
-                                            copyKeys: "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
-                                            copySuccess: {
-                                                1: "Copiada 1 fila al portapapeles",
-                                                _: "Copiadas %ds fila al portapapeles",
-                                            },
-                                            pdf: "PDF",
-                                            print: "Imprimir",
-                                        },
+                    @if(session('error'))
+                        Swal.fire('¡Error!', '{{ session('error') }}', 'error');
+                    @endif
+                    $(document).ready(function() {
+                        $('#ajustes').DataTable({
+                            responsive: true,
+                            lengthMenu : [10, 20, 30, 40, 50],
+                            language: {
+                                processing: "Procesando...",
+                                lengthMenu: "Mostrar _MENU_ registros",
+                                zeroRecords: "No se encontraron resultados",
+                                emptyTable: "Ningún dato disponible en esta tabla",
+                                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                                search: "Buscar:",
+                                infoThousands: ",",
+                                loadingRecords: "Cargando...",
+                                paginate: {
+                                    first: "Primero",
+                                    last: "Último",
+                                    next: "Siguiente",
+                                    previous: "Anterior",
+                                },
+                                buttons: {
+                                    copy: "Copiar",
+                                    colvis: "Visibilidad",
+                                    collection: "Colección",
+                                    colvisRestore: "Restaurar visibilidad",
+                                    copyKeys: "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                                    copySuccess: {
+                                        1: "Copiada 1 fila al portapapeles",
+                                        _: "Copiadas %ds fila al portapapeles",
                                     },
-                                    columnDefs: [
-                                        { width: '5%', target: [0] },
-                                        { width: '10%', target: [8] },
-                                    ],
-                                });
-                            });
-                            </script>
-                            </script> 
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-                        <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
-
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-
-                    @stop
+                                    pdf: "PDF",
+                                    print: "Imprimir",
+                                },
+                            },
+                            columnDefs: [
+                                { width: '5%', target: [0] },
+                                { width: '10%', target: [8] },
+                            ],
+                        });
+                    });
+                </script>
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
+            <script src="sweetalert2.all.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> 
+        @stop
+        @section('css')
+            <link rel="stylesheet" href="/css/admin_custom.css">
+        @stop
         @else
             <p>No tiene autorización para visualizar esta sección</p>
         @endif
