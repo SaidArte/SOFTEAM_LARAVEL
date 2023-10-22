@@ -183,7 +183,7 @@
                             
                                 <div class="mb-3">
                                     <label for="MON_CERTIFICO_FIERRO">Monto del Certifico</label>
-                                     <input type="text" id="MON_CERTIFICO_FIERRO" class="form-control" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el monto del certifico" required>
+                                     <input type="text" prefix="L. " id="MON_CERTIFICO_FIERRO" class="form-control" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el monto del certifico" min="1" step="any"required>
                                     <div class="invalid-feedback"></div>
                                  </div>
                                  <div>
@@ -246,7 +246,7 @@
                                     $('#MON_CERTIFICO_FIERRO').on('input', function() {
                                       var monto = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
                                      $(this).val(monto); // Actualizar el valor del campo solo con números
-                                     var errorMessage = 'El teléfono debe tener  2 dígitos numéricos ';
+                                     var errorMessage = 'El monto del certifico debe tener 2 dígitos numéricos ';
                                      if (monto.length  <2) {
                                         $(this).addClass('is-invalid');
                                         $(this).siblings('.invalid-feedback').text(errorMessage);
@@ -361,9 +361,9 @@
                                              @endif
                                          </td>
                                         <td>{{date('d-m-y', strtotime($fierro['FEC_TRAMITE_FIERRO']))}}</td>   
-                                        <td>{{$fierro['NUM_FOLIO_FIERRO']}}</td>
+                                        <td># {{$fierro['NUM_FOLIO_FIERRO']}}</td>
                                         <td>{{$tiposFierro[$fierro['TIP_FIERRO']] }}</td>
-                                        <td>{{$fierro['MON_CERTIFICO_FIERRO']}}</td>
+                                        <td>L. {{$fierro['MON_CERTIFICO_FIERRO']}}</td>
                                         <td>
                                         <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen del Fierro" class="img-fluid" style="max-height: 100px;">
                                         </td>
@@ -422,7 +422,7 @@
                                                         </div>
                                                         <div class="mb-3">
                                                              <label for="fierro">Monto del Certifico</label>
-                                                             <input type="text" class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}}">
+                                                             <input type="text" prefix="L. " class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}} "min="1" step="any" required>
                                                        </div>
                                                        <div class="form-group">
                                                             <label for="IMG_FIERRO">Imagen del Fierro:</label>
