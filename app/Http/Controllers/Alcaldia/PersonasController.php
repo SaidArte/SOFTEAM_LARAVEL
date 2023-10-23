@@ -131,6 +131,9 @@ class PersonasController extends Controller
             "OPE_TELEFONO" => $request->input("OPE_TELEFONO"),
             "IND_TELEFONO" => $request->input("IND_TELEFONO"),
         ];
+
+        // Obtén la ruta de la imagen actual del campo oculto
+        $rutaImagenActual = $request->input('IMG_PERSONA_actual');
     
         // Manejar la imagen si se proporciona
         if ($request->hasFile('IMG_PERSONA')) {
@@ -142,11 +145,13 @@ class PersonasController extends Controller
             $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $imagen->getClientOriginalExtension();
             $imagen->move(public_path('imagenes/personas'), $nombreImagen);
             $rutaImagen = '/imagenes/personas/' . $nombreImagen;
-            $rutaImagenAbsoluta = url($rutaImagen);
-    
-            // Actualiza la ruta de la imagen en los datos a actualizar
-            $actualizar_personas['IMG_PERSONA'] = $rutaImagenAbsoluta;
+        } else {
+            // Si no se ha subido una nueva imagen, utiliza la ruta de la imagen actual
+            $rutaImagen = $rutaImagenActual;
         }
+    
+        // Actualizar los datos, incluyendo la nueva ruta de la imagen si se ha subido una nueva
+        $actualizar_personas['IMG_PERSONA'] = $rutaImagen;
     
         // Realizar la solicitud HTTP para actualizar los datos
         $actualizar_personas = Http::withHeaders($headers)->put(self::urlapi.'PERSONAS/ACTUALIZAR/'.$request->input("COD_PERSONA"), $actualizar_personas);

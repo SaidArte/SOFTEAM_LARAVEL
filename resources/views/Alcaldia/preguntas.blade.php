@@ -43,7 +43,6 @@
                            <!-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                         </div>
                         <div class="modal-body">
-                            <p>Favor, ingrese la nueva pregunta:</p>
                             <form action="{{ url('Preguntas/insertar') }}" method="post" class="needs-validation preguntas-form">
                                 @csrf
                                     <div class="mb-3 mt-3">
@@ -152,7 +151,6 @@
                                         <h5 class="modal-title">Editar pregunta</h5>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Ingresar nuevos datos</p>
                                         <form action="{{ url('Preguntas/actualizar') }}" method="post">
                                             @csrf
                                             <input type="hidden" class="form-control" name="COD_PREGUNTA" value="{{$Preguntas['COD_PREGUNTA']}}">

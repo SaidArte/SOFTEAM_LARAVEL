@@ -122,7 +122,6 @@
                    
                 </div>
                 <div class="modal-body">
-                    <p>Ingresar Datos Solicitados:</p>
                     <form action="{{ url('ptraslado/insertar') }}" method="post" class="needs-validation">
                         @csrf                           
 
@@ -444,7 +443,6 @@
                                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Ingresa los Nuevos Datos</p>
                                 <form action="{{ url('ptraslado/actualizar') }}" method="post" class="row g-3 needs-validation" novalidate>
                                     @csrf
                                         <input type="hidden" class="form-control" name="COD_PTRASLADO" value="{{$PTraslado['COD_PTRASLADO']}}">

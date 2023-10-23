@@ -124,7 +124,6 @@
                             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Favor, ingrese los datos solicitados:</p>
                             <form action="{{ url('Cventa/insertar') }}" method="post" class="needs-validation cventa-form" >
                                 @csrf
                                 <!--metodo de inserta en codigo de vendedor  atraendo los datos ya existente de la tabla persona-->
@@ -385,7 +384,6 @@
                                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Ingresar nuevos datos</p>
                                         <form action="{{ url('Cventa/actualizar') }}" method="post">
                                             @csrf
                                                 <input type="hidden" class="form-control" name="COD_CVENTA" value="{{$Cventa['COD_CVENTA']}}">

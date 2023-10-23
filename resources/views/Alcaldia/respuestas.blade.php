@@ -11,13 +11,11 @@
             <h1>Información de Respuestas</h1>
         </center>
         <blockquote class="blockquote text-center">
-            <p class="mb-0">Registro de Respuestas.</p>
+            <p class="mb-0">Registro de Respuestas</p>
         </blockquote>
 
         @section('content')
         <div class="container mt-5">
-            <h1 class="mb-4">Recuperación de Contraseña</h1>
-
             <form method="POST" action="{{ route('Alcaldia.respuestas.submit') }}" class="needs-validation respuestas-form">
                 @csrf
                 <div class="mb-3 row">
@@ -47,7 +45,7 @@
 
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="{{ route('home') }}" class="btn btn-secondary">Cancelar</a>
+                    <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                 </div>
                 <br>
                 @if(session('error'))

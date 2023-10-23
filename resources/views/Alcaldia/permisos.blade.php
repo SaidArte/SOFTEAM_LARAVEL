@@ -46,7 +46,6 @@
                                 <!--<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                             </div>
                             <div class="modal-body">
-                                <p>Favor, ingrese los datos solicitados:</p>
                                 <form action="{{ url('Permisos/insertar') }}" method="post">
                                     @csrf              
                                         <div class="mb-3">

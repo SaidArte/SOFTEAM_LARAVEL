@@ -120,52 +120,52 @@
                   </div>
 
                   <form action="{{ route('auth.login') }}" method="post">
-                  @csrf
-                    <p><center>Ingresa tu Usuario y Contraseña</center></p>
-                    <div class="form-outline mb-4">
-                      <input type="text" id="NOM_USUARIO" name="NOM_USUARIO" class="form-control"
-                        placeholder="Usuario" value="{{ old('NOM_USUARIO') }}"/>
-                      <label class="form-label" for="COD_USUARIO">Usuario</label>
-                    </div>
+                    @csrf
+                      <p><center>Ingresa tu Usuario y Contraseña</center></p>
+                      <div class="form-outline mb-4">
+                        <input type="text" id="NOM_USUARIO" name="NOM_USUARIO" class="form-control"
+                          placeholder="Usuario" value="{{ old('NOM_USUARIO') }}"/>
+                        <label class="form-label" for="COD_USUARIO">Usuario</label>
+                      </div>
 
-                    <div class="form-outline mb-4">
-                      <input type="password" id="PAS_USUARIO" name="PAS_USUARIO" class="form-control"
-                        placeholder="Contraseña" />
-                      <label class="form-label" for="PAS_USUARIO">Contraseña</label>
+                      <div class="form-outline mb-4">
+                        <input type="password" id="PAS_USUARIO" name="PAS_USUARIO" class="form-control"
+                          placeholder="Contraseña" />
+                        <label class="form-label" for="PAS_USUARIO">Contraseña</label>
+                      </div>
+                      <div class="text-center pt-1 mb-5 pb-1">
+                          <button type="submit" class="btn btn-primary btn-block fa-lg gradient-environmental mb-2">  Iniciar  </button>
                     </div>
-                    <div class="text-center pt-1 mb-5 pb-1">
-                        <button type="submit" class="btn btn-primary btn-block fa-lg gradient-environmental mb-2">  Iniciar  </button>
-                  </div>
-                  <div>
-                  <center> <a class="text-muted" href="{{ route('auth.usuariopassreset') }}">¿Olvidaste la contraseña?</a></center>
-                  </div>
-                    @if(session('error'))
-                    <div class="alert alert-danger" role="alert">
-                        <div class="text-center">
-                            <strong>Error:</strong> {{ session('error') }}
-                        </div>
+                    <div>
+                    <center> <a class="text-muted" href="{{ route('auth.usuariopassreset') }}">¿Olvidaste la contraseña?</a></center>
                     </div>
-                    @endif
-              <!--  <div class="d-flex align-items-center justify-content-center pb-4">
-                      <p class="mb-0 me-2">¿No tienes Usuario?</p>
-                      <button class="cta">
-                        <span>Crear uno Nuevo</span>
-                        <svg viewBox="0 0 13 10" height="10px" width="15px">
-                          <path d="M1,5 L11,5"></path>
-                          <polyline points="8 1 12 5 8 9"></polyline>
-                        </svg>
-                      </button>
-                    </div> -->
-                    @if(session('notification'))
-                          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                              <script>
-                                  Swal.fire({
-                                      icon: '{{ session('notification')['type'] }}',
-                                      title: '{{ session('notification')['title'] }}',
-                                      text: '{{ session('notification')['message'] }}',
-                                  });
-                              </script>
-                    @endif
+                      @if(session('error'))
+                      <div class="alert alert-danger" role="alert">
+                          <div class="text-center">
+                              <strong>Error:</strong> {{ session('error') }}
+                          </div>
+                      </div>
+                      @endif
+                    <!--  <div class="d-flex align-items-center justify-content-center pb-4">
+                        <p class="mb-0 me-2">¿No tienes Usuario?</p>
+                        <button class="cta">
+                          <span>Crear uno Nuevo</span>
+                          <svg viewBox="0 0 13 10" height="10px" width="15px">
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                          </svg>
+                        </button>
+                      </div> -->
+                      @if(session('notification'))
+                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                                <script>
+                                    Swal.fire({
+                                        icon: '{{ session('notification')['type'] }}',
+                                        title: '{{ session('notification')['title'] }}',
+                                        text: '{{ session('notification')['message'] }}',
+                                    });
+                                </script>
+                      @endif
                   </form>
 
                   <script>

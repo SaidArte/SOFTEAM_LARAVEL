@@ -143,7 +143,6 @@
                         </div>
                         
                         <div class="modal-body">
-                            <p>Ingresar Datos Solicitados:</p>
                             <!-- Inicio del nuevo formulario -->
                             <form action="{{ url('fierro/insertar') }}" method="post" class="needs-validation fierro-form" enctype= "multipart/form-data">
 
@@ -388,7 +387,6 @@
                                          <h5 class="modal-title">Actualizar Datos</h5>
                                              </div>
                                              <div class="modal-body">
-                                                <p>Ingresa los Nuevos Datos</p>
                                           <form action="{{ url('fierro/actualizar') }}" method="post" enctype="multipart/form-data">
                                                    @csrf
                                                    <input type="hidden" class="form-control" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">

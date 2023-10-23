@@ -141,16 +141,15 @@
                             <h5 class="modal-title">INGRESAR UNA NUEVA PERSONA</h5>
                         </div>
                         <div class="modal-body">
-                            <p>Ingrese los datos solicitados:</p>
                             <form action="{{ url('personas/insertar') }}" method="post" class="needs-validation personas-form" enctype="multipart/form-data">
                                 @csrf
                                     <div class="mb-3">
-                                        <label for="DNI_PERSONA">Número de Identidad:</label>
+                                        <label for="DNI_PERSONA">Identidad:</label>
                                         <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3 mt-3">
-                                        <label for="NOM_PERSONA">Nombre de la Persona:</label>
+                                        <label for="NOM_PERSONA">Nombre Completo:</label>
                                         <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -171,11 +170,11 @@
                                     <form action="{{ route('personas.guardar-imagen') }}" method="POST" enctype="multipart/form-data">
                                       @csrf
                                       <div class="form-group">
-                                          <label for="IMG_PERSONA">Imágen de la Persona:</label>
+                                          <label for="IMG_PERSONA">Imágen:</label>
                                           <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
                                       </div>
                                     <div class="mb-3">
-                                        <label for="DES_DIRECCION">Descripción de la Dirección:</label>
+                                        <label for="DES_DIRECCION">Dirección:</label>
                                         <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -188,12 +187,12 @@
                                         </select>  
                                     </div>                          
                                     <div class="mb-3">
-                                        <label for="DIR_EMAIL">Direccion de Correo Electrónico:</label>
+                                        <label for="DIR_EMAIL">Correo Electrónico:</label>
                                         <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="NUM_TELEFONO">Número de Teléfono:</label>
+                                        <label for="NUM_TELEFONO">Teléfono:</label>
                                         <input type="text" id="NUM_TELEFONO" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -427,11 +426,11 @@
                             <th><center>DNI</center></th>
                             <th><center>Nombre</center></th>
                             <th><center>Género</center></th>
-                            <th><center>Fecha de Nacimiento</center></th>
-                            <th><center>Imágen Persona</center></th>
-                            <th><center>Descripción Dirección</center></th>
-                            <th><center>Dirección Correo</center></th>
-                            <th><center>Número Teléfono</center></th>
+                            <th><center>F.Nac.</center></th>
+                            <th><center>Imágen</center></th>
+                            <th><center>Dirección</center></th>
+                            <th><center>Correo</center></th>
+                            <th><center>Teléfono</center></th>
                             <th><center>Opciones de la Tabla</center></th>
                         </thead>
                         <tbody>
@@ -443,7 +442,7 @@
                                     <td>{{$generos[$personas['GEN_PERSONA']]}}</td>
                                     <td>{{ Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d') }}</td>
                                     <td><center>
-                                        <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imágen de la persona" class="img-fluid" style="max-height: 100px;">
+                                        <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imágen de la persona" class="img-fluid" style="max-height: 65px;">
                                     </center></td> 
                                     <td>{{$personas['DES_DIRECCION']}}</td>   
                                     <td>{{$personas['DIR_EMAIL']}}</td>   
@@ -469,12 +468,12 @@
                                                     @csrf
                                                         <input type="hidden" class="form-control" name="COD_PERSONA" value="{{$personas['COD_PERSONA']}}">
                                                         <div class="mb-3">
-                                                            <label for="personas">Número de Identidad:</label>
+                                                            <label for="personas">Identidad:</label>
                                                             <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" value="{{$personas['DNI_PERSONA']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3 mt-3">
-                                                            <label for="personas">Nombre de la Persona:</label>
+                                                            <label for="personas">Nombre Completo:</label>
                                                             <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" value="{{$personas['NOM_PERSONA']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
@@ -493,9 +492,11 @@
                                                             <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$fecha_formateada}}" required>                                    
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="IMG_PERSONA">Imágen de la Persona:</label>
+                                                            <label for="IMG_PERSONA">Imágen:</label>
                                                             <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
                                                         </div>
+                                                        <!-- Campo oculto para almacenar la ruta de la imagen actual -->
+                                                        <input type="hidden" name="IMG_PERSONA_actual" value="{{ $personas['IMG_PERSONA'] }}">
                                                         <!-- Mostrar imagen actual -->
                                                         <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
                                                         <div class="mb-3 mt-3">
@@ -503,7 +504,7 @@
                                                             <input type="text" id="COD_DIRECCION" class="form-control" name="COD_DIRECCION" placeholder="Ingrese el código de la dirección" value="{{$personas['COD_DIRECCION']}}" readonly>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="personas">Descripción de la Dirección:</label>
+                                                            <label for="personas">Dirección:</label>
                                                             <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" value="{{$personas['DES_DIRECCION']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
@@ -517,11 +518,10 @@
                                                         </div>  
                                                         <div class="mb-3 mt-3">
                                                             <label for="personas" class="form-label">Código Email:</label>
-                                                            <input type="text" id="COD_EMAIL" class="form-control" name="COD_EMAIL" placeholder="Ingrese el código del Correo" value="{{$personas['COD_EMAIL']}}" readonly>
-                                                            
+                                                            <input type="text" id="COD_EMAIL" class="form-control" name="COD_EMAIL" placeholder="Ingrese el código del Correo" value="{{$personas['COD_EMAIL']}}" readonly>                                                           
                                                         </div>                        
                                                         <div class="mb-3">
-                                                            <label for="personas">Direccion de Correo Electrónico:</label>
+                                                            <label for="personas">Correo Electrónico:</label>
                                                             <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" value="{{$personas['DIR_EMAIL']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
@@ -530,7 +530,7 @@
                                                             <input type="text" id="COD_TELEFONO" class="form-control" name="COD_TELEFONO" placeholder="Ingrese el código del teléfono" value="{{$personas['COD_TELEFONO']}}" readonly>
                                                         </div>   
                                                         <div class="mb-3">
-                                                            <label for="personas">Número de Teléfono:</label>
+                                                            <label for="personas">Teléfono:</label>
                                                             <input type="text" id="NUM_TELEFONO" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" value="{{$personas['NUM_TELEFONO']}}" required>
                                                             <div class="invalid-feedback"></div>
                                                         </div>
@@ -579,7 +579,7 @@
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        2023 &copy; SOFTEAM 
+                                        2023 &copy; UNAH 
                                     </div>
                                     <div class="col-md-6">
                                         <div class="text-md-right footer-links d-none d-sm-block">

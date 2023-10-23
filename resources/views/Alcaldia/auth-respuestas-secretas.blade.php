@@ -27,8 +27,8 @@
 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">Enviar</button>
-                                        <a href="{{ route('home') }}" class="btn btn-secondary">Cancelar</a>
+                                        <button type="submit" class="btn btn-primary">Siguiente</button>
+                                        <a href="{{ route('home') }}" class="btn btn-danger">Cancelar</a>
                                     </div>
                                 </div>
                                 <br>

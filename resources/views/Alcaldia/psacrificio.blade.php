@@ -119,7 +119,6 @@
                         </div>
                         
                         <div class="modal-body">
-                            <p>Ingresar Datos Solicitados:</p>
                             <!-- Inicio del nuevo formulario -->
                             <form action="{{ url('psacrificio/insertar') }}" method="post" class="needs-validation psacrificio-form">
 
@@ -355,7 +354,6 @@
                                                 <h5 class="modal-title">Actualizar Datos</h5>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Ingresa los Nuevos Datos</p>
                                                 <form action="{{ url('psacrificio/actualizar') }}" method="post" class="row g-3 needs-validation" novalidate>
                                                     @csrf
                                                         <input type="hidden" class="form-control" name="COD_PSACRIFICIO" value="{{$psacrificio['COD_PSACRIFICIO']}}">

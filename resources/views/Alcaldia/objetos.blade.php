@@ -42,7 +42,6 @@
                             <!--<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                         </div>
                         <div class="modal-body">
-                            <p>Favor, ingrese los datos solicitados:</p>
                             <form action="{{ url('Objetos/insertar') }}" method="post" class="needs-validation objetos-form">
                                 @csrf              
                                     <div class="mb-3">
@@ -185,7 +184,6 @@
                                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Ingresar nuevos datos</p>
                                         <form action="{{ url('Objetos/actualizar') }}" method="post">
                                             @csrf
                                                 <input type="hidden" class="form-control" name="COD_OBJETO" value="{{$Objetos['COD_OBJETO']}}">

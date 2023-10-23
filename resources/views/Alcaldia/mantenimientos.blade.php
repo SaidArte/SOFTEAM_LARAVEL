@@ -146,7 +146,6 @@
                             <!--<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                         </div>
                         <div class="modal-body">
-                            <p>Favor, ingrese los datos solicitados:</p>
                             <form action="{{ url('Mantenimientos/insertar') }}" method="post" class="needs-validation mantenimiento-form">
                                 @csrf
                                     
@@ -355,7 +354,6 @@
                                                 <h5 class="modal-title">Actualizar datos del mantenimiento</h5>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Ingresar nuevos datos</p>
                                                 <form action="{{ url('Mantenimientos/actualizar') }}" method="post" class="needs-validation">
                                                     @csrf
                                                         <input type="hidden" class="form-control" name="COD_MANTENIMIENTO" value="{{$Mantenimientos['COD_MANTENIMIENTO']}}">

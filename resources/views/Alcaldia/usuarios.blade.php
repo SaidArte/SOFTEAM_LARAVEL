@@ -124,7 +124,6 @@
                                     <!-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                                 </div>
                                 <div class="modal-body">
-                                    <p>Favor, ingrese los datos solicitados:</p>
                                     <form action="{{ url('Usuarios/insertar') }}" method="post">
                                         @csrf
                                             
@@ -354,7 +353,6 @@
                                                     <h5 class="modal-title">Actualizar datos del usuario</h5>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Ingresar nuevos datos</p>
                                                     <form action="{{ url('Usuarios/actualizar') }}" method="post" class="row g-3 needs-validation">
                                                         @csrf
                                                             <input type="hidden" class="form-control" name="COD_USUARIO" value="{{$Usuarios['COD_USUARIO']}}">

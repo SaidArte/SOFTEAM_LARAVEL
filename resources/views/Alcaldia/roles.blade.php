@@ -50,10 +50,8 @@
                         <!--<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                     </div>
                     <div class="modal-body">
-                        <p>Favor, ingrese los datos solicitados:</p>
                         <form action="{{ url('Roles/insertar') }}" method="post" class="needs-validation roles-form">
-                            @csrf
-                                
+                            @csrf                               
                                 <div class="mb-3 mt-3">
                                     <label for="NOM_ROL">Rol</label>
                                     <input type="text" id="NOM_ROL" class="form-control" name="NOM_ROL" placeholder="Ingresar el nombre del rol" oninput="this.value = this.value.toUpperCase()" required>
@@ -181,7 +179,6 @@
                                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Ingresar nuevos datos</p>
                                     <form action="{{ url('Roles/actualizar') }}" method="post">
                                         @csrf
                                             <input type="hidden" class="form-control" name="COD_ROL" value="{{$Roles['COD_ROL']}}">
