@@ -115,7 +115,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Ingresa un Nuevo Permiso de Sacrificio</h5>
+                            <h5 class="modal-title">IngresaNuev o Permiso de Sacrificio</h5>
                         </div>
                         
                         <div class="modal-body">
@@ -125,20 +125,20 @@
                                 @csrf
 
                                     <div class="mb-3">
-                                        <label for="NOM_PERSONA">Nombre de la Persona</label>
+                                        <label for="NOM_PERSONA">Nombre</label>
                                         <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                             
                                     <div class="mb-3">
-                                        <label for="DNI_PERSONA">Numero de Identidad</label>
-                                        <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="Ingresar el numero de identidad" required>
+                                        <label for="DNI_PERSONA">Identidad</label>
+                                        <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="Ingresar el número de identidad" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="TEL_PERSONA">Numero de Telefono</label>
-                                        <input type="text" id="TEL_PERSONA" class="form-control" name="TEL_PERSONA" placeholder="Ingresar el numero de telefono" required>
+                                        <label for="TEL_PERSONA">Teléfono</label>
+                                        <input type="text" id="TEL_PERSONA" class="form-control" name="TEL_PERSONA" placeholder="Ingresar el número de teléfono" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
 
@@ -149,7 +149,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="COD_ANIMAL">Codigo del Animal</label>
+                                        <label for="COD_ANIMAL">Animal</label>
                                         <select class="form-select" id="COD_ANIMAL" name="COD_ANIMAL" required>
                                             <option value="" disable selected> Seleccione al Animal</option>
                                             @foreach ($AnimalArreglo as $Animal)
@@ -160,8 +160,8 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="DIR_PSACRIFICIO">Direccion del Sacrificio</label>
-                                        <input type="text" id="DIR_PSACRIFICIO" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingresar la direccion del sacrificio" required>
+                                        <label for="DIR_PSACRIFICIO">Dirección del Sacrificio</label>
+                                        <input type="text" id="DIR_PSACRIFICIO" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingresar la dirección del sacrificio" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
@@ -172,14 +172,45 @@
 
                             <script>
                                 $(document).ready(function() {
-                                    //Validaciones del nombre persona, no permite que se ingrese numeros solo letras
-                                    $('#NOM_PERSONA').on('input', function() {
-                                        var nombre = $(this).val();
-                                        var errorMessage = 'El nombre debe tener al menos 5 letras';
-                                        if (nombre.length < 5 || !/^[a-zA-Z\s]+$/.test(nombre)) {
+                                    // Validaciones del nombre persona, no permite que se ingresen números ni caracteres especiales
+                                    $('#NOM_PERSONA').on('keydown', function(e) {
+                                        var key = e.key;
+                                        var errorMessage = '';
+
+                                        // Verifica si se está intentando ingresar un número o un carácter especial
+                                        if (!/^[a-zA-Z\s]$/.test(key) && key !== 'Backspace') {
+                                            errorMessage = 'No se permiten números ni caracteres especiales en el nombre.';
+                                            e.preventDefault(); // Evita que el carácter no deseado se ingrese en el campo
+                                        }
+
+                                        // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                        if (errorMessage) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {
+                                            // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('');
+                                        }
+                                    });
+
+                                    // Validación de longitud mínima cuando se comienza a escribir
+                                    var nombreInput = $('#NOM_PERSONA');
+                                    nombreInput.on('input', function() {
+                                        var nombre = $(this).val();
+                                        var errorMessage = '';
+
+                                        // Verifica que se haya empezado a escribir antes de aplicar la validación de longitud mínima
+                                        if (nombre.length > 0 && nombre.length < 5) {
+                                            errorMessage = 'El nombre debe tener al menos 5 letras.';
+                                        }
+
+                                        // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                        if (errorMessage) {
+                                            $(this).addClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text(errorMessage);
+                                        } else {
+                                            // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
                                             $(this).removeClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text('');
                                         }
@@ -232,12 +263,29 @@
                                         // Implementar la lógica para verificar si el código ya existe y 
                                         //mostrar el mensaje de error correspondiente si ya está en uso.
                                     });
-                                    //Validaciones del campo direccion 
-                                    $('#DIR_PSACRIFICIO').on('input', function() {
+                                     //Validaciones del campo direccion 
+                                     $('#DIR_PSACRIFICIO').on('input', function() {
                                         var direccionSacrificio = $(this).val();
-                                        var errorMessage = 'La dirección debe tener al menos 5 caracteres';
-                                        
+                                        var errorMessage = '';
+
+                                        // Validar que la dirección tenga al menos 5 caracteres
                                         if (direccionSacrificio.length < 5) {
+                                            errorMessage = 'La dirección debe tener al menos 5 caracteres';
+                                        }
+
+                                        // Validar la presencia de números
+                                        if (/\d/.test(direccionSacrificio)) {
+                                            errorMessage = 'No se permiten números en la dirección';
+                                            $(this).val(direccionSacrificio.replace(/\d/g, '')); // Eliminar números
+                                        }
+
+                                        // Validar la presencia de caracteres especiales
+                                        if (/[!@#$%^&*()_+{}\[\]:;<>,.\/?\\|~`]/.test(direccionSacrificio)) {
+                                            errorMessage = 'No se permiten caracteres especiales en la dirección';
+                                            $(this).val(direccionSacrificio.replace(/[!@#$%^&*()_+{}\[\]:;<>,.\/?\\|~`]/g, '')); // Eliminar caracteres especiales
+                                        }
+
+                                        if (errorMessage) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {
@@ -298,12 +346,12 @@
                             <tr>
                                 <th>Nº</th>
                                 <th><center>Nombre</center></th>
-                                <th><center>Numero de Identidad</center></th>
-                                <th><center>Telefono</center></th>
-                                <th><center>Fecha del Sacrificio</center></th>
-                                <th><center>Direccion del Sacrificio</center></th>
-                                <th><center>Registro del Animal</center></th>
-                                <th><center>Opciones de la Tabla</center></th>
+                                <th><center>Identidad</center></th>
+                                <th><center>Teléfono</center></th>
+                                <th><center>Fecha Sacrificio</center></th>
+                                <th><center>Dirección del Sacrificio</center></th>
+                                <th><center>Animal</center></th>
+                                <th><center>Opciones</center></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -359,17 +407,17 @@
                                                         <input type="hidden" class="form-control" name="COD_PSACRIFICIO" value="{{$psacrificio['COD_PSACRIFICIO']}}">
                                                         
                                                         <div class="mb-3 mt-3">
-                                                            <label for="psacrificio" class="form-label">Nombre de la Persona</label>
+                                                            <label for="psacrificio" class="form-label">Nombre</label>
                                                             <input type="text" class="form-control" id="NOM_PERSONA" name="NOM_PERSONA" placeholder="Ingrese el nombre de la persona" value="{{$psacrificio['NOM_PERSONA']}}" readonly>
                                                             <div class="valid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="psacrificio">Numero de Identidad</label>
-                                                            <input type="text" class="form-control" id="DNI_PERSONA" name="DNI_PERSONA" placeholder="Ingrese el numero de identidad" value="{{$psacrificio['DNI_PERSONA']}}" readonly>
+                                                            <label for="psacrificio">Identidad</label>
+                                                            <input type="text" class="form-control" id="DNI_PERSONA" name="DNI_PERSONA" placeholder="Ingrese el número de identidad" value="{{$psacrificio['DNI_PERSONA']}}" readonly>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="psacrificio">Numero de Telefono</label>
-                                                            <input type="text" class="form-control" id="TEL_PERSONA" name="TEL_PERSONA" placeholder="Ingrese el numero de telefono" value="{{$psacrificio['TEL_PERSONA']}}">
+                                                            <label for="psacrificio">Teléfono</label>
+                                                            <input type="text" class="form-control" id="TEL_PERSONA" name="TEL_PERSONA" placeholder="Ingrese el número de teléfono" value="{{$psacrificio['TEL_PERSONA']}}" require>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="psacrificio" class="form-laabel">Fecha de Sacrificio</label>
@@ -378,12 +426,12 @@
                                                             <input type="date" class="form-control" id="FEC_SACRIFICIO" name="FEC_SACRIFICIO" placeholder="Ingrese la fecha del sacrificio" value="{{$fecha_formateada}}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="psacrificio">Codigo del Animal</label>
-                                                            <input type="text" class="form-control" id="COD_ANIMAL" name="COD_ANIMAL" placeholder="Ingrese el codigo del animal" value="{{$psacrificio['COD_ANIMAL']}}" readonly>
+                                                            <label for="psacrificio">Animal</label>
+                                                            <input type="text" class="form-control" id="COD_ANIMAL" name="COD_ANIMAL" placeholder="Ingrese el código del animal" value="{{$psacrificio['COD_ANIMAL']}}" readonly>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="psacrificio">Direccion del Sacrificio</label>
-                                                            <input type="text" class="form-control" id="DIR_PSACRIFICIOL" name="DIR_PSACRIFICIO" placeholder="Ingrese la direccion del sacrificio" value="{{$psacrificio['DIR_PSACRIFICIO']}}">
+                                                            <label for="psacrificio">Dirección del Sacrificio</label>
+                                                            <input type="text" class="form-control" id="DIR_PSACRIFICIOL" name="DIR_PSACRIFICIO" placeholder="Ingrese la dirección del sacrificio" value="{{$psacrificio['DIR_PSACRIFICIO']}}">
                                                         </div>
                                                         <div class="mb-3">
                                                             <!-- Boton de confirmar al editar -->
@@ -406,7 +454,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            2023 &copy; SOFTEAM  
+                            2023 &copy; UNAH 
                         </div>
                         <div class="col-md-6">
                             <div class="text-md-right footer-links d-none d-sm-block">
@@ -500,11 +548,12 @@
                             { width: '10%', target: [2, 3, 4, 6, 7] }, 
                             { width: '25%', target: [5] },
                         ],
-                        language: {
+                        language: { //Lenguaje a español de toda la vista 
                             processing: "Procesando...",
                             lengthMenu: "Mostrar _MENU_ registros",
                             zeroRecords: "No se encontraron resultados",
                             emptyTable: "Ningún dato disponible en esta tabla",
+                            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                             infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
                             infoFiltered: "(filtrado de un total de _MAX_ registros)",
                             search: "Buscar:",
