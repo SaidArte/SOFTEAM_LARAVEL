@@ -19,11 +19,14 @@ class UsuariosController extends Controller
         $citaArreglo = json_decode($Usuarios->body(), true);
         $roles = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_ROLES');
         $rolesArreglo = json_decode($roles->body(), true);
+        $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
+        $personasArreglo = json_decode($personas->body(), true);
         // Imprime los datos para verificar si están llegando correctamente.
 
         return view('Alcaldia.usuarios')
         ->with('citaArreglo', $citaArreglo)
-        ->with('rolesArreglo', $rolesArreglo);
+        ->with('rolesArreglo', $rolesArreglo)
+        ->with('personasArreglo', $personasArreglo);
     }
 
     public function nuevo_usuario(Request $request){

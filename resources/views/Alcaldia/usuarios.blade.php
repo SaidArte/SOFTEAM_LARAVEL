@@ -73,6 +73,10 @@
             .Btn:active {
                 transform: translate(2px ,2px);
             }
+            /*Con esta instruccion css funcionaran nuestras class hidden.*/
+            .hidden {
+                display: none;
+            }
         </style>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
@@ -139,8 +143,11 @@
                                     
                                             <div class="mb-3">
                                                 <label for="COD_PERSONA">Código de la persona</label>
-                                                <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA" placeholder="Ingresar el código de la persona" required>
+                                                <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA" placeholder="Ingresar el código de la persona" oninput="buscarPersona(this.value)" required>
                                                 <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" readonly required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="NOM_USUARIO">Usuario</label>
@@ -256,6 +263,32 @@
                                                 }
                                             });
                                         });
+
+                                        function buscarPersona(codPersona) {
+                                            var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
+                                            var personaEncontrada = false;
+
+                                            if(codPersona){
+                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
+                                                for (var i = 0; i < personasArreglo.length; i++) {
+                                                    if (personasArreglo[i].COD_PERSONA == codPersona) {
+                                                        personaEncontrada = true;
+                                                        $('#NOM_PERSONA').val(personasArreglo[i].NOM_PERSONA);
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (!personaEncontrada) {
+                                                    personaEncontrada = false;
+                                                    $('#NOM_PERSONA').val('Persona no encontrada');
+                                                }
+
+                                            }else{
+                                                personaEncontrada = false;
+                                                $('#NOM_PERSONA').val('');
+                                            }
+                                        };
+
                                         //Deshabilitar el envio de formularios si hay campos no validos
                                         (function () {
                                             'use strict'
@@ -278,6 +311,7 @@
                                         function limpiarFormulario() {
                                             document.getElementById("NOM_ROL").value = "";
                                             document.getElementById("COD_PERSONA").value = "";
+                                            document.getElementById("NOM_PERSONA").value = "";
                                             document.getElementById("NOM_USUARIO").value = "";
                                             document.getElementById("PAS_USUARIO").value = "";
                                             document.getElementById("IND_USUARIO").value = "";
@@ -316,10 +350,10 @@
                                     <th><center>Nombre</center></th>
                                     <th><center>Rol</center></th>
                                     <th><center>Estado</center></th>
-                                    <th><center>Ultimo Acceso</center></th>
-                                    <th><center>Límite de Intentos</center></th>
-                                    <th><center>Intentos Fallidos</center></th>
-                                    <th><center>Vencimiento de contraseña</center></th>
+                                    <th><center>Último Acceso</center></th>
+                                    <th class="hidden"><center>Límite de Intentos</center></th>
+                                    <th class="hidden"><center>Intentos Fallidos</center></th>
+                                    <th><center>F. Vencimiento</center></th>
                                     <th>Opciones de la Tabla</th>
                                 </tr>
                             </thead>
@@ -333,8 +367,8 @@
                                         <td>{{$Usuarios['NOM_ROL']}}</td> 
                                         <td>{{$Usuarios['IND_USUARIO']}}</td>
                                         <td>{{date('d-m-Y h:i:s', strtotime($Usuarios['FEC_ULTIMO_ACCESO']))}}</td>
-                                        <td>{{$Usuarios['LIM_INTENTOS']}}</td>
-                                        <td>{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}</td>
+                                        <td class="hidden">{{$Usuarios['LIM_INTENTOS']}}</td>
+                                        <td class="hidden">{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}</td>
                                         <td>{{date('d-m-y', strtotime($Usuarios['FEC_VENCIMIENTO']))}}</td>
                                         <td>
                                             @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
