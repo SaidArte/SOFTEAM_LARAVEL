@@ -234,6 +234,7 @@
                                             print: "Imprimir",
                                         },
                                     },
+                                    order: [[0, 'desc']],
                             });
                         });
                     </script>

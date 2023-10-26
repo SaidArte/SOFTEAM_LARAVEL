@@ -112,7 +112,8 @@ class UsuariosController extends Controller
             "COD_USUARIO"       => $request -> input("COD_USUARIO"),
             "NOM_USUARIO"   => $request -> input("NOM_USUARIO"),
             "NOM_ROL"   => $request -> input("NOM_ROL"),
-            "IND_USUARIO"           => $request -> input("IND_USUARIO")
+            "IND_USUARIO"           => $request -> input("IND_USUARIO"),
+            "FEC_VENCIMIENTO"           => $request -> input("FEC_VENCIMIENTO")
         ]);
 
         if ($actualizar_usuario->successful()) {

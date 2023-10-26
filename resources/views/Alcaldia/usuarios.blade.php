@@ -140,14 +140,18 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                    
+
                                             <div class="mb-3">
-                                                <label for="COD_PERSONA">Código de la persona</label>
-                                                <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA" placeholder="Ingresar el código de la persona" oninput="buscarPersona(this.value)" required>
+                                                <label for="id">DNI</label>
+                                                <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="mb-3">
-                                                <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" readonly required>
+                                                <label for="nom">Nombre</label>
+                                                <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="hidden" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="NOM_USUARIO">Usuario</label>
@@ -160,7 +164,7 @@
                                                 <div id="password-feedback" class="invalid-feedback"></div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="IND_USUARIO">Estado del usuario</label>
+                                                <label for="IND_USUARIO">Estado</label>
                                                 <select class="form-select custom-select" id="IND_USUARIO" name="IND_USUARIO" required>
                                                     <option value="" disabled selected>Seleccione una opción</option>
                                                     <option value="ACTIVO">ACTIVO</option>
@@ -205,19 +209,19 @@
 
 
                                         $(document).ready(function() {
-                                            //Validaciones del campo COD_PERSONA el cual no permite el ingreso de letras (las bloquea y no se muestra)
+                                            //Validaciones del campo nombre el cual no permite el ingreso de números (las bloquea y no se muestra)
                                             //y solo permite el ingreso de numeros
-                                            $('#COD_PERSONA').on('input', function() {
+                                            $('#dni').on('input', function() {
                                                 var btnGuardar = document.getElementById("submitButton");  // Obtener el botón de guardar.
-                                                var id = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
+                                                var id = $(this).val().replace(/\D/g, ''); // Eliminar numéricos y simbolos.
                                                 $(this).val(id); // Actualizar el valor del campo solo con números
-                                                var errorMessage = 'Favor, ingrese un código de usuario valido';
+                                                var errorMessage = 'Favor, ingrese una identificación valida';
                                                 if (id.length == '') {
                                                     $(this).addClass('is-invalid');
                                                     $(this).siblings('.invalid-feedback').text(errorMessage);
                                                     btnGuardar.disabled = true;
-                                                } else if(id.length > 3) {
-                                                    errorMessage = 'Favor, ingrese un número no mayor de 3 cifras.';
+                                                } else if(id.length !== 13) {
+                                                    errorMessage = 'El DNI debe tener exactamente 13 dígitos numéricos.';
                                                     $(this).addClass('is-invalid');
                                                     $(this).siblings('.invalid-feedback').text(errorMessage);
                                                     btnGuardar.disabled = true;
@@ -263,17 +267,19 @@
                                                 }
                                             });
                                         });
-
-                                        function buscarPersona(codPersona) {
+                                        
+                                        //Función para buscar personas.
+                                        function buscarPersona(idPersona) {
                                             var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
                                             var personaEncontrada = false;
 
-                                            if(codPersona){
+                                            if(idPersona){
                                                 // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
                                                 for (var i = 0; i < personasArreglo.length; i++) {
-                                                    if (personasArreglo[i].COD_PERSONA == codPersona) {
+                                                    if (personasArreglo[i].DNI_PERSONA == idPersona) {
                                                         personaEncontrada = true;
                                                         $('#NOM_PERSONA').val(personasArreglo[i].NOM_PERSONA);
+                                                        $('#COD_PERSONA').val(personasArreglo[i].COD_PERSONA);
                                                         break;
                                                     }
                                                 }
@@ -281,11 +287,13 @@
                                                 if (!personaEncontrada) {
                                                     personaEncontrada = false;
                                                     $('#NOM_PERSONA').val('Persona no encontrada');
+                                                    $('#COD_PERSONA').val('');
                                                 }
 
                                             }else{
                                                 personaEncontrada = false;
                                                 $('#NOM_PERSONA').val('');
+                                                $('#COD_PERSONA').val('');
                                             }
                                         };
 
@@ -349,12 +357,12 @@
                                     <th><center>Usuario</center></th>
                                     <th><center>Nombre</center></th>
                                     <th><center>Rol</center></th>
-                                    <th><center>Estado</center></th>
                                     <th><center>Último Acceso</center></th>
                                     <th class="hidden"><center>Límite de Intentos</center></th>
                                     <th class="hidden"><center>Intentos Fallidos</center></th>
                                     <th><center>F. Vencimiento</center></th>
-                                    <th>Opciones de la Tabla</th>
+                                    <th><center>Estado</center></th>
+                                    <th><i class="fas fa-cog"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -365,11 +373,11 @@
                                         <td>{{$Usuarios['NOM_USUARIO']}}</td>
                                         <td>{{$Usuarios['NOM_PERSONA']}}</td>   
                                         <td>{{$Usuarios['NOM_ROL']}}</td> 
-                                        <td>{{$Usuarios['IND_USUARIO']}}</td>
                                         <td>{{date('d-m-Y h:i:s', strtotime($Usuarios['FEC_ULTIMO_ACCESO']))}}</td>
                                         <td class="hidden">{{$Usuarios['LIM_INTENTOS']}}</td>
                                         <td class="hidden">{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}</td>
                                         <td>{{date('d-m-y', strtotime($Usuarios['FEC_VENCIMIENTO']))}}</td>
+                                        <td>{{$Usuarios['IND_USUARIO']}}</td>
                                         <td>
                                             @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                                 <!-- Boton de Editar -->
@@ -408,12 +416,20 @@
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3 mt-3">
-                                                                <label for="Usuarios">Estado del usuario</label>
+                                                                <label for="Usuarios">Estado</label>
                                                                 <select class="form-select custom-select" id="IND_USUARIO" name="IND_USUARIO" value="{{$Usuarios['IND_USUARIO']}}" required>
                                                                     <option value="X" selected = "selected" disabled>- Elija un estado -</option>
                                                                     <option value="ACTIVO" @if($Usuarios['IND_USUARIO'] === 'ACTIVO') selected @endif>ACTIVO</option>
                                                                     <option value="INACTIVO" @if($Usuarios['IND_USUARIO'] === 'INACTIVO') selected @endif>INACTIVO</option>
                                                                 </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="FEC_VEN">Fecha vencimiento</label>
+                                                                <?php $fecha_formateada = date('Y-m-d', strtotime($Usuarios['FEC_VENCIMIENTO'])); ?>    
+                                                                <input type="date" class="form-control" id="FEC_VENCIMIENTO" name="FEC_VENCIMIENTO" value="{{ $fecha_formateada }}" min="{{ date('Y-m-d', time()) }}" required>
+                                                                <!-- La etiqueta "min" nos ayuda a que no esten disponibles a elección fechas 
+                                                                que sean anteriores a la fecha actual (en la que se realiza el cambio).-->
+                                                                <div class="invalid-feedback"></div>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <button type="submit" class="btn btn-primary" id="submitButton-{{$Usuarios['COD_USUARIO']}}">Guardar</button>
@@ -525,6 +541,7 @@
                                 print: "Imprimir",
                             },
                         },
+                        order: [[0, 'desc']],
                         
                             });
                         });

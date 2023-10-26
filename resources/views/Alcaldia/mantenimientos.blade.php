@@ -359,12 +359,12 @@
                                                         <input type="hidden" class="form-control" name="COD_MANTENIMIENTO" value="{{$Mantenimientos['COD_MANTENIMIENTO']}}">
                                                         
                                                         <div class="mb-3">
-                                                        <label for="FEC_HR_MANTENIMIENTO">Fecha y hora de mantenimiento</label>
-                                                        <?php $fecha_formateada = date('Y-m-d\TH:i', strtotime($Mantenimientos['FEC_HR_MANTENIMIENTO'])); ?>    
-                                                        <input type="datetime-local" class="form-control" id="FEC_HR_MANTENIMIENTO" name="FEC_HR_MANTENIMIENTO" value="{{ $fecha_formateada }}" min="{{ date('Y-m-d\TH:i', time()) }}" required>
-                                                        <!-- La etiqueta "min" nos ayuda a que no esten disponibles a elección fechas 
-                                                        que sean anteriores a la fecha actual (en la que se realiza el cambio).-->
-                                                        <div class="invalid-feedback"></div>
+                                                            <label for="FEC_HR_MANTENIMIENTO">Fecha y hora de mantenimiento</label>
+                                                            <?php $fecha_formateada = date('Y-m-d\TH:i', strtotime($Mantenimientos['FEC_HR_MANTENIMIENTO'])); ?>    
+                                                            <input type="datetime-local" class="form-control" id="FEC_HR_MANTENIMIENTO" name="FEC_HR_MANTENIMIENTO" value="{{ $fecha_formateada }}" min="{{ date('Y-m-d\TH:i', time()) }}" required>
+                                                            <!-- La etiqueta "min" nos ayuda a que no esten disponibles a elección fechas 
+                                                            que sean anteriores a la fecha actual (en la que se realiza el cambio).-->
+                                                            <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="LTIP_MANTENIMIENTO">Tipo de Mantenimiento</label>
@@ -531,7 +531,8 @@
                                     next: "Siguiente",
                                     previous: "Anterior"
                                 },
-                            } 
+                            }
+                            order: [[0, 'desc']], 
                         });
                     });
                 </script>

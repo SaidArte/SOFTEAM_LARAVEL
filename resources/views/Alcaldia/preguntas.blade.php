@@ -339,6 +339,7 @@
                                 print: "Imprimir",
                             },
                         },
+                        order: [[0, 'desc']],
                         columnDefs: [
                             { width: '5%', target: [0] },
                             { width: '10%', target: [2] },
