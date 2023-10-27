@@ -13,8 +13,6 @@
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Ingreso de Pregunta y Respuesta Secreta</h1>
-        <p>Necesaria para la recuperación de la cuenta, en caso de olvido de contraseña</p>
-
         <form method="POST" action="{{ route('auth.respuesta-secreta.submit') }}">
             @csrf
             <input type="hidden" class="form-control" id='COD_USUARIO' name="COD_USUARIO" value="{{ $COD_USUARIO }}" required>

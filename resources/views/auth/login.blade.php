@@ -17,6 +17,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('assets/estilos.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Importando la fuente de Google Font -->
   <style>
@@ -32,6 +33,15 @@
     /* Estilos de color al boton de Iniciar */
     .gradient-environmental {
       background: linear-gradient(to right, #3BB78F, #0F4C75); /* Ajustar los colores según las preferencias */
+    }
+
+    /*Estlos para icono de ojo*/
+        .eye-icon {
+        position: absolute;
+        top: 29%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
     }
     /* Estilos al boton de crear uno nuevo */
     .cta {
@@ -122,22 +132,23 @@
                   <form action="{{ route('auth.login') }}" method="post">
                     @csrf
                       <p><center>Ingresa tu Usuario y Contraseña</center></p>
-                      <div class="form-outline mb-4">
-                        <input type="text" id="NOM_USUARIO" name="NOM_USUARIO" class="form-control"
-                          placeholder="Usuario" value="{{ old('NOM_USUARIO') }}"/>
+                      <div class="form-group position-relative">
+                        <input type="text" id="NOM_USUARIO" name="NOM_USUARIO" class="form-control" value="{{ old('NOM_USUARIO') }}"/>
                         <label class="form-label" for="COD_USUARIO">Usuario</label>
                       </div>
 
-                      <div class="form-outline mb-4">
-                        <input type="password" id="PAS_USUARIO" name="PAS_USUARIO" class="form-control"
-                          placeholder="Contraseña" />
-                        <label class="form-label" for="PAS_USUARIO">Contraseña</label>
-                      </div>
-                      <div class="text-center pt-1 mb-5 pb-1">
-                          <button type="submit" class="btn btn-primary btn-block fa-lg gradient-environmental mb-2">  Iniciar  </button>
+                    <div class="form-group position-relative">
+                          <input type="password" id="PAS_USUARIO" name="PAS_USUARIO" class="form-control"/>
+                          <span class="eye-icon" onclick="togglePasswordVisibility()">
+                              <i class="fas fa-eye"></i>
+                          </span>
+                          <label class="form-label" for="PAS_USUARIO">Contraseña</label>
+                    </div>
+                    <div class="text-center pt-1 mb-5 pb-1">
+                      <button type="submit" class="btn primary-btn btn-block lg gradient-environmental text-white mb-2">Iniciar</button>
                     </div>
                     <div>
-                    <center> <a class="text-muted" href="{{ route('auth.usuariopassreset') }}">¿Olvidaste la contraseña?</a></center>
+                      <center> <a class="text-muted" href="{{ route('auth.usuariopassreset') }}">¿Olvidaste la contraseña?</a></center>
                     </div>
                       @if(session('error'))
                       <div class="alert alert-danger" role="alert">
@@ -240,6 +251,21 @@
     // Mostrar el mensaje de error al enviar el formulario
     document.querySelector("form").addEventListener("submit", mostrarMensajeError);
   });
+
+  function togglePasswordVisibility() {
+      var passwordInput = document.getElementById("PAS_USUARIO");
+      var eyeIcon = document.querySelector(".eye-icon i");
+
+      if (passwordInput.type === "password") {
+          passwordInput.type = "text"; // Mostrar contraseña
+          eyeIcon.classList.remove("fa-eye");
+          eyeIcon.classList.add("fa-eye-slash");
+      } else {
+          passwordInput.type = "password"; // Ocultar contraseña
+          eyeIcon.classList.remove("fa-eye-slash");
+          eyeIcon.classList.add("fa-eye");
+      }
+  }
 </script>
 
 </html>

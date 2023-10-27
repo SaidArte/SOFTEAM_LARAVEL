@@ -315,7 +315,7 @@
                     <th>Detalle Animal</th>
                     
                 
-                    <th></th>
+                    <th><center><i class="fas fa-cog"></i></center></th>
                 </thead>
                 <tbody>
                     <!-- Loop through $citaArreglo and show data -->

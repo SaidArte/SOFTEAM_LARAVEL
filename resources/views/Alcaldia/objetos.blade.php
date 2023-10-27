@@ -157,7 +157,7 @@
                     <th>Nombre del Objeto</th>
                     <th>Descripción del Objeto</th>
                     <th>Tipo de Objeto</th>
-                    <th>Opciones de la Tabla</th>
+                    <th><center><i class="fas fa-cog"></i></center></th>
                 </thead>
                 <tbody>
                     <!-- Loop through $citaArreglo and show data -->

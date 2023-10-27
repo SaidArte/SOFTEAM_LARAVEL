@@ -384,7 +384,7 @@
                 <th><center>Matricula del Vehiculo</center></th>
                 <th><center>Color del Vehiculo</center></th>
                 <th><center>Monto del Traslado</center></th>                 
-                <th><center>Opciones de la Tabla</center></th>
+                <th><center><i class="fas fa-cog"></i></center></th>
             </tr>
         </thead>
         <tbody>

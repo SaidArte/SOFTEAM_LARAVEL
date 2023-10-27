@@ -18,6 +18,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('assets/estilos.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Importando la fuente de Google Font -->
   <style>
@@ -150,7 +151,7 @@
                             <span class="btn btn-light toggle-password" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i> Ver Contraseña</span>
                         </div>
                         <div class="text-center pt-1 mb-5 pb-1">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-primary" id="submitButton" disabled>Guardar</button>
                             <a href="{{ route('auth.login') }}" class="btn btn-danger">Cancelar</a>
                         </div>
                             <!-- Función en javascript para no permitir dar "submit" si los campos de contraseña y confirmación no son iguales y cumplen con los requisitos -->

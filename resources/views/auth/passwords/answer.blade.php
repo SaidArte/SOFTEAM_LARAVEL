@@ -145,7 +145,7 @@
                             <button type="button" class="btn btn-light toggle-password" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i> Ver Respuesta</button>
                         </div>
                         <div class="text-center pt-1 mb-5 pb-1">
-                            <button type="submit" class="btn btn-primary">Siguiente</button>
+                            <button type="submit" class="btn btn-primary" id="submitButton" disabled>Siguiente</button>
                             <a href="{{ route('auth.login') }}" class="btn btn-danger">Cancelar</a>
                         </div>
                         @if(session('error'))
@@ -168,7 +168,7 @@
                     </form>
                     <!-- Agrega el enlace al archivo de script de Bootstrap (si es necesario) -->
                         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
                     <script>
                         function validarRespuesta(respuesta) {
                             var btnGuardar = document.getElementById("submitButton");

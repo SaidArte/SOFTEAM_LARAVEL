@@ -343,7 +343,7 @@
                     <th>Código Animal </th>
                     <th>Folio Cventa</th>
                     <th>Ant Cventa</th>
-                    <th>opciones </th>
+                    <th><center><i class="fas fa-cog"></i></center></th>
                    
                 </thead>
                 <tbody>

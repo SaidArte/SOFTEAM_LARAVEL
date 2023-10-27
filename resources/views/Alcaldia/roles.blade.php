@@ -153,7 +153,7 @@
                 <th>Nº</th>
                 <th>Nombre del Rol</th>
                 <th>Descripción</th>
-                <th>Opciones de la Tabla</th>
+                <th><center><i class="fas fa-cog"></i></center></th>
             </thead>
             <tbody>
                 <!-- Loop through $citaArreglo and show data -->

@@ -324,7 +324,7 @@
                             <th>Nº</th>
                             <th>Nombre de Usuario</th>
                             <th>Monto Mantenimiento</th>
-                            <th>Opciones de la Tabla</th>
+                            <th><center><i class="fas fa-cog"></i></center></th>
                         </thead>
                         <tbody>
                             <!-- Loop through $citaArreglo and show data -->

@@ -362,7 +362,7 @@
                                     <th class="hidden"><center>Intentos Fallidos</center></th>
                                     <th><center>F. Vencimiento</center></th>
                                     <th><center>Estado</center></th>
-                                    <th><i class="fas fa-cog"></i></th>
+                                    <th><center><i class="fas fa-cog"></i></center></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -415,13 +415,13 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                            <div class="mb-3 mt-3">
-                                                                <label for="Usuarios">Estado</label>
-                                                                <select class="form-select custom-select" id="IND_USUARIO" name="IND_USUARIO" value="{{$Usuarios['IND_USUARIO']}}" required>
-                                                                    <option value="X" selected = "selected" disabled>- Elija un estado -</option>
-                                                                    <option value="ACTIVO" @if($Usuarios['IND_USUARIO'] === 'ACTIVO') selected @endif>ACTIVO</option>
-                                                                    <option value="INACTIVO" @if($Usuarios['IND_USUARIO'] === 'INACTIVO') selected @endif>INACTIVO</option>
-                                                                </select>
+                                                            <div class="mb-3">
+                                                                <label for="nIntentos">No. intentos</label>
+                                                                <input type="text" readonly class="form-control" id="LIM_INTENTOS-{{$Usuarios['COD_USUARIO']}}" name="LIM_INTENTOS" value="{{$Usuarios['LIM_INTENTOS']}}">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="nIntentosF">Intentos fallidos</label>
+                                                                <input type="text" readonly class="form-control" id="NUM_INTENTOS_FALLIDOS-{{$Usuarios['COD_USUARIO']}}" name="NUM_INTENTOS_FALLIDOS" value="{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="FEC_VEN">Fecha vencimiento</label>
@@ -430,6 +430,14 @@
                                                                 <!-- La etiqueta "min" nos ayuda a que no esten disponibles a elección fechas 
                                                                 que sean anteriores a la fecha actual (en la que se realiza el cambio).-->
                                                                 <div class="invalid-feedback"></div>
+                                                            </div>
+                                                            <div class="mb-3 mt-3">
+                                                                <label for="Usuarios">Estado</label>
+                                                                <select class="form-select custom-select" id="IND_USUARIO" name="IND_USUARIO" value="{{$Usuarios['IND_USUARIO']}}" required>
+                                                                    <option value="X" selected = "selected" disabled>- Elija un estado -</option>
+                                                                    <option value="ACTIVO" @if($Usuarios['IND_USUARIO'] === 'ACTIVO') selected @endif>ACTIVO</option>
+                                                                    <option value="INACTIVO" @if($Usuarios['IND_USUARIO'] === 'INACTIVO') selected @endif>INACTIVO</option>
+                                                                </select>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <button type="submit" class="btn btn-primary" id="submitButton-{{$Usuarios['COD_USUARIO']}}">Guardar</button>

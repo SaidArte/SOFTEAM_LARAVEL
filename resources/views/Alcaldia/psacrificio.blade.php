@@ -351,7 +351,7 @@
                                 <th><center>Fecha Sacrificio</center></th>
                                 <th><center>Dirección del Sacrificio</center></th>
                                 <th><center>Animal</center></th>
-                                <th><center>Opciones</center></th>
+                                <th><center><i class="fas fa-cog"></i></center></th>
                             </tr>
                         </thead>
                         <tbody>

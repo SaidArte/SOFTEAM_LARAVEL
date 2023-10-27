@@ -124,10 +124,10 @@
             <table cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="respuestas">
                 <thead>
                     <tr>
-                    <th>Nº</th>
-                    <th>Pregunta</th>
-                    <th>Opciones de la Tabla</th>
-                            </tr>
+                        <th>Nº</th>
+                        <th>Pregunta</th>
+                        <th><center><i class="fas fa-cog"></i></center></th>
+                    </tr>
                 </thead>
                 <tbody>
                     <!-- Loop through $citaArreglo and show data -->

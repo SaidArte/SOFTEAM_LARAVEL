@@ -387,7 +387,7 @@ class AuthController extends Controller
         if ($response->successful()) {
             $notification = [
                 'type' => 'success',
-                'title' => '¡Respuesta Guardada!',
+                'title' => '¡Todo listo!',
                 'message' => 'Puede volver a iniciar sesión'
             ];
             Session::flush();
@@ -429,6 +429,34 @@ class AuthController extends Controller
                 'title' => 'Cambio de contraseña',
                 'message' => 'Su contraseña ha sido actualizada con éxito, puede iniciar sesión.'
             ];
+
+            //Verifica si el usuario tiene o no ingresada su pregunta de seguridad con su respuesta secreta.
+            $tienePregunta = Http::post(self::urlapi.'SEGURIDAD/GETONE_PREGUNTA_USUARIOS', [
+                'NOM_USUARIO' => $NOM_USUARIO
+            ]);
+            
+            $dataPregunta = $tienePregunta->json();
+
+            //En caso que el usuario no tenga su pregunta de seguridad.
+            if(empty($dataPregunta)){
+                $obtenerSesion = Http::post(self::urlapi.'api/login', [
+                    'NOM_USUARIO' => $NOM_USUARIO,
+                    'PAS_USUARIO' => $PAS_USUARIO
+                ]);
+        
+                $dataSesion = $obtenerSesion->json();
+        
+                if(!empty($dataSesion)){
+                    if ($obtenerSesion->successful()) {
+                        $user = $dataSesion['user'];
+                        $token = $dataSesion['token'];
+                        Session::put('user_data', $user); //Almacena datos del usuario.
+                        Session::put('token', $token); //Almacena el token.
+                        Session::put('COD_USUARIO', $COD_USUARIO); //Almacena el código de Usuario.
+                        return redirect()->route('auth.respuesta-secreta');
+                    }
+                }
+            }
             Session::flush();
             return redirect()->route('login')
                 ->with('notification', $notification);

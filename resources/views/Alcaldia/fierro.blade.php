@@ -334,7 +334,7 @@
                             <th><center>Tipo Fierro</center></th>
                             <th><center>Monto Certifico</center></th>
                             <th><center>Imagen Fierro</center></th>
-                            <th><center>Opciones de la Tabla</center></th>
+                            <th><center><i class="fas fa-cog"></i></center></th>
                         </tr>
                         </thead>
                         <tbody>

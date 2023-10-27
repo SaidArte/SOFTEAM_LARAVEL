@@ -155,7 +155,7 @@
                                 <th><center>Permisos Insertar</center></th>
                                 <th><center>Permisos Actualizar</center></th>
                                 <th><center>Permisos Consultar</center></th>
-                                <th><center>Opciones</center></th>
+                                <th><center><i class="fas fa-cog"></i></center></th>
                             </tr>
                         </thead>
                         <tbody>

@@ -431,7 +431,7 @@
                             <th><center>Dirección</center></th>
                             <th><center>Correo</center></th>
                             <th><center>Teléfono</center></th>
-                            <th><center>Opciones de la Tabla</center></th>
+                            <th><center><i class="fas fa-cog"></i></center></th>
                         </thead>
                         <tbody>
                             @foreach($citaArreglo as $personas)
