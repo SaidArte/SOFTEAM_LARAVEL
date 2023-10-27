@@ -7,14 +7,12 @@
 
 @section('content_header')
     @if(session()->has('user_data'))
-        <center>
-            <h1>Información de Respuestas</h1>
-        </center>
         <blockquote class="blockquote text-center">
             <p class="mb-0">Registro de Respuestas</p>
         </blockquote>
 
         @section('content')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <div class="container mt-5">
             <form method="POST" action="{{ route('Alcaldia.respuestas.submit') }}" class="needs-validation respuestas-form">
                 @csrf

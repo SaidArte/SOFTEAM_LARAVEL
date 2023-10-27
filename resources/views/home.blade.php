@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
-
 @section('content')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @if(session()->has('user_data'))
         <!-- Contenido que solo se muestra a usuarios autenticados -->
         <div style="background: linear-gradient(to right, #008080 , #000000); text-align: right; padding: 10px; font-weight: bold; color: white;">

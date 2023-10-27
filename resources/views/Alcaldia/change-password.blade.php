@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 
 @section('content')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @if(session()->has('user_data'))
         <div class="container">
             <div class="row justify-content-center align-items-center" style="height: 100vh;">

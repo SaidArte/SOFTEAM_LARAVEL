@@ -302,11 +302,31 @@ return [
             'topnav_right' => true,
         ],
         [
-            'text' => 'Cerrar Sesión',
-            'type' =>'fa-sing-out',
-           // 'icon_color' => 'Blue',
-            'url' => 'logout'  ,
-            'topnav_right' => true, 
+            'text' => 'Perfil',
+            'icon' => 'fa fa-id-badge',
+            'topnav_right' => true,
+            'submenu' => [
+                [
+                    'text' => 'Cambiar respuesta',
+                    'icon' => 'fa fa-check-circle',
+                    //'icon_color' => 'indigo',
+                    'url' => 'preguntas-auth',
+                    'icon_color' => 'green',
+                ],
+                [
+                    'text' => 'Cambiar contraseña',
+                    'icon' => 'fa fa-unlock-alt',
+                    //'icon_color' => 'indigo',
+                    'url' => 'change-password',
+                    'icon_color' => 'green',
+                ],
+                [
+                    'text' => 'Cerrar Sesión',
+                    'icon' =>'fa fa-sign-out',
+                    'url' => 'logout'  ,
+                    'icon_color' => 'green',
+                ]
+            ] 
         ],
 
         // Sidebar items:
@@ -386,6 +406,13 @@ return [
                    // 'icon_color' => 'info',
                     'url' => 'ptraslado',
                     'icon_color' => 'green',
+                ],
+                [
+                    'text' => 'Mantenimientos',
+                    'icon' => 'fa fa-wrench',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Mantenimientos',
+                    'icon_color' => 'green',
                 ]
             ]
         ],
@@ -413,8 +440,7 @@ return [
             ]
         ],
         
-        ['header' => 'Configuraciones de la cuenta'],
-      [
+        [
             'text' => 'Seguridad',
             //'url' => 'Usuarios',
             //'label' => 2,
@@ -422,34 +448,6 @@ return [
             'icon' => 'fa fa-lock',
             //'icon_color' => 'info',
             'submenu' => [
-                [
-                    'text' => 'Usuarios',
-                    'icon' => 'fa fa-user',
-                    //'icon_color' => 'indigo',
-                    'url' => 'Usuarios',
-                    'icon_color' => 'green',
-                ],
-                [
-                    'text' => 'Preguntas de seguridad',
-                    'icon' => 'fa fa-question',
-                    //'icon_color' => 'indigo',
-                    'url' => 'Preguntas',
-                    'icon_color' => 'green',
-                ],
-                [
-                    'text' => 'Cambiar respuesta',
-                    'icon' => 'fa fa-check-circle',
-                    //'icon_color' => 'indigo',
-                    'url' => 'preguntas-auth',
-                    'icon_color' => 'green',
-                ],
-                [
-                    'text' => 'Cambiar contraseña',
-                    'icon' => 'fa fa-unlock-alt',
-                    //'icon_color' => 'indigo',
-                    'url' => 'change-password',
-                    'icon_color' => 'green',
-                ],
                 [
                     'text' => 'Roles',
                     'icon' => 'fa fa-universal-access',
@@ -472,10 +470,17 @@ return [
                     'icon_color' => 'green',
                 ],
                 [
-                    'text' => 'Mantenimientos',
-                    'icon' => 'fa fa-wrench',
+                    'text' => 'Preguntas',
+                    'icon' => 'fa fa-question',
                     //'icon_color' => 'indigo',
-                    'url' => 'Mantenimientos',
+                    'url' => 'Preguntas',
+                    'icon_color' => 'green',
+                ],
+                [
+                    'text' => 'Usuarios',
+                    'icon' => 'fa fa-user',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Usuarios',
                     'icon_color' => 'green',
                 ],
                 [
