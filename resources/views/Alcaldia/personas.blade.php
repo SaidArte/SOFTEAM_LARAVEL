@@ -234,7 +234,7 @@
                                     //Validaciones del nombre persona, no permite que se ingrese numeros solo letras
                                     $('#NOM_PERSONA').on('input', function() {
                                         var nombre = $(this).val();
-                                        var errorMessage = 'El nombre debe tener al menos 5 carácteres y no más de 100, sin números';
+                                        var errorMessage = 'El nombre debe tener al menos 5 carácteres y no más de 100, sin números.';
                                         // Verificar si el nombre tiene al menos 5 letras, no contiene números y no tiene más de 100 caracteres
                                         if (nombre.length < 5 || nombre.length > 100 || !/^[a-zA-Z\s]+$/.test(nombre)) {
                                             $(this).addClass('is-invalid');
@@ -250,7 +250,7 @@
                                         var minBirthdate = new Date();
                                         minBirthdate.setFullYear(minBirthdate.getFullYear() - 18);  // Restar 18 años a la fecha actual
                                         
-                                        var errorMessage = 'Debes tener al menos 18 años para inscribirte';
+                                        var errorMessage = 'Debes tener al menos 18 años para inscribirte.';
                                         
                                         if (!fecnacimiento || fecnacimiento > currentDate) {
                                             $(this).addClass('is-invalid');
@@ -271,7 +271,7 @@
                                     $('#DNI_PERSONA').on('input', function() {
                                         var dni = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
                                         $(this).val(dni); // Actualizar el valor del campo solo con números
-                                        var errorMessage = 'El DNI debe tener exactamente 13 dígitos numéricos ';
+                                        var errorMessage = 'El DNI debe tener exactamente 13 dígitos numéricos.';
                                         if (dni.length !== 13) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
@@ -285,7 +285,7 @@
                                     $('#NUM_TELEFONO').on('input', function() {
                                         var telefono = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
                                         $(this).val(telefono); // Actualizar el valor del campo solo con números
-                                        var errorMessage = 'El teléfono debe tener exactamente 8 dígitos numéricos ';
+                                        var errorMessage = 'El teléfono debe tener exactamente 8 dígitos numéricos.';
                                         if (telefono.length !== 8) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
@@ -313,7 +313,7 @@
                                     });                                
                                     $('#DIR_EMAIL').on('input', function() {
                                         var correopersona = $(this).val();
-                                        var errorMessage = 'La dirección de correo debe tener entre 5 y 50 caraácteres, sin espacios y contener letras minúsculas, "@" y "."';
+                                        var errorMessage = 'El correo debe tener entre 5 y 50 caraácteres, sin espacios y contener letras minúsculas, "@" y "."';
                                         
                                         if (correopersona.length < 5 || correopersona.length > 50 || correopersona.indexOf(' ') !== -1 || correopersona.indexOf('@') === -1 || !/^[a-z0-9@.]+$/.test(correopersona)) {
                                             $(this).addClass('is-invalid');
@@ -469,13 +469,13 @@
                                                         <input type="hidden" class="form-control" name="COD_PERSONA" value="{{$personas['COD_PERSONA']}}">
                                                         <div class="mb-3">
                                                             <label for="personas">Identidad:</label>
-                                                            <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" value="{{$personas['DNI_PERSONA']}}" required>
-                                                            <div class="invalid-feedback"></div>
+                                                            <input type="text" class="form-control" id="DNI_PERSONA-{{$personas['COD_PERSONA']}}" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" value="{{$personas['DNI_PERSONA']}}" oninput="validarDNI('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                            <div class="invalid-feedback" id="invalid-feedback-{{$personas['COD_PERSONA']}}"></div>
                                                         </div>
                                                         <div class="mb-3 mt-3">
                                                             <label for="personas">Nombre Completo:</label>
-                                                            <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" value="{{$personas['NOM_PERSONA']}}" required>
-                                                            <div class="invalid-feedback"></div>
+                                                            <input type="text" id="NOM_PERSONA-{{$personas['COD_PERSONA']}}" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" value="{{$personas['NOM_PERSONA']}}" oninput="validarNombre('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                            <div class="invalid-feedback" id="invalid-feedback2-{{$personas['COD_PERSONA']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Género:</label>
@@ -489,7 +489,8 @@
                                                             <label for="personas" class="form-laabel">Fecha de Nacimiento:</label>
                                                             <!-- Codigo para que me muestre la fecha ya registrada al momento de actualizar --->
                                                             <?php $fecha_formateada = Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d'); ?>
-                                                            <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$fecha_formateada}}" required>                                    
+                                                            <input type="date" id="FEC_NAC_PERSONA-{{$personas['COD_PERSONA']}}" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$fecha_formateada}}" oninput="validarFecNac('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                            <div class="invalid-feedback" id="invalid-feedback3-{{$personas['COD_PERSONA']}}"></div>                                    
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="IMG_PERSONA">Imágen:</label>
@@ -505,8 +506,8 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Dirección:</label>
-                                                            <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" value="{{$personas['DES_DIRECCION']}}" required>
-                                                            <div class="invalid-feedback"></div>
+                                                            <input type="text" id="DES_DIRECCION-{{$personas['COD_PERSONA']}}" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" value="{{$personas['DES_DIRECCION']}}" oninput="validarDireccion('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                            <div class="invalid-feedback" id="invalid-feedback4-{{$personas['COD_PERSONA']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Tipo de Dirección:</label>
@@ -522,8 +523,8 @@
                                                         </div>                        
                                                         <div class="mb-3">
                                                             <label for="personas">Correo Electrónico:</label>
-                                                            <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" value="{{$personas['DIR_EMAIL']}}" required>
-                                                            <div class="invalid-feedback"></div>
+                                                            <input type="text" id="DIR_EMAIL-{{$personas['COD_PERSONA']}}" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" value="{{$personas['DIR_EMAIL']}}" oninput="validarCorreo('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                            <div class="invalid-feedback" id="invalid-feedback5-{{$personas['COD_PERSONA']}}"></div>
                                                         </div>
                                                         <div class="mb-3 mt-3">
                                                             <label for="personas" class="form-label">Código Teléfono:</label>
@@ -531,8 +532,8 @@
                                                         </div>   
                                                         <div class="mb-3">
                                                             <label for="personas">Teléfono:</label>
-                                                            <input type="text" id="NUM_TELEFONO" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" value="{{$personas['NUM_TELEFONO']}}" required>
-                                                            <div class="invalid-feedback"></div>
+                                                            <input type="text" id="NUM_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" value="{{$personas['NUM_TELEFONO']}}" oninput="validarTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                            <div class="invalid-feedback" id="invalid-feedback6-{{$personas['COD_PERSONA']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Tipo de Teléfono:</label>
@@ -544,13 +545,13 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Descripción del Teléfono:</label>
-                                                            <input type="text" id="DES_TELEFONO" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" value="{{$personas['DES_TELEFONO']}}" required>
-                                                            <div class="invalid-feedback"></div>
+                                                            <input type="text" id="DES_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" value="{{$personas['DES_TELEFONO']}}" oninput="validarDesTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                            <div class="invalid-feedback" id="invalid-feedback7-{{$personas['COD_PERSONA']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Operadora de Teléfono:</label>
-                                                            <input type="text" id="OPE_TELEFONO" class="form-control" name="OPE_TELEFONO" placeholder="Ingresar una descripción del teléfono" value="{{$personas['OPE_TELEFONO']}}" required>
-                                                            <div class="invalid-feedback"></div>
+                                                            <input type="text" id="OPE_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="OPE_TELEFONO" placeholder="Ingresar una descripción del teléfono" value="{{$personas['OPE_TELEFONO']}}" oninput="validarOpeTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                            <div class="invalid-feedback" id="invalid-feedback8-{{$personas['COD_PERSONA']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Estado:</label>
@@ -561,10 +562,147 @@
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <button type="submit" class="btn btn-primary">Editar</button>
-                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                            <button type="submit" class="btn btn-primary" id="submitButton-{{$personas['COD_PERSONA']}}">Editar</button>
+                                                            <a href="{{ url('personas') }}" class="btn btn-danger">Cancelar</a>
                                                     </div>
                                                 </form> 
+                                                <script>
+                                                    //Validaciones EDITAR
+                                                    function validarDNI(id, dni) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("DNI_PERSONA-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback-" + id);
+              
+                                                        if (!/^\d{13}$/.test(dni)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "El DNI debe tener exactamente 13 dígitos numéricos";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                    function validarNombre(id, nombre) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("NOM_PERSONA-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback2-" + id);
+
+                                                        if (nombre.length < 5 || nombre.length > 100 || !/^[a-zA-Z\s]+$/.test(nombre)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "El nombre debe tener al menos 5 carácteres y no más de 100, sin números";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                    function validarFecNac(id, fecNac) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("FEC_NAC_PERSONA-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback3-" + id);
+
+                                                        // Parsea la fecha de nacimiento en un objeto Date
+                                                        var fechaNac = new Date(fecNac);
+                                                        
+                                                        // Calcula la fecha hace 18 años atrás
+                                                        var fechaHace18Anios = new Date();
+                                                        fechaHace18Anios.setFullYear(fechaHace18Anios.getFullYear() - 18);
+
+                                                        // Compara la fecha de nacimiento con la fecha hace 18 años
+                                                        if (fechaNac <= fechaHace18Anios) {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        } else {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "Debes tener al menos 18 años para inscribirte.";
+                                                            btnGuardar.disabled = true;
+                                                        }
+                                                    }
+                                                    function validarDireccion(id, direccion) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("DES_DIRECCION-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback4-" + id);
+
+                                                        if (direccion.length < 5) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "La dirección debe tener al menos 5 caracteres.";
+                                                            btnGuardar.disabled = true;
+                                                        } else if (direccion.length > 100) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "La dirección no puede tener más de 100 carácteres.";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                    function validarCorreo(id, correo) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("DIR_EMAIL-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback5-" + id);
+
+                                                        // Verificar si el correo cumple con los requisitos
+                                                        if (/^\S+@\S+\.\S{2,}$/.test(correo) && correo.length >= 5 && correo.length <= 50) {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        } else {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "El correo debe tener al menos 5 caracteres, no ser mayor de 50, contener un '@' y un '.' sin espacios";
+                                                            btnGuardar.disabled = true;
+                                                        }
+                                                    }
+                                                    function validarTelefono(id, telefono) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("NUM_TELEFONO-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+                                                        
+                                                        if (!/^\d{8}$/.test(telefono)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "El teléfono debe tener exactamente 8 dígitos";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                    function validarDesTelefono(id, desTel) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("DES_TELEFONO-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback7-" + id);
+
+                                                        if (desTel.length < 5 || desTel.length > 100 || !/^[a-zA-Z\s]+$/.test(desTel)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "La descripción debe tener al menos 5 carácteres y no más de 100, sin números";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                    function validarOpeTelefono(id, opeTel) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("OPE_TELEFONO-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback8-" + id);
+
+                                                        if (opeTel.length < 4 || opeTel.length > 20 || !/^[a-zA-Z\s]+$/.test(opeTel)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "La descripción debe tener al menos 4 carácteres y no más de 20, sin números";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                </script>
                                             </div>
                                         </div>       
                                     </div>

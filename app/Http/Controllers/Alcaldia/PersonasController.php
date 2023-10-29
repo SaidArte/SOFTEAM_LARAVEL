@@ -13,14 +13,14 @@ class PersonasController extends Controller
     const urlapi= 'http://82.180.133.39:4000/';
 
     public function personas(){
-    //Codigo para la cabezera
-    $headers = [
-        'Authorization' => 'Bearer ' . Session::get('token'),
-    ];
-    $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
-    $citaArreglo = json_decode($personas->body(), true);
+        //Codigo para la cabezera
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
+        $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
+        $citaArreglo = json_decode($personas->body(), true);
 
-    return view('Alcaldia.personas', compact('citaArreglo'));
+        return view('Alcaldia.personas', compact('citaArreglo'));
     }
     
     public function nueva_persona(Request $request){
