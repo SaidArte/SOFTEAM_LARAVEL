@@ -99,12 +99,7 @@
                 <h1>Información de Animales</h1>
             </center>
 
-        <br>
-            <center>
-                <footer class="blockquote-footer">Animales <cite title="Source Title">Registrados</cite></footer>
-
-            </center>
-        </br>
+       
             
 
         @section('content')
@@ -123,22 +118,22 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Ingresar un nuevo Animal</h5>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                            
                         </div>
                         <div class="modal-body">
                             <form action="{{ url('Animal/insertar') }}" method="post"  class="needs-validation Animal-form">
                                 @csrf
                                 <div class="mb-3 mt-3">
-                                    <label for="CLAS_ANIMAL" >clases de Animal</label>
-                                    <input type="text" id="CLAS_ANIMAL" class="form-control" name="CLAS_ANIMAL" placeholder="Ingresar a Clases del Animal" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" required>
-                                    <div class="invalid-feedback">Ingresar a Clases del Animal</div>
+                                    <label for="CLAS_ANIMAL" >Clases de Animal</label>
+                                    <input type="text" id="CLAS_ANIMAL" class="form-control" name="CLAS_ANIMAL" placeholder="Ingresar a Clases del Animal" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras"  maxlength="7" required>
+                                    <div class="invalid-feedback">Ingrese solo letras en Clases del Animal</div>
 
                                 </div>
 
                                 <div class="mb-3 mt-3">
                                     <label for="RAZ_ANIMAL" >Raza de Animal</label>
-                                    <input type="text" id="RAZ_ANIMAL" class="form-control" name="RAZ_ANIMAL" placeholder="Ingresar la  Raza del Animal"pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" required >
-                                    <div class="invalid-feedback">Ingresar la Raza del Animal</div>
+                                    <input type="text" id="RAZ_ANIMAL" class="form-control" name="RAZ_ANIMAL" placeholder="Ingresar la  Raza del Animal"pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="15" required >
+                                    <div class="invalid-feedback">Ingrese solo letras en Raza del Animal</div>
 
                                 </div>
 
@@ -146,7 +141,7 @@
 
                             <div class="mb-3 mt-3">
                                 <label for="COL_ANIMAL" >Color del Animal</label>
-                                <input type="text" id="COL_ANIMAL" class="form-control" name="COL_ANIMAL" placeholder="Ingresar el Color del Animal"pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" required>
+                                <input type="text" id="COL_ANIMAL" class="form-control" name="COL_ANIMAL" placeholder="Ingresar el Color del Animal"pattern="^[A-Za-z\s]+$" title="Ingrese solo letras"  maxlength="25" required>
                                <!-- <div class="invalid-feedback">Ingresar el Color del Animal</div>-->
                                 <div class="invalid-feedback">Ingrese solo letras en el color</div>
                             </div>
@@ -203,8 +198,8 @@
                                 
                                 <div class="mb-3 mt-3">
                                     <label for="DET_ANIMAL">Detalle del Animal</label>
-                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras"required >
-                                    <div class="invalid-feedback">Ingrese detalle del animal </div>
+                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="25" required >
+                                    <div class="invalid-feedback">Ingrese solo letras en detalle del animal </div>
 
                                 </div>
                             
@@ -213,7 +208,7 @@
 
                                     <div class="mb-3">
                                         <button class="btn btn-primary" type="submit">Guardar</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" id="CancelarButton"  class="btn btn-danger"  data-dismiss="modal" >Cancelar</button>
                                     </div>
                             </form>
                             <script>
@@ -288,6 +283,22 @@
                                                 timer: 6000,
                                             });
                                     }
+
+                                    $('#Animal').submit(function(event) {
+                                        // ... tu código de validación y guardar existente ...
+
+                                           if (formIsValid) {
+                                                showSuccessMessage();
+                                                $('#Animal')[0].reset(); // Esto limpia el formulario
+                                            }
+                                    });
+
+                                 // Agregar un manejador de eventos para el botón "Cancelar"
+                                   $('#CancelarButton').on('click', function() {
+                                        $('#Animal')[0].reset(); // Esto limpia el formulario
+                                   });
+
+                                   
                                     
                             
                                 });
@@ -481,6 +492,12 @@
                     $(document).ready(function() {
                         $('#modAnimal').DataTable({
                             responsive: true,
+
+                            
+                        
+
+
+
                             lengthMenu : [10, 20, 30, 40, 50],
                             columnDefs: [
                                 { orderable: false, target: [0, 2, 3, 6, 7]},
@@ -505,6 +522,9 @@
                                     next: "Siguiente",
                                     previous: "Anterior"
                                 },
+                                
+
+
                             }
                         });
                     });

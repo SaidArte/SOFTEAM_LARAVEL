@@ -121,7 +121,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Ingresar un nuevo Expedientes_Cventas</h5>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                           
                         </div>
                         <div class="modal-body">
                             <form action="{{ url('Cventa/insertar') }}" method="post" class="needs-validation cventa-form" >
@@ -142,7 +142,7 @@
                                 <!--metodo de inserta en codigo de comprador  atraendo los datos ya existente de la tabla persona-->
                                <div class="mb-3">
                                     <label for="NOM_COMPRADOR">Nombre del Comprador</label>
-                                    <input type="text" id="NOM_COMPRADOR" class="form-control" name="NOM_COMPRADOR" placeholder="Ingresar el nombre completo de la Comprador"   pattern="^[A-Za-z\s]+$" title="Ingrese solo letras"required>
+                                    <input type="text" id="NOM_COMPRADOR" class="form-control" name="NOM_COMPRADOR" placeholder="Ingresar el nombre completo de la Comprador"   pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="35"  required>
                                     <div class="invalid-feedback">Ingresar el nombre completo de la Comprador</div>
                                 </div>
                         
