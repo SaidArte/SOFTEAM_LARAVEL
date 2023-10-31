@@ -500,7 +500,7 @@
                                                         <input type="hidden" name="IMG_PERSONA_actual" value="{{ $personas['IMG_PERSONA'] }}">
                                                         <!-- Mostrar imagen actual -->
                                                         <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
-                                                        <div class="mb-3 mt-3">
+                                                        <div class="mb-3 mt-3" style="display: none;">
                                                             <label for="personas" class="form-label">Código Dirección:</label>
                                                             <input type="text" id="COD_DIRECCION" class="form-control" name="COD_DIRECCION" placeholder="Ingrese el código de la dirección" value="{{$personas['COD_DIRECCION']}}" readonly>
                                                         </div>
@@ -517,7 +517,7 @@
                                                             </select>  
                                                             <div class="invalid-feedback"></div>
                                                         </div>  
-                                                        <div class="mb-3 mt-3">
+                                                        <div class="mb-3 mt-3" style="display: none;">
                                                             <label for="personas" class="form-label">Código Email:</label>
                                                             <input type="text" id="COD_EMAIL" class="form-control" name="COD_EMAIL" placeholder="Ingrese el código del Correo" value="{{$personas['COD_EMAIL']}}" readonly>                                                           
                                                         </div>                        
@@ -526,7 +526,7 @@
                                                             <input type="text" id="DIR_EMAIL-{{$personas['COD_PERSONA']}}" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" value="{{$personas['DIR_EMAIL']}}" oninput="validarCorreo('{{$personas['COD_PERSONA']}}', this.value)" required>
                                                             <div class="invalid-feedback" id="invalid-feedback5-{{$personas['COD_PERSONA']}}"></div>
                                                         </div>
-                                                        <div class="mb-3 mt-3">
+                                                        <div class="mb-3 mt-3"  style="display: none;">
                                                             <label for="personas" class="form-label">Código Teléfono:</label>
                                                             <input type="text" id="COD_TELEFONO" class="form-control" name="COD_TELEFONO" placeholder="Ingrese el código del teléfono" value="{{$personas['COD_TELEFONO']}}" readonly>
                                                         </div>   
