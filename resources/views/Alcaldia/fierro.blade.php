@@ -149,12 +149,23 @@
                                 @csrf
 
                                 <div class="mb-3 mt-3">
-                                     <label for="COD_PERSONA" class="form-label">Persona: </label>
-                                    <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" required>
-                                    <option value="" disabled selected>Seleccione una persona</option>
-                                    @foreach ($personasArreglo as $persona)
-                                        <option value="{{ $persona['COD_PERSONA'] }}">{{ $persona['NOM_PERSONA'] }} </option>
-                                    @endforeach
+                                <label for="COD_PERSONA" class="form-label">Persona: </label>
+                                <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" required>
+                                <option value="" disabled selected>Seleccione una persona</option>
+                                @foreach ($personasArreglo as $persona)
+                                     @php
+                                         $tieneFierro = false;
+                                         foreach ($citaArreglo as $fierro) {
+                                     if ($fierro['COD_PERSONA'] === $persona['COD_PERSONA']) {
+                                         $tieneFierro = true;
+                                         break;
+                                         }
+                                 }
+                                     @endphp
+                                          @if (!$tieneFierro)
+                                             <option value="{{ $persona['COD_PERSONA'] }}">{{ $persona['NOM_PERSONA'] }}</option>
+                                           @endif
+                             @endforeach
                                     </select>
                                </div>
                         
@@ -426,6 +437,8 @@
                                                             <label for="IMG_FIERRO">Imagen del Fierro:</label>
                                                             <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" >
                                                         </div>
+                                                        <!-- Campo oculto para almacenar la ruta de la imagen actual -->
+                                                        <input type="hidden" name="IMG_FIERRO_actual" value="{{ $fierro['IMG_FIERRO'] }}">                                                   
                                                         <!-- Mostrar imagen actual -->
                                                         <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
                                                         <div class="mb-3">

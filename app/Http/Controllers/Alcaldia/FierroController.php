@@ -28,6 +28,12 @@ class FierroController extends Controller
 
     public function nuevo_fierro(Request $request)
     {
+        // Verifica si la persona ya tiene un fierro registrado
+        $personaTieneFierro = Fierro::where('COD_PERSONA', $request->input('COD_PERSONA'))->count();
+
+         if ($personaTieneFierro > 0) {
+        return redirect()->back()->with('error', 'Esta persona ya tiene un fierro registrado.');
+    }
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
@@ -65,43 +71,54 @@ class FierroController extends Controller
         }
     }
 
-public function actualizar_fierro(Request $request)
-{
-    $headers = [
-        'Authorization' => 'Bearer ' . Session::get('token'),
-    ];
-    $updateData = [
-       
-        "FEC_TRAMITE_FIERRO"   => $request->input("FEC_TRAMITE_FIERRO"),
-        "NUM_FOLIO_FIERRO"     => $request->input("NUM_FOLIO_FIERRO"),
-        "TIP_FIERRO"           => $request->input("TIP_FIERRO"),
-        "MON_CERTIFICO_FIERRO" => $request->input("MON_CERTIFICO_FIERRO"),
-    ];
-
-    if ($request->hasFile('IMG_FIERRO')) {
-        $request->validate([
-            'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-        $imagen = $request->file('IMG_FIERRO');
-        $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $imagen->getClientOriginalExtension();
-        $imagen->move(public_path('imagenes/fierros'), $nombreImagen);
-        $rutaImagen = '/imagenes/fierros/' . $nombreImagen;
-        $rutaImagenAbsoluta = url($rutaImagen);
-
-        // Update the image path in the update data
-        $updateData['IMG_FIERRO'] = $rutaImagenAbsoluta;
-    }
-   // dd($updateData);
-    // Perform the update request
-    $actualizar_fierro_response = Http::withHeaders($headers)->put(self::urlapi.'FIERROS/ACTUALIZAR/'.$request->input("COD_FIERRO"), $updateData);
+    public function actualizar_fierro(Request $request)
+    {
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
+        
+        // Obtén la ruta de la imagen actual del campo oculto
+        $rutaImagenActual = $request->input('IMG_FIERRO_actual');
+        
+        $updateData = [
+            "FEC_TRAMITE_FIERRO"   => $request->input("FEC_TRAMITE_FIERRO"),
+            "NUM_FOLIO_FIERRO"     => $request->input("NUM_FOLIO_FIERRO"),
+            "TIP_FIERRO"           => $request->input("TIP_FIERRO"),
+            "MON_CERTIFICO_FIERRO" => $request->input("MON_CERTIFICO_FIERRO"),
+        ];
     
-    if ($actualizar_fierro_response->successful()) {
-        return redirect('/fierro')->with('update_success', 'Datos actualizados exitosamente.');
-    } else {
-        return redirect('/fierro')->with('update_error', 'Error al actualizar los datos.');
+        if ($request->hasFile('IMG_FIERRO')) {
+            $request->validate([
+                'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+    
+            $imagen = $request->file('IMG_FIERRO');
+            $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $imagen->getClientOriginalExtension();
+            $imagen->move(public_path('imagenes/fierros'), $nombreImagen);
+            $rutaImagen = '/imagenes/fierros/' . $nombreImagen;
+            $rutaImagenAbsoluta = url($rutaImagen);
+    
+            // Update the image path in the update data
+            $updateData['IMG_FIERRO'] = $rutaImagenAbsoluta;
+            
+            // Elimina la imagen anterior si existe
+            if ($rutaImagenActual && file_exists(public_path($rutaImagenActual))) {
+                unlink(public_path($rutaImagenActual));
+            }
+        } else {
+            // Si no se proporciona una nueva imagen, mantén la ruta de la imagen actual
+            $updateData['IMG_FIERRO'] = $rutaImagenActual;
+        }
+    
+        // Perform the update request
+        $actualizar_fierro_response = Http::withHeaders($headers)->put(self::urlapi.'FIERROS/ACTUALIZAR/'.$request->input("COD_FIERRO"), $updateData);
+    
+        if ($actualizar_fierro_response->successful()) {
+            return redirect('/fierro')->with('update_success', 'Datos actualizados exitosamente.');
+        } else {
+            return redirect('/fierro')->with('update_error', 'Error al actualizar los datos.');
+        }
     }
-}
 
 
 
