@@ -10,6 +10,58 @@
             .custom-delete-button:hover .fas.fa-trash-alt {
                 color: white !important;
             }
+            /* Estilo para alinear texto en encabezados */
+            #sysbitacora thead th {
+                white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+                overflow: hidden; /* Oculta el desbordamiento del texto */
+                text-overflow: ellipsis; /* Agrega puntos suspensivos al final si el texto es demasiado largo */
+                max-width: 200px; /* Establece un ancho máximo para las celdas del encabezado */
+            }
+
+            /*Estilo para el interruptor de activado y desactivado*/
+            .switch {
+                display: inline-flex;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            .switch .switch-text {
+                margin-right: 10px; /* Ajusta el valor según tu preferencia */
+            }
+
+            .switch input {
+                display: none;
+            }
+
+            .slider {
+                width: 40px;
+                height: 20px;
+                background-color: #ccc;
+                transition: 0.4s;
+                border-radius: 34px;
+                position: relative;
+            }
+
+            .slider:before {
+                content: "";
+                height: 16px;
+                width: 16px;
+                background-color: white;
+                transition: 0.4s;
+                border-radius: 50%;
+                position: absolute;
+                left: 2px;
+                bottom: 2px;
+            }
+
+            input:checked + .slider {
+                background-color: #2196F3;
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(20px);
+            }
+            /*Fin del estilo del botón de activar*/
         </style>
 
         <style>
@@ -92,8 +144,14 @@
                 </center></br>
                 
             @stop
-
+            
             @section('content')
+            <label for="toggle-triggers" class="switch">
+                <span class="switch-text">Activar</span>
+                <input type="checkbox" id="toggle-triggers" {{$triggerText === 'S' ? 'checked' : ''}}>
+                <span class="slider"></span>
+            </label>
+            @csrf
                 <div class="card">
                     <div class="card-body">
                         <div style="overflow-x: auto; width: 100%;">
@@ -103,12 +161,13 @@
                                         <th><center>Nº</center></th>
                                         <th><center>Tipo de Evento</center></th>
                                         <th><center>Usuario D.B.</center></th>
-                                        <th><center>Fecha/hora de Registro del Evento</center></th>
-                                        <th><center>Nombre del Objeto</center></th>
+                                        <th><center>Fecha/hora Evento</center></th>
+                                        <th><center>Nombre Objeto</center></th>
                                         <th><center>Modulo</center></th>
-                                        <th><center>Estado del Objeto</center></th>
-                                        @for ($i = 1; $i <= 28; $i++)
-                                        <th><center>Registro #{{ $i }}</center></th>
+                                        <th><center>Estado Objeto</center></th>
+                                        @for ($i = 1; $i <= 14; $i++)
+                                        <th><center>Registro Nuevo #{{ $i }}</center></th>
+                                        <th><center>Registro Anterior #{{ $i }}</center></th>
                                         @endfor
                                     </tr>
                                 </thead>
@@ -188,6 +247,15 @@
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
                         
                         <script>
+
+                        $(document).ready(function() {
+                            const runButton = document.getElementById('toggle-triggers');
+
+                            runButton.addEventListener('click', () => {
+                            runButton.classList.toggle('active'); // Alternar la clase 'active' al hacer clic
+                            });
+                        });
+
                         $(document).ready(function() {
                             $('#sysbitacora').DataTable({
                                 responsive: true,
@@ -238,6 +306,41 @@
                             });
                         });
                     </script>
+                </script>
+                <script>
+                    $(document).ready(function () {
+                        const toggleTriggers = document.getElementById('toggle-triggers');
+                        
+                        toggleTriggers.addEventListener('change', function () {
+                            const route = this.checked ? '{{ route('activar-bitacora') }}' : '{{ route('desactivar-bitacora') }}';
+
+                            fetch(route, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), // Incluye el token CSRF
+                                    'Content-Type': 'application/json',
+                                },
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Error en la solicitud: ' + response.status);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                if (data && data.message) {
+                                    // Realizar acciones con la respuesta si es necesario
+                                } else {
+                                    throw new Error('Respuesta vacía o no válida');
+                                }
+                            })
+                            .catch(error => {
+                                // Manejar el error
+                                console.error(error);
+                            });
+                        });
+                    });
+
                 </script>
             @stop
 
