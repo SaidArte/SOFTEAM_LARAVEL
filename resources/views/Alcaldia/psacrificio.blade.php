@@ -115,7 +115,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">IngresaNuev o Permiso de Sacrificio</h5>
+                            <h5 class="modal-title">Ingresar Nuevo Permiso de Sacrificio</h5>
                         </div>
                         
                         <div class="modal-body">
@@ -348,10 +348,10 @@
                                 <th><center>Nombre</center></th>
                                 <th><center>Identidad</center></th>
                                 <th><center>Teléfono</center></th>
-                                <th><center>Fecha Sacrificio</center></th>
-                                <th><center>Dirección del Sacrificio</center></th>
+                                <th><center>Fecha</center></th>
+                                <th><center>Dirección</center></th>
                                 <th><center>Animal</center></th>
-                                <th><center><i class="fas fa-cog"></i></center></th>
+                                <th><center>Opciones</center></th>
                             </tr>
                         </thead>
                         <tbody>
