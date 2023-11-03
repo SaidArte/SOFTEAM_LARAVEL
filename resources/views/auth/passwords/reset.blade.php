@@ -112,6 +112,23 @@
         font-weight: 500;
         margin-top: 5px;
     }
+
+    /*Estilos para icono de ojo*/
+    .eye-icon {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
+    .eye-icon2 {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
   </style>
 
 </head>
@@ -137,18 +154,21 @@
                         <input type="hidden" class="form-control" id='COD_USUARIO' name="COD_USUARIO" value="{{ $COD_USUARIO }}" required>
                         <label for="new_password" class="col-md-4 col-form-label text-md-right">Contraseña: </label>
                         <div class="form-outline mb-4">
+                          <div class="form-group position-relative">
                             <input type="password" id="PAS_USUARIO" name="PAS_USUARIO" class="form-control" required autocomplete="PAS_USUARIO">
-                            <input type="hidden" name="password_valid" id="passwordValid" value="0">
-                                    <br>
-                                    <span id="passwordError" class="text-danger"></span>
+                              <span class="eye-icon" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i></span>
+                              <input type="hidden" name="password_valid" id="passwordValid" value="0">
+                          </div>
+                          <br>
+                          <span id="passwordError" class="text-danger"></span>
                         </div>
-                        <p>Confirmar Contraseña</p>
+                        <p>Confirmar Contraseña:</p>
                         <div class="form-outline mb-4">
-                            <input id="CONF_PAS" type="password" name="CONF_PAS" class="form-control" required autocomplete="CONF_PAS">
-                            <div class="invalid-feedback" id="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3">
-                            <span class="btn btn-light toggle-password" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i> Ver Contraseña</span>
+                          <div class="form-group position-relative">
+                              <input id="CONF_PAS" type="password" name="CONF_PAS" class="form-control" required autocomplete="CONF_PAS">
+                              <span class="eye-icon2" onclick="togglePasswordVisibility2()"><i class="fa fa-eye"></i></span>
+                              <div class="invalid-feedback" id="invalid-feedback"></div>
+                          </div>
                         </div>
                         <div class="text-center pt-1 mb-5 pb-1">
                             <button type="submit" class="btn btn-primary" id="submitButton" disabled>Guardar</button>
@@ -213,7 +233,22 @@
                                 });
                                 function togglePasswordVisibility() {
                                     var passwordInput = document.getElementById("PAS_USUARIO");
-                                    var toggleIcon = document.querySelector(".toggle-password i");
+                                    var toggleIcon = document.querySelector(".eye-icon i");
+
+                                    if (passwordInput.type === "password") {
+                                        passwordInput.type = "text";
+                                        toggleIcon.classList.remove("fa-eye");
+                                        toggleIcon.classList.add("fa-eye-slash");
+                                    } else {
+                                        passwordInput.type = "password";
+                                        toggleIcon.classList.remove("fa-eye-slash");
+                                        toggleIcon.classList.add("fa-eye");
+                                    }
+                                }
+
+                                function togglePasswordVisibility2() {
+                                    var passwordInput = document.getElementById("CONF_PAS");
+                                    var toggleIcon = document.querySelector(".eye-icon2 i");
 
                                     if (passwordInput.type === "password") {
                                         passwordInput.type = "text";

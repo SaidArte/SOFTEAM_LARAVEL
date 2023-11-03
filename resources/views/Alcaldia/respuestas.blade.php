@@ -36,9 +36,14 @@
                         <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
-                    <label for="RESPUESTA" class="form-label">Respuesta Secreta:</label>
-                    <input type="password" id="RESPUESTA" name="RESPUESTA" class="form-control" required>
-                    <div class="invalid-feedback"></div>
+                    <label for="RESPUESTA" class="form-label">Respuesta:</label>
+                    <div class="form-group position-relative">
+                        <input type="password" id="RESPUESTA" name="RESPUESTA" class="form-control" required>
+                        <span class="eye-icon" onclick="togglePasswordVisibility()">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                        <div class="invalid-feedback"></div>
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -110,7 +115,32 @@
                     showSuccessMessage();
                 }
                 document.querySelector('.respuestas-form').addEventListener('submit', formSubmitHandler); 
+
+                function togglePasswordVisibility() {
+                    var passwordInput = document.getElementById("RESPUESTA");
+                    var eyeIcon = document.querySelector(".eye-icon i");
+
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text"; // Mostrar contraseña
+                        eyeIcon.classList.remove("fa-eye");
+                        eyeIcon.classList.add("fa-eye-slash");
+                    } else {
+                        passwordInput.type = "password"; // Ocultar contraseña
+                        eyeIcon.classList.remove("fa-eye-slash");
+                        eyeIcon.classList.add("fa-eye");
+                    }
+                }
         </script>
+        <style>
+            /*Estilos para icono de ojo*/
+            .eye-icon {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+        </style>
     </div>
         @stop
 

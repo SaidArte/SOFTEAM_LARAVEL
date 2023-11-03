@@ -17,6 +17,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ asset('assets/estilos.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <!-- Importando la fuente de Google Font -->
   <style>
@@ -110,6 +111,15 @@
         font-weight: 500;
         margin-top: 5px;
     }
+
+    /*Estilos para icono de ojo*/
+    .eye-icon {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
   </style>
 
 </head>
@@ -131,19 +141,21 @@
                   </div>
                     <form method="POST" action="{{ route('auth.passwords.answer.redirect') }}">
                         @csrf
-                        <p>Pregunta Secreta:</p>
+                        <p>Pregunta de seguridad:</p>
                         <div class="form-outline mb-4">
                             <input type="hidden" id="NOM_USUARIO" name="NOM_USUARIO" class="form-control" value="{{ $NOM_USUARIO }}" required>
                             <input type="text" readonly id="PREGUNTA" name="PREGUNTA" class="form-control" value="{{ $PREGUNTA }}" required>
                         </div>
-                        <p>Respuesta Secreta:</p>
-                        <div class="form-outline mb-4">
-                            <input type="password" id="RESPUESTA" name="RESPUESTA" class="form-control" oninput="validarRespuesta(this.value)" required>
-                            <div class="invalid-feedback" id="invalid-feedback"></div>
-                        </div>
-                        <div class="mb-3">
-                            <button type="button" class="btn btn-light toggle-password" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i> Ver Respuesta</button>
-                        </div>
+                        <p>Respuesta:</p>
+                          <div class="form-outline mb-4">
+                            <div class="form-group position-relative">
+                                <input type="password" id="RESPUESTA" name="RESPUESTA" class="form-control" oninput="validarRespuesta(this.value)" required>
+                                <div class="invalid-feedback" id="invalid-feedback"></div>
+                                <span class="eye-icon" onclick="togglePasswordVisibility()">
+                                  <i class="fas fa-eye"></i>
+                                </span>
+                            </div>
+                          </div>
                         <div class="text-center pt-1 mb-5 pb-1">
                             <button type="submit" class="btn btn-primary" id="submitButton" disabled>Siguiente</button>
                             <a href="{{ route('auth.login') }}" class="btn btn-danger">Cancelar</a>
@@ -195,7 +207,7 @@
 
                         function togglePasswordVisibility() {
                             var passwordInput = document.getElementById("RESPUESTA");
-                            var toggleIcon = document.querySelector(".toggle-password i");
+                            var toggleIcon = document.querySelector(".eye-icon i");
 
                             if (passwordInput.type === "password") {
                                 passwordInput.type = "text";

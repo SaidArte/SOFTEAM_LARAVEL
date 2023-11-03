@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Ingreso de Pregunta y Respuesta Secreta</h1>
+        <h1 class="mb-4"><center>Pregunta de Seguridad</center></h1>
         <form method="POST" action="{{ route('auth.respuesta-secreta.submit') }}">
             @csrf
             <input type="hidden" class="form-control" id='COD_USUARIO' name="COD_USUARIO" value="{{ $COD_USUARIO }}" required>
@@ -27,18 +27,17 @@
             </div>
 
             <div class="mb-3">
-                <label for="secret_answer" class="form-label">Respuesta secreta: </label>
-                <input type="password" id="RESPUESTA" name="RESPUESTA" class="form-control" oninput="validarRespuesta(this.value)" required>
-                <div class="invalid-feedback" id="invalid-feedback"></div>
+                <label for="secret_answer" class="form-label">Respuesta: </label>
+                <div class="form-group position-relative">
+                    <input type="password" id="RESPUESTA" name="RESPUESTA" class="form-control" oninput="validarRespuesta(this.value)" required>
+                    <span class="eye-icon" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i></span>
+                    <div class="invalid-feedback" id="invalid-feedback"></div>
+                </div>
             </div>
 
             <div class="mb-3">
-                <button type="button" class="btn btn-light toggle-password" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i> Ver Respuesta</button>
-            </div>
-
-            <div class="mb-3">
-                <button type="submit" class="btn btn-primary" id="submitButton">Enviar</button>
-                <a href="{{ route('auth.login') }}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary" id="submitButton">Guardar</button>
+                <a href="{{ route('auth.login') }}" class="btn btn-danger">Cancelar</a>
             </div>
             <br>
             @if(session('error'))
@@ -77,7 +76,7 @@
 
             function togglePasswordVisibility() {
                 var passwordInput = document.getElementById("RESPUESTA");
-                var toggleIcon = document.querySelector(".toggle-password i");
+                var toggleIcon = document.querySelector(".eye-icon i");
 
                 if (passwordInput.type === "password") {
                     passwordInput.type = "text";
@@ -90,6 +89,15 @@
                 }
             }
         </script>
+        <style>
+            .eye-icon {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+        </style>
         <br>
         @if(session('error'))
             <div class="alert alert-danger" role="alert">

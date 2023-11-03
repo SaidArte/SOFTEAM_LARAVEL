@@ -25,23 +25,26 @@
                             <div class="form-group row">
                                 <label for="new_password" class="col-md-4 col-form-label text-md-right">Nueva Contraseña: </label>
                                 <div class="col-md-6">
-                                    <input id="PAS_USUARIO" type="password" name="PAS_USUARIO" required autocomplete="PAS_USUARIO">
-                                    <div id="error-container" style="margin-top: 10px;"></div>
+                                    <div class="form-group position-relative">
+                                        <input id="PAS_USUARIO" type="password" name="PAS_USUARIO" required autocomplete="PAS_USUARIO">
+                                        <span class="eye-icon" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i></span>
+                                    </div>
                                 </div>
+                                <div id="error-container" style="margin-top: 10px;"></div>
                             </div>
                             <div class="form-group row">
                                 <label for="new_password_confirmation" class="col-md-4 col-form-label text-md-right">Confirmar Contraseña: </label>
                                 <div class="col-md-6">
-                                    <input id="CONF_PAS" type="password" name="CONF_PAS" required autocomplete="CONF_PAS">
+                                    <div class="form-group position-relative">
+                                        <input id="CONF_PAS" type="password" name="CONF_PAS" required autocomplete="CONF_PAS">
+                                        <span class="eye-icon2" onclick="togglePasswordVisibility2()"><i class="fa fa-eye"></i></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 col-form-label text-md-right">
-                            <span class="toggle-password" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i> Ver Contraseña</span>
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
-                                    <a href="{{ route('auth.login') }}" class="btn btn-secondary">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <a href="{{ route('auth.login') }}" class="btn btn-danger">Cancelar</a>
                                 </div>
                             </div>
                             <br>
@@ -137,7 +140,22 @@
 
         function togglePasswordVisibility() {
             var passwordInput = document.getElementById("PAS_USUARIO");
-            var toggleIcon = document.querySelector(".toggle-password i");
+            var toggleIcon = document.querySelector(".eye-icon i");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+
+        function togglePasswordVisibility2() {
+            var passwordInput = document.getElementById("CONF_PAS");
+            var toggleIcon = document.querySelector(".eye-icon2 i");
 
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
@@ -150,5 +168,23 @@
             }
         }
     </script>
+    <style>
+        /*Estilos para icono de ojo*/
+        .eye-icon {
+            position: absolute;
+            top: 50%;
+            left: 165px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .eye-icon2 {
+            position: absolute;
+            top: 50%;
+            left: 165px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 </body>
 </html>
