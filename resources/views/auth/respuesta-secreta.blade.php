@@ -38,7 +38,7 @@
     /*Estlos para icono de ojo*/
         .eye-icon {
         position: absolute;
-        top: 29%;
+        top: 50%;
         right: 10px;
         transform: translateY(-50%);
         cursor: pointer;
