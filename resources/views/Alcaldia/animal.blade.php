@@ -302,6 +302,33 @@
                                     
                             
                                 });
+
+                                
+                                 //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
+                                 function limpiarFormulario() {
+                                    document.getElementById("CLAS_ANIMAL").value = "";
+                                    document.getElementById("RAZ_ANIMAL").value = "";
+                                    document.getElementById("COL_ANIMAL").value = "";
+                                    document.getElementById("COD_FIERRO").value = "";
+                                    document.getElementById("VEN_ANIMAL").value = "";
+                                    document.getElementById("HER_ANIMAL").value = "";
+                                    document.getElementById("DET_ANIMAL").value = "";
+                                    
+
+                                    const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
+                                    invalidFeedbackElements.forEach(element => {
+                                        element.textContent = "";
+                                    });
+
+                                    const invalidFields = document.querySelectorAll(".form-control.is-invalid");
+                                    invalidFields.forEach(field => {
+                                        field.classList.remove("is-invalid");
+                                    });
+                                }
+                                document.getElementById("CancelarButton").addEventListener("click", function() {
+                                    limpiarFormulario();
+                                });
+
                             </script>
                           
 
@@ -481,57 +508,89 @@
             <!-- FIN MENSAJE -->
         @stop
         @section('js')
-        <script> console.log('Hi!'); </script>
-        <script>
-                <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-                <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-                <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-                <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-                <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
-                <script>
-                    $(document).ready(function() {
-                        $('#modAnimal').DataTable({
-                            responsive: true,
+   <script> console.log('Hi!'); </script>
+   <script>
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+       
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
 
-                            
-                        
-
-
-
-                            lengthMenu : [10, 20, 30, 40, 50],
-                            columnDefs: [
-                                { orderable: false, target: [0, 2, 3, 6, 7]},
-                                { searchable: false, target: [0, 3, 6, 7]},
-                                { width: '25%', target: [1] },
-                                { width: '10%', target: [2, 3, 4, 6, 7] }, 
-                                { width: '25%', target: [5] },
-                            ],
-                            language: {
-                                processing: "Procesando...",
-                                lengthMenu: "Mostrar _MENU_ registros",
-                                zeroRecords: "No se encontraron resultados",
-                                emptyTable: "Ningún dato disponible en esta tabla",
-                                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                                infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                                search: "Buscar:",
-                                infoThousands: ",",
-                                loadingRecords: "Cargando...",
-                                paginate: {
-                                    first: "Primero",
-                                    last: "Último",
-                                    next: "Siguiente",
-                                    previous: "Anterior"
-                                },
-                                
-
-
-                            }
-                        });
-                    });
-                </script>
-            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
             
-        @stop
+            <script>
+            $(document).ready(function() {
+                $('#modAnimal').DataTable({
+                    responsive: true,
+                        dom: "Bfrtilp",
+                        buttons: [//Botones de Excel, PDF, Imprimir
+                            {
+                                extend: "excelHtml5",
+                                text: "<i class='fa-solid fa-file-excel'></i>",
+                                tittleAttr: "Exportar a Excel",
+                                className: "btn btn-success",
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                },
+                            },
+                            {
+                                extend: "pdfHtml5",
+                                text: "<i class='fa-solid fa-file-pdf'></i>",
+                                tittleAttr: "Exportar a PDF",
+                                className: "btn btn-danger",
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                },
+                            },
+                            {
+                                extend: "print",
+                                text: "<i class='fa-solid fa-print'></i>",
+                                tittleAttr: "Imprimir",
+                                className: "btn btn-secondary",
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                },
+                            },
+                        ],
+                        lengthMenu : [10, 20, 30, 40, 50],
+                        language: {
+                            processing: "Procesando...",
+                            lengthMenu: "Mostrar _MENU_ registros",
+                            zeroRecords: "No se encontraron resultados",
+                            emptyTable: "Ningún dato disponible en esta tabla",
+                            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                            search: "Buscar:",
+                            infoThousands: ",",
+                            loadingRecords: "Cargando...",
+                            paginate: {
+                                first: "Primero",
+                                last: "Último",
+                                next: "Siguiente",
+                                previous: "Anterior",
+                            },
+                            buttons: {
+                                copy: "Copiar",
+                                colvis: "Visibilidad",
+                                collection: "Colección",
+                                colvisRestore: "Restaurar visibilidad",
+                                copyKeys: "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                                copySuccess: {
+                                    1: "Copiada 1 fila al portapapeles",
+                                    _: "Copiadas %ds fila al portapapeles",
+                                },
+                                pdf: "PDF",
+                                print: "Imprimir",
+                            },
+                        },
+                        order: [[0, 'desc']], 
+                });
+            });
+        </script>
+    </script>
+    
+@stop
         @section('css')
         <link rel="stylesheet" href="/css/admin_custom.css">
         @stop
