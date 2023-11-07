@@ -8,5 +8,7 @@ Route::get('',[FierroController::class,'fierro']);
 //DE AQUI
 Route::post('/insertar',[FierroController::class,'nuevo_fierro']);
 Route::post('/actualizar',[FierroController::class,'actualizar_fierro']);
+Route::post('fierro/insertar', 'Alcaldia\FierroController@nuevo_fierro')->name('fierro.insertar');
+
 
 //HASTA AQUI

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Alcaldia;
 
 use Illuminate\Http\Request;
@@ -6,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Session;
+use App\Models\Fierro;
 
 class FierroController extends Controller
 {
@@ -16,61 +18,56 @@ class FierroController extends Controller
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
-        $personasController = new PersonasController();
-        $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
+
+        $personas = Http::withHeaders($headers)->get(self::urlapi . 'PERSONAS/GETALL');
         $personasArreglo = json_decode($personas->body(), true);
 
-        $fierro = Http::withHeaders($headers)->get(self::urlapi.'FIERROS/GETALL');
+        $fierro = Http::withHeaders($headers)->get(self::urlapi . 'FIERROS/GETALL');
         $citaArreglo = json_decode($fierro->body(), true);
 
         return view('Alcaldia.fierro', compact('citaArreglo', 'personasArreglo'));
     }
-
+   
     public function nuevo_fierro(Request $request)
     {
-        // Verifica si la persona ya tiene un fierro registrado
-        $personaTieneFierro = Fierro::where('COD_PERSONA', $request->input('COD_PERSONA'))->count();
-
-         if ($personaTieneFierro > 0) {
-        return redirect()->back()->with('error', 'Esta persona ya tiene un fierro registrado.');
-    }
+    
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
+
         $request->validate([
             'IMG_FIERRO' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
-    
+
         $imagen = $request->file('IMG_FIERRO');
-    
+
         if ($imagen->isValid()) {
             $extension = $imagen->getClientOriginalExtension();
             $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $extension;
-    
+
             $imagen->move(public_path('imagenes/fierros'), $nombreImagen);
-    
+
             $rutaImagen = '/imagenes/fierros/' . $nombreImagen; // Ruta relativa
-    
-            // Ahora, convertimos la ruta relativa en una ruta absoluta utilizando la función url()
+
+            // Ahora, convierte la ruta relativa en una ruta absoluta utilizando la función url()
             $rutaImagenAbsoluta = url($rutaImagen);
-    
+
+            // Crea un nuevo registro de Fierro en la base de datos
             $nuevo_fierro = Http::withHeaders($headers)->post(self::urlapi.'FIERROS/INSERTAR', [
-                "COD_PERSONA"            => $request->input("COD_PERSONA"),
-                "FEC_TRAMITE_FIERRO"     => $request->input("FEC_TRAMITE_FIERRO"),
-                "NUM_FOLIO_FIERRO"       => $request->input("NUM_FOLIO_FIERRO"),
-                "TIP_FIERRO"             => $request->input("TIP_FIERRO"),
-                "MON_CERTIFICO_FIERRO"   => $request->input("MON_CERTIFICO_FIERRO"),
-                "IMG_FIERRO"             => $rutaImagenAbsoluta, // Utilizamos la ruta absoluta
+                "COD_PERSONA" => $request->input("COD_PERSONA"),
+                "FEC_TRAMITE_FIERRO" => $request->input("FEC_TRAMITE_FIERRO"),
+                "NUM_FOLIO_FIERRO" => $request->input("NUM_FOLIO_FIERRO"),
+                "TIP_FIERRO" => $request->input("TIP_FIERRO"),
+                "MON_CERTIFICO_FIERRO" => $request->input("MON_CERTIFICO_FIERRO"),
+                "IMG_FIERRO" => $rutaImagenAbsoluta, // Utilizamos la ruta absoluta
             ]);
-    
-            if ($nuevo_fierro->successful()) {
-                return redirect('/fierro')->with('success', 'Registro creado exitosamente.');
-            } else {
-                return redirect()->back()->with('error', 'Hubo un problema al crear el registro.');
-            }
+
+            return redirect('/fierro')->with('success', 'Registro creado exitosamente.');
+        } else {
+            return redirect()->back()->with('error', 'Hubo un problema al crear el registro.');
         }
     }
-
+   
     public function actualizar_fierro(Request $request)
     {
         $headers = [

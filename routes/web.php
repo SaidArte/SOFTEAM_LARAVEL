@@ -83,3 +83,4 @@ Route::get('/vencimiento', [AuthController::class, 'showVencimientoForm'])->name
 Route::post('/vencimiento', [AuthController::class, 'RenovacionVencimiento'])->name('auth.passwords.expired.submit');
 Route::post('/activar-bitacora', [BitacoraController::class, 'CrearTriggers'])->name('activar-bitacora');
 Route::post('/desactivar-bitacora', [BitacoraController::class, 'EliminarTriggers'])->name('desactivar-bitacora');
+

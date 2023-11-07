@@ -146,28 +146,18 @@
                             <!-- Inicio del nuevo formulario -->
                             <form action="{{ url('fierro/insertar') }}" method="post" class="needs-validation fierro-form" enctype= "multipart/form-data">
 
-                                @csrf
-
-                                <div class="mb-3 mt-3">
-                                <label for="COD_PERSONA" class="form-label">Persona: </label>
-                                <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" required>
-                                <option value="" disabled selected>Seleccione una persona</option>
-                                @foreach ($personasArreglo as $persona)
-                                     @php
-                                         $tieneFierro = false;
-                                         foreach ($citaArreglo as $fierro) {
-                                     if ($fierro['COD_PERSONA'] === $persona['COD_PERSONA']) {
-                                         $tieneFierro = true;
-                                         break;
-                                         }
-                                 }
-                                     @endphp
-                                          @if (!$tieneFierro)
-                                             <option value="{{ $persona['COD_PERSONA'] }}">{{ $persona['NOM_PERSONA'] }}</option>
-                                           @endif
-                             @endforeach
-                                    </select>
-                               </div>
+                                            <div class="mb-3">
+                                                <label for="id">DNI</label>
+                                                <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="nom">Nombre</label>
+                                                <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="hidden" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA">
+                                            </div>
                         
                                  <div class="mb-3 ">
                                       <label for="FEC_TRAMITE_FIERRO">Fecha de Tramite</label>
@@ -320,7 +310,35 @@
                                         successMessage.remove();
                                     }, 4000); // La notificación desaparecerá después de 4 segundos (puedes ajustar este valor)
                                 }
+                                        //Función para buscar personas.
+                                        function buscarPersona(idPersona) {
+                                            var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
+                                            var personaEncontrada = false;
 
+                                            if(idPersona){
+                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
+                                                for (var i = 0; i < personasArreglo.length; i++) {
+                                                    if (personasArreglo[i].DNI_PERSONA == idPersona) {
+                                                        personaEncontrada = true;
+                                                        $('#NOM_PERSONA').val(personasArreglo[i].NOM_PERSONA);
+                                                        $('#COD_PERSONA').val(personasArreglo[i].COD_PERSONA);
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (!personaEncontrada) {
+                                                    personaEncontrada = false;
+                                                    $('#NOM_PERSONA').val('Persona no encontrada');
+                                                    $('#COD_PERSONA').val('');
+                                                }
+
+                                            }else{
+                                                personaEncontrada = false;
+                                                $('#NOM_PERSONA').val('');
+                                                $('#COD_PERSONA').val('');
+                                            }
+                                        };
+                                             
                                 // Función que se ejecutará después de enviar el formulario
                                 function formSubmitHandler() {
                                     showSuccessMessage();
@@ -340,11 +358,11 @@
                         <tr>
                             <th>Nº</th>
                             <th><center>Dueño Fierro</center></th>
-                            <th><center>Fecha Tramite</center></th>
-                            <th><center>Numero Folio</center></th>
+                            <th><center>Fecha</center></th>
+                            <th><center>Folio</center></th>
                             <th><center>Tipo Fierro</center></th>
-                            <th><center>Monto Certifico</center></th>
-                            <th><center>Imagen Fierro</center></th>
+                            <th><center>Certifico</center></th>
+                            <th><center>Imagen</center></th>
                             <th><center><i class="fas fa-cog"></i></center></th>
                         </tr>
                         </thead>
@@ -461,7 +479,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            2023 &copy; SOFTEAM  
+                            2023 &copy; UNAH  
                         </div>
                         <div class="col-md-6">
                             <div class="text-md-right footer-links d-none d-sm-block">
@@ -587,8 +605,12 @@
                                 print: "Imprimir",
                             },
                         },
+                            order: [[0, 'desc']],
+                        
+                            
+                        });
                     });
-                });
+             
             </script>
             </script> 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
