@@ -130,16 +130,20 @@
                                 <input type="date" id="FEC_TRASLADO" class="form-control" name="FEC_TRASLADO" placeholder="Inserte la fecha del Traslado" required>
                                 <div class="invalid-feedback"></div>
                             </div>
-
-                            <div class="mb-3 mt-3">
-                                <label for="COD_PERSONA" class="form-label">Persona: </label>
-                                <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" required>
-                                <option value="" disabled selected>Seleccione una Persona</option>
-                                @foreach ($personasArreglo as $persona)
-                                    <option value="{{ $persona['COD_PERSONA'] }}">{{ $persona['NOM_PERSONA'] }} </option>
-                                @endforeach
-                            </select>
+                            
+                            <div class="mb-3">
+                                <label for="id">DNI</label>
+                                 <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
+                                 <div class="invalid-feedback"></div>
                             </div>
+                            <div class="mb-3">
+                                <label for="nom">Nombre</label>
+                                 <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="hidden" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA">
+                            </div>
+                            
 
                             <div class="mb-3">
                                 <label for="DIR_ORIG_PTRASLADO">Direccion de Origen del Traslado</label>
@@ -236,25 +240,26 @@
                             });
 
                           //Validaciones del campo direccion de Origen de Traslado
-                            $('#DIR_ORIG_PTRASLADO').on('input', function() {
-                                var direccionOrigen = $(this).val();
-                                var errorMessage = 'La dirección debe tener al menos 5 caracteres';
-                                
-                                if (direccionOrigen.length < 5) {
-                                    $(this).addClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text(errorMessage);
-                                } else {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('');
-                                }
-                            });
+                          $('#DIR_ORIG_PTRASLADO').on('input', function() {
+                                  var direccionOrigen = $(this).val();
+                                 var errorMessage = 'La dirección debe tener entre 5 y 200 caracteres';
+
+                                 if (direccionOrigen.length < 5 || direccionOrigen.length > 200) {
+                                   $(this).addClass('is-invalid');
+                                               $(this).siblings('.invalid-feedback').text(errorMessage);
+                                    } else {
+                                         $(this).removeClass('is-invalid');
+                                               $(this).siblings('.invalid-feedback').text('');
+                                      }
+                                  });
+
                               
                              //Validaciones del campo direccion de Destino de Traslado
                             $('#DIR_DEST_TRASLADO').on('input', function() {
                                 var direccionDestino = $(this).val();
-                                var errorMessage = 'La dirección debe tener al menos 5 caracteres';
+                                var errorMessage = 'La dirección debe tener entre 5 y 200 caracteres';
                                 
-                                if (direccionDestino.length < 5) {
+                                if (direccionDestino.length < 5 || direccionDestino.length > 200 ) {
                                     $(this).addClass('is-invalid');
                                     $(this).siblings('.invalid-feedback').text(errorMessage);
                                 } else {
@@ -264,17 +269,49 @@
                             });
                             
                             //Validaciones del nombre del Trasnportista, no permite que se ingrese numeros solo letras
-                            $('#NOM_TRANSPORTISTA').on('input', function() {
-                                        var nombre = $(this).val();
-                                        var errorMessage = 'El nombre debe tener al menos 5 letras';
-                                        if (nombre.length < 5 || !/^[a-zA-Z\s]+$/.test(nombre)) {
+                            // Validaciones del nombre persona, no permite que se ingresen números ni caracteres especiales
+                            $('#NOM_TRANSPORTISTA').on('keydown', function(e) {
+                                        var key = e.key;
+                                        var errorMessage = '';
+
+                                        // Verifica si se está intentando ingresar un número o un carácter especial
+                                        if (!/^[a-zA-Z\s]$/.test(key) && key !== 'Backspace') {
+                                            errorMessage = 'No se permiten números ni caracteres especiales en el nombre.';
+                                            e.preventDefault(); // Evita que el carácter no deseado se ingrese en el campo
+                                        }
+
+                                        // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                        if (errorMessage) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {
+                                            // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
                                             $(this).removeClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text('');
                                         }
-                            });
+                                    });
+
+                                    // Validación de longitud mínima cuando se comienza a escribir
+                                    var nombreInput = $('#NOM_TRANSPORTISTA');
+                                    nombreInput.on('input', function() {
+                                        var nombre = $(this).val();
+                                        var errorMessage = '';
+
+                                        // Verifica que se haya empezado a escribir antes de aplicar la validación de longitud mínima
+                                        if (nombre.length > 0 && nombre.length < 5) {
+                                            errorMessage = 'El nombre debe tener al menos 5 letras.';
+                                        }
+
+                                        // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                        if (errorMessage) {
+                                            $(this).addClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text(errorMessage);
+                                        } else {
+                                            // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('');
+                                        }
+                                    });
 
                             //Validaciones del campo DNI el cual no permite el ingreso de letras (las bloquea y no se muestra)
                             //y solo permite el ingreso de numeros
@@ -304,7 +341,218 @@
                                     $(this).siblings('.invalid-feedback').text('');
                                 }
                             });
+                         //Validaciones al campo marca
+                            $('#MAR_VEHICULO').on('keydown', function(e) {
+                                        var key = e.key;
+                                        var errorMessage = '';
+
+                                        // Verifica si se está intentando ingresar un número o un carácter especial
+                                        if (!/^[a-zA-Z\s]$/.test(key) && key !== 'Backspace') {
+                                            errorMessage = 'No se permiten números ni caracteres especiales en la marca.';
+                                            e.preventDefault(); // Evita que el carácter no deseado se ingrese en el campo
+                                        }
+
+                                        // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                        if (errorMessage) {
+                                            $(this).addClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text(errorMessage);
+                                        } else {
+                                            // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('');
+                                        }
+                                    });
+                            //Validaciones al campo modelo
+                            $('#MOD_VEHICULO').on('keydown', function(e) {
+                                       var key = e.key;
+                                       var errorMessage = '';
+
+                                // Verifica si se está intentando ingresar un carácter especial
+                                      if (!/^[a-zA-Z0-9\s]$/.test(key) && key !== 'Backspace') {
+                                       errorMessage = 'No se permiten caracteres especiales en el modelo.';
+                                    }
+
+                                // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                      if (errorMessage) {
+                                       e.preventDefault(); // Evita que el carácter no deseado se ingrese en el campo
+                                       $(this).addClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text(errorMessage);
+                                     } else {
+                                   // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
+                                      $(this).removeClass('is-invalid');
+                                     $(this).siblings('.invalid-feedback').text('');
+                                      }
+                            });
+
+                            //Validaciones del campo color
+                            $('#COL_VEHICULO').on('keydown', function(e) {
+                                        var key = e.key;
+                                        var errorMessage = '';
+
+                                        // Verifica si se está intentando ingresar un número o un carácter especial
+                                        if (!/^[a-zA-Z\s]$/.test(key) && key !== 'Backspace') {
+                                            errorMessage = 'No se permiten números ni caracteres especiales en el color';
+                                            e.preventDefault(); // Evita que el carácter no deseado se ingrese en el campo
+                                        }
+
+                                        // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                        if (errorMessage) {
+                                            $(this).addClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text(errorMessage);
+                                        } else {
+                                            // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('');
+                                        }
+                                    });
+                                     //Validaciones para el campo matricula
+                                   $('#MAT_VEHICULO').on('keydown', function(e) {
+                                        var key = e.key;
+                                        var errorMessage = '';
+
+                                     // Verifica si se está intentando ingresar un número, una letra o un carácter especial
+                                    if (!/^[a-zA-Z0-9\s]$/.test(key) && key !== 'Backspace') {
+                                       errorMessage = 'No se permiten caracteres especiales en el nombre.';
+                                     e.preventDefault(); // Evita que el carácter no deseado se ingrese en el campo
+                                    }
+
+                                    // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                    if (errorMessage) {
+                                     $(this).addClass('is-invalid');
+                                     $(this).siblings('.invalid-feedback').text(errorMessage);
+                                    } else {
+                                     // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
+                                   $(this).removeClass('is-invalid');
+                                   $(this).siblings('.invalid-feedback').text('');
+                                    }
+                                });
+
+                                //VALIDACIONES DEL CAMPO MONTO
+                                $('#MON_TRASLADO').on('keydown', function(e) {
+                                     var key = e.key;
+                                    var errorMessage = '';
+
+                                    // Verifica si se está intentando ingresar un carácter que no es un número
+                                    if (!/^\d$/.test(key) && key !== 'Backspace') {
+                                      errorMessage = 'Solo se permiten números en el campo.';
+                                      e.preventDefault(); // Evita que el carácter no deseado se ingrese en el campo
+                                     }
+
+                                    // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                    if (errorMessage) {
+                                        $(this).addClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text(errorMessage);
+                                    } else {
+                                   // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('');
+                                    }
+                                });
+
+                                //VALIDACIONES DEL CAMPO CODIGO DE FIERRO
+                                $('#COD_FIERRO').on('keydown', function(e) {
+                                     var key = e.key;
+                                    var errorMessage = '';
+
+                                    // Verifica si se está intentando ingresar un carácter que no es un número
+                                    if (!/^\d$/.test(key) && key !== 'Backspace') {
+                                      errorMessage = 'Solo se permiten números, verifica que exista el codigo en FIERROS';
+                                      e.preventDefault(); // Evita que el carácter no deseado se ingrese en el campo
+                                     }
+
+                                    // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                    if (errorMessage) {
+                                        $(this).addClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text(errorMessage);
+                                    } else {
+                                   // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('');
+                                    }
+                                });
+
+                                //VALIDACIONES AL CAMPO CANTIDAD DE ANIMALES
+                                $('#CAN_GANADO').on('keydown', function(e) {
+                                     var key = e.key;
+                                    var errorMessage = '';
+
+                                    // Verifica si se está intentando ingresar un carácter que no es un número
+                                    if (!/^\d$/.test(key) && key !== 'Backspace') {
+                                      errorMessage = 'Solo se permiten números';
+                                      e.preventDefault(); // Evita que el carácter no deseado se ingrese en el campo
+                                     }
+
+                                    // Si hay un error, muestra el mensaje y agrega la clase 'is-invalid'
+                                    if (errorMessage) {
+                                        $(this).addClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text(errorMessage);
+                                    } else {
+                                   // Si no hay errores, quita la clase 'is-invalid' y borra el mensaje
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('');
+                                    }
+                                });
+                                            
                         });
+
+                         //Función para buscar personas.
+                         function buscarPersona(idPersona) {
+                                            var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
+                                            var personaEncontrada = false;
+
+                                            if(idPersona){
+                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
+                                                for (var i = 0; i < personasArreglo.length; i++) {
+                                                    if (personasArreglo[i].DNI_PERSONA == idPersona) {
+                                                        personaEncontrada = true;
+                                                        $('#NOM_PERSONA').val(personasArreglo[i].NOM_PERSONA);
+                                                        $('#COD_PERSONA').val(personasArreglo[i].COD_PERSONA);
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (!personaEncontrada) {
+                                                    personaEncontrada = false;
+                                                    $('#NOM_PERSONA').val('Persona no encontrada');
+                                                    $('#COD_PERSONA').val('');
+                                                }
+
+                                            }else{
+                                                personaEncontrada = false;
+                                                $('#NOM_PERSONA').val('');
+                                                $('#COD_PERSONA').val('');
+                                            }
+                                        };
+
+                                        //Función para buscar personas.
+                                            function buscarPersona2(id,idPersona) {
+                                            var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
+                                            var personaEncontrada = false;
+
+                                            if(idPersona){
+                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
+                                                for (var i = 0; i < personasArreglo.length; i++) {
+                                                    if (personasArreglo[i].DNI_PERSONA == idPersona) {
+                                                        personaEncontrada = true;
+                                                        $('#NOM_PERSONA').val(personasArreglo[i].NOM_PERSONA);
+                                                        $('#COD_PERSONA').val(personasArreglo[i].COD_PERSONA);
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (!personaEncontrada) {
+                                                    personaEncontrada = false;
+                                                    $('#NOM_PERSONA').val('Persona no encontrada');
+                                                    $('#COD_PERSONA').val('');
+                                                }
+
+                                            }else{
+                                                personaEncontrada = false;
+                                                $('#NOM_PERSONA').val('');
+                                                $('#COD_PERSONA').val('');
+                                            }
+                                        };
+
                         //Deshabilitar el envio de formularios si hay campos no validos
                         (function () {
                             'use strict'
@@ -453,15 +701,19 @@
                                             <div class="valid-feedback"></div>
                                         </div>
 
-                                        <div class="mb-3 mt-3">
-                                            <label for="COD_PERSONA" class="form-label">Persona: </label>
-                                            <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" required>
-                                            <option value="" disabled selected>Seleccione una Persona</option>
-                                           @foreach ($personasArreglo as $persona)
-                                            <option value="{{ $persona['COD_PERSONA'] }}">{{ $persona['NOM_PERSONA'] }} </option>
-                                            @endforeach
-                                        </select>
-                                       </div>
+                                        <div class="mb-3">
+                                            <label for="id">DNI</label>
+                                            <input type="text" id="dni-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona2('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback"></div>
+                                         </div>
+                                            <div class="mb-3">
+                                            <label for="nom">Nombre</label>
+                                            <input type="text" readonly id="NOM_PERSONA-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="NOM_PERSONA" required>
+                                        </div>
+                                            <div class="mb-3">
+                                            <input type="hidden" readonly id="COD_PERSONA-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="COD_PERSONA">
+                                        </div>
+                            
                                         
 
                                         <div class="mb-3">
@@ -517,6 +769,38 @@
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                     </div>
                                 </form>
+
+                                   <script>
+                                //Función para buscar personas.
+                                            function buscarPersona2(id,idPersona) {
+                                            var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
+                                            var personaEncontrada = false;
+
+                                            if(idPersona){
+                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
+                                                for (var i = 0; i < personasArreglo.length; i++) {
+                                                    if (personasArreglo[i].DNI_PERSONA == idPersona) {
+                                                        personaEncontrada = true;
+                                                        $('#NOM_PERSONA-'+id).val(personasArreglo[i].NOM_PERSONA);
+                                                        $('#COD_PERSONA-'+id).val(personasArreglo[i].COD_PERSONA);
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (!personaEncontrada) {
+                                                    personaEncontrada = false;
+                                                    $('#NOM_PERSONA-'+id).val('Persona no encontrada');
+                                                    $('#COD_PERSONA-'+id).val('');
+                                                }
+
+                                            }else{
+                                                personaEncontrada = false;
+                                                $('#NOM_PERSONA-'+id).val('');
+                                                $('#COD_PERSONA-'+id).val('');
+                                            }
+                                        };
+     
+                                     </script>
                             </div>
                         </div>
                     </div>
@@ -557,7 +841,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            2023 &copy; SOFTEAM  
+                            2023 &copy; UNAH  
                         </div>
                         <div class="col-md-6">
                             <div class="text-md-right footer-links d-none d-sm-block">
