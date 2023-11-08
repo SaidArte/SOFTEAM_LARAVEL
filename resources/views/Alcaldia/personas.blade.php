@@ -16,6 +16,11 @@
       'FI' => 'FIJO',
       'MO' => 'MOVIL',
     ];
+    $operadoratelefono =[
+      'TIGO' => 'TIGO',
+      'CLARO' => 'CLARO',
+      'HONDUTEL' => 'HONDUTEL',
+    ];
 @endphp
 
 @section('title', 'Alcaldia')
@@ -212,7 +217,12 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="OPE_TELEFONO">Operadora de Teléfono:</label>
-                                        <input type="text" id="OPE_TELEFONO" class="form-control" name="OPE_TELEFONO" placeholder="Ingresar una descripción del teléfono" required>
+                                        <select class="form-select custom-select" id="OPE_TELEFONO" name="OPE_TELEFONO" required>
+                                            <option value="" disabled selected>Seleccione una opción</option>
+                                            <option value="TIGO">TIGO</option>
+                                            <option value="CLARO">CLARO</option>
+                                            <option value="HONDUTEL">HONDUTEL</option>
+                                        </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
@@ -467,6 +477,14 @@
                                                 <form action="{{ url('personas/actualizar') }}" method="post" class="personas-form"enctype="multipart/form-data">
                                                     @csrf
                                                         <input type="hidden" class="form-control" name="COD_PERSONA" value="{{$personas['COD_PERSONA']}}">
+                                                        <div class="form-group">
+                                                            <label for="IMG_PERSONA">Imágen:</label>
+                                                            <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
+                                                        </div>
+                                                        <!-- Campo oculto para almacenar la ruta de la imagen actual -->
+                                                        <input type="hidden" name="IMG_PERSONA_actual" value="{{ $personas['IMG_PERSONA'] }}">
+                                                        <!-- Mostrar imagen actual -->
+                                                        <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
                                                         <div class="mb-3">
                                                             <label for="personas">Identidad:</label>
                                                             <input type="text" class="form-control" id="DNI_PERSONA-{{$personas['COD_PERSONA']}}" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" value="{{$personas['DNI_PERSONA']}}" oninput="validarDNI('{{$personas['COD_PERSONA']}}', this.value)" required>
@@ -492,14 +510,6 @@
                                                             <input type="date" id="FEC_NAC_PERSONA-{{$personas['COD_PERSONA']}}" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$fecha_formateada}}" oninput="validarFecNac('{{$personas['COD_PERSONA']}}', this.value)" required>
                                                             <div class="invalid-feedback" id="invalid-feedback3-{{$personas['COD_PERSONA']}}"></div>                                    
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="IMG_PERSONA">Imágen:</label>
-                                                            <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
-                                                        </div>
-                                                        <!-- Campo oculto para almacenar la ruta de la imagen actual -->
-                                                        <input type="hidden" name="IMG_PERSONA_actual" value="{{ $personas['IMG_PERSONA'] }}">
-                                                        <!-- Mostrar imagen actual -->
-                                                        <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
                                                         <div class="mb-3 mt-3" style="display: none;">
                                                             <label for="personas" class="form-label">Código Dirección:</label>
                                                             <input type="text" id="COD_DIRECCION" class="form-control" name="COD_DIRECCION" placeholder="Ingrese el código de la dirección" value="{{$personas['COD_DIRECCION']}}" readonly>
@@ -550,8 +560,12 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Operadora de Teléfono:</label>
-                                                            <input type="text" id="OPE_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="OPE_TELEFONO" placeholder="Ingresar una descripción del teléfono" value="{{$personas['OPE_TELEFONO']}}" oninput="validarOpeTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>
-                                                            <div class="invalid-feedback" id="invalid-feedback8-{{$personas['COD_PERSONA']}}"></div>
+                                                            <select class="form-select custom-select" id="OPE_TELEFONO" name="OPE_TELEFONO" value="{{$personas['OPE_TELEFONO']}}" required>
+                                                                <option value="TIGO" @if($personas['OPE_TELEFONO'] === 'TIGO') selected @endif>TIGO</option>
+                                                                <option value="CLARO" @if($personas['OPE_TELEFONO'] === 'CLARO') selected @endif>CLARO</option>
+                                                                <option value="HONDUTEL" @if($personas['OPE_TELEFONO'] === 'HONDUTEL') selected @endif>HONDUTEL</option>
+                                                            </select>
+                                                            <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="personas">Estado:</label>
@@ -775,6 +789,7 @@
                                 lengthMenu: "Mostrar _MENU_ registros",
                                 zeroRecords: "No se encontraron resultados",
                                 emptyTable: "Ningún dato disponible en esta tabla",
+                                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                                 infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
                                 infoFiltered: "(filtrado de un total de _MAX_ registros)",
                                 search: "Buscar:",
@@ -786,7 +801,8 @@
                                     next: "Siguiente",
                                     previous: "Anterior"
                                 },
-                            } 
+                            },
+                             order: [[0, 'desc']],
                         });
                     });
                 </script>
