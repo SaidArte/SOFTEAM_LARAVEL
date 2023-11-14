@@ -189,6 +189,22 @@
                 </div>
             </div>
         </div>
+         <!-- MENSAJE BAJO -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        2023 &copy; UNAH  
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a>Version 1.0</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- FIN MENSAJE -->
     @else
         <!-- Contenido para usuarios no autenticados -->
         <script>

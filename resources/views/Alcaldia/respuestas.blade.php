@@ -59,6 +59,22 @@
                     </div>
                 @endif
         </form>
+         <!-- MENSAJE BAJO -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        2023 &copy; UNAH  
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a>Version 1.0</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- FIN MENSAJE -->
         <script>
             $(document).ready(function(){
                 //Validaciones del nombre rol, no permite que se ingrese numeros ni caracteres especiales, solo letras
