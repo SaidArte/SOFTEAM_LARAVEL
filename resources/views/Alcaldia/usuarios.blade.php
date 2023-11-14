@@ -77,6 +77,15 @@
             .hidden {
                 display: none;
             }
+
+            /*Estilos para icono de ojo*/
+            .eye-icon {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
         </style>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
@@ -159,9 +168,12 @@
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="PAS_USUARIO" class="form-label">Contraseña</label>
-                                                <input type="password" id="PAS_USUARIO" class="form-control" name="PAS_USUARIO" placeholder="Ingresar una contraseña" required>
-                                                <div id="password-feedback" class="invalid-feedback"></div>
+                                                <label for="PAS_USUARIOL" class="form-label">Contraseña</label>
+                                                <div class="form-group position-relative">
+                                                    <input type="password" id="PAS_USUARIO" class="form-control" name="PAS_USUARIO" placeholder="Ingresar una contraseña" required>
+                                                    <span class="eye-icon" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i></span>
+                                                    <div id="password-feedback" class="invalid-feedback"></div>
+                                                </div>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="IND_USUARIO">Estado</label>
@@ -207,7 +219,7 @@
                                             });
                                         });
 
-
+                                        
                                         $(document).ready(function() {
                                             //Validaciones del campo nombre el cual no permite el ingreso de números (las bloquea y no se muestra)
                                             //y solo permite el ingreso de numeros
@@ -296,6 +308,22 @@
                                                 $('#COD_PERSONA').val('');
                                             }
                                         };
+                                        
+                                        //Función de ocultar/mostrar password
+                                        function togglePasswordVisibility() {
+                                            var passwordInput = document.getElementById("PAS_USUARIO");
+                                            var toggleIcon = document.querySelector(".eye-icon i");
+
+                                            if (passwordInput.type === "password") {
+                                                passwordInput.type = "text";
+                                                toggleIcon.classList.remove("fa-eye");
+                                                toggleIcon.classList.add("fa-eye-slash");
+                                            } else {
+                                                passwordInput.type = "password";
+                                                toggleIcon.classList.remove("fa-eye-slash");
+                                                toggleIcon.classList.add("fa-eye");
+                                            }
+                                        }
 
                                         //Deshabilitar el envio de formularios si hay campos no validos
                                         (function () {
