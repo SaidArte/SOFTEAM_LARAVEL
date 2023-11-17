@@ -123,94 +123,139 @@
                         <div class="modal-body">
                             <form action="{{ url('Animal/insertar') }}" method="post"  class="needs-validation Animal-form">
                                 @csrf
+
+
                                 <div class="mb-3 mt-3">
-                                    <label for="CLAS_ANIMAL" >Clases de Animal</label>
-                                    <input type="text" id="CLAS_ANIMAL" class="form-control" name="CLAS_ANIMAL" placeholder="Ingresar a Clases del Animal" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras"  maxlength="7" required>
-                                    <div class="invalid-feedback">Ingrese solo letras en Clases del Animal</div>
-
+                                    <label for="CLAS_ANIMAL" >clases de Animal</label>
+                                    <select class="form-select custom-select" id="CLAS_ANIMAL" name="CLAS_ANIMAL" required >
+                                        <option value="" disabled selected>Seleccione una clase de animal</option>
+                                        <option value="Vaca" selected >Vaca</option>
+                                        <option value="Caballo" selected >Caballo</option>
+                                        <option value="Cerdo" selected >Cerdo</option>
+                                        <option value="Burro" selected >Burro</option>
+                                        <option value="Mula" selected >Mula</option>
+                                        <option value="Yegua" selected >Yegua</option>
+                                        <option value="" disabled selected>Seleccione una clase de animal</option>
+                                       
+                                       
+                                    </select>
                                 </div>
-
+        
                                 <div class="mb-3 mt-3">
                                     <label for="RAZ_ANIMAL" >Raza de Animal</label>
-                                    <input type="text" id="RAZ_ANIMAL" class="form-control" name="RAZ_ANIMAL" placeholder="Ingresar la  Raza del Animal"pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="15" required >
-                                    <div class="invalid-feedback">Ingrese solo letras en Raza del Animal</div>
-
+                                    <select class="form-select custom-select" id="RAZ_ANIMAL" name="RAZ_ANIMAL"required >
+                                        <option value="" disabled selected>Seleccione una Raza de Animal</option>
+                                       <!--Raza de Vaca-->
+                                        <option value="Holstein" selected >Vaca Holstein</option>
+                                        <option value="criolla" selected >Vaca criolla</option>
+                                        <option value="Hereford" selected >Vaca Hereford</option>
+                                        <option value="simmental<" selected >Vaca simmental</option>
+                                        <option value="Angus " selected >Vaca Angus </option>
+                                        <option value="Angus rojo" selected >Vaca Angus rojo</option>
+                                        <option value="Brangus" selected >Vaca Brangus</option>
+                                        <option value="Ganado Lechero" selected >Vaca Ganado Lechero</option>
+                                       <!--Raza de caballlo-->
+                                        <option value="criollo" selected >Caballo criollo</option>
+                                        <option value="mustang" selected >Caballo mustang</option>
+                                        <option value="shire" selected >Caballo shire</option>
+                                        <option value="frison" selected >Caballo frison</option>
+                                        <option value="arabe" selected >Caballo arabe</option>
+                                        <option value="pura sangre ingles" selected >Caballo pura sangre ingles</option>
+                                        <!--Raza de Cerdo-->
+                                        <option value="criollo" selected >Cerdo criollo</option>
+                                        <!--Raza de Burro-->
+                                        <option value="criollo" selected >Burro criollo</option>
+                                        <!--Raza de Yegua-->
+                                        <option value="criollo" selected >Yegua criollo</option>
+                                        <option value="" disabled selected>Seleccione una Raza de Animal</option>
+        
+        
+                                       
+                                    </select>
                                 </div>
-
-                            
-
+                               
+        
                             <div class="mb-3 mt-3">
                                 <label for="COL_ANIMAL" >Color del Animal</label>
-                                <input type="text" id="COL_ANIMAL" class="form-control" name="COL_ANIMAL" placeholder="Ingresar el Color del Animal"pattern="^[A-Za-z\s]+$" title="Ingrese solo letras"  maxlength="25" required>
-                               <!-- <div class="invalid-feedback">Ingresar el Color del Animal</div>-->
-                                <div class="invalid-feedback">Ingrese solo letras en el color</div>
+                                <select class="form-select custom-select" id="COL_ANIMAL" name="COL_ANIMAL" required >
+                                    <option value="" disabled selected>Seleccione el color del Ganado</option>
+        
+                                    <option value=" castaño" selected >castaño</option>
+                                    <option value="marron" selected >marron</option>
+                                    <option value="blanco" selected >blanco</option>
+                                    <option value=" negro" selected >negro</option>
+                                    <option value="cafes" selected >cafes</option>
+                                    <option value="manchado " selected >manchado </option>
+                                    <option value="Gris" selected >Gris </option>
+                                    <option value="" disabled selected>Seleccione el color del Ganado</option>
+                                   
+                                </select>
                             </div>
-
-
-
-                                
-
+        
                             <!--metodo de inserta en codigo de fierro  atraendo los datos ya existente de la tabla persona-->
                             <div class="mb-3 mt-3">
                                 <label for="COD_FIERRO" >Datos de Fierro</label>
-                                <select class="form-select custom-select" id="COD_FIERRO" name="COD_FIERRO" required >
+                                <select class="form-select custom-select" id="COD_FIERRO" name="COD_FIERRO" placeholder="Seleccione Datos de Fierro"required >
                                     <option value="" disabled selected>Seleccione Datos de Fierro </option>
                                     @foreach ($fierroArreglo as $fierro)
-                                        <option value="{{$fierro['COD_FIERRO']}}">{{$fierro['COD_FIERRO']}} {{$fierro['COD_PERSONA']}} {{$fierro['TIP_FIERRO']}} {{$fierro['NUM_FOLIO_FIERRO']}} </option>
+                                          <option value="{{$fierro['COD_FIERRO']}}">{{$fierro['COD_FIERRO']}} {{$fierro['COD_PERSONA']}} {{$fierro['TIP_FIERRO']}} {{$fierro['NUM_FOLIO_FIERRO']}} </option>
                                         
-
+        
                                     @endforeach 
                                     
-                                
+                                   
                                 </select>
                             </div>
-                        
-
+                          
+        
                         
                                 <div class="mb-3 mt-3">
                                     <label for="VEN_ANIMAL" >Venteado Animal</label>
-                                    <select class="form-select custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL" required >
+                                    <select class="form-select custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL"required >
                                         <option value="" disabled selected>Seleccione una opción Venteado</option>
                                         <option value="S" selected >SI</option>
                                         <option value="N" selected >NO</option>
                                         <option value="" disabled selected>Seleccione una opción Venteado</option>
                                         
-                                    
+                                       
                                     </select>
                                 </div>
-
+        
                                 <div class="mb-3 mt-3">
                                     <label for="HER_ANIMAL">Herrado Animal</label>
-                                    <select class="form-select custom-select" id="HER_ANIMAL" name="HER_ANIMAL" required >
+                                    <select class="form-select custom-select" id="HER_ANIMAL" name="HER_ANIMAL"required >
                                         <option value="" disabled selected>Seleccione una opción de Herrado</option>
-
+        
                                         <option value="S" selected >SI</option>
                                         <option value="N" selected >NO</option>
                                         <option value="" disabled selected>Seleccione una opción de Herrado</option>
-                                    
-                                    
+                                       
                                     </select>
-
                                 </div>
             
                         
                                 
-                                
                                 <div class="mb-3 mt-3">
                                     <label for="DET_ANIMAL">Detalle del Animal</label>
-                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="25" required >
+                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal"required >
                                     <div class="invalid-feedback">Ingrese solo letras en detalle del animal </div>
-
                                 </div>
-                            
-                            
-
-
+                               
+                               
+        
+        
                                     <div class="mb-3">
                                         <button class="btn btn-primary" type="submit">Guardar</button>
-                                        <button type="button" id="CancelarButton"  class="btn btn-danger"  data-dismiss="modal" >Cancelar</button>
+                                        <button type="button"id="CancelarButton"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                     </div>
                             </form>
+
+
+
+
+
+                            
+                             
                             <script>
                                 $(document).ready(function() {
                                     function validateInput(input, regex) {
