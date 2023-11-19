@@ -225,7 +225,7 @@
                                             //y solo permite el ingreso de numeros
                                             $('#dni').on('input', function() {
                                                 var btnGuardar = document.getElementById("submitButton");  // Obtener el botón de guardar.
-                                                var id = $(this).val().replace(/\D/g, ''); // Eliminar numéricos y simbolos.
+                                                var id = $(this).val().replace(/\D/g, ''); // Mantener solo numéricos y eliminar letras y simbolos.
                                                 $(this).val(id); // Actualizar el valor del campo solo con números
                                                 var errorMessage = 'Favor, ingrese una identificación valida';
                                                 if (id.length == '') {

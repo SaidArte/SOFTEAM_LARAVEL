@@ -49,6 +49,15 @@ class BitacoraController extends Controller
             // La solicitud falló, puedes manejar el error aquí.
             $error = $ctriggers->json();
         }
+
+        $ctriggersP = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/CREAR-TRIGGERS-PARAMETROS');
+        if ($ctriggersP->successful()) {
+            // La solicitud se completó con éxito, puedes manejar la respuesta aquí.
+            $data2 = $ctriggers->json();
+        } else {
+            // La solicitud falló, puedes manejar el error aquí.
+            $error2 = $ctriggersP->json();
+        }
     }
 
     public function EliminarTriggers(){
@@ -62,6 +71,15 @@ class BitacoraController extends Controller
         } else {
             // La solicitud falló, puedes manejar el error aquí.
             $error = $etriggers->json();
+        }
+
+        $etriggersP = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/ELIMINAR-TRIGGERS-PARAMETROS');
+        if ($etriggersP->successful()) {
+            // La solicitud se completó con éxito, puedes manejar la respuesta aquí.
+            $data2 = $etriggers->json();
+        } else {
+            // La solicitud falló, puedes manejar el error aquí.
+            $error2 = $etriggers->json();
         }
     }
 }

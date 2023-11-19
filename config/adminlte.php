@@ -449,6 +449,13 @@ return [
             //'icon_color' => 'info',
             'submenu' => [
                 [
+                    'text' => 'Parámetros',
+                    'icon' => 'fa fa-puzzle-piece',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Parametros',
+                    'icon_color' => 'green',
+                ],
+                [
                     'text' => 'Roles',
                     'icon' => 'fa fa-universal-access',
                     //'icon_color' => 'indigo',

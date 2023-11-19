@@ -88,7 +88,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->prefix('Bitacora')
                 ->group(base_path('routes/Bitacora.php'));
-
+            
+            Route::middleware('web')
+                ->prefix('Parametros')
+                ->group(base_path('routes/Parametros.php'));
                             
         });
     }

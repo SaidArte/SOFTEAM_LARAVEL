@@ -55,6 +55,7 @@ use App\Http\Controllers\Alcaldia\PermisosController;
 use App\Http\Controllers\Alcaldia\MantenimientosController;
 use App\Http\Controllers\Alcaldia\PTrasladoController;
 use App\Http\Controllers\Alcaldia\BitacoraController;
+use App\Http\Controllers\Alcaldia\ParametrosController;
 
 //Ruta inicial de acceso de usuarios.
 Route::get('/', function () {
