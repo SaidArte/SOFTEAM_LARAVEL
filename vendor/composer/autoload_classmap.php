@@ -10,6 +10,7 @@ return array(
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Alcaldia\\AlcaldiaController' => $baseDir . '/app/Http/Controllers/Alcaldia/AlcaldiaController.php',
     'App\\Http\\Controllers\\Alcaldia\\AnimalController' => $baseDir . '/app/Http/Controllers/Alcaldia/AnimalController.php',
+    'App\\Http\\Controllers\\Alcaldia\\BitacoraController' => $baseDir . '/app/Http/Controllers/Alcaldia/BitacoraController.php',
     'App\\Http\\Controllers\\Alcaldia\\CventaController' => $baseDir . '/app/Http/Controllers/Alcaldia/CventaController.php',
     'App\\Http\\Controllers\\Alcaldia\\FierroController' => $baseDir . '/app/Http/Controllers/Alcaldia/FierroController.php',
     'App\\Http\\Controllers\\Alcaldia\\MantenimientosController' => $baseDir . '/app/Http/Controllers/Alcaldia/MantenimientosController.php',

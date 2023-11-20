@@ -590,6 +590,7 @@ class ComposerStaticInit1c5064e2f34e490782c822bd55a8879d
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Alcaldia\\AlcaldiaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Alcaldia/AlcaldiaController.php',
         'App\\Http\\Controllers\\Alcaldia\\AnimalController' => __DIR__ . '/../..' . '/app/Http/Controllers/Alcaldia/AnimalController.php',
+        'App\\Http\\Controllers\\Alcaldia\\BitacoraController' => __DIR__ . '/../..' . '/app/Http/Controllers/Alcaldia/BitacoraController.php',
         'App\\Http\\Controllers\\Alcaldia\\CventaController' => __DIR__ . '/../..' . '/app/Http/Controllers/Alcaldia/CventaController.php',
         'App\\Http\\Controllers\\Alcaldia\\FierroController' => __DIR__ . '/../..' . '/app/Http/Controllers/Alcaldia/FierroController.php',
         'App\\Http\\Controllers\\Alcaldia\\MantenimientosController' => __DIR__ . '/../..' . '/app/Http/Controllers/Alcaldia/MantenimientosController.php',

@@ -19,6 +19,19 @@
             color: white !important;
         }
     </style>
+    <style>
+    .modal-body {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .mb-3 {
+        flex: 0 0 48%; /* Ajusta el ancho según tus necesidades */
+        margin-bottom: 1rem;
+    }
+</style>
+
     <!-- Estilos del mensaje de registro exitoso -->
     <style>
         .success-message {
@@ -100,6 +113,26 @@
         .Btn:active {
             transform: translate(2px ,2px);
         }
+        <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Fierros</title>
+    <!-- Estilos y estilos específicos para la generación de PDF -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        /* Agrega más estilos según sea necesario */
+    </style>
+</head>
+<body>
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
@@ -136,74 +169,77 @@
             @endif
             
             <div class="modal fade bd-example-modal-sm" id="fierro" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title">Ingresa un Nuevo Fierro</h5>
-                        </div>
-                        
-                        <div class="modal-body">
-                            <!-- Inicio del nuevo formulario -->
-                            <form action="{{ url('fierro/insertar') }}" method="post" class="needs-validation fierro-form" enctype= "multipart/form-data">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+             <h5 class="modal-title text-center">Ingresa Un Nuevo Fierro</h5>
+            </div>
 
-                                            <div class="mb-3">
-                                                <label for="id">DNI</label>
-                                                <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="nom">Nombre</label>
-                                                <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <input type="hidden" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA">
-                                            </div>
-                        
-                                 <div class="mb-3 ">
-                                      <label for="FEC_TRAMITE_FIERRO">Fecha de Tramite</label>
-                                     <input type="date" id="FEC_TRAMITE_FIERRO" class="form-control" name="FEC_TRAMITE_FIERRO" placeholder="inserte la fecha de tramite." required>
-                                      <div class="invalid-feedback"></div>
+            <div class="modal-body">
+                <!-- Inicio del nuevo formulario -->
+                <form action="{{ url('fierro/insertar') }}" method="post" class="needs-validation fierro-form" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id">DNI</label>
+                                <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
+                                <div class="invalid-feedback"></div>
                             </div>
-                                 <div class="mb-3">
-                                       <label for="NUM_FOLIO_FIERRO">Numero de Folio</label>
-                                      <input type="text" id="NUM_FOLIO_FIERRO" class="form-control" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro" required>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="mb-3">
-                                     <label for="TIP_FIERRO" class="form-label">Tipo de Fierro</label>
-                                     <select class="form-select" id="TIP_FIERRO" name="TIP_FIERRO" required>
-                                     <div class="invalid-feedback"></div>
-                                     <option value="X" selected = "selected" disabled>- Elija el tipo de Fierro -</option>
-                                    <option value="L">Letra</option>
-                                    <option value="F">Figura</option>
-                                    <option value="N">Numero</option>
-                                    <option value="S">Simbolo</option>
-                                    </select>
-                                </div>
-                            
-                                <div class="mb-3">
-                                    <label for="MON_CERTIFICO_FIERRO">Monto del Certifico</label>
-                                     <input type="text" prefix="L. " id="MON_CERTIFICO_FIERRO" class="form-control" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el monto del certifico" min="1" step="any"required>
-                                    <div class="invalid-feedback"></div>
-                                 </div>
-                                 <div>
-                                 <form action="{{ route('fierro.guardar-imagen') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-
-                     <div class="form-group">
-                                <label for="IMG_FIERRO">Imagen del Fierro</label>
-                                <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" required>
+                            <div class="mb-3">
+                                <label for="nom">Nombre</label>
+                                <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
                             </div>
-                            <center><br>
-                              <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Guardar Informacion</button>
-                                <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                
-                             </div>
-                            </center></br> 
-                            </form>
+                            <!-- Agrega más elementos aquí si es necesario -->
                         </div>
 
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="FEC_TRAMITE_FIERRO">Fecha de Tramite</label>
+                                <input type="date" id="FEC_TRAMITE_FIERRO" class="form-control" name="FEC_TRAMITE_FIERRO" placeholder="inserte la fecha de tramite." required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="NUM_FOLIO_FIERRO">Numero de Folio</label>
+                                <input type="text" id="NUM_FOLIO_FIERRO" class="form-control" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro" required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <!-- Agrega más elementos aquí si es necesario -->
+                        </div>
+                    </div>
+
+                    <!-- Repite la estructura de filas y columnas para otros elementos -->
+
+                    <div class="mb-3">
+                        <label for="TIP_FIERRO" class="form-label">Tipo de Fierro</label>
+                        <select class="form-select" id="TIP_FIERRO" name="TIP_FIERRO" required>
+                            <div class="invalid-feedback"></div>
+                            <option value="X" selected="selected" disabled>- Elija el tipo de Fierro -</option>
+                            <option value="L">Letra</option>
+                            <option value="F">Figura</option>
+                            <option value="N">Numero</option>
+                            <option value="S">Simbolo</option>
+                        </select>
+                    </div>
+
+                    <!-- Repite la estructura de filas y columnas para otros elementos -->
+
+                    <div class="mb-3">
+                        <label for="MON_CERTIFICO_FIERRO">Monto del Certifico</label>
+                        <input type="text" prefix="L. " id="MON_CERTIFICO_FIERRO" class="form-control" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el monto del certifico" min="1" step="any" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <!-- Repite la estructura de filas y columnas para otros elementos -->
+
+                    <div class="form-group">
+                        <label for="IMG_FIERRO">Imagen del Fierro</label>
+                        <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" required>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
                         </form>
 
                             <script>
@@ -215,20 +251,22 @@
                                     //mostrar el mensaje de error correspondiente si ya está en uso.
                                      });
                                     
-                                     $('#FEC_TRAMITE_FIERRO').on('input', function() {
-                                      var fechaTramiteFierro = $(this).val();
-                                      var currentDate = new Date().toISOString().split('T')[0];
-                                      var errorMessage = 'La fecha debe ser válida y no puede ser anterior a hoy';
-                                
-                                      if (!fechaTramiteFierro || fechaTramiteFierro < currentDate) {
-                                        $(this).addClass('is-invalid');
-                                        $(this).siblings('.invalid-feedback').text(errorMessage);
-                                      } else {
-                                        $(this).removeClass('is-invalid');
-                                        $(this).siblings('.invalid-feedback').text('');
-                                      }
-                                     });
-                                    
+                                      $(document).ready(function() {
+                                        $('#FEC_TRAMITE_FIERRO').on('input', function() {
+                                            var fechaTramiteFierro = $(this).val();
+                                            var currentDate = new Date().toISOString().split('T')[0];
+                                            var errorMessage = 'La fecha de tramite no puede ser posterior al día actual';
+
+                                            // Asegúrate de que la fecha de tramite no sea posterior al día actual
+                                            if (fechaTramiteFierro > currentDate) {
+                                                $(this).addClass('is-invalid');
+                                                $(this).siblings('.invalid-feedback').text(errorMessage);
+                                            } else {
+                                                $(this).removeClass('is-invalid');
+                                                $(this).siblings('.invalid-feedback').text('');
+                                            }
+                                        });
+                                    });
 
                                     $('#NUM_FOLIO_FIERRO').on('input', function() {
                                      var folio = $(this).val().replace(/\D/g, ''); // Eliminar no numéricos
@@ -410,60 +448,65 @@
                                 </tr>
                                 <!-- Modal for editing goes here -->
                                 <div class="modal fade bd-example-modal-sm" id="fierro-edit-{{$fierro['COD_FIERRO']}}" tabindex="-1">
-                                  <div class="modal-dialog">
+                                <div class="modal-dialog">
                                     <div class="modal-content">
-                                      <div class="modal-header">
-                                         <h5 class="modal-title">Actualizar Datos</h5>
-                                             </div>
-                                             <div class="modal-body">
-                                          <form action="{{ url('fierro/actualizar') }}" method="post" enctype="multipart/form-data">
-                                                   @csrf
-                                                   <input type="hidden" class="form-control" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
-                                                    <div class="mb-3 mt-3">
-                                                        <label for="COD_PERSONA" class="form-label">Persona: </label>
-                                                            <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" disabled>
-                                                                <option value="" disabled selected>Seleccione una persona</option>
-                                                     @foreach ($personasArreglo as $persona)
-                                                               <option value="{{ $persona['COD_PERSONA'] }}" @if($persona['COD_PERSONA'] == $fierro['COD_PERSONA']) selected @endif>{{ $persona['NOM_PERSONA'] }}</option>
-                                                    @endforeach
-                                                            </select>
-                                                    </div>
-                                                         <div class="mb-3">
-                                                         <label for="fierro" class="form-label">Fecha de Tramite:</label>
-                                                            <?php $fecha_formateada = date('Y-m-d', strtotime($fierro['FEC_TRAMITE_FIERRO'])); ?>
-                                                            <input type="date" class="form-control" id="FEC_TRAMITE_FIERRO" name="FEC_TRAMITE_FIERRO" value="{{ $fecha_formateada }}">
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="fierro">Numero de Folio</label>
-                                                            <input type="text" class="form-control" id="NUM_FOLIO_FIERRO" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro" value="{{$fierro['NUM_FOLIO_FIERRO']}}">
-                                                        </div>
-                                                        <div class="mb-3">
-                                                             <label for="fierro" class="form-label">Tipo de Fierro</label>
-                                                             <select class="form-select" id="TIP_FIERRO" name="TIP_FIERRO">
-                                
-                                                                <option value="L" {{ $fierro['TIP_FIERRO'] === 'L' ? 'selected' : '' }}>Letra</option>
-                                                                <option value="F" {{ $fierro['TIP_FIERRO'] === 'F' ? 'selected' : '' }}>Figura</option>
-                                                                <option value="N" {{ $fierro['TIP_FIERRO'] === 'N' ? 'selected' : '' }}>Numero</option>
-                                                                <option value="S" {{ $fierro['TIP_FIERRO'] === 'S' ? 'selected' : '' }}>Simbolo</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                             <label for="fierro">Monto del Certifico</label>
-                                                             <input type="text" prefix="L. " class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}} "min="1" step="any" required>
-                                                       </div>
-                                                       <div class="form-group">
-                                                            <label for="IMG_FIERRO">Imagen del Fierro:</label>
-                                                            <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" >
-                                                        </div>
-                                                        <!-- Campo oculto para almacenar la ruta de la imagen actual -->
-                                                        <input type="hidden" name="IMG_FIERRO_actual" value="{{ $fierro['IMG_FIERRO'] }}">                                                   
-                                                        <!-- Mostrar imagen actual -->
-                                                        <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
-                                                        <div class="mb-3">
-                                                             <!-- Boton de cancelar  y editar-->
-                                                             <button type="submit" class="btn btn-primary">Editar</button>
-                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                                    </div>
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Actualizar Datos</h5>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <form action="{{ url('fierro/actualizar') }}" method="post" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" class="form-control" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
+
+                                                <div class="mb-3 mt-3">
+                                                    <label for="COD_PERSONA" class="form-label">Persona:</label>
+                                                    <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" disabled>
+                                                        <option value="" disabled selected>Seleccione una persona</option>
+                                                        @foreach ($personasArreglo as $persona)
+                                                            <option value="{{ $persona['COD_PERSONA'] }}" @if($persona['COD_PERSONA'] == $fierro['COD_PERSONA']) selected @endif>{{ $persona['NOM_PERSONA'] }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="FEC_TRAMITE_FIERRO" class="form-label">Fecha de Tramite:</label>
+                                                    <?php $fecha_formateada = date('Y-m-d', strtotime($fierro['FEC_TRAMITE_FIERRO'])); ?>
+                                                    <input type="date" class="form-control" id="FEC_TRAMITE_FIERRO" name="FEC_TRAMITE_FIERRO" value="{{ $fecha_formateada }}">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="NUM_FOLIO_FIERRO">Numero de Folio</label>
+                                                    <input type="text" class="form-control" id="NUM_FOLIO_FIERRO" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro" value="{{$fierro['NUM_FOLIO_FIERRO']}}">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="TIP_FIERRO" class="form-label">Tipo de Fierro</label>
+                                                    <select class="form-select" id="TIP_FIERRO" name="TIP_FIERRO">
+                                                        <option value="L" {{ $fierro['TIP_FIERRO'] === 'L' ? 'selected' : '' }}>Letra</option>
+                                                        <option value="F" {{ $fierro['TIP_FIERRO'] === 'F' ? 'selected' : '' }}>Figura</option>
+                                                        <option value="N" {{ $fierro['TIP_FIERRO'] === 'N' ? 'selected' : '' }}>Numero</option>
+                                                        <option value="S" {{ $fierro['TIP_FIERRO'] === 'S' ? 'selected' : '' }}>Simbolo</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="MON_CERTIFICO_FIERRO">Monto del Certifico</label>
+                                                    <input type="text" prefix="L. " class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}}" min="1" step="any" required>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="IMG_FIERRO">Imagen del Fierro:</label>
+                                                    <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*">
+                                                </div>
+
+                                                <input type="hidden" name="IMG_FIERRO_actual" value="{{ $fierro['IMG_FIERRO'] }}">
+                                                <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
+
+                                                <div class="mb-3">
+                                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -525,91 +568,86 @@
         @if(session('error'))
             Swal.fire('¡Error!', '{{ session('error') }}', 'error');
         @endif
-                $(document).ready(function() {
-                    $('#Rfierro').DataTable({
-                        responsive: true,
-                        dom: "Bfrtilp",
-                        buttons: [//Botones de Excel, PDF, Imprimir
-                            {
-                                extend: "excelHtml5",
-                                text: "<i class='fa-solid fa-file-excel'></i>",
-                                tittleAttr: "Exportar a Excel",
-                                className: "btn btn-success",
-                                footer: true,
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6], //exportar solo la primera hasta las sexta tabla
-                                    stripHtml: false,
-                                },
-                            },
-                            {
-    extend: "pdfHtml5",
-    text: "<i class='fa-solid fa-file-pdf'></i>",
-    titleAttr: "Exportar a PDF", // Corrected property name
-    className: "btn btn-danger",
-    footer: true,
-    exportOptions: {
-        columns: [0, 1, 2, 3, 4, 5, 6], //exportar solo la primera hasta las sexta tabla
-        stripHtml: false,
-    },
-},
-                            {
-                                extend: "print",
-                                text: "<i class='fa-solid fa-print'></i>",
-                                tittleAttr: "Imprimir",
-                                className: "btn btn-secondary",
-                                footer: true,
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] ,//exportar solo la primera hasta las sexta tabla
-                                    stripHtml: false,
-                                },
-                            
-                                
-                            },
-                            
-                        ],
-                        lengthMenu : [10, 20, 30, 40, 50],
-                        columnDefs: [
-                            { orderable: false, target: [0, 2, 3, 6, 7]},
-                            { searchable: false, target: [0, 3, 6, 7]},
-                            { width: '25%', target: [1] },
-                            { width: '10%', target: [2, 3, 4, 6, 7] }, 
-                            { width: '25%', target: [5] },
-                        ],
-                        language: {
-                            processing: "Procesando...",
-                            lengthMenu: "Mostrar _MENU_ registros",
-                            zeroRecords: "No se encontraron resultados",
-                            emptyTable: "Ningún dato disponible en esta tabla",
-                            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                            infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                            search: "Buscar:",
-                            infoThousands: ",",
-                            loadingRecords: "Cargando...",
-                            paginate: {
-                                first: "Primero",
-                                last: "Último",
-                                next: "Siguiente",
-                                previous: "Anterior",
-                            },
-                            buttons: {
-                                copy: "Copiar",
-                                colvis: "Visibilidad",
-                                collection: "Colección",
-                                colvisRestore: "Restaurar visibilidad",
-                                copyKeys: "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
-                                copySuccess: {
-                                    1: "Copiada 1 fila al portapapeles",
-                                    _: "Copiadas %ds fila al portapapeles",
-                                },
-                                pdf: "PDF",
-                                print: "Imprimir",
-                            },
+        $(document).ready(function() {
+            $('#Rfierro').DataTable({
+                responsive: true,
+                dom: "Bfrtilp",
+                buttons: [
+                    {
+                        extend: "excelHtml5",
+                        text: "<i class='fa-solid fa-file-excel'></i>",
+                        titleAttr: "Exportar a Excel",
+                        className: "btn btn-success",
+                        footer: true,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6],
+                            stripHtml: false,
                         },
-                            order: [[0, 'desc']],
-                        
-                            
-                        });
-                    });
+                    },
+                    {
+                        extend: "pdfHtml5",
+                        text: "<i class='fa-solid fa-file-pdf'></i>",
+                        titleAttr: "Exportar a PDF",
+                        className: "btn btn-danger",
+                        footer: true,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6],
+                            stripHtml: false,
+                        },
+                    },
+                    {
+                        extend: "print",
+                        text: "<i class='fa-solid fa-print'></i>",
+                        titleAttr: "Imprimir",
+                        className: "btn btn-secondary",
+                        footer: true,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6],
+                            stripHtml: false,
+                        },
+                    },
+                ],
+                lengthMenu : [10, 20, 30, 40, 50],
+                columnDefs: [
+                    { orderable: false, targets: [0, 2, 3, 6, 7] },
+                    { searchable: false, targets: [0, 3, 6, 7] },
+                    { width: '25%', targets: [1] },
+                    { width: '10%', targets: [2, 3, 4, 6, 7] },
+                    { width: '25%', targets: [5] },
+                ],
+                language: {
+                    processing: "Procesando...",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    zeroRecords: "No se encontraron resultados",
+                    emptyTable: "Ningún dato disponible en esta tabla",
+                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                    search: "Buscar:",
+                    infoThousands: ",",
+                    loadingRecords: "Cargando...",
+                    paginate: {
+                        first: "Primero",
+                        last: "Último",
+                        next: "Siguiente",
+                        previous: "Anterior",
+                    },
+                    buttons: {
+                        copy: "Copiar",
+                        colvis: "Visibilidad",
+                        collection: "Colección",
+                        colvisRestore: "Restaurar visibilidad",
+                        copyKeys: "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                        copySuccess: {
+                            1: "Copiada 1 fila al portapapeles",
+                            _: "Copiadas %ds fila al portapapeles",
+                        },
+                        pdf: "PDF",
+                        print: "Imprimir",
+                    },
+                },
+                order: [[0, 'desc']],
+            });
+        });
              
             </script>
             </script> 
