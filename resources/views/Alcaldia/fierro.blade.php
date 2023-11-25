@@ -235,6 +235,15 @@
                         <label for="IMG_FIERRO">Imagen del Fierro</label>
                         <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" required>
                     </div>
+                    <div class="mb-3">
+                    <label for="FIERROS">Estado</label>
+                        <select class="form-select custom-select" id="ESTADO" name="ESTADO" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="A">ACTIVO</option>
+                            <option value="I">INACTIVO</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
 
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -401,6 +410,7 @@
                             <th><center>Tipo Fierro</center></th>
                             <th><center>Certifico</center></th>
                             <th><center>Imagen</center></th>
+                            <th><center>Estado</center></th>
                             <th><center><i class="fas fa-cog"></i></center></th>
                         </tr>
                         </thead>
@@ -416,6 +426,7 @@
                                         }
                                         }
                                  @endphp
+
                                  
                                 <tr>
                                         <td>{{$fierro['COD_FIERRO']}}</td>
@@ -433,6 +444,16 @@
                                         <td>
                                         <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen del Fierro" class="img-fluid" style="max-height: 100px;">
                                         </td>
+                                        <td>
+                                        @if ($fierro['ESTADO'] === 'A')
+                                                Activo
+                                            @elseif ($fierro['ESTADO'] === 'I')
+                                                Inactivo
+                                            @else
+                                                Desconocido
+                                            @endif
+                                        </td>
+                                        
                                     <td>
                                         <!-- Boton de Editar -->
                                         @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
@@ -498,6 +519,14 @@
                                                 <div class="form-group">
                                                     <label for="IMG_FIERRO">Imagen del Fierro:</label>
                                                     <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*">
+                                                </div>
+                                                <div class="mb-3 mt-3">
+                                                    <label for="FIERROS">Estado</label>
+                                                    <select class="form-select custom-select" id="ESTADO" name="ESTADO" required>
+                                                        <option value="X" selected disabled>- Elija un estado -</option>
+                                                        <option value="A" @if($fierro['ESTADO'] === 'A') selected @endif>ACTIVO</option>
+                                                        <option value="I" @if($fierro['ESTADO'] === 'I') selected @endif>INACTIVO</option>
+                                                    </select>
                                                 </div>
 
                                                 <input type="hidden" name="IMG_FIERRO_actual" value="{{ $fierro['IMG_FIERRO'] }}">
@@ -568,6 +597,27 @@
         @if(session('error'))
             Swal.fire('¡Error!', '{{ session('error') }}', 'error');
         @endif
+        @section('pdf_styles')
+    <style>
+        /* Estilos personalizados para la presentación en PDF */
+        /* ... */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+@endsection
         $(document).ready(function() {
             $('#Rfierro').DataTable({
                 responsive: true,
@@ -620,6 +670,7 @@
                     lengthMenu: "Mostrar _MENU_ registros",
                     zeroRecords: "No se encontraron resultados",
                     emptyTable: "Ningún dato disponible en esta tabla",
+                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
                     infoFiltered: "(filtrado de un total de _MAX_ registros)",
                     search: "Buscar:",

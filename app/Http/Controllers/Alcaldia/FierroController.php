@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Session;
 use App\Models\Fierro;
-
+use PDF;
 class FierroController extends Controller
 {
     const urlapi = 'http://82.180.133.39:4000/';
@@ -96,6 +96,7 @@ class FierroController extends Controller
                 "TIP_FIERRO" => $request->input("TIP_FIERRO"),
                 "MON_CERTIFICO_FIERRO" => $request->input("MON_CERTIFICO_FIERRO"),
                 "IMG_FIERRO" => $rutaImagenAbsoluta, // Utilizamos la ruta absoluta
+                "ESTADO" => $request->input("ESTADO"),
             ]);
 
             return redirect('/fierro')->with('success', 'Registro creado exitosamente.');
@@ -118,6 +119,7 @@ class FierroController extends Controller
             "NUM_FOLIO_FIERRO"     => $request->input("NUM_FOLIO_FIERRO"),
             "TIP_FIERRO"           => $request->input("TIP_FIERRO"),
             "MON_CERTIFICO_FIERRO" => $request->input("MON_CERTIFICO_FIERRO"),
+            "ESTADO" => $request->input("ESTADO"),
         ];
     
         if ($request->hasFile('IMG_FIERRO')) {
