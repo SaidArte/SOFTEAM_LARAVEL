@@ -209,24 +209,28 @@
 
                     <!-- Repite la estructura de filas y columnas para otros elementos -->
 
-                    <div class="mb-3">
-                        <label for="TIP_FIERRO" class="form-label">Tipo de Fierro</label>
-                        <select class="form-select" id="TIP_FIERRO" name="TIP_FIERRO" required>
-                            <div class="invalid-feedback"></div>
-                            <option value="X" selected="selected" disabled>- Elija el tipo de Fierro -</option>
-                            <option value="L">Letra</option>
-                            <option value="F">Figura</option>
-                            <option value="N">Numero</option>
-                            <option value="S">Simbolo</option>
-                        </select>
-                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="TIP_FIERRO" class="form-label">Tipo de Fierro</label>
+                                <select class="form-select" id="TIP_FIERRO" name="TIP_FIERRO" required>
+                                    <div class="invalid-feedback"></div>
+                                    <option value="X" selected="selected" disabled>- Elija el tipo de Fierro -</option>
+                                    <option value="L">Letra</option>
+                                    <option value="F">Figura</option>
+                                    <option value="N">Numero</option>
+                                    <option value="S">Simbolo</option>
+                                </select>
+                            </div>
+                        </div>
 
-                    <!-- Repite la estructura de filas y columnas para otros elementos -->
-
-                    <div class="mb-3">
-                        <label for="MON_CERTIFICO_FIERRO">Monto del Certifico</label>
-                        <input type="text" prefix="L. " id="MON_CERTIFICO_FIERRO" class="form-control" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el monto del certifico" min="1" step="any" required>
-                        <div class="invalid-feedback"></div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="MON_CERTIFICO_FIERRO">Monto del Certifico</label>
+                                <input type="text" prefix="L. " id="MON_CERTIFICO_FIERRO" class="form-control" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el monto del certifico" min="1" step="any" required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Repite la estructura de filas y columnas para otros elementos -->
