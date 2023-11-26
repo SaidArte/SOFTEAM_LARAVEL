@@ -362,7 +362,7 @@
                                 <th><center>Fecha</center></th>
                                 <th><center>Dirección</center></th>
                                 <th><center>Animal</center></th>
-                                <th><center>D. Animal</center></th>
+                                
                                 <th><center>Opciones</center></th>
                             </tr>
                         </thead>
@@ -377,7 +377,7 @@
                                     <td>{{date('d/m/y',strtotime($psacrificio['FEC_SACRIFICIO']))}}</td>
                                     <td>{{$psacrificio['DIR_PSACRIFICIO']}}</td>
                                     <td>{{$psacrificio['ANIMAL']}}</td>
-                                    <td>{{$psacrificio['DET_ANIMAL']}}</td>
+                                    
                                     <td>
                                     @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                         <!-- Boton de Editar -->
@@ -405,13 +405,15 @@
                                                         
                                                         <div class="mb-3 mt-3">
                                                             <label for="psacrificio" class="form-label">Nombre</label>
-                                                            <input type="text" class="form-control" id="NOM_PERSONA" name="NOM_PERSONA" placeholder="Ingrese el nombre de la persona" value="{{$psacrificio['NOM_PERSONA']}}" readonly>
-                                                            <div class="valid-feedback"></div>
+                                                            <input type="text" id="NOM_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="NOM_PERSONA" placeholder="Ingrese el nombre de la persona" value="{{$psacrificio['NOM_PERSONA']}}" oninput="validarNombre('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)" >
+                                                            <div class="invalid-feedback" id="invalid-feedback2-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
                                                         </div>
-                                                        <div class="mb-3">
-                                                            <label for="psacrificio">Identidad</label>
-                                                            <input type="text" class="form-control" id="DNI_PERSONA" name="DNI_PERSONA" placeholder="Ingrese el número de identidad" value="{{$psacrificio['DNI_PERSONA']}}" readonly>
+                                                        <div class="mb-3 mt-3">
+                                                            <label for="psacrificio" class="form-label">Identidad</label>
+                                                            <input type="text" id="DNI_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="DNI_PERSONA" placeholder="Ingrese el número de identidad" value="{{$psacrificio['DNI_PERSONA']}}" oninput="validarDNI('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)" >
+                                                            <div class="invalid-feedback" id="invalid-feedback-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
                                                         </div>
+
                                                         <div class="mb-3">
                                                             <label for="psacrificio">Teléfono</label>
                                                             <input type="text" class="form-control" id="TEL_PERSONA" name="TEL_PERSONA" placeholder="Ingrese el número de teléfono" value="{{$psacrificio['TEL_PERSONA']}}" require>
@@ -446,11 +448,44 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <!-- Boton de confirmar al editar -->
-                                                            <button type="submit" class="btn btn-primary">Editar</button>
+                                                            <button type="submit" class="btn btn-primary" id="submitButton-{{$psacrificio['COD_PSACRIFICIO']}}">Editar</button>
                                                             <!-- Boton de cancelar -->
-                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                            <a href="{{ url('psacrificio') }}" class="btn btn-danger">Cancelar</a>
                                                     </div>
                                                 </form>
+                                                <script>
+                                                   function validarNombre(id, nombre) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("NOM_PERSONA-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback2-" + id);
+
+                                                        if (nombre.length < 5 || nombre.length > 100 || !/^[a-zA-Z\s]+$/.test(nombre)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "El nombre debe tener al menos 5 carácteres y no más de 100, sin números";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    } 
+                                                    //Validaciones EDITAR
+                                                    function validarDNI(id, dni) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("DNI_PERSONA-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback-" + id);
+              
+                                                        if (!/^\d{13}$/.test(dni)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "El DNI debe tener exactamente 13 dígitos numéricos";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                </script>
                                             </div>
                                         </div>
                                     </div>
@@ -546,8 +581,31 @@
                                 text: "<i class='fa-solid fa-print'></i>",
                                 tittleAttr: "Imprimir",
                                 className: "btn btn-secondary",
+                                footer: true,
+                                customize: function(win) {
+                                    // Agrega tu encabezado personalizado aquí
+                                    $(win.document.head).append("<style>@page { margin-top: 20px; }</style>");
+                                    
+                                    // Agrega dos logos al encabezado
+                                
+                                    $(win.document.body).prepend("<br><br/");
+                                    $(win.document.body).prepend("<h5 style='text-align: center;'>           PERMISO DE SACRIFICIO  </h5>");
+                                    $(win.document.body).prepend("<h6 style='text-align: center;'>  Correo: alcaldiamunicipaltalanga@gmail.com  </h6>");
+                                    $(win.document.body).prepend("<h6 style='text-align: center;'>Telefonos: 2775-8010, 2775-8018, 2775-8735</h6>");
+                                    $(win.document.body).prepend("<h6 style='text-align: center;'>=======================================================</h6>");
+                                    $(win.document.body).prepend("<h6 style='text-align: center;'>DEPARTAMENTO DE FRANCISCO MORAZÁN- HONDURAS, C.A.</h6>");
+                                    $(win.document.body).prepend("<div style='text-align: center;'><img src='vendor/adminlte/dist/img/Talanga.png' alt='Logo 1' width='100' height='100' style='float: left; margin-right: 20px;' /><img src='vendor/adminlte/dist/img/Honduras.png' alt='Logo 2' width='100' height='100' style='float: right; margin-left: 20px;' /></div>");
+                                    $(win.document.body).prepend("<h6 style='text-align: center;'>MUNICIPALIDAD TALANGA</h6>");
+                                    
+                                    
+                                    // Agrega la fecha actual
+                                    var currentDate = new Date();
+                                    var formattedDate = currentDate.toLocaleDateString();
+                                    $(win.document.body).prepend("<p style='text-align: right;'>Fecha de impresión: " + formattedDate + "</p>");
+                                },
                                 exportOptions: {
                                     columns: [0, 1, 2, 3, 4, 5, 6], //exportar solo la primera hasta las sexta tabla
+                                    stripHtml: false,
                                 },
                             },
                         ],
