@@ -56,6 +56,7 @@ use App\Http\Controllers\Alcaldia\MantenimientosController;
 use App\Http\Controllers\Alcaldia\PTrasladoController;
 use App\Http\Controllers\Alcaldia\BitacoraController;
 use App\Http\Controllers\Alcaldia\ParametrosController;
+use App\Http\Controllers\Alcaldia\BackupRestoreController;
 
 //Ruta inicial de acceso de usuarios.
 Route::get('/', function () {
@@ -84,4 +85,5 @@ Route::get('/vencimiento', [AuthController::class, 'showVencimientoForm'])->name
 Route::post('/vencimiento', [AuthController::class, 'RenovacionVencimiento'])->name('auth.passwords.expired.submit');
 Route::post('/activar-bitacora', [BitacoraController::class, 'CrearTriggers'])->name('activar-bitacora');
 Route::post('/desactivar-bitacora', [BitacoraController::class, 'EliminarTriggers'])->name('desactivar-bitacora');
+
 

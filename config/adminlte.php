@@ -496,6 +496,13 @@ return [
                     //'icon_color' => 'indigo',
                     'url' => 'Bitacora',
                     'icon_color' => 'green',
+                ],
+                [
+                    'text' => 'Backup-Restore',
+                    'icon' => 'fas fa-book',
+                    //'icon_color' => 'indigo',
+                    'url' => 'backuprestore',
+                    'icon_color' => 'green',
                 ]
             ]
         ],

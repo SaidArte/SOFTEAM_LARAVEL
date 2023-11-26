@@ -130,8 +130,9 @@
                 <button type="button" class="Btn" data-toggle="modal" data-target="#Personas">
                     <div class="sign">+</div>     
                     <div class="text">Nuevo</div>
-                </button>   
+                </button> 
             </p>
+            
             @endif
             <!-- Mensaje de error cuando el DNI este repetido -->
             @if(session('message'))
@@ -139,7 +140,7 @@
                     {{ session('message')['text'] }}
                 </div>
             @endif
-            <div class="modal fade bd-example-modal-sm" id="Personas" tabindex="-1">
+            <div class="modal fade bd-example-modal-sm" id="Personas" tabindex="-1">        
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -148,92 +149,93 @@
                         <div class="modal-body">
                             <form action="{{ url('personas/insertar') }}" method="post" class="needs-validation personas-form" enctype="multipart/form-data">
                                 @csrf
-                                    <div class="mb-3">
-                                        <label for="DNI_PERSONA">Identidad:</label>
-                                        <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3 mt-3">
-                                        <label for="NOM_PERSONA">Nombre Completo:</label>
-                                        <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="GEN_PERSONA">Género:</label>
-                                        <select class="form-select custom-select" id="GEN_PERSONA" name="GEN_PERSONA" required>
-                                            <option value="" disabled selected>Seleccione una opción</option>
-                                            <option value="M">MASCULINO</option>
-                                            <option value="F">FEMENINO</option>
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="FEC_NAC_PERSONA">Fecha de Nacimiento:</label>
-                                        <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <form action="{{ route('personas.guardar-imagen') }}" method="POST" enctype="multipart/form-data">
-                                      @csrf
-                                      <div class="form-group">
-                                          <label for="IMG_PERSONA">Imágen:</label>
-                                          <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
-                                      </div>
-                                    <div class="mb-3">
-                                        <label for="DES_DIRECCION">Dirección:</label>
-                                        <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="TIP_DIRECCION">Tipo de Dirección:</label>
-                                        <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" required>
-                                            <option value="" disabled selected>Seleccione una opción</option>
-                                            <option value="DO">DOMICILIO</option>
-                                            <option value="TR">TRABAJO</option>
-                                        </select>  
-                                    </div>                          
-                                    <div class="mb-3">
-                                        <label for="DIR_EMAIL">Correo Electrónico:</label>
-                                        <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="NUM_TELEFONO">Teléfono:</label>
-                                        <input type="text" id="NUM_TELEFONO" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="TIP_TELEFONO">Tipo de Teléfono:</label>
-                                        <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" required>
-                                            <option value="" disabled selected>Seleccione una opción</option>
-                                            <option value="FI">FIJO</option>
-                                            <option value="MO">MOVIL</option>
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="DES_TELEFONO">Descripción del Teléfono:</label>
-                                        <input type="text" id="DES_TELEFONO" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="OPE_TELEFONO">Operadora de Teléfono:</label>
-                                        <select class="form-select custom-select" id="OPE_TELEFONO" name="OPE_TELEFONO" required>
-                                            <option value="" disabled selected>Seleccione una opción</option>
-                                            <option value="TIGO">TIGO</option>
-                                            <option value="CLARO">CLARO</option>
-                                            <option value="HONDUTEL">HONDUTEL</option>
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="IND_TELEFONO">Estado:</label>
-                                        <select class="form-select custom-select" id="IND_TELEFONO" name="IND_TELEFONO" required>
-                                            <option value="" disabled selected>Seleccione una opción</option>    
-                                            <option value="ACTIVO">ACTIVO</option>
-                                            <option value="INACTIVO">INACTIVO</option>
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
+                                        <form action="{{ route('personas.guardar-imagen') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="IMG_PERSONA">Imágen:</label>
+                                            <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
+                                        </div>
+                                            <div class="mb-3">
+                                                <label for="DNI_PERSONA">Identidad:</label>
+                                                <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" required>
+                                                <div class="invalid-feedback"></div>                                       
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="GEN_PERSONA">Género:</label>
+                                                <select class="form-select custom-select" id="GEN_PERSONA" name="GEN_PERSONA" required>
+                                                    <option value="" disabled selected>Seleccione una opción</option>
+                                                    <option value="M">MASCULINO</option>
+                                                    <option value="F">FEMENINO</option>
+                                                </select>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="NOM_PERSONA">Nombre Completo:</label>
+                                                <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="FEC_NAC_PERSONA">Fec Nac:</label>
+                                                <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>  
+                                        <div class="mb-3">
+                                            <label for="DES_DIRECCION">Dirección:</label>
+                                            <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="TIP_DIRECCION">Tipo de Dirección:</label>
+                                            <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" required>
+                                                <option value="" disabled selected>Seleccione una opción</option>
+                                                <option value="DO">DOMICILIO</option>
+                                                <option value="TR">TRABAJO</option>
+                                            </select>  
+                                        </div>                          
+                                        <div class="mb-3">
+                                            <label for="DIR_EMAIL">Correo Electrónico:</label>
+                                            <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                            
+                                        <div class="mb-3">
+                                            <label for="NUM_TELEFONO">Teléfono:</label>
+                                            <input type="text" id="NUM_TELEFONO" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="TIP_TELEFONO">Tipo de Teléfono:</label>
+                                            <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" required>
+                                                <option value="" disabled selected>Seleccione una opción</option>
+                                                <option value="FI">FIJO</option>
+                                                <option value="MO">MOVIL</option>
+                                            </select>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="DES_TELEFONO">Descripción del Teléfono:</label>
+                                            <input type="text" id="DES_TELEFONO" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="OPE_TELEFONO">Operadora de Teléfono:</label>
+                                            <select class="form-select custom-select" id="OPE_TELEFONO" name="OPE_TELEFONO" required>
+                                                <option value="" disabled selected>Seleccione una opción</option>
+                                                <option value="TIGO">TIGO</option>
+                                                <option value="CLARO">CLARO</option>
+                                                <option value="HONDUTEL">HONDUTEL</option>
+                                            </select>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="IND_TELEFONO">Estado:</label>
+                                            <select class="form-select custom-select" id="IND_TELEFONO" name="IND_TELEFONO" required>
+                                                <option value="" disabled selected>Seleccione una opción</option>    
+                                                <option value="ACTIVO">ACTIVO</option>
+                                                <option value="INACTIVO">INACTIVO</option>
+                                            </select>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
                                     <div class="mb-3">
                                         <button class="btn btn-primary" type="submit">Guardar</button>
                                         <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -402,6 +404,11 @@
         
                                 document.getElementById("btnCancelar").addEventListener("click", function() {
                                     limpiarFormulario();
+
+                                    // Cierra el modal manualmente
+                                    $('#Personas').modal('hide');
+                                    // Redirige a la página principal después de cerrar el modal
+                                    window.location.href = '/personas';
                                 });
                                 // Agregar una clase de CSS para mostrar la notificación flotante
                                 function showSuccessMessage() {
@@ -433,10 +440,8 @@
                     <table width=100% cellspacing="10" cellpadding="5" class="table table-hover table-bordered table-responsive mt-1" id="persona">
                         <thead>
                             <th><center>N°</center></th>
-                            <th><center>DNI</center></th>
+                            <th><center>Dni</center></th>
                             <th><center>Nombre</center></th>
-                            <th><center>Género</center></th>
-                            <th><center>F.Nac.</center></th>
                             <th><center>Imágen</center></th>
                             <th><center>Dirección</center></th>
                             <th><center>Correo</center></th>
@@ -449,8 +454,6 @@
                                     <td>{{$personas['COD_PERSONA']}}</td>
                                     <td>{{$personas['DNI_PERSONA']}}</td>
                                     <td>{{$personas['NOM_PERSONA']}}</td>
-                                    <td>{{$generos[$personas['GEN_PERSONA']]}}</td>
-                                    <td>{{ Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d') }}</td>
                                     <td><center>
                                         <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imágen de la persona" class="img-fluid" style="max-height: 65px;">
                                     </center></td> 
@@ -485,7 +488,7 @@
                                                         <input type="hidden" name="IMG_PERSONA_actual" value="{{ $personas['IMG_PERSONA'] }}">
                                                         <!-- Mostrar imagen actual -->
                                                         <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
-                                                        <div class="mb-3">
+                                                        <div class="mb-3 mt-3">
                                                             <label for="personas">Identidad:</label>
                                                             <input type="text" class="form-control" id="DNI_PERSONA-{{$personas['COD_PERSONA']}}" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" value="{{$personas['DNI_PERSONA']}}" oninput="validarDNI('{{$personas['COD_PERSONA']}}', this.value)" required>
                                                             <div class="invalid-feedback" id="invalid-feedback-{{$personas['COD_PERSONA']}}"></div>
@@ -744,7 +747,7 @@
                 <!-- FIN MENSAJE -->
             @stop
         @section('js')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script> console.log('Hi!'); </script>
             <script>
                 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -775,7 +778,7 @@
                         @endif
                     $(document).ready(function() {
                         $('#persona').DataTable({
-                            responsive: true,
+                            responsive: true,                        
                             lengthMenu : [10, 20, 30, 40, 50],
                             columnDefs: [
                                 { orderable: false, target: [0, 2, 3, 6, 7]},

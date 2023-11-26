@@ -92,6 +92,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->prefix('Parametros')
                 ->group(base_path('routes/Parametros.php'));
+
+            Route::middleware('web')
+            ->prefix('backuprestore')
+            ->group(base_path('routes/backuprestore.php'));
                             
         });
     }
