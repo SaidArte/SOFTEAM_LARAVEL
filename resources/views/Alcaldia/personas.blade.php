@@ -140,21 +140,23 @@
                     {{ session('message')['text'] }}
                 </div>
             @endif
-            <div class="modal fade bd-example-modal-sm" id="Personas" tabindex="-1">        
-                <div class="modal-dialog">
+            <div class="modal fade bd-example-modal-lg" id="Personas" tabindex="-1">        
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">INGRESAR UNA NUEVA PERSONA</h5>
                         </div>
-                        <div class="modal-body">
-                            <form action="{{ url('personas/insertar') }}" method="post" class="needs-validation personas-form" enctype="multipart/form-data">
+                        <div class="modal-body container-fluid">
+                            <form action="{{ url('personas/insertar') }}" method="post" class="needs-validation" enctype="multipart/form-data">
                                 @csrf
-                                        <form action="{{ route('personas.guardar-imagen') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="IMG_PERSONA">Imágen:</label>
-                                            <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
-                                        </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <form action="{{ route('personas.guardar-imagen') }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label for="IMG_PERSONA">Imágen:</label>
+                                                <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
+                                            </div>
                                             <div class="mb-3">
                                                 <label for="DNI_PERSONA">Identidad:</label>
                                                 <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" required>
@@ -179,63 +181,68 @@
                                                 <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" required>
                                                 <div class="invalid-feedback"></div>
                                             </div>  
-                                        <div class="mb-3">
-                                            <label for="DES_DIRECCION">Dirección:</label>
-                                            <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" required>
-                                            <div class="invalid-feedback"></div>
+                                        </div> 
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="DES_DIRECCION">Dirección:</label>
+                                                <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="TIP_DIRECCION">Tipo de Dirección:</label>
+                                                <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" required>
+                                                    <option value="" disabled selected>Seleccione una opción</option>
+                                                    <option value="DO">DOMICILIO</option>
+                                                    <option value="TR">TRABAJO</option>
+                                                </select>  
+                                            </div>                          
+                                            <div class="mb-3">
+                                                <label for="DIR_EMAIL">Correo Electrónico:</label>
+                                                <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="TIP_DIRECCION">Tipo de Dirección:</label>
-                                            <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" required>
-                                                <option value="" disabled selected>Seleccione una opción</option>
-                                                <option value="DO">DOMICILIO</option>
-                                                <option value="TR">TRABAJO</option>
-                                            </select>  
-                                        </div>                          
-                                        <div class="mb-3">
-                                            <label for="DIR_EMAIL">Correo Electrónico:</label>
-                                            <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" required>
-                                            <div class="invalid-feedback"></div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="NUM_TELEFONO">Teléfono:</label>
+                                                <input type="text" id="NUM_TELEFONO" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="TIP_TELEFONO">Tipo de Teléfono:</label>
+                                                <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" required>
+                                                    <option value="" disabled selected>Seleccione una opción</option>
+                                                    <option value="FI">FIJO</option>
+                                                    <option value="MO">MOVIL</option>
+                                                </select>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="DES_TELEFONO">Descripción del Teléfono:</label>
+                                                <input type="text" id="DES_TELEFONO" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="OPE_TELEFONO">Operadora de Teléfono:</label>
+                                                <select class="form-select custom-select" id="OPE_TELEFONO" name="OPE_TELEFONO" required>
+                                                    <option value="" disabled selected>Seleccione una opción</option>
+                                                    <option value="TIGO">TIGO</option>
+                                                    <option value="CLARO">CLARO</option>
+                                                    <option value="HONDUTEL">HONDUTEL</option>
+                                                </select>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="IND_TELEFONO">Estado:</label>
+                                                <select class="form-select custom-select" id="IND_TELEFONO" name="IND_TELEFONO" required>
+                                                    <option value="" disabled selected>Seleccione una opción</option>    
+                                                    <option value="ACTIVO">ACTIVO</option>
+                                                    <option value="INACTIVO">INACTIVO</option>
+                                                </select>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
                                         </div>
-                            
-                                        <div class="mb-3">
-                                            <label for="NUM_TELEFONO">Teléfono:</label>
-                                            <input type="text" id="NUM_TELEFONO" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="TIP_TELEFONO">Tipo de Teléfono:</label>
-                                            <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" required>
-                                                <option value="" disabled selected>Seleccione una opción</option>
-                                                <option value="FI">FIJO</option>
-                                                <option value="MO">MOVIL</option>
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="DES_TELEFONO">Descripción del Teléfono:</label>
-                                            <input type="text" id="DES_TELEFONO" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="OPE_TELEFONO">Operadora de Teléfono:</label>
-                                            <select class="form-select custom-select" id="OPE_TELEFONO" name="OPE_TELEFONO" required>
-                                                <option value="" disabled selected>Seleccione una opción</option>
-                                                <option value="TIGO">TIGO</option>
-                                                <option value="CLARO">CLARO</option>
-                                                <option value="HONDUTEL">HONDUTEL</option>
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="IND_TELEFONO">Estado:</label>
-                                            <select class="form-select custom-select" id="IND_TELEFONO" name="IND_TELEFONO" required>
-                                                <option value="" disabled selected>Seleccione una opción</option>    
-                                                <option value="ACTIVO">ACTIVO</option>
-                                                <option value="INACTIVO">INACTIVO</option>
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    </div>
                                     <div class="mb-3">
                                         <button class="btn btn-primary" type="submit">Guardar</button>
                                         <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -455,7 +462,7 @@
                                     <td>{{$personas['DNI_PERSONA']}}</td>
                                     <td>{{$personas['NOM_PERSONA']}}</td>
                                     <td><center>
-                                        <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imágen de la persona" class="img-fluid" style="max-height: 65px;">
+                                        <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imágen de la persona" class="img-fluid" style="max-height: 60px;">
                                     </center></td> 
                                     <td>{{$personas['DES_DIRECCION']}}</td>   
                                     <td>{{$personas['DIR_EMAIL']}}</td>   
@@ -470,113 +477,121 @@
                                     </td>
                                 </tr>
                                 <!-- Pantalla para ACTUALIZAR la tabla PERSONAS -->
-                                <div class="modal fade bd-example-modal-sm" id="personas-edit-{{$personas['COD_PERSONA']}}" tabindex="-1">
-                                    <div class="modal-dialog">
+                                <div class="modal fade bd-example-modal-lg" id="personas-edit-{{$personas['COD_PERSONA']}}" tabindex="-1">
+                                    <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Actualizar Datos</h5>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body container-fluid">
                                                 <form action="{{ url('personas/actualizar') }}" method="post" class="personas-form"enctype="multipart/form-data">
                                                     @csrf
-                                                        <input type="hidden" class="form-control" name="COD_PERSONA" value="{{$personas['COD_PERSONA']}}">
-                                                        <div class="form-group">
-                                                            <label for="IMG_PERSONA">Imágen:</label>
-                                                            <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
-                                                        </div>
-                                                        <!-- Campo oculto para almacenar la ruta de la imagen actual -->
-                                                        <input type="hidden" name="IMG_PERSONA_actual" value="{{ $personas['IMG_PERSONA'] }}">
-                                                        <!-- Mostrar imagen actual -->
-                                                        <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
-                                                        <div class="mb-3 mt-3">
-                                                            <label for="personas">Identidad:</label>
-                                                            <input type="text" class="form-control" id="DNI_PERSONA-{{$personas['COD_PERSONA']}}" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" value="{{$personas['DNI_PERSONA']}}" oninput="validarDNI('{{$personas['COD_PERSONA']}}', this.value)" required>
-                                                            <div class="invalid-feedback" id="invalid-feedback-{{$personas['COD_PERSONA']}}"></div>
-                                                        </div>
-                                                        <div class="mb-3 mt-3">
-                                                            <label for="personas">Nombre Completo:</label>
-                                                            <input type="text" id="NOM_PERSONA-{{$personas['COD_PERSONA']}}" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" value="{{$personas['NOM_PERSONA']}}" oninput="validarNombre('{{$personas['COD_PERSONA']}}', this.value)" required>
-                                                            <div class="invalid-feedback" id="invalid-feedback2-{{$personas['COD_PERSONA']}}"></div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="personas">Género:</label>
-                                                            <select class="form-select custom-select" id="GEN_PERSONA" name="GEN_PERSONA" value="{{$personas['GEN_PERSONA']}}" required>
-                                                                <option value="M" @if($personas['GEN_PERSONA'] === 'M') selected @endif>MASCULINO</option>
-                                                                <option value="F" @if($personas['GEN_PERSONA'] === 'F') selected @endif>FEMENINO</option>
-                                                            </select>
-                                                            <div class="invalid-feedback"></div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="personas" class="form-laabel">Fecha de Nacimiento:</label>
-                                                            <!-- Codigo para que me muestre la fecha ya registrada al momento de actualizar --->
-                                                            <?php $fecha_formateada = Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d'); ?>
-                                                            <input type="date" id="FEC_NAC_PERSONA-{{$personas['COD_PERSONA']}}" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$fecha_formateada}}" oninput="validarFecNac('{{$personas['COD_PERSONA']}}', this.value)" required>
-                                                            <div class="invalid-feedback" id="invalid-feedback3-{{$personas['COD_PERSONA']}}"></div>                                    
-                                                        </div>
-                                                        <div class="mb-3 mt-3" style="display: none;">
-                                                            <label for="personas" class="form-label">Código Dirección:</label>
-                                                            <input type="text" id="COD_DIRECCION" class="form-control" name="COD_DIRECCION" placeholder="Ingrese el código de la dirección" value="{{$personas['COD_DIRECCION']}}" readonly>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="personas">Dirección:</label>
-                                                            <input type="text" id="DES_DIRECCION-{{$personas['COD_PERSONA']}}" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" value="{{$personas['DES_DIRECCION']}}" oninput="validarDireccion('{{$personas['COD_PERSONA']}}', this.value)" required>
-                                                            <div class="invalid-feedback" id="invalid-feedback4-{{$personas['COD_PERSONA']}}"></div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="personas">Tipo de Dirección:</label>
-                                                            <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" value="{{$personas['TIP_DIRECCION']}}" required>
-                                                                <option value="DO" @if($personas['TIP_DIRECCION'] === 'DO') selected @endif>DOMICILIO</option>
-                                                                <option value="TR" @if($personas['TIP_DIRECCION'] === 'TR') selected @endif>TRABAJO</option>
-                                                            </select>  
-                                                            <div class="invalid-feedback"></div>
-                                                        </div>  
-                                                        <div class="mb-3 mt-3" style="display: none;">
-                                                            <label for="personas" class="form-label">Código Email:</label>
-                                                            <input type="text" id="COD_EMAIL" class="form-control" name="COD_EMAIL" placeholder="Ingrese el código del Correo" value="{{$personas['COD_EMAIL']}}" readonly>                                                           
-                                                        </div>                        
-                                                        <div class="mb-3">
-                                                            <label for="personas">Correo Electrónico:</label>
-                                                            <input type="text" id="DIR_EMAIL-{{$personas['COD_PERSONA']}}" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" value="{{$personas['DIR_EMAIL']}}" oninput="validarCorreo('{{$personas['COD_PERSONA']}}', this.value)" required>
-                                                            <div class="invalid-feedback" id="invalid-feedback5-{{$personas['COD_PERSONA']}}"></div>
-                                                        </div>
-                                                        <div class="mb-3 mt-3"  style="display: none;">
-                                                            <label for="personas" class="form-label">Código Teléfono:</label>
-                                                            <input type="text" id="COD_TELEFONO" class="form-control" name="COD_TELEFONO" placeholder="Ingrese el código del teléfono" value="{{$personas['COD_TELEFONO']}}" readonly>
-                                                        </div>   
-                                                        <div class="mb-3">
-                                                            <label for="personas">Teléfono:</label>
-                                                            <input type="text" id="NUM_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" value="{{$personas['NUM_TELEFONO']}}" oninput="validarTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>
-                                                            <div class="invalid-feedback" id="invalid-feedback6-{{$personas['COD_PERSONA']}}"></div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="personas">Tipo de Teléfono:</label>
-                                                            <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" value="{{$personas['TIP_TELEFONO']}}" required>
-                                                                <option value="FI" @if($personas['TIP_TELEFONO'] === 'FI') selected @endif>FIJO</option>
-                                                                <option value="MO" @if($personas['TIP_TELEFONO'] === 'MO') selected @endif>MOVIL</option>
-                                                            </select>
-                                                            <div class="invalid-feedback"></div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="personas">Descripción del Teléfono:</label>
-                                                            <input type="text" id="DES_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" value="{{$personas['DES_TELEFONO']}}" oninput="validarDesTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>
-                                                            <div class="invalid-feedback" id="invalid-feedback7-{{$personas['COD_PERSONA']}}"></div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="personas">Operadora de Teléfono:</label>
-                                                            <select class="form-select custom-select" id="OPE_TELEFONO" name="OPE_TELEFONO" value="{{$personas['OPE_TELEFONO']}}" required>
-                                                                <option value="TIGO" @if($personas['OPE_TELEFONO'] === 'TIGO') selected @endif>TIGO</option>
-                                                                <option value="CLARO" @if($personas['OPE_TELEFONO'] === 'CLARO') selected @endif>CLARO</option>
-                                                                <option value="HONDUTEL" @if($personas['OPE_TELEFONO'] === 'HONDUTEL') selected @endif>HONDUTEL</option>
-                                                            </select>
-                                                            <div class="invalid-feedback"></div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="personas">Estado:</label>
-                                                            <select class="form-select custom-select" id="IND_TELEFONO" name="IND_TELEFONO" value="{{$personas['IND_TELEFONO']}}" required>   
-                                                                <option value="ACTIVO" @if($personas['IND_TELEFONO'] === 'ACTIVO') selected @endif>ACTIVO</option>
-                                                                <option value="INACTIVO" @if($personas['IND_TELEFONO'] === 'INACTIVO') selected @endif>INACTIVO</option>
-                                                            </select>
-                                                            <div class="invalid-feedback"></div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <input type="hidden" class="form-control" name="COD_PERSONA" value="{{$personas['COD_PERSONA']}}">
+                                                                <div class="form-group">
+                                                                    <label for="IMG_PERSONA">Imágen:</label>
+                                                                    <input type="file" class="form-control" id="IMG_PERSONA" name="IMG_PERSONA" accept="image/*">
+                                                                </div>
+                                                                <!-- Campo oculto para almacenar la ruta de la imagen actual -->
+                                                                <input type="hidden" name="IMG_PERSONA_actual" value="{{ $personas['IMG_PERSONA'] }}">
+                                                                <!-- Mostrar imagen actual -->
+                                                                <img src="{{ asset($personas['IMG_PERSONA']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label for="personas">Identidad:</label>
+                                                                    <input type="text" class="form-control" id="DNI_PERSONA-{{$personas['COD_PERSONA']}}" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" value="{{$personas['DNI_PERSONA']}}" oninput="validarDNI('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                                    <div class="invalid-feedback" id="invalid-feedback-{{$personas['COD_PERSONA']}}"></div>
+                                                                </div>
+                                                                <div class="mb-3 mt-3">
+                                                                    <label for="personas">Nombre Completo:</label>
+                                                                    <input type="text" id="NOM_PERSONA-{{$personas['COD_PERSONA']}}" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" value="{{$personas['NOM_PERSONA']}}" oninput="validarNombre('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                                    <div class="invalid-feedback" id="invalid-feedback2-{{$personas['COD_PERSONA']}}"></div>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="personas">Género:</label>
+                                                                    <select class="form-select custom-select" id="GEN_PERSONA" name="GEN_PERSONA" value="{{$personas['GEN_PERSONA']}}" required>
+                                                                        <option value="M" @if($personas['GEN_PERSONA'] === 'M') selected @endif>MASCULINO</option>
+                                                                        <option value="F" @if($personas['GEN_PERSONA'] === 'F') selected @endif>FEMENINO</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback"></div>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="personas" class="form-laabel">Fecha de Nacimiento:</label>
+                                                                    <!-- Codigo para que me muestre la fecha ya registrada al momento de actualizar --->
+                                                                    <?php $fecha_formateada = Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d'); ?>
+                                                                    <input type="date" id="FEC_NAC_PERSONA-{{$personas['COD_PERSONA']}}" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$fecha_formateada}}" oninput="validarFecNac('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                                    <div class="invalid-feedback" id="invalid-feedback3-{{$personas['COD_PERSONA']}}"></div>                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="mb-3 mt-3" style="display: none;">
+                                                                    <label for="personas" class="form-label">Código Dirección:</label>
+                                                                    <input type="text" id="COD_DIRECCION" class="form-control" name="COD_DIRECCION" placeholder="Ingrese el código de la dirección" value="{{$personas['COD_DIRECCION']}}" readonly>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="personas">Dirección:</label>
+                                                                    <input type="text" id="DES_DIRECCION-{{$personas['COD_PERSONA']}}" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" value="{{$personas['DES_DIRECCION']}}" oninput="validarDireccion('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                                    <div class="invalid-feedback" id="invalid-feedback4-{{$personas['COD_PERSONA']}}"></div>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="personas">Tipo de Dirección:</label>
+                                                                    <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" value="{{$personas['TIP_DIRECCION']}}" required>
+                                                                        <option value="DO" @if($personas['TIP_DIRECCION'] === 'DO') selected @endif>DOMICILIO</option>
+                                                                        <option value="TR" @if($personas['TIP_DIRECCION'] === 'TR') selected @endif>TRABAJO</option>
+                                                                    </select>  
+                                                                    <div class="invalid-feedback"></div>
+                                                                </div>  
+                                                                <div class="mb-3 mt-3" style="display: none;">
+                                                                    <label for="personas" class="form-label">Código Email:</label>
+                                                                    <input type="text" id="COD_EMAIL" class="form-control" name="COD_EMAIL" placeholder="Ingrese el código del Correo" value="{{$personas['COD_EMAIL']}}" readonly>                                                           
+                                                                </div>                        
+                                                                <div class="mb-3">
+                                                                    <label for="personas">Correo Electrónico:</label>
+                                                                    <input type="text" id="DIR_EMAIL-{{$personas['COD_PERSONA']}}" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" value="{{$personas['DIR_EMAIL']}}" oninput="validarCorreo('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                                    <div class="invalid-feedback" id="invalid-feedback5-{{$personas['COD_PERSONA']}}"></div>
+                                                                </div>
+                                                            </div> 
+                                                            <div class="col-md-4">
+                                                                <div class="mb-3 mt-3"  style="display: none;">
+                                                                    <label for="personas" class="form-label">Código Teléfono:</label>
+                                                                    <input type="text" id="COD_TELEFONO" class="form-control" name="COD_TELEFONO" placeholder="Ingrese el código del teléfono" value="{{$personas['COD_TELEFONO']}}" readonly>
+                                                                </div>   
+                                                                <div class="mb-3">
+                                                                    <label for="personas">Teléfono:</label>
+                                                                    <input type="text" id="NUM_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="NUM_TELEFONO" placeholder="0000-0000" value="{{$personas['NUM_TELEFONO']}}" oninput="validarTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                                    <div class="invalid-feedback" id="invalid-feedback6-{{$personas['COD_PERSONA']}}"></div>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="personas">Tipo de Teléfono:</label>
+                                                                    <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" value="{{$personas['TIP_TELEFONO']}}" required>
+                                                                        <option value="FI" @if($personas['TIP_TELEFONO'] === 'FI') selected @endif>FIJO</option>
+                                                                        <option value="MO" @if($personas['TIP_TELEFONO'] === 'MO') selected @endif>MOVIL</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback"></div>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="personas">Descripción del Teléfono:</label>
+                                                                    <input type="text" id="DES_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" value="{{$personas['DES_TELEFONO']}}" oninput="validarDesTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                                    <div class="invalid-feedback" id="invalid-feedback7-{{$personas['COD_PERSONA']}}"></div>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="personas">Operadora de Teléfono:</label>
+                                                                    <select class="form-select custom-select" id="OPE_TELEFONO" name="OPE_TELEFONO" value="{{$personas['OPE_TELEFONO']}}" required>
+                                                                        <option value="TIGO" @if($personas['OPE_TELEFONO'] === 'TIGO') selected @endif>TIGO</option>
+                                                                        <option value="CLARO" @if($personas['OPE_TELEFONO'] === 'CLARO') selected @endif>CLARO</option>
+                                                                        <option value="HONDUTEL" @if($personas['OPE_TELEFONO'] === 'HONDUTEL') selected @endif>HONDUTEL</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback"></div>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="personas">Estado:</label>
+                                                                    <select class="form-select custom-select" id="IND_TELEFONO" name="IND_TELEFONO" value="{{$personas['IND_TELEFONO']}}" required>   
+                                                                        <option value="ACTIVO" @if($personas['IND_TELEFONO'] === 'ACTIVO') selected @endif>ACTIVO</option>
+                                                                        <option value="INACTIVO" @if($personas['IND_TELEFONO'] === 'INACTIVO') selected @endif>INACTIVO</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback"></div>
+                                                                </div>
+                                                            </div>                                                         
                                                         </div>
                                                         <div class="mb-3">
                                                             <button type="submit" class="btn btn-primary" id="submitButton-{{$personas['COD_PERSONA']}}">Editar</button>
@@ -778,14 +793,68 @@
                         @endif
                     $(document).ready(function() {
                         $('#persona').DataTable({
-                            responsive: true,                        
+                            responsive: true,
+                            dom: "Bfrtilp",
+                            buttons: [//Botones de Excel, PDF, Imprimir
+                                {
+                                    extend: "excelHtml5",
+                                    filename: "Personas",
+                                    text: "<i class='fa-solid fa-file-excel'></i>",
+                                    tittleAttr: "Exportar a Excel",
+                                    className: "btn btn-success",
+                                    exportOptions: {
+                                        columns: [0, 1, 2, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                    },
+                                },
+                                {
+                                    extend: "pdfHtml5",
+                                    filename: "Personas",
+                                    text: "<i class='fa-solid fa-file-pdf'></i>",
+                                    titleAttr: "Exportar a PDF",
+                                    className: "btn btn-danger",
+                                    exportOptions: {
+                                        columns: [0, 1, 2, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                    },
+                                },
+                                {
+                                    extend: "print",
+                                    filename: "Personas",
+                                    text: "<i class='fa-solid fa-print'></i>",
+                                    tittleAttr: "Imprimir",
+                                    className: "btn btn-secondary",
+                                    footer: true,
+                                    customize: function(win) {
+                                        // Agrega tu encabezado personalizado aquí
+                                        $(win.document.head).append("<style>@page { margin-top: 20px; }</style>");
+                                        
+                                        // Agrega dos logos al encabezado
+                                    
+                                        
+                                        $(win.document.body).prepend("<h5 style='text-align: center;'>           REGISTROS DE PERSONAS  </h5>");
+                                        $(win.document.body).prepend("<h6 style='text-align: center;'>  Correo: alcaldiamunicipaltalanga@gmail.com  </h6>");
+                                        $(win.document.body).prepend("<h6 style='text-align: center;'>Telefonos: 2775-8010, 2775-8018, 2775-8735</h6>");
+                                        $(win.document.body).prepend("<h6 style='text-align: center;'>=======================================================</h6>");
+                                        $(win.document.body).prepend("<h6 style='text-align: center;'>DEPARTAMENTO DE FRANCISCO MORAZÁN- HONDURAS, C.A.</h6>");
+                                        $(win.document.body).prepend("<div style='text-align: center;'><img src='vendor/adminlte/dist/img/Talanga.png' alt='Logo 1' width='100' height='100' style='float: left; margin-right: 20px;' /><img src='vendor/adminlte/dist/img/Honduras.png' alt='Logo 2' width='100' height='100' style='float: right; margin-left: 20px;' /></div>");
+                                        $(win.document.body).prepend("<h6 style='text-align: center;'>MUNICIPALIDAD TALANGA</h6>");
+                                        
+                                        // Agrega la fecha actual
+                                        var currentDate = new Date();
+                                        var formattedDate = currentDate.toLocaleDateString();
+                                        $(win.document.body).prepend("<p style='text-align: right;'>Fecha de impresión: " + formattedDate + "</p>");
+                                    },
+                                    exportOptions: {
+                                        columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                    },
+                                },
+                            ],
                             lengthMenu : [10, 20, 30, 40, 50],
                             columnDefs: [
-                                { orderable: false, target: [0, 2, 3, 6, 7]},
-                                { searchable: false, target: [0, 3, 6, 7]},
-                                { width: '25%', target: [1] },
-                                { width: '10%', target: [2, 3, 4, 6, 7] }, 
-                                { width: '25%', target: [5] },
+                                { orderable: false, targets: [0, 2, 3, 6, 7] },
+                                { searchable: false, targets: [0, 3, 6, 7] },
+                                { width: '8%', targets: [1] },
+                                { width: '25%', targets: [2, 3, 5, 6, 7] },
+                                { width: '10%', targets: [4] },
                             ],
                             language: {
                                 processing: "Procesando...",
