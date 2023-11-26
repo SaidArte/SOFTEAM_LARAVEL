@@ -112,8 +112,8 @@
                 </button>
             </p>
     @endif
-    <div class="modal fade bd-example-modal-sm" id="ptraslado" tabindex="-1">
-        <div class="modal-dialog">
+    <div class="modal fade bd-example-modal-lg" id="ptraslado" tabindex="-1">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     
@@ -121,106 +121,120 @@
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                    
                 </div>
-                <div class="modal-body">
-                    <form action="{{ url('ptraslado/insertar') }}" method="post" class="needs-validation">
-                        @csrf                           
+                <div class="modal-body container-fluid">
+    <form action="{{ url('ptraslado/insertar') }}" method="post" class="needs-validation">
+        @csrf
 
-                            <div class="mb-3">
-                                <label for="FEC_TRASLADO">Fecha del Traslado</label>
-                                <input type="date" id="FEC_TRASLADO" class="form-control" name="FEC_TRASLADO" placeholder="Inserte la fecha del Traslado" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="id">DNI</label>
-                                 <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
-                                 <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nom">Nombre</label>
-                                 <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
-                            </div>
-                            <div class="mb-3">
-                                <input type="hidden" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA">
-                            </div>
-                            
+        <div class="row">
+            <!-- Primera columna -->
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="FEC_TRASLADO">Fecha del Traslado</label>
+                    <input type="date" id="FEC_TRASLADO" class="form-control" name="FEC_TRASLADO" placeholder="Inserte la fecha del Traslado" required>
+                    <div class="invalid-feedback"></div>
+                </div>
 
-                            <div class="mb-3">
-                                <label for="DIR_ORIG_PTRASLADO">Direccion de Origen del Traslado</label>
-                                <input type="text" id="DIR_ORIG_PTRASLADO" class="form-control" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar la direccion de origen del traslado" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                              
-                            <div class="mb-3">
-                                <label for="DIR_DEST_TRASLADO">Direccion de Destino del Traslado</label>
-                                <input type="text" id="DIR_DEST_TRASLADO" class="form-control" name="DIR_DEST_TRASLADO" placeholder="Ingresar la direccion de destino del traslado" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                <div class="mb-3">
+                    <label for="id">DNI</label>
+                    <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
+                    <div class="invalid-feedback"></div>
+                </div>
 
-                            <div class="mb-3">
-                                <label for="NOM_TRANSPORTISTA">Nombre del Transportista</label>
-                                <input type="text" id="NOM_TRANSPORTISTA" class="form-control" name="NOM_TRANSPORTISTA" placeholder="Ingresar el nombre del transportita" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                       
-                            <div class="mb-3">
-                                <label for="DNI_TRANSPORTISTA">Numero de Identidad</label>
-                                <input type="text" id="DNI_TRANSPORTISTA" class="form-control" name="DNI_TRANSPORTISTA" placeholder="Ingresar el numero de identidad" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                 <div class="mb-3">
+                    <label for="nom">Nombre</label>
+                    <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
+                 </div>
+                <div class="mb-3">
+                     <input type="hidden" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA">
+                  </div>
 
-                            <div class="mb-3">
-                                <label for="TEL_TRANSPORTISTA">Numero de Telefono</label>
-                                <input type="text" id="TEL_TRANSPORTISTA" class="form-control" name="TEL_TRANSPORTISTA" placeholder="Ingresar el numero de telefono" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+                  <div class="mb-3">
+                    <label for="DIR_ORIG_PTRASLADO">Direccion de Origen del Traslado</label>
+                    <input type="text" id="DIR_ORIG_PTRASLADO" class="form-control" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar la direccion de origen del traslado" required>
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="DIR_DEST_TRASLADO">Direccion de Destino del Traslado</label>
+                    <input type="text" id="DIR_DEST_TRASLADO" class="form-control" name="DIR_DEST_TRASLADO" placeholder="Ingresar la direccion de destino del traslado" required>
+                    <div class="invalid-feedback"></div>
+                </div>
 
-                             <div class="mb-3">
-                                <label for="MAR_VEHICULO">Marca del Vehiculo</label>
-                                <input type="text" id="MAR_VEHICULO" class="form-control" name="MAR_VEHICULO" placeholder="Ingresar la marca del vehiculo" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+            </div>
 
-                            <div class="mb-3">
-                                <label for="MOD_VEHICULO"> Modelo del Vehiculo</label>
-                                <input type="text" id="MOD_VEHICULO" class="form-control" name="MOD_VEHICULO" placeholder="Ingresar el modelo del vehiculo" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+            <!-- Segunda columna -->
+            <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="NOM_TRANSPORTISTA">Nombre del Transportista</label>
+                        <input type="text" id="NOM_TRANSPORTISTA" class="form-control" name="NOM_TRANSPORTISTA" placeholder="Ingresar el nombre del transportita" required>
+                         <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="DNI_TRANSPORTISTA">Numero de Identidad</label>
+                         <input type="text" id="DNI_TRANSPORTISTA" class="form-control" name="DNI_TRANSPORTISTA" placeholder="Ingresar el numero de identidad" required>
+                         <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="TEL_TRANSPORTISTA">Numero de Telefono</label>
+                        <input type="text" id="TEL_TRANSPORTISTA" class="form-control" name="TEL_TRANSPORTISTA" placeholder="Ingresar el numero de telefono" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="MAR_VEHICULO">Marca del Vehiculo</label>
+                        <input type="text" id="MAR_VEHICULO" class="form-control" name="MAR_VEHICULO" placeholder="Ingresar la marca del vehiculo" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="MOD_VEHICULO"> Modelo del Vehiculo</label>
+                        <input type="text" id="MOD_VEHICULO" class="form-control" name="MOD_VEHICULO" placeholder="Ingresar el modelo del vehiculo" required>
+                        <div class="invalid-feedback"></div>
+                    </div>   
+            </div>
 
-                            <div class="mb-3">
-                                <label for="MAT_VEHICULO">Matricula del Vehiculo</label>
-                                <input type="text" id="MAT_VEHICULO" class="form-control" name="MAT_VEHICULO" placeholder="Ingresar la matricula del vehiculo" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+            <!-- Tercera columna -->
+            <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="MAT_VEHICULO">Matricula del Vehiculo</label>
+                        <input type="text" id="MAT_VEHICULO" class="form-control" name="MAT_VEHICULO" placeholder="Ingresar la matricula del vehiculo" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="COL_VEHICULO">Color del Vehiculo</label>
+                        <input type="text" id="COL_VEHICULO" class="form-control" name="COL_VEHICULO" placeholder="Ingresar el color del vehiculo" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="MON_TRASLADO">Monto del traslado</label>
+                        <input type="text" id="MON_TRASLADO" class="form-control" name="MON_TRASLADO" placeholder="Ingresar el monto del traslado" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="COD_FIERRO">Codigo del fierro</label>
+                        <input type="text" id="COD_FIERRO" class="form-control" name="COD_FIERRO" placeholder="Ingresar el codigo del Fierro" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="CAN_GANADO">Cantidad de Animales</label>
+                        <input type="text" id="CAN_GANADO" class="form-control" name="CAN_GANADO" placeholder="Ingresar la cantidad de animales" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+            </div>
+        </div>
 
-                            <div class="mb-3">
-                                <label for="COL_VEHICULO">Color del Vehiculo</label>
-                                <input type="text" id="COL_VEHICULO" class="form-control" name="COL_VEHICULO" placeholder="Ingresar el color del vehiculo" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+        <!-- Otras filas y columnas -->
 
-                             <div class="mb-3">
-                                <label for="MON_TRASLADO">Monto del traslado</label>
-                                <input type="text" id="MON_TRASLADO" class="form-control" name="MON_TRASLADO" placeholder="Ingresar el monto del traslado" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Botones de acción -->
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="submit">Guardar</button>
+                    <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
-                            <div class="mb-3">
-                        
-                                <label for="COD_FIERRO">Codigo del fierro</label>
-                                <input type="text" id="COD_FIERRO" class="form-control" name="COD_FIERRO" placeholder="Ingresar el codigo del Fierro" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="CAN_GANADO">Cantidad de Animales</label>
-                                <input type="text" id="CAN_GANADO" class="form-control" name="CAN_GANADO" placeholder="Ingresar la cantidad de animales" required>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="mb-3">
-                                <button class="btn btn-primary" type="submit">Guardar</button>
-                                <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            </div>
-                    </form>
+                
 
                     <script>
                         $(document).ready(function() {
@@ -615,23 +629,16 @@
     <div class="card">
         <div class="card-body">
 
-        <table width=100% cellspacing="14" cellpadding="14" class="table table-hover table-responsive   mt-1" id="traslado">
+        <table width=100% cellspacing="8" cellpadding="8" class="table table-hover table-bordered mt-1" id="traslado">
         <thead>
             <tr>
                 <th>Nº</th>                
                 <th><center>Fecha de Registro</center></th>
                 <th><center>Fecha de Traslado</center></th>
-                <th><center>Nombre de la persona</center></th>
+                <th><center>Nombre del dueño</center></th>
                 <th><center>Direccion de Origen</center></th>
                 <th><center>Direccion de Destino</center></th>
-                <th><center>Nombre de Transportista</center></th>
-                <th><center>Identidad del Transportista</center></th>
-                <th><center>Telefono del Transportista</center></th>
-                <th><center>Marca del Vehiculo</center></th>
-                <th><center>Modelo del Vehiculo</center></th>
-                <th><center>Matricula del Vehiculo</center></th>
-                <th><center>Color del Vehiculo</center></th>
-                <th><center>Monto del Traslado</center></th>                 
+                <th><center>Nombre de Transportista</center></th>        
                 <th><center><i class="fas fa-cog"></i></center></th>
             </tr>
         </thead>
@@ -662,13 +669,6 @@
                     <td>{{$PTraslado['DIR_ORIG_PTRASLADO']}}</td>
                     <td>{{$PTraslado['DIR_DEST_TRASLADO']}}</td>
                     <td>{{$PTraslado['NOM_TRANSPORTISTA']}}</td>
-                    <td>{{$PTraslado['DNI_TRANSPORTISTA']}}</td>
-                    <td>{{$PTraslado['TEL_TRANSPORTISTA']}}</td>
-                    <td>{{$PTraslado['MAR_VEHICULO']}}</td>
-                    <td>{{$PTraslado['MOD_VEHICULO']}}</td>
-                    <td>{{$PTraslado['MAT_VEHICULO']}}</td>
-                    <td>{{$PTraslado['COL_VEHICULO']}}</td>
-                    <td>{{$PTraslado['MON_TRASLADO']}}</td>
                     <td>
                     @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                         <button value="Editar" title="Editar" class="btn btn-sm btn-warning"  type="button" data-toggle="modal" data-target="#PTraslado-edit-{{$PTraslado['COD_PTRASLADO']}}">
@@ -906,6 +906,7 @@
                             lengthMenu: "Mostrar _MENU_ registros",
                             zeroRecords: "No se encontraron resultados",
                             emptyTable: "Ningún dato disponible en esta tabla",
+                            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                             infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
                             infoFiltered: "(filtrado de un total de _MAX_ registros)",
                             search: "Buscar:",
@@ -931,6 +932,8 @@
                                 print: "Imprimir",
                             },
                         },
+                        
+                     order: [[0, 'desc']],
                 });
             });
         </script>
