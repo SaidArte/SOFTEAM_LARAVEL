@@ -432,10 +432,10 @@ return [
                 ],
              
                 [
-                    'icon' => 'fa fa-paw',
-                    'text' => 'Animales',
-                     'url' => 'Animal',
-                     'icon_color' => 'green',
+                    //'icon' => 'fa fa-paw',
+                    //'text' => 'Animales',
+                    // 'url' => 'Animal',
+                    // 'icon_color' => 'green',
                 ]
             ]
         ],
