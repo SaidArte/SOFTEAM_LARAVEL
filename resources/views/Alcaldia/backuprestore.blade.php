@@ -15,14 +15,58 @@
 
         @section('content')
 
-        <p align="right">
-                <a href="{{ route('backuprestore.restaurar') }}" class="btn btn-sm btn-warning" title="btnRestoreDatabase">
-                    <i class="fa-solid fa-database" style='font-size:15px'></i> Restaurar Base de Datos
-                </a>
-                <a href="{{ $urlapi . 'SEGURIDAD/BACKUP' }}" class="btn btn-sm btn-success">
-                    <i class="fa-solid fa-plus" style='font-size:15px'></i> Nuevo
-                </a>
-        </p>
+        <div class="button-container">
+            <table>
+                <tr>
+                    <td>
+                        <form method="POST" action="{{ url('backuprestore/nuevo') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <i class="fa-solid fa-plus" style='font-size:15px'></i> Nuevo
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ route('sqlform.submit') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-warning" title="btnRestoreDatabase">
+                            <i class="fa-solid fa-database" style='font-size:15px'></i> Restaurar
+                            </button>
+                        </form>
+                    </td>
+                    <td class="eliminar-todo" colspan="2" style="text-align: right;">
+                        <!-- Agrega tu tercer botón aquí -->
+                        <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDelete-all">
+                            <i class="fas fa-exclamation-triangle" style='font-size:15px'></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- Modal para borrar todos -->
+        <div class="modal fade" id="confirmDelete-all" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Está seguro de querer eliminar todos los respaldos? Esta acción no se puede revertir.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <form id="deleteForm" action="{{ url('backuprestore/delete-all') }}" method="post" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Mensaje de error cuando el rol este repetido -->
         @if(session('message'))
             <div class="alert alert-danger">
@@ -36,23 +80,7 @@
             </div>
         </div>
         @endif
-            <div class="modal fade bd-example-modal-sm" id="Backuprestore" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Crear un nuevo backup</h5>
-                            <!--<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
-                        </div>
-                        <div class="modal-body">
-                                <!-- Formulario para generar un nuevo respaldo -->
-                                <form action="{{ route('backuprestore.index') }}" method="post">
-                                    @csrf
-                                    <button type="submit">Generar Nuevo Respaldo</button>
-                                </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <div class="card">
                 <div class="card-body">
                     <table width=100% cellspacing="7" cellpadding="7" class="table table-hover table-bordered table-responsive mt-1" id="backuprestores">             
@@ -67,12 +95,12 @@
                                     <td><center>{{ $loop->iteration }}</center></td>
                                     <td>{{ $backuprestore }}</td>
                                     <td>
-                                        <a href="{{ $urlapi . 'SEGURIDAD/DESCARGAR-BACKUP/' . $backuprestore }}" class="btn btn-sm btn-info" title="Descargar">
-                                            <i class="fa-solid fa-download" style='font-size:15px'></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger" title="Eliminar" data-toggle="modal" data-target="#confirmDelete">
-                                            <i class="fa-solid fa-trash" style='font-size:15px'></i> 
-                                        </a>
+                                    <a href="{{ url('backuprestore/download/' . $backuprestore) }}" class="btn btn-sm btn-info" title="Descargar">
+                                        <i class="fa-solid fa-download" style='font-size:15px'></i>
+                                    </a>
+                                    <a href="#" class="btn btn-sm btn-danger" title="Eliminar" data-toggle="modal" data-target="#confirmDelete" onclick="updateDeleteForm('{{ $backuprestore }}')">
+                                        <i class="fa-solid fa-trash" style='font-size:15px'></i> 
+                                    </a>
                                     </td>
                                 </tr>
                                 <!-- Modal -->
@@ -86,20 +114,40 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                ¿Estás seguro de que deseas eliminar este respaldo? Esta acción no se puede deshacer.
+                                                ¿Está seguro de querer eliminar este respaldo? Esta acción no se puede revertir.
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a href="{{ $urlapi . 'SEGURIDAD/BACKUP-DELETE/' . $backuprestore }}" class="btn btn-danger">Eliminar</a>
+                                                <form id="deleteForm2" action="{{ url('backuprestore/delete/') }}" method="post" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    function updateDeleteForm(filename) {
+                                        document.getElementById('deleteForm2').action = "{{ url('backuprestore/delete/') }}" + '/' + filename;
+                                    }
+                                </script>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
+            @if(session('notification'))
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <script>
+                            Swal.fire({
+                                icon: '{{ session('notification')['type'] }}',
+                                title: '{{ session('notification')['title'] }}',
+                                text: '{{ session('notification')['message'] }}',
+                            });
+                        </script>
+            @endif
             <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">
@@ -122,6 +170,15 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="/css/admin_custom.css">
         <style>
+            .button-container {
+                display: inline-block;
+            }
+
+            .button-container a,
+            .button-container form {
+                display: inline-block;
+                margin-right: 10px; /* Puedes ajustar este valor según sea necesario para el espacio entre los botones */
+            }
             #paramtbl thead th {
                 white-space: nowrap; /* Evita que el texto se divida en varias líneas */
                 overflow: hidden; /* Oculta el desbordamiento del texto */
@@ -193,25 +250,6 @@
                             { width: '1%', targets: [0] },
                             { width: '100%', targets: [0] },
                         ],
-                    });
-                    // Manejar clic en el botón para restaurar la base de datos
-                    $('#btnRestoreDatabase').on('click', function () {
-                        $.ajax({
-                            url: '{{ route('backuprestore.restaurar') }}', // Ajusta la ruta según tu configuración
-                            type: 'POST',
-                            headers: {
-                                'Authorization': 'Bearer ' + '{{ Session::get("token") }}'
-                            },
-                            success: function (response) {
-                                // Mostrar mensaje de éxito
-                                alert('¡Base de datos restaurada con éxito!');
-                                // Puedes redirigir a otra página o realizar otras acciones según necesites
-                            },
-                            error: function (error) {
-                                // Mostrar mensaje de error
-                                alert('Error al restaurar la base de datos.');
-                            }
-                        });
                     });
                     // Agrega el evento de clic para los botones de descarga
                     $('.btn-descargar').on('click', function() {

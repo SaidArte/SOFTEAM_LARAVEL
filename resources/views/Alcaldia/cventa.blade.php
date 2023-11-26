@@ -604,6 +604,7 @@
                 <thead>
                     <th>N° Cventas</th>
                     <th>Fecha Venta</th>
+<<<<<<< Updated upstream
                     <th>Vendedor</th>
                     <th>Comprador</th>
                     <th>DNI Comprador</th>
@@ -612,6 +613,13 @@
                     <th>color Animal</th>
                     <th>Cantidad</th>
                     <th>Estado</th>
+=======
+                    <th>Nombre Vendedor</th>
+                    <th>Nombre Comprador</th>
+                    <th>DNI Comprador</th>
+                    <th>Folio Cventa</th>
+                    <th>Ant Cventa</th>
+>>>>>>> Stashed changes
                     <th><center><i class="fas fa-cog"></i></center></th>
                    
                 </thead>
@@ -621,6 +629,7 @@
                         <tr>
                             <td>{{$Cventa['COD_CVENTA']}}</td>
                             <td>{{date('d-m-y', strtotime($Cventa['FEC_CVENTA']))}}</td>
+<<<<<<< Updated upstream
                     
                             <td>{{$Cventa['NombreVendedor']}}</td>
                             <td>{{$Cventa['NOM_COMPRADOR']}}</td> 
@@ -631,6 +640,13 @@
                             <td>{{$Cventa['CANT_CVENTA']}}</td>
                             
                             <td>{{$Cventa['IND_CVENTA']}}</td>
+=======
+                            <td>{{$Cventa['NombreVendedor']}}</td>
+                            <td>{{$Cventa['NOM_COMPRADOR']}}</td> 
+                            <td>{{$Cventa['DNI_COMPRADOR']}}</td> 
+                            <td>{{$Cventa['FOL_CVENTA']}}</td> 
+                            <td>{{$Cventa['ANT_CVENTA']}}</td>
+>>>>>>> Stashed changes
                             <td>
                             @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                     <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Cventa-edit-{{$Cventa['COD_CVENTA']}}">
@@ -669,6 +685,7 @@
                                                     <input type="date" class="form-control" id="FEC_CVENTA" name="FEC_CVENTA" value="{{$Cventa['FEC_CVENTA']}}">
                                     
                                                 </div>
+<<<<<<< Updated upstream
 
                                                 <div class="col-md-6">
                                                     <label for="Cventa">Vendedor</label>
@@ -676,6 +693,9 @@
                                                     <div class="invalid-feedback"></div>
                                                 </div>
                                                 <div class="col-md-6">
+=======
+                                                <div class="mb-3">
+>>>>>>> Stashed changes
                                                     <label for="Cventa">nombre Comprador</label>
                                                     <input type="text" class="form-control" id="NOM_COMPRADOR" name="NOM_COMPRADOR" placeholder=" Ingrese el codigo del comprador  " value="{{$Cventa['NOM_COMPRADOR']}}"required >
                                                     <div class="invalid-feedback"></div>
@@ -687,6 +707,7 @@
                                                     <div class="invalid-feedback"></div>
                                                 </div>
 
+<<<<<<< Updated upstream
                                                  <div class="col-md-6"
                                                      < label  for="Animal">Clase Del Animal</label>
                                                     <input type="text" class="form-control" id="CLAS_ANIMAL" name="CLAS_ANIMAL" placeholder=" Ingrese La clase Del Animal  " value="{{$Cventa['CLAS_ANIMAL']}}"required >
@@ -699,6 +720,8 @@
                                                     
                                                 </div>
 
+=======
+>>>>>>> Stashed changes
 
                                                 <div class="col-md-6">
                                                     <label for="Cventa">Color Del Animal</label>

@@ -82,4 +82,23 @@ class BitacoraController extends Controller
             $error2 = $etriggers->json();
         }
     }
+
+    public function EliminarBitacora(){
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
+        $response = Http::withHeaders($headers)->delete(self::urlapi.'SEGURIDAD/DELETE_BITACORA');
+        if ($response->successful()) {
+            // Pasar la lista de archivos a la vista junto con la URL API
+            $notification = [
+                'type' => 'success',
+                'title' => '¡Eliminación exitosa!',
+                'message' => 'La bitácora ha sido borrada.'
+            ];
+            return redirect('/Bitacora')
+                ->with('notification', $notification);
+        } else {
+            return redirect()->back()->with('error', 'No se pudo restaurar la base de datos')->withInput();
+        }
+    }
 }

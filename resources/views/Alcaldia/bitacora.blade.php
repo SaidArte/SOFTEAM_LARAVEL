@@ -146,11 +146,49 @@
             @stop
             
             @section('content')
-            <label for="toggle-triggers" class="switch">
-                <span class="switch-text">Activar</span>
-                <input type="checkbox" id="toggle-triggers" {{$triggerText === 'S' ? 'checked' : ''}}>
-                <span class="slider"></span>
-            </label>
+            <div style="display: flex; justify-content: space-between;">
+                <label for="toggle-triggers" class="switch">
+                    <span class="switch-text">Activar</span>
+                    <input type="checkbox" id="toggle-triggers" {{$triggerText === 'S' ? 'checked' : ''}}>
+                    <span class="slider"></span>
+                </label>
+                
+                <div class="button-container">
+                    <table>
+                        <tr>
+                            <td class="eliminar-todo" style="text-align: right;">
+                                <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDelete-all">
+                                    <i class="fas fa-exclamation-triangle" style='font-size:15px'></i> Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        <!-- Modal para borrar todos -->
+        <div class="modal fade" id="confirmDelete-all" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Está seguro de querer eliminar todos los registros de la bitácora? Esta acción no se puede revertir.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <form id="deleteForm" action="{{ url('Bitacora/delete-bitacora') }}" method="post" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
             @csrf
                 <div class="card">
                     <div class="card-body">
@@ -217,6 +255,16 @@
                         </div>
                     </div>
                 </div>
+                @if(session('notification'))
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                            <script>
+                                Swal.fire({
+                                    icon: '{{ session('notification')['type'] }}',
+                                    title: '{{ session('notification')['title'] }}',
+                                    text: '{{ session('notification')['message'] }}',
+                                });
+                            </script>
+                @endif
                 <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">

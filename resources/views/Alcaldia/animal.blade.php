@@ -352,42 +352,7 @@
                                             }
                                     });
 
-                                 //Función para buscar personas .
-                                 function buscarPersona(idPersona  ) {
-                                            var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
-                                            var fierroArreglo = <?php echo json_encode($fierroArreglo); ?>;
-                                           
-
-                                            var persona = false;
-
-                                            var personaEncontrada = false;
-
-                                            if(idPersona){
-                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
-                                                for (var i = 0; i < personasArreglo.length; i++) {
-                                                    if (personasArreglo[i].DNI_PERSONA == idPersona) {
-                                                        personaEncontrada = true;
-                                                        $('#NOM_PERSONA').val(personasArreglo[i].NOM_PERSONA);
-                                                        $('#COD_PERSONA').val(personasArreglo[i].COD_PERSONA);
- // Verifica si COD_PERSONA está definido
- if (personasArreglo[i].COD_PERSONA) {
-                    var persona = false;
-
-                    // Itera sobre el arreglo de fierros
-                    for (var j = 0; j < fierroArreglo.length; j++) {
-                        if (fierroArreglo[j].COD_PERSONA == personasArreglo[i].COD_PERSONA) {
-                            persona = true;
-                            
-                            // Establece los valores para los fierros encontrados
-                            $('#COD_FIERRO').val(fierroArreglo[j].COD_FIERRO);
-                            //$('#IMG_FIERRO').val(fierroArreglo[j].IMG_FIERRO);
-                            var imagenFierroUrl = fierroArreglo[j].IMG_FIERRO;
-                            $('#imagenFierro').attr('src', imagenFierroUrl);
-                            $('#imagenFierro').show();  // Asegúrate de que la imagen sea visible
-
-                            break; // Sale del bucle al encontrar un fierro
-                        }
-                    }
+                                 
 
                     // Verifica si no se encontró un fierro
                     if (!persona) {

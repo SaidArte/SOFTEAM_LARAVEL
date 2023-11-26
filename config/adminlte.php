@@ -499,7 +499,7 @@ return [
                 ],
                 [
                     'text' => 'Backup-Restore',
-                    'icon' => 'fas fa-book',
+                    'icon' => 'fa-solid fa-arrow-right-arrow-left',
                     //'icon_color' => 'indigo',
                     'url' => 'backuprestore',
                     'icon_color' => 'green',

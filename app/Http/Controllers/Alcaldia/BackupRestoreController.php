@@ -13,17 +13,14 @@ class BackupRestoreController extends Controller
 {
     const urlapi = 'http://82.180.133.39:4000/';
 
-    public function backuprestore(Request $request, $filename = null)
+    const uploadFolder = 'SOFTEAM/uploads'; // Carpeta donde se guarda el archivo en tu proyecto de las APIs
+
+    public function backuprestore()
     {
         // Código para la cabecera
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
-
-        // Si se proporciona un nombre de archivo, intenta descargarlo
-        if ($filename) {
-            return $this->descargarBackup($filename);
-        }
 
         // Hacer la solicitud a la API de Express para obtener la lista de archivos de respaldo
         $backuprestore = Http::withHeaders($headers)->get(self::urlapi . 'SEGURIDAD/BACKUP-LIST');
@@ -33,28 +30,68 @@ class BackupRestoreController extends Controller
         $citaArreglo = $response['Archivos de respaldo'] ?? [];
 
         // Pasar la lista de archivos a la vista junto con la URL API
-        return view('Alcaldia.backuprestore', ['citaArreglo' => $citaArreglo, 'urlapi' => self::urlapi]);
+        return view('Alcaldia.backuprestore', ['citaArreglo' => $citaArreglo]);
 
     }
 
-    private function descargarBackup($filename)
+    public function backup()
     {
-        $token = Session::get('token');
+        try {
+            // Código para la cabecera
+            $headers = [
+                'Authorization' => 'Bearer ' . Session::get('token'),
+            ];
+
+            // Hacer la solicitud a la API de Express para generar el respaldo
+            $response = Http::withHeaders($headers)->post(self::urlapi. 'SEGURIDAD/BACKUP');
+
+            // Verificar si la solicitud fue exitosa (código de respuesta 200)
+            if ($response->successful()) {
+                // Pasar la lista de archivos a la vista junto con la URL API
+                $notification = [
+                    'type' => 'success',
+                    'title' => '¡Creación exitosa!',
+                    'message' => 'El respaldo ha sido guardado.'
+                ];
+                return redirect('/backuprestore')
+                    ->with('notification', $notification);
+            } else {
+                return redirect()->back()->with('error', 'No se pudo crear el archivo')->withInput();
+            }
+        } catch (\Exception $e) {
+            // Manejar cualquier excepción que pueda ocurrir durante el proceso
+            return view('Alcaldia.backuprestore', ['error' => 'Error interno del servidor']);
+        }
+    }
+
+    public function descargarBackup($filename)
+    {
+        // Código para la cabecera
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
         try {
 
-            // Ajusta la ruta del almacenamiento según tu configuración
-            $backupPath = storage_path('app/backups/' . $filename);
+            // Hacer la solicitud a la API para descargar el respaldo
+            $response = Http::withHeaders($headers)->get(self::urlapi . 'SEGURIDAD/DESCARGAR-BACKUP/' . $filename);
 
-            // Verificar si el archivo existe
-            if (!file_exists($backupPath)) {
-                return response()->json(['error' => 'Archivo no encontrado'], 404);
+            // Verificar si la solicitud fue exitosa (código de respuesta 200)
+            if ($response->successful()) {
+                // Configurar el encabezado de la respuesta para la descarga
+                return response()->stream(
+                    function () use ($response) {
+                        echo $response->body();
+                    },
+                    200,
+                    [
+                        'Content-Type' => 'application/sql',
+                        'Content-Disposition' => 'attachment; filename=' . $filename,
+                    ]
+                );
+            } else {
+                // Manejar errores de la API
+                return response()->json(['error' => 'Error al descargar el archivo de respaldo'], $response->status());
             }
-
-            // Configurar el encabezado de la respuesta para la descarga
-            return response()->download($backupPath, $filename, [
-                'Content-Type' => 'application/sql',
-                'Content-Disposition' => 'attachment; filename=' . $filename,
-            ]);
 
         } catch (\Exception $e) {
             \Log::error('Error al descargar el archivo de respaldo: ' . $e->getMessage());
@@ -62,75 +99,108 @@ class BackupRestoreController extends Controller
         }
     }
 
-    public function downloadBackup($filename)
-    {
-        // Ajusta la ruta del almacenamiento según tu configuración
-        $backupPath = storage_path('app/backups/' . $filename);
-
-        // Verificar si el archivo existe
-        if (!file_exists($backupPath)) {
-            abort(404);
-        }
-
-        // Configurar el encabezado de la respuesta para la descarga
-        return response()->download($backupPath, $filename, [
-            'Content-Type' => 'application/sql',
-            'Content-Disposition' => 'attachment; filename=' . $filename,
-        ]);
-    }
-
     public function deleteBackup($filename)
     {
-        // Código para la cabecera
-        $headers = [
-            'Authorization' => 'Bearer ' . Session::get('token'),
-        ];
-
-        // Realiza la solicitud a la API para eliminar el respaldo
-        $response = Http::withHeaders($headers)->get(self::urlapi . 'SEGURIDAD/BACKUP-DELETE/' . $filename);
-
-        // Decodifica la respuesta JSON
-        $data = $response->json();
-
-        // Maneja la respuesta según sea necesario (puedes redirigir, mostrar mensajes, etc.)
-        if (isset($data['message'])) {
-            return redirect()->route('backuprestore.index')->with('success', $data['message']);
-        } elseif (isset($data['error'])) {
-            return redirect()->route('backuprestore.index')->with('error', $data['error']);
-        } else {
-            // Manejo de otra respuesta inesperada
-            return redirect()->route('backuprestore.index')->with('error', 'Error inesperado al eliminar el respaldo.');
-        }
-    }
-
-    public function restaurarBackup()
-    {
-        // Código para la cabecera
-        $headers = [
-            'Authorization' => 'Bearer ' . Session::get('token'),
-        ];
-
         try {
-            // Realiza la solicitud a la API para restaurar la base de datos
-            $response = Http::withHeaders($headers)->post(self::urlapi . 'SEGURIDAD/RESTAURAR-BACKUP');
+            // Código para la cabecera
+            $headers = [
+                'Authorization' => 'Bearer ' . Session::get('token'),
+            ];
 
-            // Decodifica la respuesta JSON
-            $data = $response->json();
+            // Realiza la solicitud a la API para eliminar el respaldo
+            $response = Http::withHeaders($headers)->delete(self::urlapi . 'SEGURIDAD/BACKUP-DELETE/' . $filename);
 
-            // Maneja la respuesta según sea necesario (puedes redirigir, mostrar mensajes, etc.)
-            if (isset($data['message'])) {
-                return redirect()->route('backuprestore.index')->with('success', $data['message']);
-            } elseif (isset($data['error'])) {
-                return redirect()->route('backuprestore.index')->with('error', $data['error']);
+            // Verificar si la solicitud fue exitosa (código de respuesta 200)
+            if ($response->successful()) {
+                // Pasar la lista de archivos a la vista junto con la URL API
+                $notification = [
+                    'type' => 'success',
+                    'title' => '¡Operación exitosa!',
+                    'message' => 'El respaldo ha sido eliminado.'
+                ];
+                return redirect('/backuprestore')
+                    ->with('notification', $notification);
             } else {
-                // Manejo de otra respuesta inesperada
-                return redirect()->route('backuprestore.index')->with('error', 'Error inesperado al restaurar la base de datos.');
+                return redirect()->back()->with('error', 'No se pudo eliminar el archivo')->withInput();
             }
         } catch (\Exception $e) {
-            \Log::error('Error al restaurar la base de datos: ' . $e->getMessage());
-            return redirect()->route('backuprestore.index')->with('error', 'Error interno del servidor al restaurar la base de datos.');
+            // Manejar cualquier excepción que pueda ocurrir durante el proceso
+            return view('Alcaldia.backuprestore', ['error' => 'Error interno del servidor']);
         }
-        
     }
 
+    public function deleteAllBU()
+    {
+        try {
+            // Código para la cabecera
+            $headers = [
+                'Authorization' => 'Bearer ' . Session::get('token'),
+            ];
+
+            // Realiza la solicitud a la API para eliminar el respaldo
+            $response = Http::withHeaders($headers)->delete(self::urlapi . 'SEGURIDAD/BACKUP-DELETE-ALL');
+
+            // Verificar si la solicitud fue exitosa (código de respuesta 200)
+            if ($response->successful()) {
+                // Pasar la lista de archivos a la vista junto con la URL API
+                $notification = [
+                    'type' => 'success',
+                    'title' => '¡Operación exitosa!',
+                    'message' => 'Todos los respaldos han sido eliminados.'
+                ];
+                return redirect('/backuprestore')
+                    ->with('notification', $notification);
+            } else {
+                return redirect()->back()->with('error', 'No se pudieron eliminar los archivos')->withInput();
+            }
+        } catch (\Exception $e) {
+            // Manejar cualquier excepción que pueda ocurrir durante el proceso
+            return view('Alcaldia.backuprestore', ['error' => 'Error interno del servidor']);
+        }
+    }
+
+    public function showUploadSQLForm()
+    {
+        return view('Alcaldia.uploadsql');
+    }
+
+    public function restore(Request $request)
+    {
+        try {
+            // Código para la cabecera
+            $headers = [
+                'Authorization' => 'Bearer ' . Session::get('token'),
+            ];
+
+            // Verificar si se proporcionó un archivo en la solicitud
+            if ($request->hasFile('backupFile') && $request->file('backupFile')->isValid()) {
+                // Obtener el archivo del formulario
+                $backupFile = $request->file('backupFile');
+
+                // Construir la solicitud a la API para subir el archivo
+                $response = Http::withHeaders($headers)
+                    ->attach('backupFile', file_get_contents($backupFile), $backupFile->getClientOriginalName())
+                    ->post(self::urlapi . 'SEGURIDAD/RESTAURAR-BACKUP');
+                
+                // Verificar si la solicitud fue exitosa (código de respuesta 200)
+                if ($response->successful()) {
+                    // Pasar la lista de archivos a la vista junto con la URL API
+                    $notification = [
+                        'type' => 'success',
+                        'title' => '¡Restauración exitosa!',
+                        'message' => 'La base de datos ha sido restaurada.'
+                    ];
+                    return redirect('/backuprestore')
+                        ->with('notification', $notification);
+                } else {
+                    return redirect()->back()->with('error', 'No se pudo restaurar la base de datos')->withInput();
+                }
+            } else {
+                return redirect()->back()->with('error', 'Por favor, seleccione un archivo válido para restaurar')->withInput();
+            }
+        } catch (\Exception $e) {
+            // Manejar cualquier excepción que pueda ocurrir durante el proceso
+            return view('Alcaldia.backuprestore', ['error' => 'Error interno del servidor']);
+        }
+    }
 }
