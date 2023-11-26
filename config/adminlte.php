@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Alcaldia',
+    'title' => '',
     'title_prefix' => '',
     'title_postfix' => '',
 
