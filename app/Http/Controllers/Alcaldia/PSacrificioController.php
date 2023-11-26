@@ -20,12 +20,9 @@ class PSacrificioController extends Controller
     $psacrificio = Http::withHeaders($headers)->get(self::urlapi.'PSACRIFICIO/GETALL');
     $citaArreglo = json_decode($psacrificio->body(), true);
     // Imprime los datos para verificar si están llegando correctamente
-    // dd($citaArreglo);
-    $animalController = new AnimalController();
-    $Animal = Http::withHeaders($headers)->get(self::urlapi.'ANIMAL/GETALL');
-    $AnimalArreglo = json_decode($Animal->body(), true);
 
-    return view('Alcaldia.psacrificio', compact('citaArreglo', 'AnimalArreglo'));
+
+    return view('Alcaldia.psacrificio', compact('citaArreglo'));
     //->with('citaArreglo', $citaArreglo)
     //->width('AnimalArreglo', $AnimalArreglo);
     
@@ -42,8 +39,9 @@ public function nuevo_psacrificio(Request $request)
         "DNI_PERSONA"           => $request->input("DNI_PERSONA"),
         "TEL_PERSONA"           => $request->input("TEL_PERSONA"),
         "FEC_SACRIFICIO"        => $request->input("FEC_SACRIFICIO"),
-        "COD_ANIMAL"            => $request->input("COD_ANIMAL"),
         "DIR_PSACRIFICIO"       => $request->input("DIR_PSACRIFICIO"),
+        "ANIMAL"            => $request->input("ANIMAL"),
+        "DET_ANIMAL"            => $request->input("DET_ANIMAL"),
     ]);
 
     if ($nuevo_psacrificio->successful()) {
@@ -66,8 +64,9 @@ public function nuevo_psacrificio(Request $request)
                 "DNI_PERSONA"           => $request->input("DNI_PERSONA"),
                 "TEL_PERSONA"           => $request->input("TEL_PERSONA"),
                 "FEC_SACRIFICIO"        => $request->input("FEC_SACRIFICIO"),
-                "COD_ANIMAL"            => $request->input("COD_ANIMAL"),
                 "DIR_PSACRIFICIO"       => $request->input("DIR_PSACRIFICIO"),
+                "ANIMAL"            => $request->input("ANIMAL"),
+                "DET_ANIMAL"            => $request->input("DET_ANIMAL"),
             ]);
         
             if ($actualizar_psacrificio->successful()) {

@@ -149,21 +149,32 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="COD_ANIMAL">Animal</label>
-                                        <select class="form-select" id="COD_ANIMAL" name="COD_ANIMAL" required>
-                                            <option value="" disable selected> Seleccione al Animal</option>
-                                            @foreach ($AnimalArreglo as $Animal)
-                                                <option value="{{ $Animal['COD_ANIMAL'] }}">{{ $Animal['CLAS_ANIMAL'] }}</option>
-                                            @endforeach
+                                        <label for="DIR_PSACRIFICIO">Dirección del Sacrificio</label>
+                                        <input type="text" id="DIR_PSACRIFICIO" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingresar la dirección del sacrificio" required>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="ANIMALL" >Tipo de Animal</label>
+                                        <select class="form-select custom-select" id="ANIMAL" name="ANIMAL" required >
+                                            <option value="" disabled selected>Seleccione una clase de animal</option>
+                                            <option value="Vaca">Vaca</option>
+                                            <option value="Caballo">Caballo</option>
+                                            <option value="Cerdo">Cerdo</option>
+                                            <option value="Burro">Burro</option>
+                                            <option value="Mula">Mula</option>
+                                            <option value="Yegua">Yegua</option>
+                                            <option value="Toro">Toro</option>
+                                            <option value="Res">Res</option>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="DIR_PSACRIFICIO">Dirección del Sacrificio</label>
-                                        <input type="text" id="DIR_PSACRIFICIO" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingresar la dirección del sacrificio" required>
+                                        <label for="DET_ANIMALL">Detalle del Animal</label>
+                                        <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal"required >
                                         <div class="invalid-feedback"></div>
                                     </div>
+
                                     <div class="mb-3">
                                         <button class="btn btn-primary" type="submit">Guardar</button>
                                         <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -342,7 +353,7 @@
                 <div class="card-body">
                     <!-- Inicio de la tabla -->
                     <table  width="100%" cellspacing="8 " cellpadding="8" class="table table-hover table-bordered mt-1" id="sacrificio">
-                        <thead>
+                    <thead>
                             <tr>
                                 <th>Nº</th>
                                 <th><center>Nombre</center></th>
@@ -351,21 +362,13 @@
                                 <th><center>Fecha</center></th>
                                 <th><center>Dirección</center></th>
                                 <th><center>Animal</center></th>
+                                <th><center>D. Animal</center></th>
                                 <th><center>Opciones</center></th>
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Loop through $citaArreglo and show data -->
                             @foreach($citaArreglo as $psacrificio)
-                                @php
-                                    $Animal = null;
-                                    foreach ($AnimalArreglo as $p) {
-                                        if ($p ['COD_ANIMAL'] === $psacrificio ['COD_ANIMAL']) {
-                                            $Animal = $p;
-                                            break;
-                                        }
-                                    }
-                                @endphp
                                 <tr>
                                     <td>{{$psacrificio['COD_PSACRIFICIO']}}</td>  
                                     <td>{{$psacrificio['NOM_PERSONA']}}</td> 
@@ -373,14 +376,8 @@
                                     <td>{{$psacrificio['TEL_PERSONA']}}</td>
                                     <td>{{date('d/m/y',strtotime($psacrificio['FEC_SACRIFICIO']))}}</td>
                                     <td>{{$psacrificio['DIR_PSACRIFICIO']}}</td>
-                                    <td>
-                                        @if ($Animal !== null)
-                                            {{ $Animal['CLAS_ANIMAL'] }}
-                                        @else
-                                            Animal no encontrado
-                                        @endif
-                                    </td>
-                                    
+                                    <td>{{$psacrificio['ANIMAL']}}</td>
+                                    <td>{{$psacrificio['DET_ANIMAL']}}</td>
                                     <td>
                                     @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                         <!-- Boton de Editar -->
@@ -426,12 +423,26 @@
                                                             <input type="date" class="form-control" id="FEC_SACRIFICIO" name="FEC_SACRIFICIO" placeholder="Ingrese la fecha del sacrificio" value="{{$fecha_formateada}}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="psacrificio">Animal</label>
-                                                            <input type="text" class="form-control" id="COD_ANIMAL" name="COD_ANIMAL" placeholder="Ingrese el código del animal" value="{{$psacrificio['COD_ANIMAL']}}" readonly>
-                                                        </div>
-                                                        <div class="mb-3">
                                                             <label for="psacrificio">Dirección del Sacrificio</label>
                                                             <input type="text" class="form-control" id="DIR_PSACRIFICIOL" name="DIR_PSACRIFICIO" placeholder="Ingrese la dirección del sacrificio" value="{{$psacrificio['DIR_PSACRIFICIO']}}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="ANIMALL" >Tipo de Animal</label>
+                                                            <select class="form-select custom-select" id="ANIMAL" name="ANIMAL" required >
+                                                                <option value="" disabled selected>Seleccione una clase de animal</option>
+                                                                <option value="Vaca" @if($psacrificio['ANIMAL'] === 'Vaca') selected @endif>Vaca</option>
+                                                                <option value="Caballo" @if($psacrificio['ANIMAL'] === 'Caballo') selected @endif>Caballo</option>
+                                                                <option value="Cerdo" @if($psacrificio['ANIMAL'] === 'Cerdo') selected @endif>Cerdo</option>
+                                                                <option value="Burro" @if($psacrificio['ANIMAL'] === 'Burro') selected @endif>Burro</option>
+                                                                <option value="Mula" @if($psacrificio['ANIMAL'] === 'Mula') selected @endif>Mula</option>
+                                                                <option value="Yegua" @if($psacrificio['ANIMAL'] === 'Yegua') selected @endif>Yegua</option>
+                                                                <option value="Toro" @if($psacrificio['ANIMAL'] === 'Toro') selected @endif>Toro</option>
+                                                                <option value="Res" @if($psacrificio['ANIMAL'] === 'Res') selected @endif>Res</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="DET_ANIMALL">Detalle del Animal</label>
+                                                            <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal" value="{{$psacrificio['DET_ANIMAL']}}">
                                                         </div>
                                                         <div class="mb-3">
                                                             <!-- Boton de confirmar al editar -->
