@@ -427,7 +427,7 @@
                                                             <input type="text" class="form-control" id="DIR_PSACRIFICIOL" name="DIR_PSACRIFICIO" placeholder="Ingrese la dirección del sacrificio" value="{{$psacrificio['DIR_PSACRIFICIO']}}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="ANIMALL" >Tipo de Animal</label>
+                                                            <label for="ANIMALLL" >Tipo de Animal</label>
                                                             <select class="form-select custom-select" id="ANIMAL" name="ANIMAL" required >
                                                                 <option value="" disabled selected>Seleccione una clase de animal</option>
                                                                 <option value="Vaca" @if($psacrificio['ANIMAL'] === 'Vaca') selected @endif>Vaca</option>
