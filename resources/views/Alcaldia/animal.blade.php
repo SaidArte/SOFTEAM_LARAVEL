@@ -113,19 +113,46 @@
             </p>
         @endif
             
-            <div class="modal fade bd-example-modal-sm" id="Animal" tabindex="-1">
-                <div class="modal-dialog">
+            <div class="modal fade bd-example-modal-lg id="Animal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Ingresar un nuevo Animal</h5>
                             
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body container-fluid">
                             <form action="{{ url('Animal/insertar') }}" method="post"  class="needs-validation Animal-form">
                                 @csrf
+                                <div class="row">
 
+                                    <div class="col-md-6">
+                                        <label for="id">DNI</label>
+                                         <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
+                                         <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="nom">Dueño Fierro</label>
+                                         <input type="text"readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA"  required>
+                                    </div>
+                               
+                                    <div class="mb-3">
+                                        <input type="hidden"readonly  id="COD_PERSONA" class="form-control" name="COD_PERSONA"  oninput="buscarPersona(this.value)" required>
+                                    </div> 
+                                    <div class="mb-3">
+        
+                                        <label for="nom">N° Fierro</label>
+                                        <input type="text" readonly id="COD_FIERRO" class="form-control" name="COD_FIERRO">
+                                    </div> 
+                               </div>
+                                    <div class="mb-3">
+                                        <img id="imagenFierro" src="" alt="Imagen del Fierro" style="display: none;">
+                                        <label for="nom">Imagen Fierro</label>
+                                        <input type="text" readonly id="IMG_FIERRO" class="form-control" name="IMG_FIERRO">
+                                    </div> 
 
-                                <div class="mb-3 mt-3">
+                            <div class="row">    
+
+                                <div class="col-md-6">
                                     <label for="CLAS_ANIMAL" >clases de Animal</label>
                                     <select class="form-select custom-select" id="CLAS_ANIMAL" name="CLAS_ANIMAL" required >
                                         <option value="" disabled selected>Seleccione una clase de animal</option>
@@ -141,7 +168,7 @@
                                     </select>
                                 </div>
         
-                                <div class="mb-3 mt-3">
+                                <div class="col-md-6">
                                     <label for="RAZ_ANIMAL" >Raza de Animal</label>
                                     <select class="form-select custom-select" id="RAZ_ANIMAL" name="RAZ_ANIMAL"required >
                                         <option value="" disabled selected>Seleccione una Raza de Animal</option>
@@ -175,7 +202,7 @@
                                 </div>
                                
         
-                            <div class="mb-3 mt-3">
+                            <div class="col-md-6">
                                 <label for="COL_ANIMAL" >Color del Animal</label>
                                 <select class="form-select custom-select" id="COL_ANIMAL" name="COL_ANIMAL" required >
                                     <option value="" disabled selected>Seleccione el color del Ganado</option>
@@ -192,24 +219,11 @@
                                 </select>
                             </div>
         
-                            <!--metodo de inserta en codigo de fierro  atraendo los datos ya existente de la tabla persona-->
-                            <div class="mb-3 mt-3">
-                                <label for="COD_FIERRO" >Datos de Fierro</label>
-                                <select class="form-select custom-select" id="COD_FIERRO" name="COD_FIERRO" placeholder="Seleccione Datos de Fierro"required >
-                                    <option value="" disabled selected>Seleccione Datos de Fierro </option>
-                                    @foreach ($fierroArreglo as $fierro)
-                                          <option value="{{$fierro['COD_FIERRO']}}">{{$fierro['COD_FIERRO']}} {{$fierro['COD_PERSONA']}} {{$fierro['TIP_FIERRO']}} {{$fierro['NUM_FOLIO_FIERRO']}} </option>
-                                        
-        
-                                    @endforeach 
-                                    
-                                   
-                                </select>
-                            </div>
+                            
                           
-        
+
                         
-                                <div class="mb-3 mt-3">
+                                <div class="col-md-6">
                                     <label for="VEN_ANIMAL" >Venteado Animal</label>
                                     <select class="form-select custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL"required >
                                         <option value="" disabled selected>Seleccione una opción Venteado</option>
@@ -221,7 +235,7 @@
                                     </select>
                                 </div>
         
-                                <div class="mb-3 mt-3">
+                                <div class="col-md-6">
                                     <label for="HER_ANIMAL">Herrado Animal</label>
                                     <select class="form-select custom-select" id="HER_ANIMAL" name="HER_ANIMAL"required >
                                         <option value="" disabled selected>Seleccione una opción de Herrado</option>
@@ -235,12 +249,12 @@
             
                         
                                 
-                                <div class="mb-3 mt-3">
+                                <div class="col-md-6">
                                     <label for="DET_ANIMAL">Detalle del Animal</label>
                                     <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal"required >
                                     <div class="invalid-feedback">Ingrese solo letras en detalle del animal </div>
                                 </div>
-                               
+                            </div>  
                                
         
         
@@ -338,10 +352,73 @@
                                             }
                                     });
 
-                                 // Agregar un manejador de eventos para el botón "Cancelar"
-                                   $('#CancelarButton').on('click', function() {
-                                        $('#Animal')[0].reset(); // Esto limpia el formulario
-                                   });
+                                 //Función para buscar personas .
+                                 function buscarPersona(idPersona  ) {
+                                            var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
+                                            var fierroArreglo = <?php echo json_encode($fierroArreglo); ?>;
+                                           
+
+                                            var persona = false;
+
+                                            var personaEncontrada = false;
+
+                                            if(idPersona){
+                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
+                                                for (var i = 0; i < personasArreglo.length; i++) {
+                                                    if (personasArreglo[i].DNI_PERSONA == idPersona) {
+                                                        personaEncontrada = true;
+                                                        $('#NOM_PERSONA').val(personasArreglo[i].NOM_PERSONA);
+                                                        $('#COD_PERSONA').val(personasArreglo[i].COD_PERSONA);
+ // Verifica si COD_PERSONA está definido
+ if (personasArreglo[i].COD_PERSONA) {
+                    var persona = false;
+
+                    // Itera sobre el arreglo de fierros
+                    for (var j = 0; j < fierroArreglo.length; j++) {
+                        if (fierroArreglo[j].COD_PERSONA == personasArreglo[i].COD_PERSONA) {
+                            persona = true;
+                            
+                            // Establece los valores para los fierros encontrados
+                            $('#COD_FIERRO').val(fierroArreglo[j].COD_FIERRO);
+                            //$('#IMG_FIERRO').val(fierroArreglo[j].IMG_FIERRO);
+                            var imagenFierroUrl = fierroArreglo[j].IMG_FIERRO;
+                            $('#imagenFierro').attr('src', imagenFierroUrl);
+                            $('#imagenFierro').show();  // Asegúrate de que la imagen sea visible
+
+                            break; // Sale del bucle al encontrar un fierro
+                        }
+                    }
+
+                    // Verifica si no se encontró un fierro
+                    if (!persona) {
+                        $('#COD_FIERRO').val('Persona no  Tiene Fierro');
+                       // $('#IMG_FIERRO').val('Persona no encontrada');
+                       $('#imagenFierro').hide();  // Oculta la imagen si no se encuentra un fierro
+                    }
+                } else {
+                    // Si COD_PERSONA no está definido
+                    $('#COD_FIERRO').val('');
+                    $('#IMG_FIERRO').val('');
+                }
+                                                        
+
+                                                        break;
+                                                    }
+                                                }
+
+
+                                                if (!personaEncontrada) {
+                                                    personaEncontrada = false;
+                                                    $('#NOM_PERSONA').val('Persona no encontrada');
+                                                    $('#COD_PERSONA').val('');
+                                                }
+
+                                            }else{
+                                                personaEncontrada = false;
+                                                $('#NOM_PERSONA').val('');
+                                                $('#COD_PERSONA').val('');
+                                            }
+                                        };
 
                                    
                                     
@@ -386,12 +463,12 @@
                 <div class="card-body">
             <table cellspacing="9" cellpadding="9" class="Table table-hover table-bordered mt-1 " id="modAnimal" >
                 <thead>
-                    <th>Código Animal</th>
+                    <th>N° Animal</th>
                     <th>Fecha registro</th>
                     <th>Clase Animal</th>
                     <th>Raza Animal</th>
                     <th>color Animal</th>
-                    <th>Código Fierro </th>
+                    <th>N° Fierro </th>
                     <th>Dueño Del Fierro </th>
                     <th>Venteado Animal</th>
                     <th>Herrado Animal</th>
