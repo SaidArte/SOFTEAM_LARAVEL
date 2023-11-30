@@ -27,48 +27,35 @@ class PersonasController extends Controller
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
-        //Codigo para las imagenes
+        // Validación de la imagen
         $request->validate([
             'IMG_PERSONA' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
         $imagen = $request->file('IMG_PERSONA');
         $dni = $request->input("DNI_PERSONA");
         $nombrePersona = $request->input("NOM_PERSONA");
         $email = $request->input("DIR_EMAIL");
         $numeroTelefono = $request->input("NUM_TELEFONO");
+
+        // Obtén la lista de todas las personas
         $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
 
-        if ($personas->successful()){
+        // Verifica si la solicitud fue exitosa
+        if ($personas->successful()) {
             $personas_todas = $personas->json();
-    
-            foreach ($personas_todas as $persona){
-                if ($persona["DNI_PERSONA"] === $dni){
-                    return redirect('/personas')->with('message', [
-                        'type' => 'error',
-                        'text' => 'El DNI ingresado ya existe'
-                    ])->withInput();
-                } else {
-                    if ($persona["NOM_PERSONA"] === $nombrePersona){
-                        return redirect('personas')->with('message', [
-                            'type' => 'error',
-                            'text' => 'El nombre ingresado ya existe'
-                        ])->withInput();
-                    }
-                } 
-                if ($persona["DIR_EMAIL"] === $email){
-                    return redirect('personas')->with('message', [
-                        'type' => 'error',
-                        'text' => 'El correo electrónico ingresado ya existe'
-                    ])->withInput();
-                } else {
-                    if ($persona["NUM_TELEFONO"] === $numeroTelefono) {
-                        return redirect('personas')->with('message', [
-                            'type' => 'error',
-                            'text' => 'El número de teléfono ingresado ya existe'
-                        ])->withInput();
-                    }
+
+            // Validaciones para DNI, nombre, correo electrónico y número de teléfono
+            foreach ($personas_todas as $persona) {
+                if (isset($persona["DNI_PERSONA"]) && $persona["DNI_PERSONA"] === $dni) {
+                    return redirect('/personas')->with('error', 'El DNI ingresado ya existe')->withInput();
+                } elseif (isset($persona["NOM_PERSONA"]) && $persona["NOM_PERSONA"] === $nombrePersona) {
+                    return redirect('personas')->with('error', 'El nombre ingresado ya existe')->withInput();
+                } elseif (isset($persona["DIR_EMAIL"]) && $persona["DIR_EMAIL"] === $email) {
+                    return redirect('personas')->with('error', 'El correo electrónico ingresado ya existe')->withInput();
+                } elseif (isset($persona["NUM_TELEFONO"]) && $persona["NUM_TELEFONO"] === $numeroTelefono) {
+                    return redirect('personas')->with('error', 'El número de teléfono ingresado ya existe')->withInput();
                 }
-                
             }
         }
     
@@ -113,6 +100,58 @@ class PersonasController extends Controller
         $headers = [
             'Authorization' => 'Bearer ' . Session::get('token'),
         ];
+        // Obtén la información actual de la persona
+        $persona_actual = Http::withHeaders($headers)->post(self::urlapi.'PERSONAS/GETONE', [
+            "COD_PERSONA" => $request->input("COD_PERSONA"),
+        ])->json();
+
+        // Validaciones para DNI
+        $dni = $request->input("DNI_PERSONA");
+        if (!isset($persona_actual["DNI_PERSONA"]) || $dni !== $persona_actual["DNI_PERSONA"]) {
+            $dni_existente = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL')->json();
+            foreach ($dni_existente as $persona) {
+                // Excluir la persona actual en la verificación
+                if (isset($persona["DNI_PERSONA"]) && $persona["DNI_PERSONA"] === $dni && $persona["COD_PERSONA"] != $request->input("COD_PERSONA")) {
+                    return redirect('/personas')->with('update_error', 'El DNI ingresado ya existe')->withInput();
+                }
+            }
+        }
+        // Validaciones para nombres
+        $nombre = $request->input("NOM_PERSONA");
+        if (!isset($persona_actual["NOM_PERSONA"]) || $nombre !== $persona_actual["NOM_PERSONA"]) {
+            $nombre_existente = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL')->json();
+            foreach ($nombre_existente as $persona) {
+                // Excluir la persona actual en la verificación
+                if (isset($persona["NOM_PERSONA"]) && $persona["NOM_PERSONA"] === $nombre && $persona["COD_PERSONA"] != $request->input("COD_PERSONA")) {
+                    return redirect('/personas')->with('update_error', 'El nombre ingresado ya existe')->withInput();
+                }
+            }
+        }
+
+        // Validaciones para correo electrónico
+        $emails = $request->input("DIR_EMAIL");
+        if (!isset($persona_actual["DIR_EMAIL"]) || $emails !== $persona_actual["DIR_EMAIL"]) {
+            $emails_existente = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL')->json();
+            foreach ($emails_existente as $persona) {
+                // Excluir la persona actual en la verificación
+                if (isset($persona["DIR_EMAIL"]) && $persona["DIR_EMAIL"] === $emails && $persona["COD_PERSONA"] != $request->input("COD_PERSONA")) {
+                    return redirect('/personas')->with('update_error', 'El correo electrónico ingresado ya existe')->withInput();
+                }
+            }
+        }
+
+        // Validaciones para número de teléfono
+        $telefono = $request->input("NUM_TELEFONO");
+        if (!isset($persona_actual["NUM_TELEFONO"]) || $telefono !== $persona_actual["NUM_TELEFONO"]) {
+            $telefono_existente = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL')->json();
+            foreach ($telefono_existente as $persona) {
+                // Excluir la persona actual en la verificación
+                if (isset($persona["NUM_TELEFONO"]) && $persona["NUM_TELEFONO"] === $telefono && $persona["COD_PERSONA"] != $request->input("COD_PERSONA")) {
+                    return redirect('/personas')->with('update_error', 'El teléfono ingresado ya existe')->withInput();
+                }
+            }
+        }
+
         $actualizar_personas = [
             "COD_PERSONA" => $request->input("COD_PERSONA"),
             "DNI_PERSONA" => $request->input("DNI_PERSONA"),

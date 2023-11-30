@@ -180,16 +180,18 @@
                                                 <label for="FEC_NAC_PERSONA">Fec Nac:</label>
                                                 <input type="date" id="FEC_NAC_PERSONA" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" required>
                                                 <div class="invalid-feedback"></div>
-                                            </div>  
+                                            </div>
                                         </div> 
                                         <div class="col-md-4">
-                                            <div class="mb-3">
-                                                <label for="DES_DIRECCION">Dirección:</label>
-                                                <input type="text" id="DES_DIRECCION" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" required>
-                                                <div class="invalid-feedback"></div>
+                                            <div class="col-sm-13 mb-3">
+                                                <div class="form-group">
+                                                    <label for="DES_DIRECCION">Dirección:</label>
+                                                    <textarea id="DES_DIRECCION" rows="4" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" required></textarea>
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="TIP_DIRECCION">Tipo de Dirección:</label>
+                                                <label for="TIP_DIRECCION">Tipo Dirección:</label>
                                                 <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" required>
                                                     <option value="" disabled selected>Seleccione una opción</option>
                                                     <option value="DO">DOMICILIO</option>
@@ -209,7 +211,7 @@
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="TIP_TELEFONO">Tipo de Teléfono:</label>
+                                                <label for="TIP_TELEFONO">Tipo Teléfono:</label>
                                                 <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" required>
                                                     <option value="" disabled selected>Seleccione una opción</option>
                                                     <option value="FI">FIJO</option>
@@ -217,13 +219,15 @@
                                                 </select>
                                                 <div class="invalid-feedback"></div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="DES_TELEFONO">Descripción del Teléfono:</label>
-                                                <input type="text" id="DES_TELEFONO" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" required>
-                                                <div class="invalid-feedback"></div>
+                                            <div class="col-sm-13 mb-3">
+                                                <div class="form-group">
+                                                    <label for="DES_TELEFONO">Descripción Teléfono:</label>
+                                                    <textarea id="DES_TELEFONO" rows="2" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" required></textarea>
+                                                    <div class="invalid-feedback"></div>
+                                                </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="OPE_TELEFONO">Operadora de Teléfono:</label>
+                                                <label for="OPE_TELEFONO">Operadora Teléfono:</label>
                                                 <select class="form-select custom-select" id="OPE_TELEFONO" name="OPE_TELEFONO" required>
                                                     <option value="" disabled selected>Seleccione una opción</option>
                                                     <option value="TIGO">TIGO</option>
@@ -466,7 +470,7 @@
                                     </center></td> 
                                     <td>{{$personas['DES_DIRECCION']}}</td>   
                                     <td>{{$personas['DIR_EMAIL']}}</td>   
-                                    <td>{{$personas['NUM_TELEFONO']}}</td>   
+                                    <td>{{$personas['NUM_TELEFONO']}}</td>  
                                     <td>
                                     @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                       <!-- Boton de Editar -->
@@ -516,7 +520,7 @@
                                                                     <div class="invalid-feedback"></div>
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label for="personas" class="form-laabel">Fecha de Nacimiento:</label>
+                                                                    <label for="personas" class="form-laabel">Fec Nac:</label>
                                                                     <!-- Codigo para que me muestre la fecha ya registrada al momento de actualizar --->
                                                                     <?php $fecha_formateada = Carbon::parse($personas['FEC_NAC_PERSONA'])->format('Y-m-d'); ?>
                                                                     <input type="date" id="FEC_NAC_PERSONA-{{$personas['COD_PERSONA']}}" class="form-control" name="FEC_NAC_PERSONA" placeholder="Seleccione la fecha de nacimiento" value="{{$fecha_formateada}}" oninput="validarFecNac('{{$personas['COD_PERSONA']}}', this.value)" required>
@@ -528,13 +532,15 @@
                                                                     <label for="personas" class="form-label">Código Dirección:</label>
                                                                     <input type="text" id="COD_DIRECCION" class="form-control" name="COD_DIRECCION" placeholder="Ingrese el código de la dirección" value="{{$personas['COD_DIRECCION']}}" readonly>
                                                                 </div>
-                                                                <div class="mb-3">
-                                                                    <label for="personas">Dirección:</label>
-                                                                    <input type="text" id="DES_DIRECCION-{{$personas['COD_PERSONA']}}" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" value="{{$personas['DES_DIRECCION']}}" oninput="validarDireccion('{{$personas['COD_PERSONA']}}', this.value)" required>
-                                                                    <div class="invalid-feedback" id="invalid-feedback4-{{$personas['COD_PERSONA']}}"></div>
+                                                                <div class="col-sm-13 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="personas">Dirección:</label>
+                                                                        <textarea id="DES_DIRECCION-{{$personas['COD_PERSONA']}}" rows="4" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" oninput="validarDireccion('{{$personas['COD_PERSONA']}}', this.value)" required>{{$personas['DES_DIRECCION']}}</textarea>
+                                                                        <div class="invalid-feedback" id="invalid-feedback4-{{$personas['COD_PERSONA']}}"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label for="personas">Tipo de Dirección:</label>
+                                                                    <label for="personas">Tipo Dirección:</label>
                                                                     <select class="form-select custom-select" id="TIP_DIRECCION" name="TIP_DIRECCION" value="{{$personas['TIP_DIRECCION']}}" required>
                                                                         <option value="DO" @if($personas['TIP_DIRECCION'] === 'DO') selected @endif>DOMICILIO</option>
                                                                         <option value="TR" @if($personas['TIP_DIRECCION'] === 'TR') selected @endif>TRABAJO</option>
@@ -562,20 +568,22 @@
                                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$personas['COD_PERSONA']}}"></div>
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label for="personas">Tipo de Teléfono:</label>
+                                                                    <label for="personas">Tipo Teléfono:</label>
                                                                     <select class="form-select custom-select" id="TIP_TELEFONO" name="TIP_TELEFONO" value="{{$personas['TIP_TELEFONO']}}" required>
                                                                         <option value="FI" @if($personas['TIP_TELEFONO'] === 'FI') selected @endif>FIJO</option>
                                                                         <option value="MO" @if($personas['TIP_TELEFONO'] === 'MO') selected @endif>MOVIL</option>
                                                                     </select>
                                                                     <div class="invalid-feedback"></div>
                                                                 </div>
-                                                                <div class="mb-3">
-                                                                    <label for="personas">Descripción del Teléfono:</label>
-                                                                    <input type="text" id="DES_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" value="{{$personas['DES_TELEFONO']}}" oninput="validarDesTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>
-                                                                    <div class="invalid-feedback" id="invalid-feedback7-{{$personas['COD_PERSONA']}}"></div>
+                                                                <div class="col-sm-13 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="personas">Descripción Teléfono:</label>
+                                                                        <textarea id="DES_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" oninput="validarDesTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>{{$personas['DES_TELEFONO']}}</textarea>
+                                                                        <div class="invalid-feedback" id="invalid-feedback7-{{$personas['COD_PERSONA']}}"></div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label for="personas">Operadora de Teléfono:</label>
+                                                                    <label for="personas">Operadora Teléfono:</label>
                                                                     <select class="form-select custom-select" id="OPE_TELEFONO" name="OPE_TELEFONO" value="{{$personas['OPE_TELEFONO']}}" required>
                                                                         <option value="TIGO" @if($personas['OPE_TELEFONO'] === 'TIGO') selected @endif>TIGO</option>
                                                                         <option value="CLARO" @if($personas['OPE_TELEFONO'] === 'CLARO') selected @endif>CLARO</option>
@@ -813,7 +821,7 @@
                                     titleAttr: "Exportar a PDF",
                                     className: "btn btn-danger",
                                     exportOptions: {
-                                        columns: [0, 1, 2, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                        columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
                                     },
                                 },
                                 {
