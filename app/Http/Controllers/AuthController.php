@@ -99,12 +99,20 @@ class AuthController extends Controller
                 Session::put('token', $token); //Almacena el token.
                 $COD_USUARIO = Session::get('user_data')['COD_USUARIO']; //Extrae la variable de código de usuario de la sesión.
                 $FEC_VENCIMIENTO = Session::get('user_data')['FEC_VENCIMIENTO'];
+                $fechaUltimoAcceso = Session::get('user_data')['FEC_ULTIMO_ACCESO'];
     
                 $vencimiento = date("Y-m-d", strtotime($FEC_VENCIMIENTO)); //Adaptamos la fecha almacenada a un formato más simple.
+
+                // Convertir la cadena de fecha a un timestamp
+                $timestampUltimoAcceso = strtotime($fechaUltimoAcceso);
+
+                // Formatear el timestamp según el formato 'Y-m-d H:i:s'
+                $fechaAccFormateada = date('Y-m-d H:i:s', $timestampUltimoAcceso);
+
     
                 //En caso que ya se haya alcanzado o sobrepasado la
                 //fecha de vencimiento de la contraseña.
-                if ($vencimiento < $fechaActual) {
+                if ($vencimiento < $fechaActual || $fechaAccFormateada == '1999-01-01 00:00:00') {
                     Session::put('COD_USUARIO', $COD_USUARIO); //Almacena el código de Usuario.
                     Session::put('NOM_USUARIO', $NOM_USUARIO); //Almacena el nombre de Usuario.
                     return redirect()->route('auth.passwords.expired');
@@ -424,6 +432,10 @@ class AuthController extends Controller
         ]);
 
         if ($response2->successful()) {
+            //Actualiza la fecha y hora de ingreso.
+            $actualizaFecha = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_FECHA_ACCESO', [
+                'COD_USUARIO' => $COD_USUARIO
+            ]);
             $notification = [
                 'type' => 'success',
                 'title' => 'Cambio de contraseña',

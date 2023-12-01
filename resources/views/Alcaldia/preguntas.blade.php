@@ -134,7 +134,7 @@
                     @foreach($PreguntasArreglo as $Preguntas)
                         <tr>
                             <td>{{$Preguntas['COD_PREGUNTA']}}</td>
-                            <td>{{$Preguntas['PREGUNTA']}}</td>
+                            <td>¿{{$Preguntas['PREGUNTA']}}?</td>
                             <td>
                             @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                 <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Preguntas-edit-{{$Preguntas['COD_PREGUNTA']}}">
@@ -156,7 +156,7 @@
                                             <input type="hidden" class="form-control" name="COD_PREGUNTA" value="{{$Preguntas['COD_PREGUNTA']}}">
                                             
                                             <div class="mb-3">
-                                                <label for="PREGUNTAX">PREGUNTA</label>
+                                                <label for="PREGUNTAX">Pregunta</label>
                                                 <input type="text" class="form-control" id="PREGUNTAE-{{$Preguntas['COD_PREGUNTA']}}" name="PREGUNTAE" placeholder="Ingrese una breve pregunta" value="{{$Preguntas['PREGUNTA']}}" oninput="validarPregunta2('{{$Preguntas['COD_PREGUNTA']}}', this.value); this.value = this.value.toUpperCase()" required>
                                                 <div class="invalid-feedback" id="invalid-feedback-{{$Preguntas['COD_PREGUNTA']}}"></div>
                                             </div>

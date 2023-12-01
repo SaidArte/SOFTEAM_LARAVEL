@@ -45,17 +45,17 @@
                             <form action="{{ url('Parametros/insertar') }}" method="post" class="needs-validation param-form">
                                 @csrf              
                                     <div class="mb-3">
-                                        <label for="paraml">Nombre del parámetro</label>
+                                        <label for="paraml">Nombre parámetro</label>
                                         <input type="text" id="PARAMETRO" class="form-control" name="PARAMETRO" placeholder="Ingresar el nombre del parámetro" oninput="this.value = this.value.toUpperCase()" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="paramdesl">Descripción del parámetro</label>
+                                        <label for="paramdesl">Descripción parámetro</label>
                                         <input type="text" id="DES_PARAMETRO" class="form-control" name="DES_PARAMETRO" placeholder="Ingresar la descripción del parámetro" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="paramtipl">Valor del parámetro</label>
+                                        <label for="paramtipl">Valor parámetro</label>
                                         <input type="text" id="VALOR" class="form-control" name="VALOR" placeholder="Ingresar el valor del parámetro" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -166,9 +166,9 @@
             <table cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="paramtbl">
                 <thead>
                     <th><center>Nº</center></th>
-                    <th><center>Nombre del Parámetro</center></th>
-                    <th><center>Descripción del Parámetro</center></th>
-                    <th><center>Valor del Parámetro</center></th>
+                    <th><center>Nombre Parámetro</center></th>
+                    <th><center>Descripción Parámetro</center></th>
+                    <th><center>Valor Parámetro</center></th>
                     <th><center>Usuario Creador</center></th>
                     <th><center>Fecha Creación</center></th>
                     <th><center>Usuario Modificador</center></th>
@@ -209,12 +209,12 @@
                                                 <input type="hidden" class="form-control" name="COD_PARAMETRO" value="{{$param['COD_PARAMETRO']}}">
                                                 
                                                 <div class="mb-3">
-                                                    <label for="paramle">Nombre del parámetro</label>
-                                                    <input type="text" class="form-control" id="PARAMETRO-{{$param['COD_PARAMETRO']}}" name="PARAMETRO" value="{{$param['PARAMETRO']}}" oninput="validarParametro('{{$param['COD_PARAMETRO']}}', this.value)" required>
+                                                    <label for="paramle">Nombre parámetro</label>
+                                                    <input type="text" readonly class="form-control" id="PARAMETRO-{{$param['COD_PARAMETRO']}}" name="PARAMETRO" value="{{$param['PARAMETRO']}}" oninput="validarParametro('{{$param['COD_PARAMETRO']}}', this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback-{{$param['COD_PARAMETRO']}}"></div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="desparamle">Descripción del parámetro</label>
+                                                    <label for="desparamle">Descripción parámetro</label>
                                                     <input type="text" class="form-control" id="DES_PARAMETRO-{{$param['COD_PARAMETRO']}}" name="DES_PARAMETRO" value="{{$param['DES_PARAMETRO']}}" oninput="validarDesParametro('{{$param['COD_PARAMETRO']}}', this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback2-{{$param['COD_PARAMETRO']}}"></div>
                                                 </div>

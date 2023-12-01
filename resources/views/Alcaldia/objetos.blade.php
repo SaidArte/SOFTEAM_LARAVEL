@@ -45,17 +45,17 @@
                             <form action="{{ url('Objetos/insertar') }}" method="post" class="needs-validation objetos-form">
                                 @csrf              
                                     <div class="mb-3">
-                                        <label for="OBJETO">Nombre del objeto</label>
+                                        <label for="OBJETO">Nombre objeto</label>
                                         <input type="text" id="OBJETO" class="form-control" name="OBJETO" placeholder="Ingresar el nombre del objeto" oninput="this.value = this.value.toUpperCase()" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="DES_OBJETO">Descripción del objeto</label>
+                                        <label for="DES_OBJETO">Descripción objeto</label>
                                         <input type="text" id="DES_OBJETO" class="form-control" name="DES_OBJETO" placeholder="Ingresar la descripción del objeto" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="TIP_OBJETO">Tipo del objeto</label>
+                                        <label for="TIP_OBJETO">Tipo objeto</label>
                                         <select class="form-select custom-select" id="TIP_OBJETO" name="TIP_OBJETO" required>
                                             <option value="" disabled selected>Seleccione una opción</option>
                                             <option value="Primordial">Primordial</option>
@@ -154,9 +154,9 @@
             <table cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="objetoss">
                 <thead>
                     <th>Nº</th>
-                    <th>Nombre del Objeto</th>
-                    <th>Descripción del Objeto</th>
-                    <th>Tipo de Objeto</th>
+                    <th>Nombre Objeto</th>
+                    <th>Descripción Objeto</th>
+                    <th>Tipo Objeto</th>
                     <th><center><i class="fas fa-cog"></i></center></th>
                 </thead>
                 <tbody>
@@ -189,17 +189,17 @@
                                                 <input type="hidden" class="form-control" name="COD_OBJETO" value="{{$Objetos['COD_OBJETO']}}">
                                                 
                                                 <div class="mb-3">
-                                                    <label for="OBJETO">Nombre del objeto</label>
-                                                    <input type="text" class="form-control" id="OBJETO-{{$Objetos['COD_OBJETO']}}" name="OBJETO" value="{{$Objetos['OBJETO']}}" oninput="validarObjeto('{{$Objetos['COD_OBJETO']}}', this.value)" required>
+                                                    <label for="OBJETO">Nombre objeto</label>
+                                                    <input type="text" readonly class="form-control" id="OBJETO-{{$Objetos['COD_OBJETO']}}" name="OBJETO" value="{{$Objetos['OBJETO']}}" oninput="validarObjeto('{{$Objetos['COD_OBJETO']}}', this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback-{{$Objetos['COD_OBJETO']}}"></div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="DES_OBJETO">Descripción del objeto</label>
+                                                    <label for="DES_OBJETO">Descripción objeto</label>
                                                     <input type="text" class="form-control" id="DES_OBJETO-{{$Objetos['COD_OBJETO']}}" name="DES_OBJETO" value="{{$Objetos['DES_OBJETO']}}" oninput="validarDesObjeto('{{$Objetos['COD_OBJETO']}}', this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback2-{{$Objetos['COD_OBJETO']}}"></div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="TIP_OBJETO">Tipo de objeto</label>
+                                                    <label for="TIP_OBJETO">Tipo objeto</label>
                                                     <select class="form-select custom-select" id="TIP_OBJETO" name="TIP_OBJETO" value="{{$Objetos['TIP_OBJETO']}}" required>
                                                         <option value="Primordial" @if($Objetos['TIP_OBJETO'] === 'Primordial') selected @endif>Primordial</option>
                                                         <option value="Servicio" @if($Objetos['TIP_OBJETO'] === 'Servicio') selected @endif>Servicio</option>

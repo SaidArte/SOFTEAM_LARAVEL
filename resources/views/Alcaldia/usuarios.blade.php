@@ -386,7 +386,7 @@
                                     <th><center>Nombre</center></th>
                                     <th><center>Rol</center></th>
                                     <th><center>Último Acceso</center></th>
-                                    <th class="hidden"><center>Límite de Intentos</center></th>
+                                    <th class="hidden"><center>Límite Intentos</center></th>
                                     <th class="hidden"><center>Intentos Fallidos</center></th>
                                     <th><center>F. Vencimiento</center></th>
                                     <th><center>Estado</center></th>

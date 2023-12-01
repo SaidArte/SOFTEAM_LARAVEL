@@ -58,7 +58,7 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="DES_ROL">Descripción del rol</label>
+                                    <label for="DES_ROL">Descripción rol</label>
                                     <input type="text" id="DES_ROL" class="form-control" name="DES_ROL" placeholder="Ingrese la descripción del rol" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -185,11 +185,11 @@
                                             
                                             <div class="mb-3 mt-3">
                                                 <label for="NOM_ROL" class="form-label">Rol</label>
-                                                <input type="text" class="form-control" id="NOM_ROL-{{$Roles['COD_ROL']}}" name="NOM_ROL" value="{{$Roles['NOM_ROL']}}" oninput="validarRol('{{$Roles['COD_ROL']}}', this.value)" required>
+                                                <input type="text" readonly class="form-control" id="NOM_ROL-{{$Roles['COD_ROL']}}" name="NOM_ROL" value="{{$Roles['NOM_ROL']}}" oninput="validarRol('{{$Roles['COD_ROL']}}', this.value)" required>
                                                 <div class="invalid-feedback" id="invalid-feedback-{{$Roles['COD_ROL']}}"></div>
                                             </div>
                                             <div class="mb-3 mt-3">
-                                                <label for="DES_ROL" class="form-label">Descripción del rol</label>
+                                                <label for="DES_ROL" class="form-label">Descripción rol</label>
                                                 <input type="text" class="form-control" id="DES_ROL-{{$Roles['COD_ROL']}}" name="DES_ROL" value="{{$Roles['DES_ROL']}}" oninput="validarDescripcion('{{$Roles['COD_ROL']}}', this.value)" required>
                                                 <div class="invalid-feedback" id="invalid-feedback2-{{$Roles['COD_ROL']}}"></div>
                                             </div>

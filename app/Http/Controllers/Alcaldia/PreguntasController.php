@@ -28,8 +28,6 @@ class PreguntasController extends Controller
         ];
     
         $pregunta = $request->input("PREGUNTA");
-    
-        $pregunta = "¿" . $pregunta . "?";  // Se utilizan puntos (.) para concatenar cadenas.
 
         $response = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/GETONE_PREGUNTAS',[
             "PREGUNTA"       => $pregunta,
@@ -63,8 +61,7 @@ class PreguntasController extends Controller
         ];
 
         $pregunta = $request->input("PREGUNTAE");
-
-        $pregunta = "¿" . $pregunta . "?";  // Se utilizan puntos (.) para concatenar cadenas.
+        
 
         $response = Http::withHeaders($headers)->post(self::urlapi.'SEGURIDAD/GETONE_PREGUNTAS',[
             "PREGUNTA"       => $pregunta,

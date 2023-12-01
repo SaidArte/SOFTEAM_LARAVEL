@@ -59,7 +59,7 @@
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="OBJETO">OBJETO</label>
+                                            <label for="OBJETO">Objeto</label>
                                             <select class="form-select custom-select" id="OBJETO" name="OBJETO" required>
                                                 <option value="" disabled selected>Seleccione una opción</option>
                                                 @foreach ($objetosArreglo as $objetos)
@@ -69,9 +69,19 @@
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="form-group">
+                                            
+                                            <!-- Consultar -->
+                                            <div class="mb-3">
+                                                <label for="LPRM_CONSULTAR">Permiso Consultar</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" onchange="updateValue(this)">
+                                                    <input type="hidden" id="PRM_CONSULTAR_HIDDEN" name="PRM_CONSULTAR" value="N">
+                                                </div>
+                                            </div>
+
                                             <!-- Insertar -->
                                             <div class="mb-3">
-                                                <label for="LPRM_INSERTAR">Permiso de Insertar</label>
+                                                <label for="LPRM_INSERTAR">Permiso Insertar</label>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="PRM_INSERTAR" name="PRM_INSERTAR" onchange="updateValue(this)">
                                                     <input type="hidden" id="PRM_INSERTAR_HIDDEN" name="PRM_INSERTAR" value="N">
@@ -80,21 +90,13 @@
 
                                             <!-- Actualizar -->
                                             <div class="mb-3">
-                                                <label for="LPRM_ACTUALIZAR">Permiso de Actualizar</label>
+                                                <label for="LPRM_ACTUALIZAR">Permiso Actualizar</label>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="PRM_ACTUALIZAR" name="PRM_ACTUALIZAR" onchange="updateValue(this)">
                                                     <input type="hidden" id="PRM_ACTUALIZAR_HIDDEN" name="PRM_ACTUALIZAR" value="N">
                                                 </div>
                                             </div>
 
-                                            <!-- Consultar -->
-                                            <div class="mb-3">
-                                                <label for="LPRM_CONSULTAR">Permiso de Consultar</label>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" onchange="updateValue(this)">
-                                                    <input type="hidden" id="PRM_CONSULTAR_HIDDEN" name="PRM_CONSULTAR" value="N">
-                                                </div>
-                                            </div>
                                             <br>
                                             <div class="mb-3">
                                                 <button class="btn btn-primary" type="submit">Guardar</button>
@@ -152,9 +154,9 @@
                                 <th><center>Rol</center></th>
                                 <th class="hidden"><center>No. Objeto</center></th>
                                 <th><center>Objeto</center></th>
+                                <th><center>Permisos Consultar</center></th>
                                 <th><center>Permisos Insertar</center></th>
                                 <th><center>Permisos Actualizar</center></th>
-                                <th><center>Permisos Consultar</center></th>
                                 <th><center><i class="fas fa-cog"></i></center></th>
                             </tr>
                         </thead>
@@ -167,6 +169,13 @@
                                     <td class="hidden">{{$Permisos['COD_OBJETO']}}</td>
                                     <td>{{$Permisos['OBJETO']}}</td>
                                     <td>
+                                        @if ($Permisos['PRM_CONSULTAR'] === 'S')
+                                            <span class="badge bg-success">Sí</span>
+                                        @else
+                                            <span class="badge bg-danger">No</span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         @if ($Permisos['PRM_INSERTAR'] === 'S')
                                             <span class="badge bg-success">Sí</span>
                                         @else
@@ -175,13 +184,6 @@
                                     </td>
                                     <td>
                                         @if ($Permisos['PRM_ACTUALIZAR'] === 'S')
-                                            <span class="badge bg-success">Sí</span>
-                                        @else
-                                            <span class="badge bg-danger">No</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($Permisos['PRM_CONSULTAR'] === 'S')
                                             <span class="badge bg-success">Sí</span>
                                         @else
                                             <span class="badge bg-danger">No</span>
@@ -205,7 +207,6 @@
                                                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                            <p>Si desea agregar un permiso, marque la casilla; en caso contrario, déjela desmarcada.</p>
                                             <form action="{{ url('Permisos/actualizar') }}" method="post">
                                                 @csrf
                                                 <input type="hidden" class="form-control" name="COD_ROL" value="{{$Permisos['COD_ROL']}}"> 
@@ -217,9 +218,19 @@
                                                     <label for="NROL">Objeto: </label>
                                                     <input type="text" readonly class="form-control" name="OBJETO" value="{{$Permisos['OBJETO']}}">
                                                 </div>
+
+                                                <!-- Consultar -->
+                                                <div class="mb-3">
+                                                    <label for="LPRM_CONSULTAR">Permiso Consultar</label>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" {{$Permisos['PRM_CONSULTAR'] === 'S' ? 'checked' : ''}} onchange="updateValue(this)">
+                                                        <input type="hidden" id="PRM_CONSULTAR_HIDDEN" name="PRM_CONSULTAR" value="{{$Permisos['PRM_CONSULTAR']}}">
+                                                    </div>
+                                                </div>
+
                                                 <!-- Insertar -->
                                                 <div class="mb-3">
-                                                    <label for="LPRM_INSERTAR">Permiso de Insertar</label>
+                                                    <label for="LPRM_INSERTAR">Permiso Insertar</label>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" id="PRM_INSERTAR" name="PRM_INSERTAR" {{$Permisos['PRM_INSERTAR'] === 'S' ? 'checked' : ''}} onchange="updateValue(this)">
                                                         <input type="hidden" id="PRM_INSERTAR_HIDDEN" name="PRM_INSERTAR" value="{{$Permisos['PRM_INSERTAR']}}">
@@ -228,21 +239,13 @@
 
                                                 <!-- Actualizar -->
                                                 <div class="mb-3">
-                                                    <label for="LPRM_ACTUALIZAR">Permiso de Actualizar</label>
+                                                    <label for="LPRM_ACTUALIZAR">Permiso Actualizar</label>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" id="PRM_ACTUALIZAR" name="PRM_ACTUALIZAR" {{$Permisos['PRM_ACTUALIZAR'] === 'S' ? 'checked' : ''}} onchange="updateValue(this)">
                                                         <input type="hidden" id="PRM_ACTUALIZAR_HIDDEN" name="PRM_ACTUALIZAR" value="{{$Permisos['PRM_ACTUALIZAR']}}">
                                                     </div>
                                                 </div>
 
-                                                <!-- Consultar -->
-                                                <div class="mb-3">
-                                                    <label for="LPRM_CONSULTAR">Permiso de Consultar</label>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="PRM_CONSULTAR" name="PRM_CONSULTAR" {{$Permisos['PRM_CONSULTAR'] === 'S' ? 'checked' : ''}} onchange="updateValue(this)">
-                                                        <input type="hidden" id="PRM_CONSULTAR_HIDDEN" name="PRM_CONSULTAR" value="{{$Permisos['PRM_CONSULTAR']}}">
-                                                    </div>
-                                                </div>
                                                 <br>
                                                 <div class="mb-3">
                                                     <button type="submit" class="btn btn-primary">Editar</button>
