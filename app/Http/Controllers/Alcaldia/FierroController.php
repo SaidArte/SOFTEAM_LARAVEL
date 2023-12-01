@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Session;
 use App\Models\Fierro;
-use PDF;
+
 class FierroController extends Controller
 {
     const urlapi = 'http://82.180.133.39:4000/';
@@ -27,43 +27,7 @@ class FierroController extends Controller
 
         return view('Alcaldia.fierro', compact('citaArreglo', 'personasArreglo'));
     }
-    public function generarPDF()
-    {
-        $headers = [
-            'Authorization' => 'Bearer ' . Session::get('token'),
-        ];
-
-        $personas = Http::withHeaders($headers)->get(self::urlapi . 'PERSONAS/GETALL');
-        $personasArreglo = json_decode($personas->body(), true);
-
-        $fierro = Http::withHeaders($headers)->get(self::urlapi . 'FIERROS/GETALL');
-        $citaArreglo = json_decode($fierro->body(), true);
-
-        $data = [
-            'citaArreglo' => $citaArreglo,
-            'personasArreglo' => $personasArreglo,
-        ];
-
-        $pdf = PDF::loadView('Alcaldia.pdf.fierro', $data);
-
-        // Personaliza el encabezado y fondo de cada página
-        $pdf->setOptions([
-            'isHtml5ParserEnabled' => true,
-            'isPhpEnabled' => true,
-        ]);
-
-        $pdf->setPaper('letter');
-
-        // Configura el encabezado
-        $pdf->setOption('header-html', view('pdf.header')->render());
-
-        // Configura el fondo
-        $pdf->setOption('background', view('pdf.background')->render());
-
-        return $pdf->stream('fierro_reporte.pdf');
-    }
-
-   
+      
     public function nuevo_fierro(Request $request)
     {
     

@@ -178,7 +178,8 @@
             <div class="modal-body">
                 <!-- Inicio del nuevo formulario -->
                 <form action="{{ url('fierro/insertar') }}" method="post" class="needs-validation fierro-form" enctype="multipart/form-data">
-                    <div class="row">
+                   @csrf 
+                        <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id">DNI</label>
@@ -189,7 +190,9 @@
                                 <label for="nom">Nombre</label>
                                 <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
                             </div>
-                            <!-- Agrega más elementos aquí si es necesario -->
+                            <div class="mb-3">
+                            <input type="hidden" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA">
+                            </div>¡
                         </div>
 
                         <div class="col-md-6">
@@ -240,7 +243,7 @@
                         <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" required>
                     </div>
                     <div class="mb-3">
-                    <label for="FIERROS">Estado</label>
+                    <label for="ESTADO">Estado</label>
                         <select class="form-select custom-select" id="ESTADO" name="ESTADO" required>
                             <option value="" disabled selected>Seleccione una opción</option>
                             <option value="A">ACTIVO</option>
@@ -480,8 +483,8 @@
                                         </div>
 
                                         <div class="modal-body">
-                                            <form action="{{ url('fierro/actualizar') }}" method="post" enctype="multipart/form-data">
-                                                @csrf
+                                        <form action="{{ url('fierro/actualizar') }}" method="post" enctype="multipart/form-data" onsubmit="return validarFormulario({{$fierro['COD_FIERRO']}})">
+                                            @csrf
                                                 <input type="hidden" class="form-control" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
 
                                                 <div class="mb-3 mt-3">
@@ -502,7 +505,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="NUM_FOLIO_FIERRO">Numero de Folio</label>
-                                                    <input type="text" class="form-control" id="NUM_FOLIO_FIERRO" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro" value="{{$fierro['NUM_FOLIO_FIERRO']}}">
+                                                    <input type="text" class="form-control" id="NUM_FOLIO_FIERRO-{{$fierro['COD_FIERRO']}}" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el Folio" value="{{$fierro['NUM_FOLIO_FIERRO']}}" oninput="validarfolio({{$fierro['COD_FIERRO']}}, this.value)" required>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -514,7 +517,7 @@
                                                         <option value="S" {{ $fierro['TIP_FIERRO'] === 'S' ? 'selected' : '' }}>Simbolo</option>
                                                     </select>
                                                 </div>
-
+                                                
                                                 <div class="mb-3">
                                                     <label for="MON_CERTIFICO_FIERRO">Monto del Certifico</label>
                                                     <input type="text" prefix="L. " class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}}" min="1" step="any" required>
@@ -537,10 +540,40 @@
                                                 <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
 
                                                 <div class="mb-3">
-                                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                                    <button type="submit" class="btn btn-primary" id="submitButton-{{$fierro['COD_FIERRO']}}">Editar</button>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                                 </div>
                                                 </form>
+                                                
+                                                <script>
+                                                function validarfolio(id, Folio) {
+                                                    var inputElement = document.getElementById("NUM_FOLIO_FIERRO-" + id);
+                                                    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+                                                    // Validar el formato del número de folio
+                                                    if (!/^\d{6}$/.test(Folio) || Folio.length !== 6) {
+                                                        // Si el formato no es correcto o la longitud no es 6, agregar clases de estilo y mostrar el mensaje de error
+                                                        inputElement.classList.add("is-invalid");
+                                                        invalidFeedback.textContent = "El Folio debe tener exactamente 6 dígitos";
+                                                        return false; // Devuelve false para indicar que la validación ha fallado
+                                                    } else {
+                                                        // Si el formato es correcto, quitar clases de estilo y mensaje de error
+                                                        inputElement.classList.remove("is-invalid");
+                                                        invalidFeedback.textContent = "";
+                                                        return true; // Devuelve true para indicar que la validación es exitosa
+                                                    }
+                                                }
+
+                                                function validarFormulario(id) {
+                                                    var Folio = document.getElementById("NUM_FOLIO_FIERRO-" + id).value;
+                                                    var isValid = validarfolio(id, Folio);
+
+                                                    // Agregar otras validaciones si es necesario
+
+                                                    return isValid;
+                                                }
+                                            </script>
+
                                             </div>
                                         </div>
                                     </div>
@@ -638,17 +671,7 @@
                             stripHtml: false,
                         },
                     },
-                    {
-                        extend: "pdfHtml5",
-                        text: "<i class='fa-solid fa-file-pdf'></i>",
-                        titleAttr: "Exportar a PDF",
-                        className: "btn btn-danger",
-                        footer: true,
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6],
-                            stripHtml: false,
-                        },
-                    },
+                
                     {
                             extend: "print",
                             text: "<i class='fa-solid fa-print'></i>",
