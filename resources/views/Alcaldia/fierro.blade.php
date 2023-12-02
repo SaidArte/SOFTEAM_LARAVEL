@@ -192,17 +192,17 @@
                             </div>
                             <div class="mb-3">
                             <input type="hidden" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA">
-                            </div>¡
+                            </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="FEC_TRAMITE_FIERRO">Fecha de Tramite</label>
+                                <label for="FEC_TRAMITE_FIERRO">Fecha Tramite</label>
                                 <input type="date" id="FEC_TRAMITE_FIERRO" class="form-control" name="FEC_TRAMITE_FIERRO" placeholder="inserte la fecha de tramite." required>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
-                                <label for="NUM_FOLIO_FIERRO">Numero de Folio</label>
+                                <label for="NUM_FOLIO_FIERRO">Numero Folio</label>
                                 <input type="text" id="NUM_FOLIO_FIERRO" class="form-control" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro" required>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -215,7 +215,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="TIP_FIERRO" class="form-label">Tipo de Fierro</label>
+                                <label for="TIP_FIERRO" class="form-label">Tipo Fierro</label>
                                 <select class="form-select" id="TIP_FIERRO" name="TIP_FIERRO" required>
                                     <div class="invalid-feedback"></div>
                                     <option value="X" selected="selected" disabled>- Elija el tipo de Fierro -</option>
@@ -229,7 +229,7 @@
 
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="MON_CERTIFICO_FIERRO">Monto del Certifico</label>
+                                <label for="MON_CERTIFICO_FIERRO">Monto Certifico</label>
                                 <input type="text" prefix="L. " id="MON_CERTIFICO_FIERRO" class="form-control" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el monto del certifico" min="1" step="any" required>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -239,7 +239,7 @@
                     <!-- Repite la estructura de filas y columnas para otros elementos -->
 
                     <div class="form-group">
-                        <label for="IMG_FIERRO">Imagen del Fierro</label>
+                        <label for="IMG_FIERRO">Imagen Fierro</label>
                         <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*" required>
                     </div>
                     <div class="mb-3">
@@ -353,17 +353,7 @@
                                     limpiarFormulario();
                                 });
                                 // Agregar una clase de CSS para mostrar la notificación flotante
-                                function showSuccessMessage() {
-                                    const successMessage = document.createElement('div');
-                                    successMessage.className = 'success-message';
-                                    successMessage.textContent = 'Registro Exitoso';
-
-                                    document.body.appendChild(successMessage);
-
-                                    setTimeout(() => {
-                                        successMessage.remove();
-                                    }, 4000); // La notificación desaparecerá después de 4 segundos (puedes ajustar este valor)
-                                }
+                                
                                         //Función para buscar personas.
                                         function buscarPersona(idPersona) {
                                             var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
@@ -468,10 +458,10 @@
                                             <i class="fa-solid fa-pen-to-square" style="font-size: 15px"></i>
                                             </button>
                                         @endif
-                                        <!-- Boton de PDF -->
+                                        <!-- Boton de PDF 
                                         <a href="{{ route('fierro.pdfFierro') }}" class="btn btn-sm btn-danger" data-target="#fierro-edit-{{ $fierro['COD_FIERRO'] }}" target="_blank">
                                         <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
-                                        </a>
+                                        </a>-->
                                     </td>
                                 </tr>
                                 <!-- Modal for editing goes here -->
@@ -498,18 +488,18 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="FEC_TRAMITE_FIERRO" class="form-label">Fecha de Tramite:</label>
+                                                    <label for="FEC_TRAMITE_FIERRO" class="form-label">Fecha Tramite:</label>
                                                     <?php $fecha_formateada = date('Y-m-d', strtotime($fierro['FEC_TRAMITE_FIERRO'])); ?>
                                                     <input type="date" class="form-control" id="FEC_TRAMITE_FIERRO" name="FEC_TRAMITE_FIERRO" value="{{ $fecha_formateada }}">
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="NUM_FOLIO_FIERRO">Numero de Folio</label>
+                                                    <label for="NUM_FOLIO_FIERRO">Numero Folio</label>
                                                     <input type="text" class="form-control" id="NUM_FOLIO_FIERRO-{{$fierro['COD_FIERRO']}}" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el Folio" value="{{$fierro['NUM_FOLIO_FIERRO']}}" oninput="validarfolio({{$fierro['COD_FIERRO']}}, this.value)" required>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="TIP_FIERRO" class="form-label">Tipo de Fierro</label>
+                                                    <label for="TIP_FIERRO" class="form-label">Tipo Fierro</label>
                                                     <select class="form-select" id="TIP_FIERRO" name="TIP_FIERRO">
                                                         <option value="L" {{ $fierro['TIP_FIERRO'] === 'L' ? 'selected' : '' }}>Letra</option>
                                                         <option value="F" {{ $fierro['TIP_FIERRO'] === 'F' ? 'selected' : '' }}>Figura</option>
@@ -519,12 +509,12 @@
                                                 </div>
                                                 
                                                 <div class="mb-3">
-                                                    <label for="MON_CERTIFICO_FIERRO">Monto del Certifico</label>
+                                                    <label for="MON_CERTIFICO_FIERRO">Monto Certifico</label>
                                                     <input type="text" prefix="L. " class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}}" min="1" step="any" required>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="IMG_FIERRO">Imagen del Fierro:</label>
+                                                    <label for="IMG_FIERRO">Imagen Fierro:</label>
                                                     <input type="file" class="form-control" id="IMG_FIERRO" name="IMG_FIERRO" accept="image/*">
                                                 </div>
                                                 <div class="mb-3 mt-3">
@@ -564,14 +554,7 @@
                                                     }
                                                 }
 
-                                                function validarFormulario(id) {
-                                                    var Folio = document.getElementById("NUM_FOLIO_FIERRO-" + id).value;
-                                                    var isValid = validarfolio(id, Folio);
-
-                                                    // Agregar otras validaciones si es necesario
-
-                                                    return isValid;
-                                                }
+                                               
                                             </script>
 
                                             </div>

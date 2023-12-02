@@ -28,12 +28,12 @@
 
             <div class="mySlides">
                 <q>Talanga cada dia avanzando mas  </q>
-                <p class="author"> SofTeam</p>
+                <p class="author"> UNAH</p>
             </div>
 
             <div class="mySlides">
-                <q>Somos Grandes</q>
-                <p class="author">-Equipo Suave</p>
+                <q>Todo por el Desarollo de Talanga</q>
+                <p class="author">-</p>
             </div>
             
             <a class="prev" onclick="plusSlides(-1)">❮</a>
