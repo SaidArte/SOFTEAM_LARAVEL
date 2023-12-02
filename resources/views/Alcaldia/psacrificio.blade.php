@@ -143,18 +143,18 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="FEC_SACRIFICIO">Fecha del Sacrificio</label>
+                                        <label for="FEC_SACRIFICIO">Fecha Sacrificio</label>
                                         <input type="date" id="FEC_SACRIFICIO" class="form-control" name="FEC_SACRIFICIO" placeholder="Inserte la fecha del sacrificio" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="DIR_PSACRIFICIO">Dirección del Sacrificio</label>
+                                        <label for="DIR_PSACRIFICIO">Dirección Sacrificio</label>
                                         <input type="text" id="DIR_PSACRIFICIO" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingresar la dirección del sacrificio" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="ANIMALL" >Tipo de Animal</label>
+                                        <label for="ANIMALL" >Tipo Animal</label>
                                         <select class="form-select custom-select" id="ANIMAL" name="ANIMAL" required >
                                             <option value="" disabled selected>Seleccione una clase de animal</option>
                                             <option value="Vaca">Vaca</option>
@@ -170,8 +170,8 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="DET_ANIMALL">Detalle del Animal</label>
-                                        <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal"required >
+                                        <label for="COL_ANIMALL">Color Animal</label>
+                                        <input type="text" id="COL_ANIMAL" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal"required >
                                         <div class="invalid-feedback"></div>
                                     </div>
 
@@ -340,6 +340,29 @@
                                         field.classList.remove("is-invalid");
                                     });
                                 }
+                                //validaciones del color del animal
+                                document.getElementById('COL_ANIMAL').addEventListener('keydown', function (event) {
+                                    var input = event.key;
+
+                                    // Validar que no sea un número
+                                    if (!isNaN(input)) {
+                                        event.preventDefault();
+                                        this.classList.add('is-invalid');
+                                        this.nextElementSibling.textContent = 'No se aceptan números.';
+                                    } else {
+                                        // Validar caracteres especiales
+                                        var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+                                        if (specialChars.test(input)) {
+                                            event.preventDefault();
+                                            this.classList.add('is-invalid');
+                                            this.nextElementSibling.textContent = 'No se aceptan caracteres especiales.';
+                                        } else {
+                                            // Si no hay números ni caracteres especiales, quitar la clase 'is-invalid'
+                                            this.classList.remove('is-invalid');
+                                            this.nextElementSibling.textContent = '';
+                                        }
+                                    }
+                                });
                                 document.getElementById("btnCancelar").addEventListener("click", function() {
                                     limpiarFormulario();
                                 });
@@ -363,7 +386,7 @@
                                 <th><center>Dirección</center></th>
                                 <th><center>Animal</center></th>
                                 
-                                <th><center>Opciones</center></th>
+                                <th><center>Opción</center></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -385,10 +408,10 @@
                                         <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                                         </button>
                                     @endif
-                                        <!-- Boton de PDF -->
+                                        <!-- Boton de PDF 
                                         <a href="{{ route('psacrificio.pdf') }}" class="btn btn-sm btn-danger" data-target="#psacrificio-edit-{{$psacrificio['COD_PSACRIFICIO']}}" target="_blank">
                                             <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
-                                        </a>
+                                        </a> -->
                                     </td>
                                 </tr>
                                 <!-- Modal for editing goes here -->
@@ -416,20 +439,22 @@
 
                                                         <div class="mb-3">
                                                             <label for="psacrificio">Teléfono</label>
-                                                            <input type="text" class="form-control" id="TEL_PERSONA" name="TEL_PERSONA" placeholder="Ingrese el número de teléfono" value="{{$psacrificio['TEL_PERSONA']}}" require>
+                                                            <input type="text" id="TEL_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="TEL_PERSONA" placeholder="Ingrese el número de teléfono" value="{{$psacrificio['TEL_PERSONA']}}" oninput="validarTelefono('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)" >
+                                                            <div class="invalid-feedback" id="invalid-feedback10-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="psacrificio" class="form-laabel">Fecha de Sacrificio</label>
+                                                            <label for="psacrificio" class="form-laabel">Fecha Sacrificio</label>
                                                             <!-- Codigo para que me muestre la fecha ya registrada al momento de actualizar --->
                                                             <?php $fecha_formateada = date('Y-m-d', strtotime($psacrificio['FEC_SACRIFICIO'])); ?>
                                                             <input type="date" class="form-control" id="FEC_SACRIFICIO" name="FEC_SACRIFICIO" placeholder="Ingrese la fecha del sacrificio" value="{{$fecha_formateada}}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="psacrificio">Dirección del Sacrificio</label>
-                                                            <input type="text" class="form-control" id="DIR_PSACRIFICIOL" name="DIR_PSACRIFICIO" placeholder="Ingrese la dirección del sacrificio" value="{{$psacrificio['DIR_PSACRIFICIO']}}">
+                                                            <label for="psacrificio">Dirección Sacrificio</label>
+                                                            <input type="text" id="DIR_PSACRIFICIO-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingrese la dirección del sacrificio" value="{{$psacrificio['DIR_PSACRIFICIO']}}" oninput="validarDireccion('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)" >
+                                                            <div class="invalid-feedback" id="invalid-feedback5-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="ANIMALLL" >Tipo de Animal</label>
+                                                            <label for="ANIMALLL" >Tipo Animal</label>
                                                             <select class="form-select custom-select" id="ANIMAL" name="ANIMAL" required >
                                                                 <option value="" disabled selected>Seleccione una clase de animal</option>
                                                                 <option value="Vaca" @if($psacrificio['ANIMAL'] === 'Vaca') selected @endif>Vaca</option>
@@ -443,8 +468,9 @@
                                                             </select>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="DET_ANIMALL">Detalle del Animal</label>
-                                                            <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal" value="{{$psacrificio['DET_ANIMAL']}}">
+                                                            <label for="COL_ANIMALL">Color Animal</label>
+                                                            <input type="text" id="COL_ANIMAL-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal" value="{{$psacrificio['COL_ANIMAL']}}" oninput="validarColor('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)" >
+                                                            <div class="invalid-feedback" id="invalid-feedback4-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
                                                             <!-- Boton de confirmar al editar -->
@@ -485,6 +511,71 @@
                                                             btnGuardar.disabled = false;
                                                         }
                                                     }
+                                                    //Validaciones Telefono
+                                                    function validarTelefono(id, telefono) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("TEL_PERSONA-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback10-" + id);
+
+                                                        
+                                                        if (!/^\d{8}$/.test(telefono)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "El teléfono debe tener exactamente 8 dígitos";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                    //Validar Direccion
+                                                    function validarDireccion(id, direccion) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("DIR_PSACRIFICIO-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback5-" + id);
+
+                                                        if (direccion.length < 5) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "La dirección debe tener al menos 5 caracteres.";
+                                                            btnGuardar.disabled = true;
+                                                        } else if (direccion.length > 100) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "La dirección no puede tener más de 100 carácteres.";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+
+                                                    //validaciones color
+                                                    function validarDireccion(id, direccion) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("DIR_PSACRIFICIO-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback4-" + id);
+
+                                                        if (!isNaN(input)) {
+                                                            event.preventDefault();
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = 'No se aceptan números.';
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            // Validar caracteres especiales
+                                                            var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+                                                            if (specialChars.test(input)) {
+                                                                event.preventDefault();
+                                                                inputElement.classList.add("is-invalid");
+                                                                invalidFeedback.textContent= 'No se aceptan caracteres especiales.';
+                                                                btnGuardar.disabled = true;
+                                                            } else {
+                                                                // Si no hay números ni caracteres especiales, quitar la clase 'is-invalid'
+                                                                inputElement.classList.remove("is-invalid");
+                                                                invalidFeedback.textContent = "";
+                                                                btnGuardar.disabled = false;
+                                                            }
+                                                        }
+                                                    }    
                                                 </script>
                                             </div>
                                         </div>
@@ -563,17 +654,17 @@
                                 },
                             },
                             
-                                {
-                extend: "pdfHtml5",
-                filename: "Permisos de Sacrificio",
-                title: "Permisos de Sacrificio",
-                text: "<i class='fa-solid fa-file-pdf'></i>",
-                titleAttr: "Exportar a PDF",
-                className: "btn btn-danger",
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6],
-                },
-            },  
+                                //{
+                //extend: "pdfHtml5",
+                //filename: "Permisos de Sacrificio",
+                //title: "Permisos de Sacrificio",
+                //text: "<i class='fa-solid fa-file-pdf'></i>",
+                //titleAttr: "Exportar a PDF",
+                //className: "btn btn-danger",
+                //exportOptions: {
+                    //columns: [0, 1, 2, 3, 4, 5, 6],
+                //},
+            //},  
             {
                                 extend: "print",
                                 filename: "Permisos de Sacrificio",
@@ -589,7 +680,7 @@
                                     // Agrega dos logos al encabezado
                                 
                                     $(win.document.body).prepend("<br><br/");
-                                    $(win.document.body).prepend("<h5 style='text-align: center;'>           PERMISO DE SACRIFICIO  </h5>");
+                                    //$(win.document.body).prepend("<h5 style='text-align: center;'>           PERMISO DE SACRIFICIO  </h5>");
                                     $(win.document.body).prepend("<h6 style='text-align: center;'>  Correo: alcaldiamunicipaltalanga@gmail.com  </h6>");
                                     $(win.document.body).prepend("<h6 style='text-align: center;'>Telefonos: 2775-8010, 2775-8018, 2775-8735</h6>");
                                     $(win.document.body).prepend("<h6 style='text-align: center;'>=======================================================</h6>");

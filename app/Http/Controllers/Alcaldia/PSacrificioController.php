@@ -41,7 +41,7 @@ public function nuevo_psacrificio(Request $request)
         "FEC_SACRIFICIO"        => $request->input("FEC_SACRIFICIO"),
         "DIR_PSACRIFICIO"       => $request->input("DIR_PSACRIFICIO"),
         "ANIMAL"            => $request->input("ANIMAL"),
-        "DET_ANIMAL"            => $request->input("DET_ANIMAL"),
+        "COL_ANIMAL"            => $request->input("COL_ANIMAL"),
     ]);
 
     if ($nuevo_psacrificio->successful()) {
@@ -66,7 +66,7 @@ public function nuevo_psacrificio(Request $request)
                 "FEC_SACRIFICIO"        => $request->input("FEC_SACRIFICIO"),
                 "DIR_PSACRIFICIO"       => $request->input("DIR_PSACRIFICIO"),
                 "ANIMAL"            => $request->input("ANIMAL"),
-                "DET_ANIMAL"            => $request->input("DET_ANIMAL"),
+                "COL_ANIMAL"            => $request->input("COL_ANIMAL"),
             ]);
         
             if ($actualizar_psacrificio->successful()) {
