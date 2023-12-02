@@ -186,7 +186,7 @@
                                             <div class="col-sm-13 mb-3">
                                                 <div class="form-group">
                                                     <label for="DES_DIRECCION">Dirección:</label>
-                                                    <textarea id="DES_DIRECCION" rows="4" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" required></textarea>
+                                                    <textarea id="DES_DIRECCION" rows="8" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" required></textarea>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
                                             </div>
@@ -457,7 +457,7 @@
                             <th><center>Dirección</center></th>
                             <th><center>Correo</center></th>
                             <th><center>Teléfono</center></th>
-                            <th><center><i class="fas fa-cog"></i></center></th>
+                            <th><center>Opción</center></th>
                         </thead>
                         <tbody>
                             @foreach($citaArreglo as $personas)
@@ -535,7 +535,7 @@
                                                                 <div class="col-sm-13 mb-3">
                                                                     <div class="form-group">
                                                                         <label for="personas">Dirección:</label>
-                                                                        <textarea id="DES_DIRECCION-{{$personas['COD_PERSONA']}}" rows="4" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" oninput="validarDireccion('{{$personas['COD_PERSONA']}}', this.value)" required>{{$personas['DES_DIRECCION']}}</textarea>
+                                                                        <textarea id="DES_DIRECCION-{{$personas['COD_PERSONA']}}" rows="13" class="form-control" name="DES_DIRECCION" placeholder="Ingresar la dirección de la persona" oninput="validarDireccion('{{$personas['COD_PERSONA']}}', this.value)" required>{{$personas['DES_DIRECCION']}}</textarea>
                                                                         <div class="invalid-feedback" id="invalid-feedback4-{{$personas['COD_PERSONA']}}"></div>
                                                                     </div>
                                                                 </div>
@@ -578,7 +578,7 @@
                                                                 <div class="col-sm-13 mb-3">
                                                                     <div class="form-group">
                                                                         <label for="personas">Descripción Teléfono:</label>
-                                                                        <textarea id="DES_TELEFONO-{{$personas['COD_PERSONA']}}" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" oninput="validarDesTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>{{$personas['DES_TELEFONO']}}</textarea>
+                                                                        <textarea id="DES_TELEFONO-{{$personas['COD_PERSONA']}}" rows="6" class="form-control" name="DES_TELEFONO" placeholder="Ingresar una descripción del teléfono" oninput="validarDesTelefono('{{$personas['COD_PERSONA']}}', this.value)" required>{{$personas['DES_TELEFONO']}}</textarea>
                                                                         <div class="invalid-feedback" id="invalid-feedback7-{{$personas['COD_PERSONA']}}"></div>
                                                                     </div>
                                                                 </div>
@@ -815,20 +815,10 @@
                                     },
                                 },
                                 {
-                                    extend: "pdfHtml5",
-                                    filename: "Personas",
-                                    text: "<i class='fa-solid fa-file-pdf'></i>",
-                                    titleAttr: "Exportar a PDF",
-                                    className: "btn btn-danger",
-                                    exportOptions: {
-                                        columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
-                                    },
-                                },
-                                {
                                     extend: "print",
                                     filename: "Personas",
                                     text: "<i class='fa-solid fa-print'></i>",
-                                    tittleAttr: "Imprimir",
+                                    titleAttr: "Imprimir",
                                     className: "btn btn-secondary",
                                     footer: true,
                                     customize: function(win) {
@@ -852,7 +842,8 @@
                                         $(win.document.body).prepend("<p style='text-align: right;'>Fecha de impresión: " + formattedDate + "</p>");
                                     },
                                     exportOptions: {
-                                        columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                        columns: [0, 1, 2, 3, 4, 5, 6],
+                                        stripHtml: false,
                                     },
                                 },
                             ],
