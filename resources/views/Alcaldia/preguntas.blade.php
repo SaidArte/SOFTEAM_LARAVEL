@@ -284,6 +284,10 @@
         .Btn:active {
             transform: translate(2px ,2px);
         }
+
+        #respuestas_wrapper {
+            overflow-x: auto;
+        }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
@@ -314,6 +318,7 @@
                             lengthMenu: "Mostrar _MENU_ registros",
                             zeroRecords: "No se encontraron resultados",
                             emptyTable: "Ningún dato disponible en esta tabla",
+                            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                             infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
                             infoFiltered: "(filtrado de un total de _MAX_ registros)",
                             search: "Buscar:",

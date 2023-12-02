@@ -651,7 +651,7 @@
 
             <!-- Loop through $citaArreglo and show data -->
             @foreach($citaArreglo as $PTraslado)
-            @php
+                @php
                     $persona = null;
                     foreach ($personasArreglo as $p) {
                         if ($p['COD_PERSONA'] === $PTraslado['COD_PERSONA']) {

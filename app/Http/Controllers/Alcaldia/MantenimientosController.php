@@ -19,8 +19,10 @@ class MantenimientosController extends Controller
         $Mantenimientos = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_MANTENIMIENTOS');
         $citaArreglo = json_decode($Mantenimientos->body(), true);
         // Imprime los datos para verificar si están llegando correctamente.
+        $Usuarios = Http::withHeaders($headers)->get(self::urlapi.'SEGURIDAD/GETALL_USUARIOS');
+        $userArreglo = json_decode($Usuarios->body(), true);
 
-    return view('Alcaldia.mantenimientos', compact('citaArreglo'));
+    return view('Alcaldia.mantenimientos', compact('citaArreglo', 'userArreglo'));
     }
 
     public function nuevo_mantenimiento(Request $request){

@@ -45,17 +45,17 @@
                             <form action="{{ url('Parametros/insertar') }}" method="post" class="needs-validation param-form">
                                 @csrf              
                                     <div class="mb-3">
-                                        <label for="paraml">Nombre parámetro</label>
+                                        <label for="paraml">Nombre Parámetro</label>
                                         <input type="text" id="PARAMETRO" class="form-control" name="PARAMETRO" placeholder="Ingresar el nombre del parámetro" oninput="this.value = this.value.toUpperCase()" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="paramdesl">Descripción parámetro</label>
+                                        <label for="paramdesl">Descripción Parámetro</label>
                                         <input type="text" id="DES_PARAMETRO" class="form-control" name="DES_PARAMETRO" placeholder="Ingresar la descripción del parámetro" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="paramtipl">Valor parámetro</label>
+                                        <label for="paramtipl">Valor Parámetro</label>
                                         <input type="text" id="VALOR" class="form-control" name="VALOR" placeholder="Ingresar el valor del parámetro" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -166,13 +166,13 @@
             <table cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="paramtbl">
                 <thead>
                     <th><center>Nº</center></th>
-                    <th><center>Nombre Parámetro</center></th>
-                    <th><center>Descripción Parámetro</center></th>
-                    <th><center>Valor Parámetro</center></th>
-                    <th><center>Usuario Creador</center></th>
-                    <th><center>Fecha Creación</center></th>
-                    <th><center>Usuario Modificador</center></th>
-                    <th><center>Fecha Modificación</center></th>
+                    <th><center>Parámetro</center></th>
+                    <th><center>D. Parámetro</center></th>
+                    <th><center>V. Parámetro</center></th>
+                    <th><center>U. Creador</center></th>
+                    <th><center>F. Creación</center></th>
+                    <th><center>U. Modificador</center></th>
+                    <th><center>F. Modificación</center></th>
                     <th><center><i class="fas fa-cog"></i></center></th>
                 </thead>
                 <tbody>
@@ -209,17 +209,17 @@
                                                 <input type="hidden" class="form-control" name="COD_PARAMETRO" value="{{$param['COD_PARAMETRO']}}">
                                                 
                                                 <div class="mb-3">
-                                                    <label for="paramle">Nombre parámetro</label>
-                                                    <input type="text" readonly class="form-control" id="PARAMETRO-{{$param['COD_PARAMETRO']}}" name="PARAMETRO" value="{{$param['PARAMETRO']}}" oninput="validarParametro('{{$param['COD_PARAMETRO']}}', this.value)" required>
+                                                    <label for="paramle">Nombre Parámetro</label>
+                                                    <input type="text" readonly readonly class="form-control" id="PARAMETRO-{{$param['COD_PARAMETRO']}}" name="PARAMETRO" value="{{$param['PARAMETRO']}}" oninput="validarParametro('{{$param['COD_PARAMETRO']}}', this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback-{{$param['COD_PARAMETRO']}}"></div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="desparamle">Descripción parámetro</label>
+                                                    <label for="desparamle">Descripción Parámetro</label>
                                                     <input type="text" class="form-control" id="DES_PARAMETRO-{{$param['COD_PARAMETRO']}}" name="DES_PARAMETRO" value="{{$param['DES_PARAMETRO']}}" oninput="validarDesParametro('{{$param['COD_PARAMETRO']}}', this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback2-{{$param['COD_PARAMETRO']}}"></div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="tipparamle">Valor del parámetro</label>
+                                                    <label for="tipparamle">Valor Parámetro</label>
                                                     <input type="text" class="form-control" id="VALOR-{{$param['COD_PARAMETRO']}}" name="VALOR" value="{{$param['VALOR']}}" oninput="validarValParametro('{{$param['COD_PARAMETRO']}}', this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback3-{{$param['COD_PARAMETRO']}}"></div>
                                                 </div>
@@ -396,6 +396,10 @@
             transform: translate(2px ,2px);
         }
 
+        #paramtbl_wrapper {
+            overflow-x: auto;
+        }
+
         /*Con esta instruccion css funcionaran nuestras class hidden.*/
         .hidden {
             display: none;
@@ -430,6 +434,7 @@
                             lengthMenu: "Mostrar _MENU_ registros",
                             zeroRecords: "No se encontraron resultados",
                             emptyTable: "Ningún dato disponible en esta tabla",
+                            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                             infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
                             infoFiltered: "(filtrado de un total de _MAX_ registros)",
                             search: "Buscar:",

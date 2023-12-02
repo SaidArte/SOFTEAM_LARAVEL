@@ -97,7 +97,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
         <center><br>
-            <h1>Información de Permisos de Sacrificio</h1>
+            <h1>Información Permisos de Sacrificio</h1>
         </center></br>
 
         @section('content')
@@ -304,6 +304,35 @@
                                             $(this).siblings('.invalid-feedback').text('');
                                         }
                                     });
+
+
+                                    //Validaciones del campo direccion 
+                                    $('#COL_ANIMAL').on('input', function() {
+                                        var input = $(this).val();
+                                        var errorMessage = '';
+                                        // Validar caracteres especiales
+                                        var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+                                        if (/^\d+$/.test(input)) {
+                                            errorMessage = 'No se aceptan números.';
+                                        } 
+                                        
+                                        if (specialChars.test(input)) {
+                                            errorMessage = 'No se aceptan caracteres especiales.';
+                                        } 
+                                        
+                                        if (input.length < 4 || input.length > 25) {
+                                            errorMessage = 'El color debe contener más de 4 caracteres y menos de 25.';
+                                        }
+
+                                        if (errorMessage) {
+                                            $(this).addClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text(errorMessage);
+                                        } else {
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('');
+                                        }
+                                    });
                                 });
                                 // Deshabilita el botón de enviar inicialmente
                                 $('form.needs-validation').find('button[type="submit"]').prop('disabled', true);
@@ -340,29 +369,6 @@
                                         field.classList.remove("is-invalid");
                                     });
                                 }
-                                //validaciones del color del animal
-                                document.getElementById('COL_ANIMAL').addEventListener('keydown', function (event) {
-                                    var input = event.key;
-
-                                    // Validar que no sea un número
-                                    if (!isNaN(input)) {
-                                        event.preventDefault();
-                                        this.classList.add('is-invalid');
-                                        this.nextElementSibling.textContent = 'No se aceptan números.';
-                                    } else {
-                                        // Validar caracteres especiales
-                                        var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
-                                        if (specialChars.test(input)) {
-                                            event.preventDefault();
-                                            this.classList.add('is-invalid');
-                                            this.nextElementSibling.textContent = 'No se aceptan caracteres especiales.';
-                                        } else {
-                                            // Si no hay números ni caracteres especiales, quitar la clase 'is-invalid'
-                                            this.classList.remove('is-invalid');
-                                            this.nextElementSibling.textContent = '';
-                                        }
-                                    }
-                                });
                                 document.getElementById("btnCancelar").addEventListener("click", function() {
                                     limpiarFormulario();
                                 });
@@ -550,30 +556,33 @@
                                                     }
 
                                                     //validaciones color
-                                                    function validarDireccion(id, direccion) {
+                                                    function validarColor(id, input) {
                                                         var btnGuardar = document.getElementById("submitButton-" + id);
-                                                        var inputElement = document.getElementById("DIR_PSACRIFICIO-" + id);
+                                                        var inputElement = document.getElementById("COL_ANIMAL-" + id);
                                                         var invalidFeedback = document.getElementById("invalid-feedback4-" + id);
+                                                        // Validar caracteres especiales
+                                                        var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 
                                                         if (!isNaN(input)) {
                                                             event.preventDefault();
                                                             inputElement.classList.add("is-invalid");
                                                             invalidFeedback.textContent = 'No se aceptan números.';
                                                             btnGuardar.disabled = true;
+                                                        } else if (specialChars.test(input)) {
+                                                            event.preventDefault();
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent= 'No se aceptan caracteres especiales.';
+                                                            btnGuardar.disabled = true;
+                                                        } else if (input.length < 4 || input.length > 25) {
+                                                            event.preventDefault();
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent= 'El color debe contener más de 4 caracteres y menos de 25.';
+                                                            btnGuardar.disabled = true;
                                                         } else {
-                                                            // Validar caracteres especiales
-                                                            var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
-                                                            if (specialChars.test(input)) {
-                                                                event.preventDefault();
-                                                                inputElement.classList.add("is-invalid");
-                                                                invalidFeedback.textContent= 'No se aceptan caracteres especiales.';
-                                                                btnGuardar.disabled = true;
-                                                            } else {
-                                                                // Si no hay números ni caracteres especiales, quitar la clase 'is-invalid'
-                                                                inputElement.classList.remove("is-invalid");
-                                                                invalidFeedback.textContent = "";
-                                                                btnGuardar.disabled = false;
-                                                            }
+                                                            // Si no hay números ni caracteres especiales, quitar la clase 'is-invalid'
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
                                                         }
                                                     }    
                                                 </script>
@@ -739,6 +748,7 @@
                                 print: "Imprimir",
                             },
                         },
+                        order: [[0, 'desc']],
                     });
                 });
             </script>
