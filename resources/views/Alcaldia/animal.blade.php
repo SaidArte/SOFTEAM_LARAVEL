@@ -499,9 +499,9 @@
                     <th>N° Animal</th>
                     <th>Fecha registro</th>
                     <th>Clase Animal</th>
-                    <th>Raza Animal</th>
+                    
                     <th>color Animal</th>
-                    <th>N° Fierro </th>
+                   
                     <th>Dueño Del Fierro </th>
                     <th>Venteado Animal</th>
                     <th>Herrado Animal</th>
@@ -517,9 +517,9 @@
                             <td>{{$Animal['COD_ANIMAL']}}</td>
                             <td>{{date('d-m-y', strtotime($Animal['FEC_REG_ANIMAL']))}}</td>
                             <td>{{$Animal['CLAS_ANIMAL']}}</td>   
-                            <td>{{$Animal['RAZ_ANIMAL']}}</td> 
+                         
                             <td>{{$Animal['COL_ANIMAL']}}</td>
-                            <td>{{$Animal['COD_FIERRO']}}</td> 
+                           
                             <td>{{$Animal['NOM_PERSONA']}}</td>
                             <td>{{$Animal['VEN_ANIMAL']}}</td>
                             <td>{{$Animal['HER_ANIMAL']}}</td>

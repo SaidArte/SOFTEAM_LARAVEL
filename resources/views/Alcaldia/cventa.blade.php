@@ -360,13 +360,13 @@
                 <thead>
                     <th>Código Cventas</th>
                     <th>Fecha Venta</th>
-                    <th>Código Vendedor</th>
+                    
                     <th>Nombre Vendedor</th>
                     <th>Nombre Comprador</th>
                     <th>DNI Comprador</th>
-                    <th>Código Animal </th>
+                  
                     <th>Folio Cventa</th>
-                    <th>Ant Cventa</th>
+                  
                     <th><center><i class="fas fa-cog"></i></center></th>
                    
                 </thead>
@@ -376,13 +376,13 @@
                         <tr>
                             <td>{{$Cventa['COD_CVENTA']}}</td>
                             <td>{{date('d-m-y', strtotime($Cventa['FEC_CVENTA']))}}</td>
-                            <td>{{$Cventa['COD_VENDEDOR']}}</td> 
+                            
                             <td>{{$Cventa['NombreVendedor']}}</td>
                             <td>{{$Cventa['NOM_COMPRADOR']}}</td> 
                             <td>{{$Cventa['DNI_COMPRADOR']}}</td> 
-                            <td>{{$Cventa['COD_ANIMAL']}}</td>
+                          
                             <td>{{$Cventa['FOL_CVENTA']}}</td> 
-                            <td>{{$Cventa['ANT_CVENTA']}}</td>
+                            
                             <td>
                             @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                     <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Cventa-edit-{{$Cventa['COD_CVENTA']}}">
