@@ -21,11 +21,14 @@ class AnimalController extends Controller
       // Imprime los datos para verificar si están llegando correctamente
       $fierro = Http::withHeaders($headers)->get(self::urlapi.'FIERROS/GETALL');
       $fierroArreglo = json_decode($fierro->body(), true);
+      $personas = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL');
+        $personasArreglo = json_decode($personas->body(), true);
      
 
      
       return view('Alcaldia.animal')
       ->with('citaArreglo', $citaArreglo)
+      ->with('personasArreglo', $personasArreglo)
       ->with('fierroArreglo', $fierroArreglo);
   
       //return view('Alcaldia.Animal', compact('citaArreglo'));

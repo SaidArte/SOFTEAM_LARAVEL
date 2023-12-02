@@ -102,9 +102,11 @@
             ?>
              @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
             <center><br>
-                <h1>Información de Expedientes Cartas De Ventas</h1>
+                <h1>Información </h1>
             </center></br>
-            
+            <center><br>
+                <h1>Expedientes Cartas  Ventas</h1>
+            </center></br>
            
 
         @section('content')
@@ -117,32 +119,31 @@
         </p>
         @endif
        
-            <div class="modal fade bd-example-modal-sm" id="Cventa" tabindex="-1">
-                <div class="modal-dialog">
+            <div class="modal fade bd-example-modal-lg" id="Cventa" tabindex="-1">
+                <div class="modal-dialog modal-lg ">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Ingresar un nuevo Expedientes_Cventas</h5>
                            
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body  container-fluid">
                             <form action="{{ url('Cventa/insertar') }}" method="post" class="needs-validation cventa-form" >
                                 @csrf
                                 <!--metodo de inserta en codigo de vendedor  atraendo los datos ya existente de la tabla persona-->
-                                <div class="mb-3 mt-3">
+                                <div class="row"> 
+                                <div class="col-md-6">
                                     <label for="COD_VENDEDOR" >Nombre Vendedor</label>
                                     <select class="form-select custom-select" id="COD_VENDEDOR" name="COD_VENDEDOR" required>
                                         <option value="" disabled selected>Seleccione el Nombre del vendedor</option>
-                                        @foreach ($personasArreglo as $personas)
-                                            <option value="{{$personas['COD_PERSONA']}}">{{$personas['NOM_PERSONA']}}</option>
-                                        @endforeach 
+                                        
                                         
                                     
                                     </select>
                                 </div>
 
                                 <!--metodo de inserta en codigo de comprador  atraendo los datos ya existente de la tabla persona-->
-                               <div class="mb-3">
-                                    <label for="NOM_COMPRADOR">Nombre del Comprador</label>
+                               <div class="col-md-6">
+                                    <label for="NOM_COMPRADOR">Nombre  Comprador</label>
                                     <input type="text" id="NOM_COMPRADOR" class="form-control" name="NOM_COMPRADOR" placeholder="Ingresar el nombre completo de la Comprador"   pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="35"  required>
                                     <div class="invalid-feedback">Ingresar el nombre completo de la Comprador</div>
                                 </div>
@@ -152,8 +153,8 @@
                                     <input type="text" id="DNI_COMPRADOR" class="form-control" name="DNI_COMPRADOR" placeholder="Ingresar el numero de identidad de comprador" required>
                                     <div class="invalid-feedback"></div>
                                 </div>-->
-                                <div class="mb-3">
-                                    <label for="DNI_COMPRADOR">Numero de Identidad comprador</label>
+                                <div class="col-md-6">
+                                    <label for="DNI_COMPRADOR">DNI comprador</label>
                                     <input type="text" id="DNI_COMPRADOR" class="form-control @error('DNI_COMPRADOR') is-invalid @enderror" name="DNI_COMPRADOR" placeholder="Ingresar el numero de identidad de comprador" required pattern="[0-9]+" title="Ingrese solo números" maxlength="13">
                                     <div class="invalid-feedback"> Ingresar el DNI completo de la Comprador</div>
                                     @error('DNI_COMPRADOR')
@@ -164,22 +165,18 @@
 
 
                                 <!--metodo de inserta en codigo de animal  atraendo los datos ya existente de la tabla persona-->
-                                <div class="mb-3 mt-3">
+                                <div class="col-md-6">
                                     <label for="COD_ANIMAL" >Animal</label>
                                     <select class="form-select custom-select" id="COD_ANIMAL" name="COD_ANIMAL" required>
                                         <option value="" disabled selected>Seleccione una opción</option>
-                                        @foreach ($AnimalArreglo as $Animal)
-                                            <option value="{{$Animal['COD_ANIMAL']}}">{{$Animal['COD_ANIMAL']}} {{$Animal['CLAS_ANIMAL']}} {{$Animal['CLAS_ANIMAL']}} {{$Animal['RAZ_ANIMAL']}} {{$Animal['COL_ANIMAL']}} {{$Animal['COD_FIERRO']}} {{$Animal['VEN_ANIMAL']}} {{$Animal['HER_ANIMAL']}} {{$Animal['DET_ANIMAL']}}</option>
-                                            
-
-                                        @endforeach 
+                                       
                                         
                                     
                                     </select>
                                 </div>
 
-                                <div class="mb-3 mt-3">
-                                    <label for="FOL_CVENTA">Folios De Cartas</label>
+                                <div class="col-md-6">
+                                    <label for="FOL_CVENTA">Folios Cartas</label>
                                     <input type="text" id="FOL_CVENTA" class="form-control"  @error('FOL_CVENTA') is-invalid @enderror "   name="FOL_CVENTA" placeholder="Ingrese numero de Folio "required pattern="[0-9]+" title="Ingrese solo números" maxlength="5" >
                                     
                                     <div class="invalid-feedback">Ingresar el numero de folio </div>
@@ -192,8 +189,8 @@
                             
 
 
-                                <div class="mb-3 mt-3">
-                                    <label for="ANT_CVENTA">Antecedentes de carta venta</label>
+                                <div class="col-md-6">
+                                    <label for="ANT_CVENTA">Antecedentes carta venta</label>
                                     <select class="form-select custom-select"  id="ANT_CVENTA" name="ANT_CVENTA" required>
                                         <option value="" disabled selected>Seleccione una opción</option>
                                         <option value="SI" selected >SI</option>
@@ -203,6 +200,7 @@
                                     </select>
                                     <div class="invalid-feedback" id="antCventaError">Seleccione una opción válida.</div>
                                 </div>
+                            </div>
                             
                             
 
@@ -319,13 +317,13 @@
 
                              //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                              function limpiarFormulario() {
-                                    document.getElementById("CLAS_ANIMAL").value = "";
-                                    document.getElementById("RAZ_ANIMAL").value = "";
-                                    document.getElementById("COL_ANIMAL").value = "";
-                                    document.getElementById("COD_FIERRO").value = "";
-                                    document.getElementById("VEN_ANIMAL").value = "";
-                                    document.getElementById("HER_ANIMAL").value = "";
-                                    document.getElementById("DET_ANIMAL").value = "";
+                                    document.getElementById("COD_VENDEDOR").value = "";
+                                    document.getElementById("NOM_COMPRADOR").value = "";
+                                    document.getElementById("DNI_COMPRADOR").value = "";
+                                    document.getElementById("COD_ANIMAL").value = "";
+                                    document.getElementById("FOL_CVENTA").value = "";
+                                    document.getElementById("ANT_CVENTA").value = "";
+                                    
                                     
 
                                     const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
@@ -406,7 +404,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Actualizar datos de cartas Ventas</h5>
+                                        <h5 class="modal-title">Actualizar datos cartas Ventas</h5>
                                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -440,11 +438,7 @@
                                                     <input type="text" class="form-control" id="COD_ANIMAL" name="COD_ANIMAL" placeholder=" Ingrese el codigo del animal  " value="{{$Cventa['COD_ANIMAL']}}">
                                                     <select class="form-select custom-select" id="COD_ANIMAL" name="COD_ANIMAL" required>
                                                         <option value="" disabled selected>Seleccione una opción</option>
-                                                            @foreach ($AnimalArreglo as $Animal)
-                                                                <option value="{{$Animal['COD_ANIMAL']}}">{{$Animal['COD_ANIMAL']}} {{$Animal['CLAS_ANIMAL']}} {{$Animal['CLAS_ANIMAL']}} {{$Animal['RAZ_ANIMAL']}} {{$Animal['COL_ANIMAL']}} {{$Animal['COD_FIERRO']}} {{$Animal['VEN_ANIMAL']}} {{$Animal['HER_ANIMAL']}} {{$Animal['DET_ANIMAL']}}</option>
-                                            
-
-                                                                @endforeach 
+                                                          
                                         
                                     
                                                     </select>
@@ -456,13 +450,13 @@
 
 
                                                 <div class="mb-3">
-                                                    <label for="Cventa">Folio de Carta De Venta</label>
+                                                    <label for="Cventa">Folio Carta Venta</label>
                                                     <input type="text" class="form-control" id="FOL_CVENTA" name="FOL_CVENTA" placeholder=" Ingrese el numero de folio  " value="{{$Cventa['FOL_CVENTA']}}">
                                                  
                                                 </div>
 
                                                 <div class="mb-3 mt-3">
-                                                    <label for="Cventa" class="form-label">Antecedentes Carta De Venta</label>
+                                                    <label for="Cventa" class="form-label">Antecedentes Carta Venta</label>
                                                     <input type="text" readonly class="form-control" id="ANT_CVENTA" name="ANT_CVENTA" value="{{$Cventa['ANT_CVENTA']}}">
                                                     <select class="form-select" id="ANT_CVENTA" name="ANT_CVENTA">
                                                         <option value="SI" selected >SI</option>
@@ -534,7 +528,7 @@
                                      exportOptions: {
                                          columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
                                      },
-                                 },
+                                 },/*
                                  {
                                      extend: "pdfHtml5",
                                      text: "<i class='fa-solid fa-file-pdf'></i>",
@@ -543,7 +537,7 @@
                                      exportOptions: {
                                          columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
                                      },
-                                 },
+                                 },*/
                                  {
                                      extend: "print",
                                      text: "<i class='fa-solid fa-print'></i>",
