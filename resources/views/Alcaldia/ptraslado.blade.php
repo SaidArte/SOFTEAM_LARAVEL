@@ -715,21 +715,22 @@
 
                                         <div class="mb-3 mt-3">
                                             <label for="PTraslado" class="form-label">Fecha Traslado</label>
-                                            <input type="date" class="form-control" id="FEC_TRASLADO" name="FEC_TRASLADO" placeholder="Inserte fecha del Traslado" value="{{$PTraslado['FEC_TRASLADO']}}" required>
-                                            <div class="valid-feedback"></div>
+                                            <?php $fecha_formateada = date('Y-m-d', strtotime($PTraslado['FEC_TRASLADO'])); ?>    
+                                            <input type="date" class="form-control" id="FEC_TRASLADO" name="FEC_TRASLADO" value="{{ $fecha_formateada }}" min="{{ date('Y-m-d', time()) }}" required>
+                                            <div class="valid-feedback1-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="id">DNI</label>
-                                            <input type="text" id="dni-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="dni" placeholder="Ingrese número de identidad" oninput="buscarPersona2('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
-                                            <div class="invalid-feedback"></div>
+                                            <input type="text" id="dni-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="dni" value="{{$persona['DNI_PERSONA']}}" placeholder="Ingrese número de identidad" oninput="buscarPersona2('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback2-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                          </div>
                                             <div class="mb-3">
                                             <label for="nom">Nombre</label>
-                                            <input type="text" readonly id="NOM_PERSONA-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="NOM_PERSONA" required>
+                                            <input type="text" readonly id="NOM_PERSONA-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="NOM_PERSONA" value="{{$persona['NOM_PERSONA']}}" required>
                                         </div>
                                             <div class="mb-3">
-                                            <input type="hidden" readonly id="COD_PERSONA-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="COD_PERSONA">
+                                            <input type="hidden" id="COD_PERSONA-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="COD_PERSONA" value="{{$persona['COD_PERSONA']}}">
                                         </div>
                                                     
                                         <div class="mb-3">
@@ -788,7 +789,7 @@
                                         </div>
                                         <div class="mb-3">
                                              <label for="CAN_GANADO">Cantidad Animales</label>
-                                            <input type="text" id="CAN_GANADO" class="form-control" name="CAN_GANADO" placeholder="Ingresar cantidad de animales" required>
+                                            <input type="text" id="CAN_GANADO" class="form-control" name="CAN_GANADO" placeholder="Ingresar cantidad de animales" value="{{$PTraslado['CAN_GANADO']}}" required>
                                              <div class="invalid-feedback"></div>
                                          </div>
                                         <div class="mb-3 mt-3">
