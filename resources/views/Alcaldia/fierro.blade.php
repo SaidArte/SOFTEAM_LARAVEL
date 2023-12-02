@@ -405,10 +405,9 @@
                             <th><center>Fecha</center></th>
                             <th><center>Folio</center></th>
                             <th><center>Tipo Fierro</center></th>
-                            <th><center>Certifico</center></th>
                             <th><center>Imagen</center></th>
                             <th><center>Estado</center></th>
-                            <th><center><i class="fas fa-cog"></i></center></th>
+                            <th><center>Opciones</center></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -437,7 +436,7 @@
                                         <td>{{date('d-m-y', strtotime($fierro['FEC_TRAMITE_FIERRO']))}}</td>   
                                         <td># {{$fierro['NUM_FOLIO_FIERRO']}}</td>
                                         <td>{{$tiposFierro[$fierro['TIP_FIERRO']] }}</td>
-                                        <td>L. {{$fierro['MON_CERTIFICO_FIERRO']}}</td>
+                                        
                                         <td>
                                         <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen del Fierro" class="img-fluid" style="max-height: 100px;">
                                         </td>
@@ -454,14 +453,11 @@
                                     <td>
                                         <!-- Boton de Editar -->
                                         @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
-                                            <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#fierro-edit-{{ $fierro['COD_FIERRO'] }}">
+                                            <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#fierro-edit-{{$fierro['COD_FIERRO']}}">
                                             <i class="fa-solid fa-pen-to-square" style="font-size: 15px"></i>
                                             </button>
                                         @endif
-                                        <!-- Boton de PDF 
-                                        <a href="{{ route('fierro.pdfFierro') }}" class="btn btn-sm btn-danger" data-target="#fierro-edit-{{ $fierro['COD_FIERRO'] }}" target="_blank">
-                                        <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
-                                        </a>-->
+                                        
                                     </td>
                                 </tr>
                                 <!-- Modal for editing goes here -->
@@ -490,12 +486,14 @@
                                                 <div class="mb-3">
                                                     <label for="FEC_TRAMITE_FIERRO" class="form-label">Fecha Tramite:</label>
                                                     <?php $fecha_formateada = date('Y-m-d', strtotime($fierro['FEC_TRAMITE_FIERRO'])); ?>
-                                                    <input type="date" class="form-control" id="FEC_TRAMITE_FIERRO" name="FEC_TRAMITE_FIERRO" value="{{ $fecha_formateada }}">
+                                                    <input type="date" class="form-control" id="FEC_TRAMITE_FIERRO" name="FEC_TRAMITE_FIERRO" value="{{ $fecha_formateada }}" oninput="validarFechaTramite(this.value)">
+                                                    <div class="invalid-feedback" id="fecha-invalid-feedback"></div>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="NUM_FOLIO_FIERRO">Numero Folio</label>
-                                                    <input type="text" class="form-control" id="NUM_FOLIO_FIERRO-{{$fierro['COD_FIERRO']}}" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el Folio" value="{{$fierro['NUM_FOLIO_FIERRO']}}" oninput="validarfolio({{$fierro['COD_FIERRO']}}, this.value)" required>
+                                                    <input type="text" class="form-control" id="NUM_FOLIO_FIERRO-{{ $fierro['COD_FIERRO'] }}" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el Folio" value="{{ $fierro['NUM_FOLIO_FIERRO'] }}" oninput="validarFOLIO({{ $fierro['COD_FIERRO'] }}, this.value)" required>
+                                                    <div class="invalid-feedback" id="invalid-feedback-{{ $fierro['COD_FIERRO'] }}"></div>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -510,7 +508,8 @@
                                                 
                                                 <div class="mb-3">
                                                     <label for="MON_CERTIFICO_FIERRO">Monto Certifico</label>
-                                                    <input type="text" prefix="L. " class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}}" min="1" step="any" required>
+                                                    <input type="text" prefix="L. " class="form-control" id="MON_CERTIFICO_FIERRO" name="MON_CERTIFICO_FIERRO" placeholder="Ingrese el Monto del Certifico" value="{{$fierro['MON_CERTIFICO_FIERRO']}}" min="1" step="any" oninput="validarMontoC({{ $fierro['COD_FIERRO'] }}, this.value)" required>
+                                                    <div class="invalid-feedback" id="invalid-feedback-{{ $fierro['COD_FIERRO'] }}"></div>
                                                 </div>
 
                                                 <div class="form-group">
@@ -530,30 +529,46 @@
                                                 <img src="{{ asset($fierro['IMG_FIERRO']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
 
                                                 <div class="mb-3">
-                                                    <button type="submit" class="btn btn-primary" id="submitButton-{{$fierro['COD_FIERRO']}}">Editar</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                                </div>
+                                                            <!-- Boton de confirmar al editar -->
+                                                            <button type="submit" class="btn btn-primary" id="submitButton-{{$fierro['COD_FIERRO']}}">Editar</button>
+                                                            <!-- Boton de cancelar -->
+                                                            <a href="{{ url('fierro') }}" class="btn btn-danger">Cancelar</a>
+                                                    </div>
                                                 </form>
                                                 
                                                 <script>
-                                                function validarfolio(id, Folio) {
-                                                    var inputElement = document.getElementById("NUM_FOLIO_FIERRO-" + id);
-                                                    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
-
-                                                    // Validar el formato del número de folio
-                                                    if (!/^\d{6}$/.test(Folio) || Folio.length !== 6) {
-                                                        // Si el formato no es correcto o la longitud no es 6, agregar clases de estilo y mostrar el mensaje de error
-                                                        inputElement.classList.add("is-invalid");
-                                                        invalidFeedback.textContent = "El Folio debe tener exactamente 6 dígitos";
-                                                        return false; // Devuelve false para indicar que la validación ha fallado
-                                                    } else {
-                                                        // Si el formato es correcto, quitar clases de estilo y mensaje de error
-                                                        inputElement.classList.remove("is-invalid");
-                                                        invalidFeedback.textContent = "";
-                                                        return true; // Devuelve true para indicar que la validación es exitosa
+                                               function validarFOLIO(id, folio) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("NUM_FOLIO_FIERRO-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback-" + id);
+              
+                                                        if (!/^\d{6}$/.test(folio)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "El folio debe tener exactamente 6 dígitos numéricos";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
                                                     }
-                                                }
 
+                                                    function validarMontoC(id, monto) {
+                                                            var btnGuardar = document.getElementById("submitButton-" + id);
+                                                            var inputElement = document.getElementById("MON_CERTIFICO_FIERRO");
+                                                            var invalidFeedback = document.getElementById("invalid-feedback-" + id);
+
+                                                            // Modifiqué la expresión regular para aceptar al menos 2 dígitos
+                                                            if (!/^\d{2,}$/.test(monto)) {
+                                                                inputElement.classList.add("is-invalid");
+                                                                invalidFeedback.textContent = "El Monto debe tener al menos 2 dígitos";
+                                                                btnGuardar.disabled = true;
+                                                            } else {
+                                                                inputElement.classList.remove("is-invalid");
+                                                                invalidFeedback.textContent = "";
+                                                                btnGuardar.disabled = false;
+                                                            }
+                                                        }
                                                
                                             </script>
 
