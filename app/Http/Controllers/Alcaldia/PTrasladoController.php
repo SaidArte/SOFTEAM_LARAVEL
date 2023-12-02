@@ -50,6 +50,7 @@ class PTrasladoController extends Controller
             "MON_TRASLADO"=> $request -> input("MON_TRASLADO"),
             "COD_FIERRO"=> $request -> input("COD_FIERRO"),
             "CAN_GANADO"=> $request -> input("CAN_GANADO"),
+            "ESTADO" => $request->input("ESTADO"),
         ]);
         return redirect('/ptraslado');
     }
@@ -76,6 +77,8 @@ class PTrasladoController extends Controller
         "MAT_VEHICULO"=> $request -> input("MAT_VEHICULO"),
         "COL_VEHICULO"=> $request -> input("COL_VEHICULO"),
         "MON_TRASLADO"=> $request -> input("MON_TRASLADO"),
+        "CAN_GANADO"=> $request -> input("CAN_GANADO"),
+        "ESTADO" => $request->input("ESTADO"),
     
     ]);
     return redirect('/ptraslado');

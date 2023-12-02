@@ -129,14 +129,14 @@
             <!-- Primera columna -->
             <div class="col-md-4">
                 <div class="mb-3">
-                    <label for="FEC_TRASLADO">Fecha del Traslado</label>
-                    <input type="date" id="FEC_TRASLADO" class="form-control" name="FEC_TRASLADO" placeholder="Inserte la fecha del Traslado" required>
+                    <label for="FEC_TRASLADO">Fecha Traslado</label>
+                    <input type="date" id="FEC_TRASLADO" class="form-control" name="FEC_TRASLADO" placeholder="Inserte fecha del Traslado" required>
                     <div class="invalid-feedback"></div>
                 </div>
 
                 <div class="mb-3">
                     <label for="id">DNI</label>
-                    <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
+                    <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese número de identidad" oninput="buscarPersona(this.value)" required>
                     <div class="invalid-feedback"></div>
                 </div>
 
@@ -149,13 +149,13 @@
                   </div>
 
                   <div class="mb-3">
-                    <label for="DIR_ORIG_PTRASLADO">Direccion de Origen del Traslado</label>
-                    <input type="text" id="DIR_ORIG_PTRASLADO" class="form-control" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar la direccion de origen del traslado" required>
+                    <label for="DIR_ORIG_PTRASLADO">Direccion Origen Traslado</label>
+                    <input type="text" id="DIR_ORIG_PTRASLADO" class="form-control" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar direccion de origen" required>
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
-                    <label for="DIR_DEST_TRASLADO">Direccion de Destino del Traslado</label>
-                    <input type="text" id="DIR_DEST_TRASLADO" class="form-control" name="DIR_DEST_TRASLADO" placeholder="Ingresar la direccion de destino del traslado" required>
+                    <label for="DIR_DEST_TRASLADO">Direccion Destino Traslado</label>
+                    <input type="text" id="DIR_DEST_TRASLADO" class="form-control" name="DIR_DEST_TRASLADO" placeholder="Ingresar direccion de destino" required>
                     <div class="invalid-feedback"></div>
                 </div>
 
@@ -164,28 +164,28 @@
             <!-- Segunda columna -->
             <div class="col-md-4">
                     <div class="mb-3">
-                        <label for="NOM_TRANSPORTISTA">Nombre del Transportista</label>
-                        <input type="text" id="NOM_TRANSPORTISTA" class="form-control" name="NOM_TRANSPORTISTA" placeholder="Ingresar el nombre del transportita" required>
+                        <label for="NOM_TRANSPORTISTA">Nombre Transportista</label>
+                        <input type="text" id="NOM_TRANSPORTISTA" class="form-control" name="NOM_TRANSPORTISTA" placeholder="Ingresar nombre de transportita" required>
                          <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="DNI_TRANSPORTISTA">Numero de Identidad</label>
-                         <input type="text" id="DNI_TRANSPORTISTA" class="form-control" name="DNI_TRANSPORTISTA" placeholder="Ingresar el numero de identidad" required>
+                        <label for="DNI_TRANSPORTISTA">Numero Identidad</label>
+                         <input type="text" id="DNI_TRANSPORTISTA" class="form-control" name="DNI_TRANSPORTISTA" placeholder="Ingresar numero de identidad" required>
                          <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="TEL_TRANSPORTISTA">Numero de Telefono</label>
-                        <input type="text" id="TEL_TRANSPORTISTA" class="form-control" name="TEL_TRANSPORTISTA" placeholder="Ingresar el numero de telefono" required>
+                        <label for="TEL_TRANSPORTISTA">Numero Telefono</label>
+                        <input type="text" id="TEL_TRANSPORTISTA" class="form-control" name="TEL_TRANSPORTISTA" placeholder="Ingresar numero de telefono" required>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="MAR_VEHICULO">Marca del Vehiculo</label>
-                        <input type="text" id="MAR_VEHICULO" class="form-control" name="MAR_VEHICULO" placeholder="Ingresar la marca del vehiculo" required>
+                        <label for="MAR_VEHICULO">Marca Vehiculo</label>
+                        <input type="text" id="MAR_VEHICULO" class="form-control" name="MAR_VEHICULO" placeholder="Ingresar marca del vehiculo" required>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="MOD_VEHICULO"> Modelo del Vehiculo</label>
-                        <input type="text" id="MOD_VEHICULO" class="form-control" name="MOD_VEHICULO" placeholder="Ingresar el modelo del vehiculo" required>
+                        <label for="MOD_VEHICULO"> Modelo Vehiculo</label>
+                        <input type="text" id="MOD_VEHICULO" class="form-control" name="MOD_VEHICULO" placeholder="Ingresar modelo del vehiculo" required>
                         <div class="invalid-feedback"></div>
                     </div>   
             </div>
@@ -193,28 +193,33 @@
             <!-- Tercera columna -->
             <div class="col-md-4">
                     <div class="mb-3">
-                        <label for="MAT_VEHICULO">Matricula del Vehiculo</label>
-                        <input type="text" id="MAT_VEHICULO" class="form-control" name="MAT_VEHICULO" placeholder="Ingresar la matricula del vehiculo" required>
+                        <label for="MAT_VEHICULO">Matricula Vehiculo</label>
+                        <input type="text" id="MAT_VEHICULO" class="form-control" name="MAT_VEHICULO" placeholder="Ingresar matricula del vehiculo" required>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="COL_VEHICULO">Color del Vehiculo</label>
-                        <input type="text" id="COL_VEHICULO" class="form-control" name="COL_VEHICULO" placeholder="Ingresar el color del vehiculo" required>
+                        <label for="COL_VEHICULO">Color Vehiculo</label>
+                        <input type="text" id="COL_VEHICULO" class="form-control" name="COL_VEHICULO" placeholder="Ingresar color del vehiculo" required>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="MON_TRASLADO">Monto del traslado</label>
-                        <input type="text" id="MON_TRASLADO" class="form-control" name="MON_TRASLADO" placeholder="Ingresar el monto del traslado" required>
+                        <label for="MON_TRASLADO">Monto traslado</label>
+                        <input type="text" id="MON_TRASLADO" class="form-control" name="MON_TRASLADO" placeholder="Ingresar monto del traslado" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="CAN_GANADO">Cantidad Animales</label>
+                        <input type="text" id="CAN_GANADO" class="form-control" name="CAN_GANADO" placeholder="Ingresar cantidad de animales" required>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="COD_FIERRO">Codigo del fierro</label>
-                        <input type="text" id="COD_FIERRO" class="form-control" name="COD_FIERRO" placeholder="Ingresar el codigo del Fierro" required>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="CAN_GANADO">Cantidad de Animales</label>
-                        <input type="text" id="CAN_GANADO" class="form-control" name="CAN_GANADO" placeholder="Ingresar la cantidad de animales" required>
+                    <label for="ESTADO">Estado</label>
+                        <select class="form-select custom-select" id="ESTADO" name="ESTADO" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="A">ACTIVO</option>
+                            <option value="I">INACTIVO</option>
+                        </select>
                         <div class="invalid-feedback"></div>
                     </div>
             </div>
@@ -601,9 +606,9 @@
                             document.getElementById("MAT_VEHICULO").value = "";
                             document.getElementById("COL_VEHICULO").value = "";
                             document.getElementById("MON_TRASLADO").value = "";
-                            document.getElementById("COD_DTRASLADO").value = "";
-                            document.getElementById("COD_FIERRO").value = "";
                             document.getElementById("CAN_GANADO").value = "";
+                            document.getElementById("ESTADO").value = "";
+
                                
                             const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
                             invalidFeedbackElements.forEach(element => {
@@ -633,12 +638,12 @@
         <thead>
             <tr>
                 <th>Nº</th>                
-                <th><center>Fecha de Registro</center></th>
                 <th><center>Fecha de Traslado</center></th>
-                <th><center>Nombre del dueño</center></th>
+                <th><center>Nombre del Dueño</center></th>
                 <th><center>Direccion de Origen</center></th>
                 <th><center>Direccion de Destino</center></th>
-                <th><center>Nombre de Transportista</center></th>        
+                <th><center>Nombre de Transportista</center></th> 
+                <th><center>Estado</center></th>      
                 <th><center><i class="fas fa-cog"></i></center></th>
             </tr>
         </thead>
@@ -656,8 +661,7 @@
                     }
                 @endphp
                 <tr>    
-                    <td>{{$PTraslado['COD_PTRASLADO']}}</td> 
-                    <td>{{date('d/m/y',strtotime($PTraslado['FEC_REG_PTRASLADO']))}}</td>              
+                    <td>{{$PTraslado['COD_PTRASLADO']}}</td>             
                     <td>{{date('d/m/y',strtotime($PTraslado['FEC_TRASLADO']))}}</td>
                     <td>
                         @if ($persona !== null)
@@ -670,6 +674,15 @@
                     <td>{{$PTraslado['DIR_DEST_TRASLADO']}}</td>
                     <td>{{$PTraslado['NOM_TRANSPORTISTA']}}</td>
                     <td>
+                        @if ($PTraslado['ESTADO'] === 'A')
+                                ACTIVO
+                            @elseif ($PTraslado['ESTADO'] === 'I')
+                                INACTIVO
+                            @else
+                                DESCONOCIDO
+                            @endif
+                    </td>
+                    <td>
                     @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                         <button value="Editar" title="Editar" class="btn btn-sm btn-warning"  type="button" data-toggle="modal" data-target="#PTraslado-edit-{{$PTraslado['COD_PTRASLADO']}}">
                         <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
@@ -681,29 +694,34 @@
                                         </a>
                         
                     </td>
+                    
                 </tr>
                 <!-- Modal for editing goes here -->
-                <div class="modal fade bd-example-modal-sm" id="PTraslado-edit-{{$PTraslado['COD_PTRASLADO']}}" tabindex="-1">
-                    <div class="modal-dialog">
+                <div class="modal fade bd-example-modal-lg" id="PTraslado-edit-{{$PTraslado['COD_PTRASLADO']}}" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Actualizar Datos</h5>
                                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body container-fluid">
                                 <form action="{{ url('ptraslado/actualizar') }}" method="post" class="row g-3 needs-validation" novalidate>
                                     @csrf
+                                    
+                                <div class="row">
+                                    <!-- Primera columna -->
+                                    <div class="col-md-4">
                                         <input type="hidden" class="form-control" name="COD_PTRASLADO" value="{{$PTraslado['COD_PTRASLADO']}}">
 
                                         <div class="mb-3 mt-3">
-                                            <label for="PTraslado" class="form-label">Fecha de Traslado</label>
-                                            <input type="date" class="form-control" id="FEC_TRASLADO" name="FEC_TRASLADO" placeholder="Inserte la fecha del Traslado" value="{{$PTraslado['FEC_TRASLADO']}}" required>
+                                            <label for="PTraslado" class="form-label">Fecha Traslado</label>
+                                            <input type="date" class="form-control" id="FEC_TRASLADO" name="FEC_TRASLADO" placeholder="Inserte fecha del Traslado" value="{{$PTraslado['FEC_TRASLADO']}}" required>
                                             <div class="valid-feedback"></div>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="id">DNI</label>
-                                            <input type="text" id="dni-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona2('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <input type="text" id="dni-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="dni" placeholder="Ingrese número de identidad" oninput="buscarPersona2('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
                                             <div class="invalid-feedback"></div>
                                          </div>
                                             <div class="mb-3">
@@ -713,62 +731,88 @@
                                             <div class="mb-3">
                                             <input type="hidden" readonly id="COD_PERSONA-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="COD_PERSONA">
                                         </div>
-                            
+                                                    
+                                        <div class="mb-3">
+                                            <label for="PTraslado">Direccion Origen</label>
+                                            <input type="text" class="form-control" id="DIR_ORIG_PTRASLADO" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar direccion de origen del traslado" value="{{$PTraslado['DIR_ORIG_PTRASLADO']}}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="PTraslado">Direccion Destino</label>
+                                            <input type="text" class="form-control" id="DIR_DEST_TRASLADO" name="DIR_DEST_TRASLADO" placeholder="Ingresar direccion de destino del traslado" value="{{$PTraslado['DIR_DEST_TRASLADO']}}">
+                                        </div>
+
                                         
+                                    </div>
 
+                                    <!-- Segunda columna --> 
+                                    <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label for="PTraslado">Direccion de Origen</label>
-                                            <input type="text" class="form-control" id="DIR_ORIG_PTRASLADO" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar la direccion de origen del traslado" value="{{$PTraslado['DIR_ORIG_PTRASLADO']}}">
+                                            <label for="PTraslado">Nombre Transportista</label>
+                                            <input type="text" class="form-control" id="NOM_TRANSPORTISTA" name="NOM_TRANSPORTISTA" placeholder="Ingresar nombre del transportita" value="{{$PTraslado['NOM_TRANSPORTISTA']}}">
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="PTraslado">Direccion de Destino</label>
-                                            <input type="text" class="form-control" id="DIR_DEST_TRASLADO" name="DIR_DEST_TRASLADO" placeholder="Ingresar la direccion de destino del traslado" value="{{$PTraslado['DIR_DEST_TRASLADO']}}">
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="PTraslado">Nombre de Transportista</label>
-                                            <input type="text" class="form-control" id="NOM_TRANSPORTISTA" name="NOM_TRANSPORTISTA" placeholder="Ingresar el nombre del transportita" value="{{$PTraslado['NOM_TRANSPORTISTA']}}">
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="PTraslado">Identidad del Transportista</label>
-                                            <input type="text" class="form-control" id="DNI_TRANSPORTISTA" name="DNI_TRANSPORTISTA" placeholder="Ingresar el numero de identidad" value="{{$PTraslado['DNI_TRANSPORTISTA']}}">
+                                            <label for="PTraslado">Identidad Transportista</label>
+                                            <input type="text" class="form-control" id="DNI_TRANSPORTISTA" name="DNI_TRANSPORTISTA" placeholder="Ingresar numero de identidad" value="{{$PTraslado['DNI_TRANSPORTISTA']}}">
                                         </div>
 
                                          <div class="mb-3">
-                                            <label for="PTraslado">Telefono del Transportista</label>
-                                            <input type="text" class="form-control" id="TEL_TRANSPORTISTA" name="TEL_TRANSPORTISTA" placeholder="Ingresar el numero de telefono" value="{{$PTraslado['TEL_TRANSPORTISTA']}}">
+                                            <label for="PTraslado">Telefono Transportista</label>
+                                            <input type="text" class="form-control" id="TEL_TRANSPORTISTA" name="TEL_TRANSPORTISTA" placeholder="Ingresar numero de telefono" value="{{$PTraslado['TEL_TRANSPORTISTA']}}">
                                         </div> 
 
                                          <div class="mb-3">
-                                            <label for="PTraslado">Marca del Vehiculo</label>
-                                            <input type="text" class="form-control" id="MAR_VEHICULO" name="MAR_VEHICULO" placeholder="Ingresar la marca del vehiculo" value="{{$PTraslado['MAR_VEHICULO']}}">
+                                            <label for="PTraslado">Marca Vehiculo</label>
+                                            <input type="text" class="form-control" id="MAR_VEHICULO" name="MAR_VEHICULO" placeholder="Ingresar marca del vehiculo" value="{{$PTraslado['MAR_VEHICULO']}}">
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="PTraslado">Modelo del Vehiculo</label>
-                                            <input type="text" class="form-control" id="MOD_VEHICULO" name="MOD_VEHICULO" placeholder="Ingresar el modelo del vehiculo" value="{{$PTraslado['MOD_VEHICULO']}}">
+                                            <label for="PTraslado">Modelo Vehiculo</label>
+                                            <input type="text" class="form-control" id="MOD_VEHICULO" name="MOD_VEHICULO" placeholder="Ingresar modelo del vehiculo" value="{{$PTraslado['MOD_VEHICULO']}}">
+                                        </div>
+                                    </div>
+                                    <!-- Tercera columna --> 
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="PTraslado">Matricula Vehiculo</label>
+                                            <input type="text" class="form-control" id="MAT_VEHICULO" name="MAT_VEHICULO" placeholder="Ingresar matricula del vehiculo" value="{{$PTraslado['MAT_VEHICULO']}}">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="PTraslado">Matricula del Vehiculo</label>
-                                            <input type="text" class="form-control" id="MAT_VEHICULO" name="MAT_VEHICULO" placeholder="Ingresar la matricula del vehiculo" value="{{$PTraslado['MAT_VEHICULO']}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="PTraslado">Color del Vehiculo</label>
-                                            <input type="text" class="form-control" id="COL_VEHICULO" name="COL_VEHICULO" placeholder="Ingresar el color del vehiculo" value="{{$PTraslado['COL_VEHICULO']}}">
+                                            <label for="PTraslado">Color Vehiculo</label>
+                                            <input type="text" class="form-control" id="COL_VEHICULO" name="COL_VEHICULO" placeholder="Ingresar color del vehiculo" value="{{$PTraslado['COL_VEHICULO']}}">
                                         </div>
 
                                          <div class="mb-3">
-                                            <label for="PTraslado">Monto del Traslado</label>
-                                            <input type="text" class="form-control" id="MON_TRASLADO" name="MON_TRASLADO" placeholder="Ingresar el monto del traslado" value="{{$PTraslado['MON_TRASLADO']}}">
+                                            <label for="PTraslado">Monto Traslado</label>
+                                            <input type="text" class="form-control" id="MON_TRASLADO" name="MON_TRASLADO" placeholder="Ingresar monto del traslado" value="{{$PTraslado['MON_TRASLADO']}}">
                                         </div>
-                                    
+                                        <div class="mb-3">
+                                             <label for="CAN_GANADO">Cantidad Animales</label>
+                                            <input type="text" id="CAN_GANADO" class="form-control" name="CAN_GANADO" placeholder="Ingresar cantidad de animales" required>
+                                             <div class="invalid-feedback"></div>
+                                         </div>
+                                        <div class="mb-3 mt-3">
+                                            <label for="PTraslado">Estado</label>
+                                            <select class="form-select custom-select" id="ESTADO" name="ESTADO" required>
+                                                <option value="X" selected disabled>- Elija un estado -</option>
+                                                <option value="A" @if($PTraslado['ESTADO'] === 'A') selected @endif>ACTIVO</option>
+                                                <option value="I" @if($PTraslado['ESTADO'] === 'I') selected @endif>INACTIVO</option>
+                                            </select>
+                                        </div>
+                                     </div>
+                         <!-- Otras filas y columnas -->
+
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="mb-3">
                                             <button type="submit" class="btn btn-primary">Editar</button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                        </div>
                                     </div>
-                                </form>
+                                 </div>
+                             </form>
+                         </div>
+                    
 
                                    <script>
                                 //Función para buscar personas.
@@ -882,23 +926,37 @@
                                 },
                             },
                             {
-                                extend: "pdfHtml5",
-                                text: "<i class='fa-solid fa-file-pdf'></i>",
-                                tittleAttr: "Exportar a PDF",
-                                className: "btn btn-danger",
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                    extend: "print",
+                                    filename: "Guia Franca",
+                                    text: "<i class='fa-solid fa-print'></i>",
+                                    tittleAttr: "Imprimir",
+                                    className: "btn btn-secondary",
+                                    footer: true,
+                                    customize: function(win) {
+                                        // Agrega tu encabezado personalizado aquí
+                                        $(win.document.head).append("<style>@page { margin-top: 20px; }</style>");
+                                        
+                                        // Agrega dos logos al encabezado
+                                    
+                                        
+                                        $(win.document.body).prepend("<h5 style='text-align: center;'>           REGISTROS DE PERMISOS DE TRASLADO  </h5>");
+                                        $(win.document.body).prepend("<h6 style='text-align: center;'>  Correo: alcaldiamunicipaltalanga@gmail.com  </h6>");
+                                        $(win.document.body).prepend("<h6 style='text-align: center;'>Telefonos: 2775-8010, 2775-8018, 2775-8735</h6>");
+                                        $(win.document.body).prepend("<h6 style='text-align: center;'>=======================================================</h6>");
+                                        $(win.document.body).prepend("<h6 style='text-align: center;'>DEPARTAMENTO DE FRANCISCO MORAZÁN- HONDURAS, C.A.</h6>");
+                                        $(win.document.body).prepend("<div style='text-align: center;'><img src='vendor/adminlte/dist/img/Talanga.png' alt='Logo 1' width='100' height='100' style='float: left; margin-right: 20px;' /><img src='vendor/adminlte/dist/img/Honduras.png' alt='Logo 2' width='100' height='100' style='float: right; margin-left: 20px;' /></div>");
+                                        $(win.document.body).prepend("<h6 style='text-align: center;'>MUNICIPALIDAD TALANGA</h6>");
+                                        
+                                        // Agrega la fecha actual
+                                        var currentDate = new Date();
+                                        var formattedDate = currentDate.toLocaleDateString();
+                                        $(win.document.body).prepend("<p style='text-align: right;'>Fecha de impresión: " + formattedDate + "</p>");
+                                    },
+                                    exportOptions: {
+                                        columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
+                                    },
                                 },
-                            },
-                            {
-                                extend: "print",
-                                text: "<i class='fa-solid fa-print'></i>",
-                                tittleAttr: "Imprimir",
-                                className: "btn btn-secondary",
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
-                                },
-                            },
+                            
                         ],
                         lengthMenu : [10, 20, 30, 40, 50],
                         language: {
