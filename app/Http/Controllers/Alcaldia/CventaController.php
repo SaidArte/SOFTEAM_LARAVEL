@@ -95,7 +95,13 @@ class CventaController extends Controller
        ]);
 
        
-       return redirect('/Cventa');
+       //return redirect('/Cventa');
+       if ($actualizar_cventa->successful()) {
+        return redirect('/Cventa')->with('update_success', 'Datos actualizados exitosamente.');
+      } else {
+        return redirect('/Cventa')->with('update_error', 'Error al actualizar los datos.');
+      }
+    
    }
 
    

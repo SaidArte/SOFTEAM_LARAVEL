@@ -138,14 +138,15 @@
                                     <div class="mb-3">
                                         <input type="hidden"readonly  id="COD_PERSONA" class="form-control" name="COD_PERSONA"  oninput="buscarPersona(this.value)" required>
                                     </div> 
-                                    <div class="mb-3">
+                                    <div class="col-md-6">
         
                                         <label for="nom">N° Fierro</label>
                                         <input type="text" readonly id="COD_FIERRO" class="form-control" name="COD_FIERRO">
                                     </div> 
                                </div>
-                                    <div class="mb-3">
-                                        <img id="imagenFierro" src="" alt="Imagen del Fierro" style="display: none;">
+                                    <div class="col-md-6">
+                                        <img id="imagenFierro" src="" alt="Imagen del Fierro" style="display: none; max-width: 60%; max-height: 60%; ">
+
                                         <label for="nom">Imagen Fierro</label>
                                         <input type="text" readonly id="IMG_FIERRO" class="form-control" name="IMG_FIERRO">
                                     </div> 
@@ -251,7 +252,7 @@
                                 
                                 <div class="col-md-6">
                                     <label for="DET_ANIMAL">Detalle  Animal</label>
-                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal"required >
+                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal" required >
                                     <div class="invalid-feedback">Ingrese solo letras en detalle del animal </div>
                                 </div>
                             </div>  
@@ -460,7 +461,7 @@
                                     document.getElementById("dni").value = "";
                                     document.getElementById("NOM_PERSONA").value = "";
                                     document.getElementById("COD_PERSONA").value = "";
-                                    document.getElementById("IMG_FIERRO").value = "";
+                                    //document.getElementById("IMG_FIERRO").value = "";
                                     document.getElementById("CLAS_ANIMAL").value = "";
                                     document.getElementById("RAZ_ANIMAL").value = "";
                                     document.getElementById("COL_ANIMAL").value = "";
@@ -468,6 +469,10 @@
                                     document.getElementById("VEN_ANIMAL").value = "";
                                     document.getElementById("HER_ANIMAL").value = "";
                                     document.getElementById("DET_ANIMAL").value = "";
+
+                                     // Limpiar el campo de imagen y ocultar la imagen
+                                  document.getElementById("IMG_FIERRO").value = "";
+                                  document.getElementById("imagenFierro").style.display = 'none';
                                     
 
                                     const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
@@ -479,12 +484,22 @@
                                     invalidFields.forEach(field => {
                                         field.classList.remove("is-invalid");
                                     });
+
+                                    
+
+
+
+
                                 }
                                 document.getElementById("CancelarButton").addEventListener("click", function() {
                                     limpiarFormulario();
                                 });
 
+
+
+
                             </script>
+
                           
 
 
@@ -544,92 +559,178 @@
                         
                         </tr>
                         <!-- Modal for editing goes here -->
-                        <div class="modal fade bd-example-modal-sm" id="Animal-edit-{{$Animal['COD_ANIMAL']}}" tabindex="-1">
-                            <div class="modal-dialog">
+                        <div class="modal fade bd-example-modal-lg" id="Animal-edit-{{$Animal['COD_ANIMAL']}}" tabindex="-1">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Actualizar Datos Animales</h5>
                                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
-                                        <form action="{{ url('Animal/actualizar') }}" method="post">
+                                    <div class="modal-bodycontainer-fluid ">
+                                        <form action="{{ url('Animal/actualizar') }}" method="post" class="row g-3 needs-validation">
                                             @csrf
                                                 <input type="hidden" class="form-control" name="COD_ANIMAL" value="{{$Animal['COD_ANIMAL']}}">
                                                 <!--
-                                                <div class="mb-3">
+                                                <div class="col-md-6">
                                                     <label for="Animal">Fecha  Registro Animal</label>
                                                     <input type="text" readonly class="form-control" id="FEC_REG_ANIMAL" name="FEC_REG_ANIMAL" value="{{date('d-m-y', strtotime($Animal['FEC_REG_ANIMAL']))}}">
                                                     <input type="date" class="form-control" id="FEC_REG_ANIMAL" name="FEC_REG_ANIMAL" value="{{$Animal['FEC_REG_ANIMAL']}}">
                                     
                                                 </div>
                                             -->
-                                                <div class="mb-3">
+                                            <div class="row">  
+                                            
+                                            <div class="col-md-6">
                                                     <label for="Animal">Clase Animal</label>
-                                                    <input type="text" class="form-control" id="CLAS_ANIMAL" name="CLAS_ANIMAL" placeholder=" Ingrese La clase Del Animal  " value="{{$Animal['CLAS_ANIMAL']}}">
+                                                    <input type="text" class="form-control" id="CLAS_ANIMAL-{{$Animal['COD_ANIMAL']}}" name="CLAS_ANIMAL" placeholder=" Ingrese La clase Del Animal  " value="{{$Animal['CLAS_ANIMAL']}}" oninput=" validarClase('{{$Animal['COD_ANIMAL']}}', this.value)" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="30"required>
+                                                    <div class="invalid-feedback" id="invalid-feedback6-{{$Animal['COD_ANIMAL']}}">Solo Se Permirte Ingresar letras</div>
                                             
                                                 </div>
-                                                <div class="mb-3">
+
+                                               
+
+
+                                                <div class="col-md-6">
                                                     <label for="Animal">Raza  Animal</label>
-                                                    <input type="text" class="form-control" id="RAZ_ANIMAL" name="RAZ_ANIMAL" placeholder=" Ingrese La Raza Del Animal  " value="{{$Animal['RAZ_ANIMAL']}}">
+                                                    <input type="text" class="form-control" id="RAZ_ANIMAL-{{$Animal['COD_ANIMAL']}}" name="RAZ_ANIMAL" placeholder=" Ingrese La Raza Del Animal  " value="{{$Animal['RAZ_ANIMAL']}}"oninput=" validarRaza('{{$Animal['COD_ANIMAL']}}', this.value)" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="30"required>
+                                                    <div class="invalid-feedback" id="invalid-feedback6-{{$Animal['COD_ANIMAL']}}">Solo Se Permirte Ingresar letras</div>
                                                     
                                                 </div>
 
 
-                                                <div class="mb-3">
+                                                <div class="col-md-6">
                                                     <label for="Animal">Color  Animal</label>
-                                                    <input type="text" class="form-control" id="COL_ANIMAL" name="COL_ANIMAL" placeholder=" Ingrese El Color Del animal  " value="{{$Animal['COL_ANIMAL']}}">
+                                                    <input type="text" class="form-control" id="COL_ANIMAL-{{$Animal['COD_ANIMAL']}}" name="COL_ANIMAL" placeholder=" Ingrese El Color Del animal  " value="{{$Animal['COL_ANIMAL']}}"oninput=" validarColor('{{$Animal['COD_ANIMAL']}}', this.value)" required>
+                                                    <div class="invalid-feedback" id="invalid-feedback6-{{$Animal['COD_ANIMAL']}}">Solo Se Permirte Ingresar letras</div>
                                                   
 
                                                 </div>
 
 
-                                                <div class="mb-3">
+                                                <div class="col-md-6">
                                                     <label for="Animal">Codigo fierro</label>
                                                     <input type="text" class="form-control" id="COD_FIERRO" name="COD_FIERRO" placeholder=" Ingrese El Codigo Del Fierro  " value="{{$Animal['COD_FIERRO']}}">
-                                                    <select class="form-select custom-select" id="COD_FIERRO" name="COD_FIERRO" >
-                                                        <option value="" disabled selected>Seleccione Datos de Fierro </option>
-                                                   
-                                                        
                                                     
-                                                    </select>
 
                                                 </div>
 
                                                 
 
-                                                <div class="mb-3 mt-3">
-                                                    <label for="Animal" > Venteado  Animal</label>
+                                                <div class="col-md-6">
+                                                    <label for="Animal" class="form-label"> Venteado  Animal</label>
                                                 
-                                                    <select class="form-select  custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL" value="{{$Animal['VEN_ANIMAL']}}">
-                                                        <option value="" disabled selected>Seleccione una opción</option>
-                                                        <option value="S" selected >SI</option>
-                                                        <option value="N" selected >NO</option>
+                                                    <select class="form-select  custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL" value="{{$Animal['VEN_ANIMAL']}}"required >
+                                                        <option value="S" @if($Animal['VEN_ANIMAL'] === 'S') selected @endif>SI</option>
+                                                        <option value="N" @if($Animal['VEN_ANIMAL'] === 'N') selected @endif>NO</option>
+                                                        
                                                         
                                                     </select>
+                                                    <div class="invalid-feedback"></div>
                                                 </div>
 
-                                                <div class="mb-3 mt-3">
+                                                <div class="col-md-6">
                                                     <label for="Animal" class="form-label">Herrado Animal</label>
-                                                
-                                                    <select class="form-select  custom-select" id="HER_ANIMAL" name="HER_ANIMAL" value="{{$Animal['HER_ANIMAL']}}" >
-                                                        <option value="" disabled selected>Seleccione una opción</option>
-                                                        <option value="S" selected >SI</option>
-                                                        <option value="N" selected >NO</option>
-                                                        
+                                                    <select class="form-select custom-select"  id="HER_ANIMAL" name="HER_ANIMAL" value="{{$Animal['HER_ANIMAL']}}" required>
+                                                        <option value="S" @if($Animal['HER_ANIMAL'] === 'S') selected @endif>SI</option>
+                                                        <option value="N" @if($Animal['HER_ANIMAL'] === 'N') selected @endif>NO</option>
                                                     </select>
+                                                    <div class="invalid-feedback"></div>
                                                 </div>
 
-                                                <div class="mb-3">
-                                                    <label for="Animal">Detalle Animal</label>
-                                                    <input type="text" class="form-control" id="DET_ANIMAL" name="DET_ANIMAL" placeholder=" Ingrese El Detalle Del Animal  " value="{{$Animal['DET_ANIMAL']}}">
-                                                </div>
 
                                                 
+
+                                                <div class="col-md-6">
+                                                    <label for="Animal">Detalle Animal</label>
+                                                    <input type="text" class="form-control" id="DET_ANIMAL-{{$Animal['COD_ANIMAL']}}" name="DET_ANIMAL" placeholder=" Ingrese El Detalle Del Animal  " value="{{$Animal['DET_ANIMAL']}}"oninput=" validarDet('{{$Animal['COD_ANIMAL']}}', this.value)"  required>
+                                                    <div class="invalid-feedback" id="invalid-feedback6-{{$Animal['COD_ANIMAL']}}">Solo Se Permirte Ingresar letras</div>
+                                                </div>
+                                            </div>
+
+                                                <!--
                                                 <div class="mb-3">
                                                     <button type="submit" class="btn btn-primary">Editar</button>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                            
+                                            </div>-->
+                                            <div class="mb-3">
+                                                    <button type="submit" class="btn btn-primary" id="submitButton-{{$Animal['COD_ANIMAL']}}">Editar</button>
+                                                     <a href="{{ url('Animal') }}" class="btn btn-danger">Cancelar</a>
                                             </div>
+
                                         </form>
+                                        
+                                        <script>
+                                            
+                                            function validarClase(id, clase) {
+    var btnGuardar = document.getElementById("submitButton-" + id);
+    var inputElement = document.getElementById("CLAS_ANIMAL-" + id);
+    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+    if (clase.length < 5 || clase.length > 10 || !/^[a-zA-Z\s]+$/.test(clase)) {
+        inputElement.classList.add("is-invalid");
+        invalidFeedback.textContent = "La clase debe tener al menos 5 caracteres y no más de 10, sin números";
+        btnGuardar.disabled = true;
+    } else {
+        inputElement.classList.remove("is-invalid");
+        invalidFeedback.textContent = "";
+        btnGuardar.disabled = false;
+    }
+}
+
+function validarRaza(id, raza) {
+    var btnGuardar = document.getElementById("submitButton-" + id);
+    var inputElement = document.getElementById("RAZ_ANIMAL-" + id);
+    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+    if (raza.length < 5 || raza.length > 10 || !/^[a-zA-Z\s]+$/.test(raza)) {
+        inputElement.classList.add("is-invalid");
+        invalidFeedback.textContent = "La raza debe tener al menos 5 caracteres y no más de 10, sin números";
+        btnGuardar.disabled = true;
+    } else {
+        inputElement.classList.remove("is-invalid");
+        invalidFeedback.textContent = "";
+        btnGuardar.disabled = false;
+    }
+}
+
+function validarColor(id, color) {
+    var btnGuardar = document.getElementById("submitButton-" + id);
+    var inputElement = document.getElementById("COL_ANIMAL-" + id);
+    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+    if (color.length < 4 || color.length > 15 || !/^[a-zA-Z\s]+$/.test(color)) {
+        inputElement.classList.add("is-invalid");
+        invalidFeedback.textContent = "El color debe tener al menos 4 caracteres y no más de 15, sin números";
+        btnGuardar.disabled = true;
+    } else {
+        inputElement.classList.remove("is-invalid");
+        invalidFeedback.textContent = "";
+        btnGuardar.disabled = false;
+    }
+}
+
+function validarDet(id, det) {
+    var btnGuardar = document.getElementById("submitButton-" + id);
+    var inputElement = document.getElementById("DET_ANIMAL-" + id);
+    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+    if (det.length < 5 || det.length > 100 || !/^[a-zA-Z\s]+$/.test(det)) {
+        inputElement.classList.add("is-invalid");
+        invalidFeedback.textContent = "El detalle debe tener al menos 5 caracteres y no más de 100, sin números";
+        btnGuardar.disabled = true;
+    } else {
+        inputElement.classList.remove("is-invalid");
+        invalidFeedback.textContent = "";
+        btnGuardar.disabled = false;
+    }
+}
+
+
+                                        </script>
+
+
+
                                     </div>
                                 </div>
                             </div>
@@ -671,6 +772,22 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
             
             <script>
+
+                @if(session('update_success'))
+            Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
+        @endif
+
+        @if(session('update_error'))
+            Swal.fire('¡Error!', '{{ session('update_error') }}', 'error');
+        @endif
+
+        @if(session('success'))
+            Swal.fire('¡Éxito!', '{{ session('success') }}', 'success');
+        @endif
+
+        @if(session('error'))
+            Swal.fire('¡Error!', '{{ session('error') }}', 'error');
+        @endif
             $(document).ready(function() {
                 $('#modAnimal').DataTable({
                     responsive: true,
@@ -704,10 +821,10 @@
                                 // Agrega tu encabezado personalizado aquí
                                 $(win.document.head).append("<style>@page { margin-top: 20px; }</style>");
                                 
-                                // Agrega dos logos al encabezado
+                                // Agrega dos logos al encabezado 
                             
                                 
-                                $(win.document.body).prepend("<h5 style='text-align: center;'>           REGISTROS DE FIERROS  </h5>");
+                                $(win.document.body).prepend("<h5 style='text-align: center;'>           REGISTROS DE ANIMALES  </h5>");
                                 $(win.document.body).prepend("<h6 style='text-align: center;'>  Correo: alcaldiamunicipaltalanga@gmail.com  </h6>");
                                 $(win.document.body).prepend("<h6 style='text-align: center;'>Telefonos: 2775-8010, 2775-8018, 2775-8735</h6>");
                                 $(win.document.body).prepend("<h6 style='text-align: center;'>=======================================================</h6>");

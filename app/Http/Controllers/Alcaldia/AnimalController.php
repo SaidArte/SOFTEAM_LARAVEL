@@ -91,7 +91,15 @@ class AnimalController extends Controller
        ]);
 
        
-       return redirect('/Animal');
+       //return redirect('/Animal');
+       if ($actualizar_animal->successful()) {
+        return redirect('/Animal')->with('update_success', 'Datos actualizados exitosamente.');
+     } else {
+        return redirect('/Animal')->with('update_error', 'Error al actualizar los datos.');
+    }
+
+
+
    }
 
 

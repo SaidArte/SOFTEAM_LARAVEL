@@ -1,4 +1,3 @@
-
 @extends('adminlte::page')
 @php
     use Carbon\Carbon;
@@ -130,15 +129,35 @@
                             <form action="{{ url('Cventa/insertar') }}" method="post" class="needs-validation cventa-form" >
                                 @csrf
                                 <!--metodo de inserta en codigo de vendedor  atraendo los datos ya existente de la tabla persona-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="id">DNI</label>
+                                         <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
+                                         <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="nom">Nombre Vendedor</label>
+                                         <input type="text"readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA"  required>
+                                    </div>
+                               
+                                    <div class="mb-3">
+                                        <label for="nom"></label>
+                                        <input type="hidden"readonly  id="COD_PERSONA" class="form-control" name="COD_PERSONA"  oninput="buscarPersona(this.value)" required>
+                                    </div> 
+                                    
+                               </div>
+
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                                 <div class="row"> 
                                 <div class="col-md-6">
-                                    <label for="COD_VENDEDOR" >Nombre Vendedor</label>
-                                    <select class="form-select custom-select" id="COD_VENDEDOR" name="COD_VENDEDOR" required>
-                                        <option value="" disabled selected>Seleccione el Nombre del vendedor</option>
-                                        
-                                        
-                                    
-                                    </select>
+                                    <label for="COD_VENDEDOR" >COD Vendedor</label>
+                                    <input type="text" id="COD_VENDEDOR" class="form-control" name="COD_VENDEDOR" readonly>
                                 </div>
 
                                 <!--metodo de inserta en codigo de comprador  atraendo los datos ya existente de la tabla persona-->
@@ -165,15 +184,51 @@
 
 
                                 <!--metodo de inserta en codigo de animal  atraendo los datos ya existente de la tabla persona-->
+                                
+
                                 <div class="col-md-6">
-                                    <label for="COD_ANIMAL" >Animal</label>
-                                    <select class="form-select custom-select" id="COD_ANIMAL" name="COD_ANIMAL" required>
-                                        <option value="" disabled selected>Seleccione una opción</option>
-                                       
-                                        
-                                    
+                                    <label for="COD_ANIMAL">Animal</label>
+                                    <select class="form-select custom-select" id="COD_ANIMAL" name="COD_ANIMAL" placeholder="Seleccione Datos de Animal" oninput="buscarAnimal(this.value)" required>
+                                        <option value="" disabled selected>Seleccione Datos</option>
+                                        @foreach (array_slice($AnimalArreglo, -5) as $Animal)
+                                            <option value="{{$Animal['COD_ANIMAL']}}">{{$Animal['COD_ANIMAL']}}</option>
+                                        @endforeach 
                                     </select>
                                 </div>
+
+                                <!--DATOS DEL ANIMAL-->
+                                <div class="col-md-6">
+        
+                                    <label for="nom">N° Fierro</label>
+                                    <input type="text" readonly id="COD_FIERRO" class="form-control" name="COD_FIERRO">
+                                </div> 
+                              
+                              
+                              
+                               <div class="col-md-6">
+                                      
+                                    <label for="nom">Clase Animal</label>
+                                    <input type="text" readonly id="CLAS_ANIMAL" class="form-control" name="CLAS_ANIMAL">
+                                </div>
+                              
+                               <div class="col-md-6">
+                                      
+                                    <label for="nom">Color Animla </label>
+                                    <input type="text" readonly id="COL_ANIMAL" class="form-control" name="COL_ANIMAL">
+                                </div>
+                              
+                               <div class="col-md-6">
+                                      
+                                    <label for="nom">Detalle Animal</label>
+                                    <input type="text" readonly id="DET_ANIMAL" class="form-control" name="DET_ANIMAL">
+                                </div>
+
+
+
+
+
+
+
 
                                 <div class="col-md-6">
                                     <label for="FOL_CVENTA">Folios Cartas</label>
@@ -183,7 +238,7 @@
                                     @error('FOL_CVENTA')
                                         <div class="invalid-feedback">Ingresar el numero de folio</div>
                                     @enderror
-                                   
+                                    
                                     
                                 </div>
                             
@@ -315,14 +370,112 @@
                                 }
                             });
 
+                             //Función para buscar personas.
+                             function buscarPersona(idPersona) {
+                                            var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
+                                            var personaEncontrada = false;
+
+                                            if(idPersona){
+                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
+                                                for (var i = 0; i < personasArreglo.length; i++) {
+                                                    if (personasArreglo[i].DNI_PERSONA == idPersona) {
+                                                        personaEncontrada = true;
+                                                        $('#NOM_PERSONA').val(personasArreglo[i].NOM_PERSONA);
+                                                        $('#COD_PERSONA').val(personasArreglo[i].COD_PERSONA);
+                                                         // Asigna el valor de COD_PERSONA a COD_VENDEDOR
+                                                          $('#COD_VENDEDOR').val(personasArreglo[i].COD_PERSONA);
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (!personaEncontrada) {
+                                                    personaEncontrada = false;
+                                                    $('#NOM_PERSONA').val('Persona no encontrada');
+                                                    $('#COD_PERSONA').val('');
+                                                    $('#COD_VENDEDOR').val(''); // Si no se encuentra la persona, limpia COD_VENDEDOR
+                                                }
+
+                                            }else{
+                                                personaEncontrada = false;
+                                                $('#NOM_PERSONA').val('');
+                                                $('#COD_PERSONA').val('');
+                                                $('#COD_VENDEDOR').val(''); // Si no hay ID, limpia COD_VENDEDOR
+                                            }
+                                        };
+
+
+                                //Función para buscar animal.
+                                function buscarAnimal(idAnimal) {
+                                            var AnimalArreglo = <?php echo json_encode($AnimalArreglo); ?>;
+                                            var AnimalEncontrada = false;
+
+                                            if(idAnimal){
+                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
+                                                for (var i = 0; i < AnimalArreglo.length; i++) {
+                                                    if (AnimalArreglo[i].COD_ANIMAL == idAnimal) {
+                                                        AnimalEncontrada = true;
+                                                        $('#CLAS_ANIMAL').val(AnimalArreglo[i].CLAS_ANIMAL);
+                                                        $('#COL_ANIMAL').val(AnimalArreglo[i].COL_ANIMAL);
+                                                        $('#COD_FIERRO').val(AnimalArreglo[i].COD_FIERRO);
+                                                        $('#DET_ANIMAL').val(AnimalArreglo[i].DET_ANIMAL);
+
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (!AnimalEncontrada) {
+                                                    AnimalEncontrada = false;
+                                                    $('#CLAS_ANIMAL').val();
+                                                        $('#COL_ANIMAL').val();
+                                                        $('#COD_FIERRO').val(); 
+                                                        $('#DET_ANIMAL').val('');
+                                                   
+                                                }
+
+                                            }else{
+                                                AnimalEncontrada = false;
+                                                $('#CLAS_ANIMAL').val('');
+                                                $('#COL_ANIMAL').val('');
+                                                $('#COD_FIERRO').val('');
+                                                $('#DET_ANIMAL').val('');
+
+
+                                               
+                                        }; 
+                                    } 
+
+
+                                       
+             
+
+                     
+
+
+                           
+
+                   
+
+
                              //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                              function limpiarFormulario() {
+                                    document.getElementById("dni").value = "";
+                                    document.getElementById("NOM_PERSONA").value = "";
+                                    document.getElementById("COD_PERSONA").value = "";
                                     document.getElementById("COD_VENDEDOR").value = "";
                                     document.getElementById("NOM_COMPRADOR").value = "";
                                     document.getElementById("DNI_COMPRADOR").value = "";
                                     document.getElementById("COD_ANIMAL").value = "";
                                     document.getElementById("FOL_CVENTA").value = "";
                                     document.getElementById("ANT_CVENTA").value = "";
+
+                                    //ANIMAL
+                                    document.getElementById("CLAS_ANIMAL").value = "";
+                                    
+                                    document.getElementById("COL_ANIMAL").value = "";
+                                    document.getElementById("COD_FIERRO").value = "";
+                                    
+                                    document.getElementById("DET_ANIMAL").value = "";
+
                                     
                                     
 
@@ -339,6 +492,14 @@
                                 document.getElementById("CancelarButton").addEventListener("click", function() {
                                     limpiarFormulario();
                                 });
+
+
+                                
+
+
+
+
+
                         </script>
 
 
@@ -390,58 +551,72 @@
                                     </button>
                             @endif
 
-                             <!-- Boton de PDF -->
+                             <!-- Boton de PDF 
                               <a href="{{ route('Cventa.pdfc') }}" class="btn btn-sm btn-danger" data-target="#Cventa-edit-{{$Cventa['COD_CVENTA']}}" target="_blank">
                                     <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
-                             </a>
+                             </a>-->
     
 
                             </td>   
                                
                         </tr>
                         <!-- Modal for editing goes here -->
-                        <div class="modal fade bd-example-modal-sm" id="Cventa-edit-{{$Cventa['COD_CVENTA']}}" tabindex="-1">
-                            <div class="modal-dialog">
+                        <div class="modal fade bd-example-modal-lg" id="Cventa-edit-{{$Cventa['COD_CVENTA']}}" tabindex="-1">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Actualizar datos cartas Ventas</h5>
+                                    <div class="modal-header ">
+                                        <h5 class="modal-title">Actualizar Datos cartas Ventas</h5>
                                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
-                                        <form action="{{ url('Cventa/actualizar') }}" method="post">
+                                    <div class="modal-body container-fluid">
+                                        <form action="{{ url('Cventa/actualizar') }}" method="post" class="row g-3 needs-validation" >
                                             @csrf
                                                 <input type="hidden" class="form-control" name="COD_CVENTA" value="{{$Cventa['COD_CVENTA']}}">
 
-                                                <div class="mb-3">
+                                              
+
+
+                                                <div class="row">
+
+                                                <div class="col-md-6">
                                                     <label for="Cventa">Fecha  Registro Cventa</label>
                                                     <input type="text" readonly class="form-control" id="FEC_CVENTA" name="FEC_CVENTA" value="{{date('d-m-y', strtotime($Cventa['FEC_CVENTA']))}}">
                                                     <input type="date" class="form-control" id="FEC_CVENTA" name="FEC_CVENTA" value="{{$Cventa['FEC_CVENTA']}}">
                                     
                                                 </div>
 
-                                                <div class="mb-3">
+                                                
+
+
+
+
+
+
+
+                                                <div class="col-md-6">
                                                     <label for="Cventa">Codigo Vendedor</label>
-                                                    <input type="text" class="form-control" id="COD_VENDEDOR" name="COD_VENDEDOR" placeholder=" Ingrese el codigo del vendedor  " value="{{$Cventa['COD_VENDEDOR']}}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="Cventa">nombre Comprador</label>
-                                                    <input type="text" class="form-control" id="NOM_COMPRADOR" name="NOM_COMPRADOR" placeholder=" Ingrese el codigo del comprador  " value="{{$Cventa['NOM_COMPRADOR']}}">
+                                                    <input type="text" class="form-control" id="COD_VENDEDOR-{{$Cventa['COD_CVENTA']}}" name="COD_VENDEDOR" placeholder=" Ingrese el codigo del vendedor  " value="{{$Cventa['COD_VENDEDOR']}}   ">
+                                                    <div class="invalid-feedback" id="invalid-feedback6-{{$Cventa['COD_CVENTA']}}"></div>
                                                 </div>
 
-                                               <div class="mb-3">
+                                                
+
+                                                <div class="col-md-6">
+                                                    <label for="Cventa">Nombre Comprador</label>
+                                                    <input type="text" class="form-control" id="NOM_COMPRADOR-{{$Cventa['COD_CVENTA']}}" name="NOM_COMPRADOR" placeholder="Ingrese el nombre del comprador" value="{{$Cventa['NOM_COMPRADOR']}}" oninput=" validarNombre('{{$Cventa['COD_CVENTA']}}', this.value)" required>
+                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Cventa['COD_CVENTA']}}">Solo Se Permirte Ingresar letras</div>
+                                                </div>
+
+                                               <div class="col-md-6">
                                                     <label for="Cventa">DNI Comprador</label>
-                                                    <input type="text" class="form-control" id="DNI_COMPRADOR" name="DNI_COMPRADOR" placeholder=" Ingrese el codigo del comprador  " value="{{$Cventa['DNI_COMPRADOR']}}">
+                                                    <input type="text" class="form-control" id="DNI_COMPRADOR-{{$Cventa['COD_CVENTA']}}" name="DNI_COMPRADOR" placeholder=" Ingrese el codigo del comprador  " value="{{$Cventa['DNI_COMPRADOR']}}"oninput=" validarDNI('{{$Cventa['COD_CVENTA']}}', this.value)" required>
+                                                    <div class="invalid-feedback" id="invalid-feedback6-{{$Cventa['COD_CVENTA']}}">Solo Se Permirte Ingresar Numeros</div>
                                                 </div>
 
-                                                <div class="mb-3">
+                                                <div class="col-md-6">
                                                     <label for="Cventa">Codigo Animal</label>
-                                                    <input type="text" class="form-control" id="COD_ANIMAL" name="COD_ANIMAL" placeholder=" Ingrese el codigo del animal  " value="{{$Cventa['COD_ANIMAL']}}">
-                                                    <select class="form-select custom-select" id="COD_ANIMAL" name="COD_ANIMAL" required>
-                                                        <option value="" disabled selected>Seleccione una opción</option>
-                                                          
-                                        
-                                    
-                                                    </select>
+                                                    <input type="text" class="form-control" id="COD_ANIMAL-{{$Cventa['COD_CVENTA']}}" name="COD_ANIMAL" placeholder=" Ingrese el codigo del animal  " value="{{$Cventa['COD_ANIMAL']}}">
+                                                   
                     
                                         
                                     
@@ -449,28 +624,96 @@
                                                 </div>
 
 
-                                                <div class="mb-3">
+                                                <div class="col-md-6">
                                                     <label for="Cventa">Folio Carta Venta</label>
-                                                    <input type="text" class="form-control" id="FOL_CVENTA" name="FOL_CVENTA" placeholder=" Ingrese el numero de folio  " value="{{$Cventa['FOL_CVENTA']}}">
+                                                    <input type="text" class="form-control" id="FOL_CVENTA-{{$Cventa['COD_CVENTA']}}" name="FOL_CVENTA" placeholder=" Ingrese el numero de folio  " value="{{$Cventa['FOL_CVENTA']}}"oninput=" validarFolio('{{$Cventa['COD_CVENTA']}}', this.value)" required>
+                                                    <div class="invalid-feedback" id="invalid-feedback6-{{$Cventa['COD_CVENTA']}}">Solo Se Permir Ingrese Numeros</div>
                                                  
                                                 </div>
 
-                                                <div class="mb-3 mt-3">
+                                                <div class="col-md-6">
                                                     <label for="Cventa" class="form-label">Antecedentes Carta Venta</label>
-                                                    <input type="text" readonly class="form-control" id="ANT_CVENTA" name="ANT_CVENTA" value="{{$Cventa['ANT_CVENTA']}}">
-                                                    <select class="form-select" id="ANT_CVENTA" name="ANT_CVENTA">
-                                                        <option value="SI" selected >SI</option>
-                                                        <option value="NO" selected >NO</option>
+                                                    <select class="form-select custom-select" id="ANT_CVENTA" name="ANT_CVENTA" value="{{$Cventa['ANT_CVENTA']}}" required>
+                                                   
+                                                   
+                                                        <option value="SI" @if($Cventa['ANT_CVENTA'] === 'SI') selected @endif>SI</option>
+                                                        <option value="NO" @if($Cventa['ANT_CVENTA'] === 'NO') selected @endif>NO</option>
+                                                        
                                                         
                                                     </select>
+                                                    <div class="invalid-feedback"></div>
                                                 </div>
+                                  
 
-                                                <div class="mb-3">
+                                             <!--   <div class="mb-3">
                                                     <button type="submit" class="btn btn-primary">Editar</button>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                            </div>-->
+
+                                            <div class="mb-3">
+                                                    <button type="submit" class="btn btn-primary" id="submitButton-{{$Cventa['COD_CVENTA']}}">Editar</button>
+                                                     <a href="{{ url('Cventa') }}" class="btn btn-danger">Cancelar</a>
                                             </div>
                                         </form>
+                                   
+
+                                        <script>
+                                            function validarNombre(id, nombre) {
+                                                var btnGuardar = document.getElementById("submitButton-" + id);
+                                                var inputElement = document.getElementById("NOM_COMPRADOR-" + id);
+                                                var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+                                               if (nombre.length < 5 || nombre.length > 100 || !/^[a-zA-Z\s]+$/.test(nombre)) {
+                                                    inputElement.classList.add("is-invalid");
+                                                    invalidFeedback.textContent = "El nombre debe tener al menos 5 caracteres y no más de 100, sin números";
+                                                    btnGuardar.disabled = true;
+                                               } else {
+                                                   inputElement.classList.remove("is-invalid");
+                                                    invalidFeedback.textContent = "";
+                                                 btnGuardar.disabled = false;
+                                                }
+                                            }
+       
+
+   
+                                                    function validarDNI(id, dni) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("DNI_COMPRADOR-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback-" + id);
+              
+                                                        if (!/^\d{13}$/.test(dni)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "El DNI debe tener exactamente 13 dígitos numéricos";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                    function validarFolio(id, folio) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("FOL_CVENTA-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+                                                        
+                                                        if (!/^\d{5}$/.test(folio)) {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = " debe tener exactamente 5 dígitos";
+                                                            btnGuardar.disabled = true;
+                                                        } else {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                        </script>
+
+
+
+
                                     </div>
+                                
                                 </div>
                             </div>
                         </div>
@@ -515,6 +758,23 @@
                  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
                  
                  <script>
+
+                    @if(session('update_success'))
+            Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
+        @endif
+
+        @if(session('update_error'))
+            Swal.fire('¡Error!', '{{ session('update_error') }}', 'error');
+        @endif
+
+        @if(session('success'))
+            Swal.fire('¡Éxito!', '{{ session('success') }}', 'success');
+        @endif
+
+        @if(session('error'))
+            Swal.fire('¡Error!', '{{ session('error') }}', 'error');
+        @endif
+
                  $(document).ready(function() {
                      $('#modCventa').DataTable({
                          responsive: true,
@@ -543,6 +803,27 @@
                                      text: "<i class='fa-solid fa-print'></i>",
                                      tittleAttr: "Imprimir",
                                      className: "btn btn-secondary",
+                                     footer: true,
+                            customize: function(win) {
+                                // Agrega tu encabezado personalizado aquí
+                                $(win.document.head).append("<style>@page { margin-top: 20px; }</style>");
+                                
+                                // Agrega dos logos al encabezado
+                            
+                                
+                                $(win.document.body).prepend("<h5 style='text-align: center;'>           REGISTROS DE CARTAS DE VENTAS  </h5>");
+                                $(win.document.body).prepend("<h6 style='text-align: center;'>  Correo: alcaldiamunicipaltalanga@gmail.com  </h6>");
+                                $(win.document.body).prepend("<h6 style='text-align: center;'>Telefonos: 2775-8010, 2775-8018, 2775-8735</h6>");
+                                $(win.document.body).prepend("<h6 style='text-align: center;'>=======================================================</h6>");
+                                $(win.document.body).prepend("<h6 style='text-align: center;'>DEPARTAMENTO DE FRANCISCO MORAZÁN- HONDURAS, C.A.</h6>");
+                                $(win.document.body).prepend("<div style='text-align: center;'><img src='vendor/adminlte/dist/img/Talanga.png' alt='Logo 1' width='100' height='100' style='float: left; margin-right: 20px;' /><img src='vendor/adminlte/dist/img/Honduras.png' alt='Logo 2' width='100' height='100' style='float: right; margin-left: 20px;' /></div>");
+                                $(win.document.body).prepend("<h6 style='text-align: center;'>MUNICIPALIDAD TALANGA</h6>");
+                                
+                                // Agrega la fecha actual
+                                var currentDate = new Date();
+                                var formattedDate = currentDate.toLocaleDateString();
+                                $(win.document.body).prepend("<p style='text-align: right;'>Fecha de impresión: " + formattedDate + "</p>");
+                            },
                                      exportOptions: {
                                          columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
                                      },
@@ -603,3 +884,4 @@
         </script>
     @endif
 @stop
+
