@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Alcaldia;
 
+use TCPDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Session;
+use DateTime;
 use App\Models\Fierro;
 
 class FierroController extends Controller
@@ -158,6 +160,131 @@ class FierroController extends Controller
         return $nombreImagen;
     }
 
-   
+    public function generarPdfF($id){
+        // Obtener datos del registro seleccionado ($Cventa) por su ID
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
+    
+        $response = Http::withHeaders($headers)->get(self::urlapi . 'PERSONAS/GETALL');
+        $personas = json_decode($response->body(), true);
+
+        $response2 = Http::withHeaders($headers)->get(self::urlapi . 'FIERROS/GETALL');
+        $fierros = json_decode($response2->body(), true);
+    
+        // Buscar el registro específico por ID
+        $Fierro = collect($fierros)->firstWhere('COD_FIERRO', $id);
+    
+        // Verificar si se encontró el registro
+        if (!$Fierro) {
+            return response('Registro no encontrado.', 404);
+        }
+        
+        // Buscar el animal específico por ID
+        $Persona = collect($personas)->firstWhere('COD_PERSONA', $Fierro['COD_PERSONA']);
+
+        // Crear instancia de TCPDF con formato de página y orientación
+        $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+        $fechaReg = $Fierro['FEC_TRAMITE_FIERRO'];
+
+        // Convertir la fecha a un objeto DateTime
+        $dateTime = new DateTime($fechaReg);
+
+        // Obtener el día, mes y año como cadenas
+        $dia = $dateTime->format('d');
+        $mes = $dateTime->format('m');
+        $año = $dateTime->format('Y');
+    
+        // Configurar el salto de página automático
+        $pdf->SetAutoPageBreak(true, 10);
+    
+        // Agregar una página al PDF
+        $pdf->AddPage();
+    
+        // Establecer el contenido del PDF con los datos del registro
+        $contenido = "
+        <!DOCTYPE html>
+        <html lang=\"en\">
+        <head>
+            <meta charset=\"UTF-8\">
+            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+            <title>Permisos de Sacrificio</title>
+            <style>
+                body {
+                    font-family: \"Times New Roman\", Times, serif;
+                    margin: 0;
+                    padding: 0;
+                    text-align: justify;
+                    line-height: 1.6;
+                }
+                h1, h6 {
+                    text-align: center;
+                    margin-top: 10px;
+                }
+                h1:first-of-type, h6:first-of-type {
+                    margin-top: 20px;
+                }
+                h1 + h6 {
+                    margin-top: 60px;
+                }
+                h1 + h6 + h1 {
+                    margin-top: 40px;
+                }
+                p {
+                    margin: 0 0 2.0em;
+                    text-indent: 2em;
+                }
+                .divider {
+                    width: 100%;
+                    text-align: center;
+                }
+                .divider p {
+                    display: inline-block;
+                    width: 60%;
+                    border-bottom: 1px solid #000;
+                }
+                .signature {
+                    margin-top: 50px;
+                    text-align: center;
+                }
+                .signature p {
+                    margin: 0;
+                }
+                .signature h3 {
+                    margin-top: 10px;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Municipalidad de Talanga</h1>
+            <h6>DEPARTAMENTO DE FRANCISCO MORAZAN - HONDURAS C.A.</h6>
+            <h6>Correo Electrónico: municipalidadtalanga2022@gmail.com</h6>
+            <br><br><br>
+            <h1>Certifico</h1>
+            <br><br>
+            <div style=\"text-align: justify;\">
+            <p>El infrascrito director Municipal de Justicia de este Municipio concede permiso al señor(a):
+             {$Persona['NOM_PERSONA']}, con número de identidad {$Persona['DNI_PERSONA']}, 
+            de portar un fierro para marcar ganado, del tipo {$Fierro['TIP_FIERRO']}, con número de folio {$Fierro['NUM_FOLIO_FIERRO']}, 
+            que fue registrado el día $dia del mes $mes del año $año 
+            en la siguiente dirección: {$Persona['DES_DIRECCION']}.</p>
+            </div>
+            <br><br>
+            
+
+            <div class=\"signature\"><center>
+                <p>______________________________________</p>
+                <h3>Juez de Justicia Municipal</h3>
+            </div></center>
+        </body>
+        </html>
+      ";
+    
+        // Agregar el contenido al PDF
+        $pdf->writeHTML($contenido, true, false, true, false, '');
+    
+        // Descargar el PDF, "D" para descarga directa e "I" para pre-visualización.
+        $pdf->Output("Permiso_de_Sacrificio.pdf", "I");
+      }
 }
 
