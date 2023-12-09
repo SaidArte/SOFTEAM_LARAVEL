@@ -146,99 +146,96 @@ class CventaController extends Controller
     <html lang=\"es\">
 
     <head>
-        <meta charset=\"UTF-8\">
-        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-        <title>Municipalidad de Talanga - Carta de Venta</title>
-        <style>
-            body {
-                text-align: center;
-            }
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <title>Carta de venta</title>
+    <style>
+                    body {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        min-height: 100vh;
+                        margin: 0;
+                    }
+                    h1 {
+                        text-align: center;
+                    }
+                    .logo-container {
+                        margin: 0 20px; /* Ajusta este valor según tu preferencia */
+                    }
+                    .folio {
+                        font-weight: bold;
+                        color: red;
+                    }
+                    .logo-container img {
+                        width: 1500px;
+                        height: 400px;
+                    }
+                    .two-columns {
+                        column-count: 2;
+                    }
+                    header {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                        margin: auto; 
+                    }
+            
+                    header h1,
+                    header h6 {
+                        margin: 0;
+                    }
 
-            header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
+                    section {
+                        text-align: justify;
+                    }
 
-            header div {
-                display: flex;
-                align-items: center;
-            }
+                    section p {
+                        margin: 0;
+                    }
+                    .two-parts {
+                        white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+                    }
 
-            header h1,
-            header h6 {
-                margin: 0;
-            }
-
-            header img {
-                margin: 0 20px; /* Espaciado entre la imagen y los títulos */
-            }
-
-            section {
-                text-align: justify;
-            }
-
-            section p {
-                margin: 0;
-            }
-
-            .signature {
-                margin-top: 10px;
-            }
-        </style>
-    </head>
-
-<body>
-
-    <header>
-        <div>
-            <img src=\"vendor/adminlte/dist/img/Talanga.jpg\" alt=\"Logo 1\" width=\"100\" height=\"100\" />
-            <h1>Municipalidad de Talanga</h1>
-        </div>
-        <div>
-            <h6>DEPARTAMENTO DE FRANCISCO MORAZÁN - HONDURAS C.A.</h6>
-            <img src=\"vendor/adminlte/dist/img/Honduras.jpg\" alt=\"Logo 2\" width=\"100\" height=\"100\" />
-        </div>
-    </header>
-    
-        <section>
-            <h1>CARTA DE VENTA</h1>
-            <div style=\"text-align: justify;\">
-                <p>Yo, {$Cventa['NombreVendedor']}, mayor de edad, vecino de: __________________, por medio de la presente
-                    hago constar que en esta fecha he vendido y entregado al señor (a): {$Cventa['NOM_COMPRADOR']}, vecino
-                    de: ________________, en lo cual me obligo a la evicción y saneamiento conforme a la ley.</p>
+                    .signature {
+                        margin-top: 10px;
+                    }
+            </style>
+            </head>
+            <body>
+            <div class=\"logo-container\">
+                <img src=\"vendor/adminlte/dist/img/Encabezado.jpg\" alt=\"Logo 1\">
             </div>
-            <p>CLASE: {$Animal['CLAS_ANIMAL']} </p>
-            <p>COLOR: {$Animal['COL_ANIMAL']} </p>
-            <p>FIERRO</p>
-            <p>HERRADO: {$Animal['HER_ANIMAL']}</p>
-            <p>VENTEADO: {$Animal['VEN_ANIMAL']}</p>
-            <p>CANTIDAD: _____________</p>
-            <p>REGISTRO: _____________</p>
-            <p>FOLIO: {$Cventa['FOL_CVENTA']} </p>
-            <p>ANTECEDENTES: {$Cventa['ANT_CVENTA']} </p>
-            <br>
-            <p>NOTA: El infrascrito Director Municipal de Justicia, da fe de esta carta de venta. No somos responsables de
+            <section>
+            <h1>CARTA DE VENTA</h1>
+            <span class=\"folio\">Nº: {$Cventa['FOL_CVENTA']} </span>
+            <div style=\"text-align: justify;\">
+                <p>Yo, {$Cventa['NombreVendedor']}, mayor de edad y residente de _________, 
+                mediante la presente hago constar que en la fecha de hoy he vendido y entregado al señor (a): {$Cventa['NOM_COMPRADOR']}, identificado con la cédula de identidad: {$Cventa['DNI_COMPRADOR']} 
+                residente de: ________________, en lo cual me obligo a la evicción y saneamiento conforme a la ley.</p>
+                    <p class=\"two-parts\">CLASE: {$Animal['CLAS_ANIMAL']}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;COLOR: {$Animal['COL_ANIMAL']} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; REGISTRO: {$Cventa['FOL_CVENTA']}</p>
+                    <p class=\"two-parts\">HERRADO: {$Animal['HER_ANIMAL']}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VENTEADO: {$Animal['VEN_ANIMAL']} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ANTECEDENTES: {$Cventa['ANT_CVENTA']}</p>
+                    <p class=\"two-parts\">CANTIDAD: ____ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FIERRO </p>
+                         
+                    <br>
+                 <p>NOTA: El infrascrito Director Municipal de Justicia, da fe de esta carta de venta. No somos responsables de
                 adulteraciones de este documento. Cualquier modificación, borrado o tachado debe ser refrendada por el sello
                 del Director Municipal de Justicia.</p>
+                <p>Talanga Francisco Morazan  Día ____ del mes ____ del año ______</p>
             <br>
-            <p>Talanga FM. Día ____ del mes ____ del año ______</p>
-            <div style=\"text-align: center;\">
-                <p>F. __________________</p>
-                <p>ID VENDEDOR ___________</p>
             </div>
-            <br><br>
-            <div class=\"signature\" style=\"text-align: center;\">
-                <p>______________</p>
-                <h3>DIRECTOR MUNICIPAL DE JUSTICIA</h3>
-            </div>
+            <p class=\"two-parts\">________________________________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;______________________________</p>
+            <p class=\"two-parts\"> &nbsp;&nbsp;&nbsp;&nbsp;{$Cventa['NombreVendedor']}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Maynor Garcia</p>
+            <p class=\"two-parts\"> &nbsp;&nbsp;&nbsp;&nbsp;  Vendedor &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Director Municipal de Justicia</p>
             <div class=\"signature\" style=\"text-align: center;\">
                 <p>\"TODOS POR EL DESARROLLO DE TALANGA\"</p>
-            </div>
+          </div>
         </section>
     
-    </body>
-    
+ </body>
+  
     </html>
   ";
 
