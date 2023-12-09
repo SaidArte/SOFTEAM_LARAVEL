@@ -217,6 +217,13 @@ class FierroController extends Controller
                     text-align: justify;
                     line-height: 1.6;
                 }
+                .logo-container {
+                    margin: 0 20px; /* Ajusta este valor según tu preferencia */
+                }
+                .logo-container img {
+                    width: 1500px;
+                    height: 400px;
+                }
                 h1, h6 {
                     text-align: center;
                     margin-top: 10px;
@@ -255,13 +262,14 @@ class FierroController extends Controller
                 }
             </style>
         </head>
-        <body>
-            <h1>Municipalidad de Talanga</h1>
-            <h6>DEPARTAMENTO DE FRANCISCO MORAZAN - HONDURAS C.A.</h6>
-            <h6>Correo Electrónico: municipalidadtalanga2022@gmail.com</h6>
-            <br><br><br>
-            <h1>Certifico</h1>
-            <br><br>
+        <div class=\"logo-container\">
+        <img src=\"vendor/adminlte/dist/img/Encabezado.jpg\" alt=\"Logo 1\">
+         </div>
+         <section>
+    <body>
+            <h1>REGISTRO DE FIERRO</h1>
+            <h1>{$Persona['NOM_PERSONA']}</h1>    
+            <img src=\"imagenes/fierros/{$Fierro['IMG_FIERRO']}\" alt=\"Fierro\">       
             <div style=\"text-align: justify;\">
             <p>El infrascrito director Municipal de Justicia de este Municipio concede permiso al señor(a):
              {$Persona['NOM_PERSONA']}, con número de identidad {$Persona['DNI_PERSONA']}, 
@@ -269,14 +277,14 @@ class FierroController extends Controller
             que fue registrado el día $dia del mes $mes del año $año 
             en la siguiente dirección: {$Persona['DES_DIRECCION']}.</p>
             </div>
-            <br><br>
-            
+           
 
             <div class=\"signature\"><center>
                 <p>______________________________________</p>
                 <h3>Juez de Justicia Municipal</h3>
             </div></center>
-        </body>
+        </section>
+    </body>
         </html>
       ";
     
