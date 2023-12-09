@@ -414,10 +414,10 @@
                                         <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                                         </button>
                                     @endif
-                                        <!-- Boton de PDF 
-                                        <a href="{{ route('psacrificio.pdf') }}" class="btn btn-sm btn-danger" data-target="#psacrificio-edit-{{$psacrificio['COD_PSACRIFICIO']}}" target="_blank">
+                                        <!-- Boton de PDF -->
+                                        <button onclick="mostrarVistaPrevia({{$psacrificio['COD_PSACRIFICIO']}})" class="btn btn-sm btn-danger">
                                             <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
-                                        </a> -->
+                                        </button>
                                     </td>
                                 </tr>
                                 <!-- Modal for editing goes here -->
@@ -584,7 +584,18 @@
                                                             invalidFeedback.textContent = "";
                                                             btnGuardar.disabled = false;
                                                         }
-                                                    }    
+                                                    }
+
+                                                    function mostrarVistaPrevia(idsacrificio) {
+                                                        // URL de la acción del controlador que genera el PDF
+                                                        var nuevaVentana = window.open("{{ url('psacrificio/generar-pdf') }}/" + idsacrificio, '_blank');
+
+                                                        // Esperar a que la nueva ventana esté completamente cargada
+                                                        nuevaVentana.onload = function () {
+                                                            // Mostrar el diálogo de impresión
+                                                            nuevaVentana.print();
+                                                        };
+                                                    }
                                                 </script>
                                             </div>
                                         </div>
