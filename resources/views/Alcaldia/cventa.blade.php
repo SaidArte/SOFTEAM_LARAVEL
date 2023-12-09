@@ -8,6 +8,8 @@
 @section('title', 'Alcaldia')
 @section('css')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
     <!-- Agrega la clase CSS personalizada aquí -->
     <style>
         /* CSS personalizado */
@@ -551,10 +553,10 @@
                                     </button>
                             @endif
 
-                             <!-- Boton de PDF 
-                              <a href="{{ route('Cventa.pdfc') }}" class="btn btn-sm btn-danger" data-target="#Cventa-edit-{{$Cventa['COD_CVENTA']}}" target="_blank">
-                                    <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
-                             </a>-->
+                             <!-- Boton de PDF -->
+                             <button onclick="mostrarVistaPrevia()" class="btn btn-sm btn-danger">
+                                <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
+                            </button>
     
 
                             </td>   
@@ -707,6 +709,17 @@
                                                             btnGuardar.disabled = false;
                                                         }
                                                     }
+
+                                                    function mostrarVistaPrevia() {
+                                                        // URL de la acción del controlador que genera el PDF
+                                                        var nuevaVentana = window.open("{{ url('Cventa/generar-pdf', ['id' => $Cventa['COD_CVENTA']]) }}", '_blank');
+
+                                                        // Esperar a que la nueva ventana esté completamente cargada
+                                                        nuevaVentana.onload = function () {
+                                                            // Mostrar el diálogo de impresión
+                                                            nuevaVentana.print();
+                                                        };
+                                                    }
                                         </script>
 
 
@@ -719,7 +732,6 @@
                         </div>
                         <!--agregado -->
             
-
 
 
                     @endforeach
