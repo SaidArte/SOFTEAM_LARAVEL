@@ -137,7 +137,11 @@
                             <select class="form-select custom-select" id="PREGUNTA" name="PREGUNTA" required>
                                 <option value="" disabled selected>Seleccione una opción</option>
                                 @foreach ($preguntasArreglo as $preguntas)
-                                <option value="{{$preguntas['PREGUNTA']}}">{{$preguntas['PREGUNTA']}}</option>
+                                @php
+                                  // Agrega símbolos de interrogación al valor de la pregunta
+                                  $formatoPregunda = '¿' . $preguntas['PREGUNTA'] . '?';
+                                @endphp
+                                <option value="{{$preguntas['PREGUNTA']}}">{{$formatoPregunda}}</option>
                                 @endforeach
                             </select>
                         </div>

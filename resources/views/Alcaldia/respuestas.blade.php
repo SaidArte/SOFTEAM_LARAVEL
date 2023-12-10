@@ -17,23 +17,22 @@
             <form method="POST" action="{{ route('Alcaldia.respuestas.submit') }}" class="needs-validation respuestas-form">
                 @csrf
                 <div class="mb-3 row">
-                    <label for="ALPREGUNTA" class="col-sm-3 col-form-label">Pregunta anterior:</label>
+                    <label for="PREGUNTA">Pregunta:</label>
                     <div class="col-sm-3">
-                        <input type="text" readonly id="PREGUNTA" name="PREGUNTA" class="form-control" value="{{ $PREGUNTA }}" required>
+                        <select class="form-select" id="PREGUNTA" name="PREGUNTA" required>
+                            <option value="X" selected disabled>- Elija una pregunta -</option>
+                            @foreach ($preguntasArreglo as $pregunta)
+                                @php
+                                    // Agrega símbolos de interrogación al valor de la pregunta
+                                    $formatoPregunta = '¿' . $pregunta['PREGUNTA'] . '?';
+                                @endphp
+                                <option value="{{ $pregunta['PREGUNTA'] }}" @if ($pregunta['PREGUNTA'] == $PREGUNTA) selected @endif>
+                                    {{ $formatoPregunta }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="invalid-feedback"></div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="ALPREGUNTA" class="col-sm-3 col-form-label">Seleccione la pregunta de seguridad:</label>
-                        <div class="col-sm-3">
-                            <select class="form-select" id="PREGUNTA" name="PREGUNTA" required>
-                                <option value="X" selected = "selected" disabled>- Elija una pregunta -</option>
-                                @foreach ($preguntasArreglo as $preguntas)
-                                    <option value="{{$preguntas['PREGUNTA']}}">{{$preguntas['PREGUNTA']}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
                     <label for="RESPUESTA" class="form-label">Respuesta:</label>

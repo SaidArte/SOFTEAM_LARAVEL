@@ -91,6 +91,16 @@
                 transform: translateY(-50%);
                 cursor: pointer;
             }
+
+            /* Estilos comunes para todas las clases que cumplen el patrón eye-icon{id} */
+            [class^="eye-icon2"] {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+
         </style>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css" rel="stylesheet">
@@ -138,7 +148,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Ingresar un nuevo usuario</h5>
+                                    <h5 class="modal-title">Ingresar Nuevo Usuario</h5>
                                     <!-- <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> -->
                                 </div>
                                 <div class="modal-body">
@@ -146,7 +156,7 @@
                                         @csrf
                                             
                                             <div class="mb-3 mt-3">
-                                                <label for="NOM_ROL">Rol</label>
+                                                <label for="NOM_ROL">Rol:</label>
                                                 <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL" required>
                                                     <option value="" disabled selected>Seleccione una opción</option>
                                                     @foreach ($rolesArreglo as $roles)
@@ -156,24 +166,24 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="id">DNI</label>
+                                                <label for="id">No. Identidad:</label>
                                                 <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="nom">Nombre</label>
+                                                <label for="nom">Nombre:</label>
                                                 <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
                                             </div>
                                             <div class="mb-3">
                                                 <input type="hidden" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="NOM_USUARIO">Usuario</label>
+                                                <label for="NOM_USUARIO">Usuario:</label>
                                                 <input type="text" id="NOM_USUARIO" class="form-control" name="NOM_USUARIO" placeholder="Ingresar el alias del usuario" required>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="PAS_USUARIOL" class="form-label">Contraseña</label>
+                                                <label for="PAS_USUARIOL" class="form-label">Contraseña:</label>
                                                 <div class="form-group position-relative">
                                                     <input type="password" id="PAS_USUARIO" class="form-control" name="PAS_USUARIO" placeholder="Ingresar una contraseña" required>
                                                     <span class="eye-icon" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i></span>
@@ -181,7 +191,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="IND_USUARIO">Estado</label>
+                                                <label for="IND_USUARIO">Estado:</label>
                                                 <select class="form-select custom-select" id="IND_USUARIO" name="IND_USUARIO" required>
                                                     <option value="" disabled selected>Seleccione una opción</option>
                                                     <option value="ACTIVO">ACTIVO</option>
@@ -417,6 +427,12 @@
                                                 <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Usuarios-edit-{{$Usuarios['COD_USUARIO']}}">
                                                     <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                                                 </button>
+                                                @if(session('user_data')['COD_USUARIO'] != $Usuarios['COD_USUARIO'])
+                                                    <!-- Boton de cambio de contraseñas -->
+                                                    <button value="EditarPass" title="Editar Contraseña" class="btn btn-sm btn-secondary" type="button" data-toggle="modal" data-target="#Usuarios-edit-pass-{{$Usuarios['COD_USUARIO']}}">
+                                                        <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
+                                                    </button>
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>
@@ -425,7 +441,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Actualizar datos del usuario</h5>
+                                                    <h5 class="modal-title">Actualizar Datos Usuario</h5>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form action="{{ url('Usuarios/actualizar') }}" method="post" class="row g-3 needs-validation">
@@ -433,12 +449,16 @@
                                                             <input type="hidden" class="form-control" name="COD_USUARIO" value="{{$Usuarios['COD_USUARIO']}}">
                                                             
                                                             <div class="mb-3">
-                                                                <label for="Usuarios">Usuario</label>
+                                                                <label for="Usuarios">Usuario:</label>
                                                                 <input type="text" class="form-control" id="NOM_USUARIO-{{$Usuarios['COD_USUARIO']}}" name="NOM_USUARIO" placeholder="Ingrese el alias del usuario" value="{{$Usuarios['NOM_USUARIO']}}" oninput="validarUsuario('{{$Usuarios['COD_USUARIO']}}', this.value)" required>
                                                                 <div class="invalid-feedback" id="invalid-feedback-{{$Usuarios['COD_USUARIO']}}"></div>
                                                             </div>
+                                                            <div class="mb-3">
+                                                                <label for="Usuarios">Dueño Usuario:</label>
+                                                                <input type="text" readonly class="form-control" id="NOM_PERSONA-{{$Usuarios['COD_USUARIO']}}" name="NOM_PERSONA" placeholder="Ingrese el alias del usuario" value="{{$Usuarios['NOM_PERSONA']}}" required>
+                                                            </div>
                                                             <div class="mb-3 mt-3">
-                                                                <label for="Usuarios">Rol</label>
+                                                                <label for="Usuarios">Rol:</label>
                                                                 <select class="form-select custom-select" id="NOM_ROL" name="NOM_ROL" required>
                                                                     <option value="" disabled selected>Seleccione una opción</option>
                                                                     @foreach ($rolesArreglo as $roles)
@@ -449,15 +469,15 @@
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="nIntentos">No. intentos</label>
+                                                                <label for="nIntentos">No. Intentos:</label>
                                                                 <input type="text" readonly class="form-control" id="LIM_INTENTOS-{{$Usuarios['COD_USUARIO']}}" name="LIM_INTENTOS" value="{{$Usuarios['LIM_INTENTOS']}}">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="nIntentosF">Intentos fallidos</label>
+                                                                <label for="nIntentosF">Intentos Fallidos:</label>
                                                                 <input type="text" readonly class="form-control" id="NUM_INTENTOS_FALLIDOS-{{$Usuarios['COD_USUARIO']}}" name="NUM_INTENTOS_FALLIDOS" value="{{$Usuarios['NUM_INTENTOS_FALLIDOS']}}">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="FEC_VEN">Fecha vencimiento</label>
+                                                                <label for="FEC_VEN">Fecha Vencimiento:</label>
                                                                 <?php $fecha_formateada = date('Y-m-d', strtotime($Usuarios['FEC_VENCIMIENTO'])); ?>    
                                                                 <input type="date" class="form-control" id="FEC_VENCIMIENTO" name="FEC_VENCIMIENTO" value="{{ $fecha_formateada }}" min="{{ date('Y-m-d', time()) }}" required>
                                                                 <!-- La etiqueta "min" nos ayuda a que no esten disponibles a elección fechas 
@@ -465,7 +485,7 @@
                                                                 <div class="invalid-feedback"></div>
                                                             </div>
                                                             <div class="mb-3 mt-3">
-                                                                <label for="Usuarios">Estado</label>
+                                                                <label for="Usuarios">Estado:</label>
                                                                 <select class="form-select custom-select" id="IND_USUARIO" name="IND_USUARIO" value="{{$Usuarios['IND_USUARIO']}}" required>
                                                                     <option value="X" selected = "selected" disabled>- Elija un estado -</option>
                                                                     <option value="ACTIVO" @if($Usuarios['IND_USUARIO'] === 'ACTIVO') selected @endif>ACTIVO</option>
@@ -501,6 +521,94 @@
                                                                 btnGuardar.disabled = false;
                                                             }
                                                         }
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal for pass goes here -->
+                                    <div class="modal fade bd-example-modal-sm" id="Usuarios-edit-pass-{{$Usuarios['COD_USUARIO']}}" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Actualizar Contraseña Usuario</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ url('Usuarios/act-pass') }}" method="post" class="row g-3 needs-validation">
+                                                        @csrf
+                                                            <input type="hidden" class="form-control" name="COD_USUARIO" value="{{$Usuarios['COD_USUARIO']}}">
+                                                            
+                                                            <div class="mb-3">
+                                                                <label for="Usuarios">Usuario:</label>
+                                                                <input type="text" readonly class="form-control" id="NOM_USUARIO-{{$Usuarios['COD_USUARIO']}}" name="NOM_USUARIO" placeholder="Ingrese el alias del usuario" value="{{$Usuarios['NOM_USUARIO']}}" oninput="validarUsuario('{{$Usuarios['COD_USUARIO']}}', this.value)" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="Usuarios">Dueño Usuario:</label>
+                                                                <input type="text" readonly class="form-control" id="NOM_PERSONA-{{$Usuarios['COD_USUARIO']}}" name="NOM_PERSONA" placeholder="Ingrese el alias del usuario" value="{{$Usuarios['NOM_PERSONA']}}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="PAS_USUARIOL" class="form-label">Nueva Contraseña:</label>
+                                                                <div class="form-group position-relative">
+                                                                    <input type="password" id="PAS_USUARIO-{{$Usuarios['COD_USUARIO']}}" class="form-control" name="PAS_USUARIO" oninput="validarPassword({{$Usuarios['COD_USUARIO']}})" placeholder="Ingresar una contraseña" required>
+                                                                    <span class="eye-icon2-{{$Usuarios['COD_USUARIO']}}" onclick="togglePasswordVisibility2({{$Usuarios['COD_USUARIO']}})"><i class="fa fa-eye"></i></span>
+                                                                    <div class="invalid-feedback" id="invalid-feedback2-{{$Usuarios['COD_USUARIO']}}"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <button type="submit" class="btn btn-primary" id="submitButtonP-{{$Usuarios['COD_USUARIO']}}" disabled>Guardar</button>
+                                                                <a href="{{ url('Usuarios') }}" class="btn btn-danger">Cancelar</a>
+                                                            </div>
+                                                    </form>
+                                                    <script>
+                                                        function togglePasswordVisibility2(id) {
+                                                            var passwordInput = document.getElementById("PAS_USUARIO-"+id);
+                                                            var toggleIcon = document.querySelector(".eye-icon2-"+id+" i");
+
+                                                            if (passwordInput.type === "password") {
+                                                                passwordInput.type = "text";
+                                                                toggleIcon.classList.remove("fa-eye");
+                                                                toggleIcon.classList.add("fa-eye-slash");
+                                                            } else {
+                                                                passwordInput.type = "password";
+                                                                toggleIcon.classList.remove("fa-eye-slash");
+                                                                toggleIcon.classList.add("fa-eye");
+                                                            }
+                                                        }
+                                                        
+                                                        //Validaciones de la Contraseña
+                                                        function validarPassword(id) {
+                                                            const passwordInput = document.getElementById('PAS_USUARIO-'+id);
+                                                            const passwordFeedback = document.getElementById('invalid-feedback2-'+id);
+                                                            const password = passwordInput.value;
+                                                            var btnGuardar = document.getElementById("submitButtonP-"+id);  // Obtener el botón de guardar
+
+                                                            // Validaciones
+                                                            if (password.length < 8 || password.length > 40) {
+                                                                passwordInput.classList.add('is-invalid');
+                                                                passwordFeedback.textContent = 'La contraseña debe tener al menos 8 caracteres, y no más de 40.';
+                                                                btnGuardar.disabled = true;
+                                                            } else if (!/[A-Z]/.test(password)) {
+                                                                passwordInput.classList.add('is-invalid');
+                                                                passwordFeedback.textContent = 'La contraseña debe contener al menos una letra mayúscula.';
+                                                                btnGuardar.disabled = true;
+                                                            } else if (!/[0-9]/.test(password)) {
+                                                                passwordInput.classList.add('is-invalid');
+                                                                passwordFeedback.textContent = 'La contraseña debe contener al menos un número.';
+                                                                btnGuardar.disabled = true;
+                                                            } else if (!/[!@#$%^&*]/.test(password)) {
+                                                                passwordInput.classList.add('is-invalid');
+                                                                passwordFeedback.textContent = 'La contraseña debe contener al menos un carácter especial (!@#$%^&*).';
+                                                                btnGuardar.disabled = true;
+                                                            } else if (/\s/.test(password)) {
+                                                                passwordInput.classList.add('is-invalid');
+                                                                passwordFeedback.textContent = 'La contraseña no debe contener espacios.';
+                                                                btnGuardar.disabled = true;
+                                                            } else {
+                                                                passwordInput.classList.remove('is-invalid');
+                                                                passwordFeedback.textContent = '';
+                                                                btnGuardar.disabled = false;
+                                                            }
+                                                        };
                                                     </script>
                                                 </div>
                                             </div>
@@ -600,7 +708,10 @@
                 <link rel="stylesheet" href="/css/admin_custom.css">
             @stop
     @else
-            <p>No tiene autorización para visualizar esta sección</p>
+        <script>
+            alert("No tiene autorización para ver este contenido");
+            window.location.href = "{{ route('home') }}"; // Cambia a 'home' si no se poseen permisos.
+        </script>
     @endif
     @else
             <!-- Contenido para usuarios no autenticados -->
