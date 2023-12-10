@@ -124,56 +124,64 @@
 
                                 @csrf
 
-                                    <div class="mb-3">
-                                        <label for="NOM_PERSONA">Nombre</label>
-                                        <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                            
-                                    <div class="mb-3">
-                                        <label for="DNI_PERSONA">Identidad</label>
-                                        <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="Ingresar el número de identidad" required>
-                                        <div class="invalid-feedback"></div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="NOM_PERSONA">Nombre</label>
+                                            <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="DNI_PERSONA">Identidad</label>
+                                            <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="Ingresar el número de identidad" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="TEL_PERSONA">Teléfono</label>
+                                            <input type="text" id="TEL_PERSONA" class="form-control" name="TEL_PERSONA" placeholder="Ingresar el número de teléfono" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
                                     </div>
 
-                                    <div class="mb-3">
-                                        <label for="TEL_PERSONA">Teléfono</label>
-                                        <input type="text" id="TEL_PERSONA" class="form-control" name="TEL_PERSONA" placeholder="Ingresar el número de teléfono" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="FEC_SACRIFICIO">Fecha Sacrificio</label>
+                                            <input type="date" id="FEC_SACRIFICIO" class="form-control" name="FEC_SACRIFICIO" placeholder="Inserte la fecha del sacrificio" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
 
-                                    <div class="mb-3">
-                                        <label for="FEC_SACRIFICIO">Fecha Sacrificio</label>
-                                        <input type="date" id="FEC_SACRIFICIO" class="form-control" name="FEC_SACRIFICIO" placeholder="Inserte la fecha del sacrificio" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
+                                        <div class="mb-3">
+                                            <label for="DIR_PSACRIFICIO">Dirección Sacrificio</label>
+                                            <input type="text" id="DIR_PSACRIFICIO" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingresar la dirección del sacrificio" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
 
-                                    <div class="mb-3">
-                                        <label for="DIR_PSACRIFICIO">Dirección Sacrificio</label>
-                                        <input type="text" id="DIR_PSACRIFICIO" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingresar la dirección del sacrificio" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="ANIMALL" >Tipo Animal</label>
-                                        <select class="form-select custom-select" id="ANIMAL" name="ANIMAL" required >
-                                            <option value="" disabled selected>Seleccione una clase de animal</option>
-                                            <option value="Vaca">Vaca</option>
-                                            <option value="Caballo">Caballo</option>
-                                            <option value="Cerdo">Cerdo</option>
-                                            <option value="Burro">Burro</option>
-                                            <option value="Mula">Mula</option>
-                                            <option value="Yegua">Yegua</option>
-                                            <option value="Toro">Toro</option>
-                                            <option value="Res">Res</option>
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
+                                        <div class="mb-3">
+                                            <label for="ANIMALL">Tipo Animal</label>
+                                            <select class="form-select custom-select" id="ANIMAL" name="ANIMAL" required>
+                                                <option value="" disabled selected>Seleccione una clase de animal</option>
+                                                <option value="Vaca">Vaca</option>
+                                                <option value="Caballo">Caballo</option>
+                                                <option value="Cerdo">Cerdo</option>
+                                                <option value="Burro">Burro</option>
+                                                <option value="Mula">Mula</option>
+                                                <option value="Yegua">Yegua</option>
+                                                <option value="Toro">Toro</option>
+                                                <option value="Res">Res</option>
+                                            </select>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
 
-                                    <div class="mb-3">
-                                        <label for="COL_ANIMALL">Color Animal</label>
-                                        <input type="text" id="COL_ANIMAL" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal"required >
-                                        <div class="invalid-feedback"></div>
+                                        <div class="mb-3">
+                                            <label for="COL_ANIMALL">Color Animal</label>
+                                            <input type="text" id="COL_ANIMAL" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal" required>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
                                     </div>
+                                </div>
+
 
                                     <div class="mb-3">
                                         <button class="btn btn-primary" type="submit">Guardar</button>
@@ -432,52 +440,64 @@
                                                     @csrf
                                                         <input type="hidden" class="form-control" name="COD_PSACRIFICIO" value="{{$psacrificio['COD_PSACRIFICIO']}}">
                                                         
-                                                        <div class="mb-3 mt-3">
-                                                            <label for="psacrificio" class="form-label">Nombre</label>
-                                                            <input type="text" id="NOM_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="NOM_PERSONA" placeholder="Ingrese el nombre de la persona" value="{{$psacrificio['NOM_PERSONA']}}" oninput="validarNombre('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)" >
-                                                            <div class="invalid-feedback" id="invalid-feedback2-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
-                                                        </div>
-                                                        <div class="mb-3 mt-3">
-                                                            <label for="psacrificio" class="form-label">Identidad</label>
-                                                            <input type="text" id="DNI_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="DNI_PERSONA" placeholder="Ingrese el número de identidad" value="{{$psacrificio['DNI_PERSONA']}}" oninput="validarDNI('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)" >
-                                                            <div class="invalid-feedback" id="invalid-feedback-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="mb-3 mt-3">
+                                                                    <label for="psacrificio" class="form-label">Nombre</label>
+                                                                    <input type="text" id="NOM_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="NOM_PERSONA" placeholder="Ingrese el nombre de la persona" value="{{$psacrificio['NOM_PERSONA']}}" oninput="validarNombre('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
+                                                                    <div class="invalid-feedback" id="invalid-feedback2-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
+                                                                </div>
+
+                                                                <div class="mb-3 mt-3">
+                                                                    <label for="psacrificio" class="form-label">Identidad</label>
+                                                                    <input type="text" id="DNI_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="DNI_PERSONA" placeholder="Ingrese el número de identidad" value="{{$psacrificio['DNI_PERSONA']}}" oninput="validarDNI('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
+                                                                    <div class="invalid-feedback" id="invalid-feedback-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="psacrificio">Teléfono</label>
+                                                                    <input type="text" id="TEL_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="TEL_PERSONA" placeholder="Ingrese el número de teléfono" value="{{$psacrificio['TEL_PERSONA']}}" oninput="validarTelefono('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
+                                                                    <div class="invalid-feedback" id="invalid-feedback10-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <div class="mb-3">
+                                                                    <label for="psacrificio" class="form-laabel">Fecha Sacrificio</label>
+                                                                    <!-- Codigo para que me muestre la fecha ya registrada al momento de actualizar --->
+                                                                    <?php $fecha_formateada = date('Y-m-d', strtotime($psacrificio['FEC_SACRIFICIO'])); ?>
+                                                                    <input type="date" class="form-control" id="FEC_SACRIFICIO" name="FEC_SACRIFICIO" placeholder="Ingrese la fecha del sacrificio" value="{{$fecha_formateada}}">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="psacrificio">Dirección Sacrificio</label>
+                                                                    <input type="text" id="DIR_PSACRIFICIO-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingrese la dirección del sacrificio" value="{{$psacrificio['DIR_PSACRIFICIO']}}" oninput="validarDireccion('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
+                                                                    <div class="invalid-feedback" id="invalid-feedback5-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="ANIMALLL" >Tipo Animal</label>
+                                                                    <select class="form-select custom-select" id="ANIMAL" name="ANIMAL" required>
+                                                                        <option value="" disabled selected>Seleccione una clase de animal</option>
+                                                                        <option value="Vaca" @if($psacrificio['ANIMAL'] === 'Vaca') selected @endif>Vaca</option>
+                                                                        <option value="Caballo" @if($psacrificio['ANIMAL'] === 'Caballo') selected @endif>Caballo</option>
+                                                                        <option value="Cerdo" @if($psacrificio['ANIMAL'] === 'Cerdo') selected @endif>Cerdo</option>
+                                                                        <option value="Burro" @if($psacrificio['ANIMAL'] === 'Burro') selected @endif>Burro</option>
+                                                                        <option value="Mula" @if($psacrificio['ANIMAL'] === 'Mula') selected @endif>Mula</option>
+                                                                        <option value="Yegua" @if($psacrificio['ANIMAL'] === 'Yegua') selected @endif>Yegua</option>
+                                                                        <option value="Toro" @if($psacrificio['ANIMAL'] === 'Toro') selected @endif>Toro</option>
+                                                                        <option value="Res" @if($psacrificio['ANIMAL'] === 'Res') selected @endif>Res</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="COL_ANIMALL">Color Animal</label>
+                                                                    <input type="text" id="COL_ANIMAL-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal" value="{{$psacrificio['COL_ANIMAL']}}" oninput="validarColor('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
+                                                                    <!-- <div class="invalid-feedback"></div> -->
+                                                                </div>
+                                                            </div>
                                                         </div>
 
-                                                        <div class="mb-3">
-                                                            <label for="psacrificio">Teléfono</label>
-                                                            <input type="text" id="TEL_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="TEL_PERSONA" placeholder="Ingrese el número de teléfono" value="{{$psacrificio['TEL_PERSONA']}}" oninput="validarTelefono('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)" >
-                                                            <div class="invalid-feedback" id="invalid-feedback10-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="psacrificio" class="form-laabel">Fecha Sacrificio</label>
-                                                            <!-- Codigo para que me muestre la fecha ya registrada al momento de actualizar --->
-                                                            <?php $fecha_formateada = date('Y-m-d', strtotime($psacrificio['FEC_SACRIFICIO'])); ?>
-                                                            <input type="date" class="form-control" id="FEC_SACRIFICIO" name="FEC_SACRIFICIO" placeholder="Ingrese la fecha del sacrificio" value="{{$fecha_formateada}}">
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="psacrificio">Dirección Sacrificio</label>
-                                                            <input type="text" id="DIR_PSACRIFICIO-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingrese la dirección del sacrificio" value="{{$psacrificio['DIR_PSACRIFICIO']}}" oninput="validarDireccion('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)" >
-                                                            <div class="invalid-feedback" id="invalid-feedback5-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="ANIMALLL" >Tipo Animal</label>
-                                                            <select class="form-select custom-select" id="ANIMAL" name="ANIMAL" required >
-                                                                <option value="" disabled selected>Seleccione una clase de animal</option>
-                                                                <option value="Vaca" @if($psacrificio['ANIMAL'] === 'Vaca') selected @endif>Vaca</option>
-                                                                <option value="Caballo" @if($psacrificio['ANIMAL'] === 'Caballo') selected @endif>Caballo</option>
-                                                                <option value="Cerdo" @if($psacrificio['ANIMAL'] === 'Cerdo') selected @endif>Cerdo</option>
-                                                                <option value="Burro" @if($psacrificio['ANIMAL'] === 'Burro') selected @endif>Burro</option>
-                                                                <option value="Mula" @if($psacrificio['ANIMAL'] === 'Mula') selected @endif>Mula</option>
-                                                                <option value="Yegua" @if($psacrificio['ANIMAL'] === 'Yegua') selected @endif>Yegua</option>
-                                                                <option value="Toro" @if($psacrificio['ANIMAL'] === 'Toro') selected @endif>Toro</option>
-                                                                <option value="Res" @if($psacrificio['ANIMAL'] === 'Res') selected @endif>Res</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="COL_ANIMALL">Color Animal</label>
-                                                            <input type="text" id="COL_ANIMAL-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal" value="{{$psacrificio['COL_ANIMAL']}}" oninput="validarColor('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)" >
-                                                            <div class="invalid-feedback" id="invalid-feedback4-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
-                                                        </div>
                                                         <div class="mb-3">
                                                             <!-- Boton de confirmar al editar -->
                                                             <button type="submit" class="btn btn-primary" id="submitButton-{{$psacrificio['COD_PSACRIFICIO']}}">Editar</button>
