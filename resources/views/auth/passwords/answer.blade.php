@@ -144,7 +144,7 @@
                         <p>Pregunta de seguridad:</p>
                         <div class="form-outline mb-4">
                             <input type="hidden" id="NOM_USUARIO" name="NOM_USUARIO" class="form-control" value="{{ $NOM_USUARIO }}" required>
-                            <input type="text" readonly id="PREGUNTA" name="PREGUNTA" class="form-control" value="{{ $PREGUNTA }}" required>
+                            <input type="text" readonly id="PREGUNTA" name="PREGUNTA" class="form-control" value="{{ '¿' . $PREGUNTA . '?' }}" required>
                         </div>
                         <p>Respuesta:</p>
                           <div class="form-outline mb-4">

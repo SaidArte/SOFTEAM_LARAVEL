@@ -402,6 +402,7 @@
                         <tr>
                             <th>Nº</th>
                             <th><center>Dueño Fierro</center></th>
+                            <th><center>No. Identidad</center></th>
                             <th><center>Fecha</center></th>
                             <th><center>Folio</center></th>
                             <th><center>Tipo Fierro</center></th>
@@ -429,6 +430,13 @@
                                          <td>
                                             @if ($persona !== null)
                                                  {{ $persona['NOM_PERSONA']  }}
+                                             @else
+                                                 Persona no encontrada
+                                             @endif
+                                         </td>
+                                         <td>
+                                            @if ($persona !== null)
+                                                 {{ $persona['DNI_PERSONA']  }}
                                              @else
                                                  Persona no encontrada
                                              @endif
@@ -474,16 +482,17 @@
                                         <div class="modal-body">
                                         <form action="{{ url('fierro/actualizar') }}" method="post" enctype="multipart/form-data" onsubmit="return validarFormulario({{$fierro['COD_FIERRO']}})">
                                             @csrf
-                                                <input type="hidden" class="form-control" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
+                                                <div>
+                                                    <input type="hidden" class="form-control" name="COD_FIERRO" value="{{$fierro['COD_FIERRO']}}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="PERSONAL" class="form-label">Nombre Propietario:</label>
+                                                    <input type="text" readonly class="form-control" id="NOM_PERSONA-{{ $fierro['COD_FIERRO'] }}" name="NOM_PERSONA" value="{{$persona['NOM_PERSONA']}}" required>
+                                                </div>
 
-                                                <div class="mb-3 mt-3">
-                                                    <label for="COD_PERSONA" class="form-label">Persona:</label>
-                                                    <select class="form-select" id="COD_PERSONA" name="COD_PERSONA" disabled>
-                                                        <option value="" disabled selected>Seleccione una persona</option>
-                                                        @foreach ($personasArreglo as $persona)
-                                                            <option value="{{ $persona['COD_PERSONA'] }}" @if($persona['COD_PERSONA'] == $fierro['COD_PERSONA']) selected @endif>{{ $persona['NOM_PERSONA'] }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                <div class="mb-3">
+                                                    <label for="COD_PERSONA" class="form-label">No. Identidad:</label>
+                                                    <input type="text" readonly class="form-control" id="DNI_PERSONA-{{ $fierro['COD_FIERRO'] }}" name="DNI_PERSONA" value="{{$persona['DNI_PERSONA']}}" required>
                                                 </div>
 
                                                 <div class="mb-3">

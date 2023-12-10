@@ -129,13 +129,34 @@ class UsuariosController extends Controller
         }
     }
 
-    public function actualizar_pass_usuarios(Request $request){ //Este código es innesesario.
+    public function actualizar_pass_usuarios(Request $request){
 
-        $actualizar_pass_usuario = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PASS_USUARIOS',[
-            "COD_USUARIO"       => $request -> input("COD_USUARIO"),
-            "PAS_USUARIO"       => $request -> input("PAS_USUARIO"),
+        $response = Http::post(self::urlapi.'api/login', [
+            'NOM_USUARIO' => $request -> input("NOM_USUARIO"),
+            'PAS_USUARIO' => $request -> input("PAS_USUARIO"),
         ]);
-        return redirect('/Usuarios');
+
+        if ($response->successful()) {
+            return redirect()->back()->with('error', 'Favor, ingrese una contraseña diferente a la actual.')->withInput();
+        }
+
+        $response2 = Http::put(self::urlapi.'SEGURIDAD/ACTUALIZAR_PASS_USUARIOS', [
+            'COD_USUARIO' => $request -> input("COD_USUARIO"),
+            'PAS_USUARIO' => $request -> input("PAS_USUARIO"),
+        ]);
+
+        if ($response2->successful()) {
+            $notification = [
+                'type' => 'success',
+                'title' => 'Cambio de contraseña',
+                'message' => 'La contraseña del usuario ha sido actualizada con éxito.'
+            ];
+            
+            return redirect('/Usuarios')
+                ->with('notification', $notification);
+        } else {
+            return redirect()->back()->with('error', 'Error interno de servidor')->withInput();
+        }
 
     }
 
