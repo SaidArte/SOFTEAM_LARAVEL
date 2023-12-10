@@ -200,15 +200,15 @@ public function generarPdfT($id){
         <section>
     <body>
         <h1>GUIA FRANCA</h1>
-        <p>El infrascrito Director Municipal de Justicia Municipal por medio de la presente, concede permiso a {$Persona['NOM_PERSONA']}.</p>
+        <p>El infrascrito Director Municipal de Justicia Municipal por medio de la presente, concede permiso a {$Persona['NOM_PERSONA']} con numero de identidad: {$Persona['DNI_PERSONA']}.</p>
         <p>Dicho traslado será desde: {$Traslado['DIR_ORIG_PTRASLADO']}. </p>
         <p>Hasta: {$Traslado['DIR_DEST_TRASLADO']}. </p>
         <p>En el vehículo:</p>
         <p>Marca: {$Traslado['MAR_VEHICULO']} Color: {$Traslado['COL_VEHICULO']}. </p>
         <p>Placa: {$Traslado['MAT_VEHICULO']}. </p>
-        <p>Nombre del conductor: {$Traslado['NOM_TRANSPORTISTA']}. </p>
+        <p>Nombre del conductor: {$Traslado['NOM_TRANSPORTISTA']}. con numero de identidad: {$Traslado['DNI_TRANSPORTISTA']}. </p>
         <p>Donde se solicita a las autoridades civiles y policiales no abstaculizar dicho traslado.</p>
-        <p>Talanga F.M. $dia del mes $mes del año $año.</p>
+        <p>Talanga Francisco Morazan $dia del mes $mes del año $año.</p>
         <br>
         <div class=\"signature\">
             <p>______________________________________</p>

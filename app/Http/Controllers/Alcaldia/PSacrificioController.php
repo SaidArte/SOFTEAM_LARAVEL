@@ -173,19 +173,19 @@ public function nuevo_psacrificio(Request $request)
                         margin-top: 10px;
                     }
                 </style>
-                <div class=\"logo-container\">
-                     <img src=\"vendor/adminlte/dist/img/Encabezado.jpg\" alt=\"Logo 1\">
-                </div>
+              
             </head>
+            <div class=\"logo-container\">
+            <img src=\"vendor/adminlte/dist/img/Encabezado.jpg\" alt=\"Logo 1\">
+       </div>
             <body>
                 <h1>PERMISO DE SACRIFICIO DE UN ANIMAL</h1>
                 <br><br>
                 <div style=\"text-align: justify;\">
-                <p>El infrascrito director Municipal de Justicia de este Municipio concede permiso al señor(a):
+                <p>El suscrito Director Municipal de Justicia de este Municipio otorga permiso al señor(a):
                  {$Sacrificio['NOM_PERSONA']}, con número de identidad {$Sacrificio['DNI_PERSONA']}, 
-                para un sacrificio de un {$Sacrificio['ANIMAL']} de color {$Sacrificio['COL_ANIMAL']} 
-                con el siguiente fierro: 
-                será sacrificado el día $dia del mes $mes del año $año 
+                 para un sacrificio de un {$Sacrificio['ANIMAL']} de color {$Sacrificio['COL_ANIMAL']} 
+                 será sacrificado el día $dia del mes $mes del año $año 
                 en la siguiente dirección: {$Sacrificio['DIR_PSACRIFICIO']}.</p>
                 </div>
                 
