@@ -195,29 +195,7 @@ class FierroController extends Controller
         $mes = $dateTime->format('m');
         $año = $dateTime->format('Y');
 
-  // Obtener el nombre del archivo de la URL almacenada en la base de datos
-    $nombreArchivo = pathinfo(parse_url($Fierro['IMG_FIERRO'], PHP_URL_PATH), PATHINFO_BASENAME);
 
-    // Construir la ruta local de la imagen
-    $rutaImagen = public_path("imagenes/fierros/" . $nombreArchivo);
-    $contenido = "";
-    // Verificar si la imagen existe antes de agregarla al PDF
-    if (file_exists($rutaImagen)) {
-        // Obtener la extensión de la imagen
-        $extension = pathinfo($rutaImagen, PATHINFO_EXTENSION);
-    
-        // Verificar la extensión y agregar la imagen al HTML
-        if (in_array($extension, ['jpg', 'jpeg', 'png'])) {
-            // Agregar la imagen al contenido HTML directamente
-            $contenido = "<img src=\"{$rutaImagen}\" alt=\"Fierro\" style=\"width: 80mm; height: auto;\">".$contenido;
-        } else {
-            // Manejar la situación donde la extensión no es compatible
-            return response('Formato de imagen no compatible.', 400);
-        }
-    } else {
-        // Manejar la situación donde la imagen no existe
-        return response('Imagen no encontrada.', 404);
-    }
     
 
         // Configurar el salto de página automático
@@ -250,10 +228,7 @@ class FierroController extends Controller
                     width: 1500px;
                     height: 400px;
                 }
-                img {
-                    width:  50px;
-                    height: 50px;
-                }
+               
                 h1, h6 {
                     text-align: center;
                     margin-top: 10px;
