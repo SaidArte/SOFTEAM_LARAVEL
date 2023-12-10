@@ -888,7 +888,10 @@ function validarDet(id, det) {
         <script> console.log('Hi!'); </script>
         @stop
     @else
-            <p>No tiene autorización para visualizar esta sección</p>
+        <script>
+            alert("No tiene autorización para ver este contenido");
+            window.location.href = "{{ route('home') }}"; // Cambia a 'home' si no se poseen permisos.
+        </script>
     @endif
     @else
         <!-- Contenido para usuarios no autenticados -->
