@@ -159,6 +159,13 @@ public function nuevo_psacrificio(Request $request)
                         margin-top: 50px;
                         text-align: center;
                     }
+                    .logo-container {
+                        margin: 0 20px; /* Ajusta este valor según tu preferencia */
+                    }
+                    .logo-container img {
+                        width: 1500px;
+                        height: 400px;
+                    }
                     .signature p {
                         margin: 0;
                     }
@@ -166,12 +173,11 @@ public function nuevo_psacrificio(Request $request)
                         margin-top: 10px;
                     }
                 </style>
+                <div class=\"logo-container\">
+                     <img src=\"vendor/adminlte/dist/img/Encabezado.jpg\" alt=\"Logo 1\">
+                </div>
             </head>
             <body>
-                <h1>Municipalidad de Talanga</h1>
-                <h6>DEPARTAMENTO DE FRANCISCO MORAZAN - HONDURAS C.A.</h6>
-                <h6>Correo Electrónico: municipalidadtalanga2022@gmail.com</h6>
-                <br><br><br>
                 <h1>PERMISO DE SACRIFICIO DE UN ANIMAL</h1>
                 <br><br>
                 <div style=\"text-align: justify;\">
@@ -182,7 +188,7 @@ public function nuevo_psacrificio(Request $request)
                 será sacrificado el día $dia del mes $mes del año $año 
                 en la siguiente dirección: {$Sacrificio['DIR_PSACRIFICIO']}.</p>
                 </div>
-                <br><br>
+                
                 
 
                 <div class=\"signature\"><center>

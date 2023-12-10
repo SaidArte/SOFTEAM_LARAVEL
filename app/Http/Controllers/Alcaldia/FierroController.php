@@ -194,12 +194,38 @@ class FierroController extends Controller
         $dia = $dateTime->format('d');
         $mes = $dateTime->format('m');
         $año = $dateTime->format('Y');
+
+  // Obtener el nombre del archivo de la URL almacenada en la base de datos
+    $nombreArchivo = pathinfo(parse_url($Fierro['IMG_FIERRO'], PHP_URL_PATH), PATHINFO_BASENAME);
+
+    // Construir la ruta local de la imagen
+    $rutaImagen = public_path("imagenes/fierros/" . $nombreArchivo);
+    $contenido = "";
+    // Verificar si la imagen existe antes de agregarla al PDF
+    if (file_exists($rutaImagen)) {
+        // Obtener la extensión de la imagen
+        $extension = pathinfo($rutaImagen, PATHINFO_EXTENSION);
     
+        // Verificar la extensión y agregar la imagen al HTML
+        if (in_array($extension, ['jpg', 'jpeg', 'png'])) {
+            // Agregar la imagen al contenido HTML directamente
+            $contenido = "<img src=\"{$rutaImagen}\" alt=\"Fierro\" style=\"width: 80mm; height: auto;\">".$contenido;
+        } else {
+            // Manejar la situación donde la extensión no es compatible
+            return response('Formato de imagen no compatible.', 400);
+        }
+    } else {
+        // Manejar la situación donde la imagen no existe
+        return response('Imagen no encontrada.', 404);
+    }
+    
+
         // Configurar el salto de página automático
         $pdf->SetAutoPageBreak(true, 10);
-    
         // Agregar una página al PDF
         $pdf->AddPage();
+        
+
     
         // Establecer el contenido del PDF con los datos del registro
         $contenido = "
@@ -223,6 +249,10 @@ class FierroController extends Controller
                 .logo-container img {
                     width: 1500px;
                     height: 400px;
+                }
+                img {
+                    width:  50px;
+                    height: 50px;
                 }
                 h1, h6 {
                     text-align: center;
@@ -260,28 +290,37 @@ class FierroController extends Controller
                 .signature h3 {
                     margin-top: 10px;
                 }
+                .folio {
+                    font-weight: bold;
+                    color: red;
+                }
             </style>
         </head>
-        <div class=\"logo-container\">
-        <img src=\"vendor/adminlte/dist/img/Encabezado.jpg\" alt=\"Logo 1\">
-         </div>
+     <div class=\"logo-container\">
+         <img src=\"vendor/adminlte/dist/img/Encabezado.jpg\" alt=\"Logo 1\">
+     </div>
          <section>
     <body>
             <h1>REGISTRO DE FIERRO</h1>
             <h1>{$Persona['NOM_PERSONA']}</h1>    
-            <img src=\"imagenes/fierros/{$Fierro['IMG_FIERRO']}\" alt=\"Fierro\">       
+            <img src=\"imagenes/fierros/{$Fierro['IMG_FIERRO']}\" alt=\"Fierro\">  
+               
             <div style=\"text-align: justify;\">
-            <p>El infrascrito director Municipal de Justicia de este Municipio concede permiso al señor(a):
+            <span class=\"folio\">Nº: {$Fierro['NUM_FOLIO_FIERRO']} </span>
+            <p>El día de hoy se presentó el señor (a):
              {$Persona['NOM_PERSONA']}, con número de identidad {$Persona['DNI_PERSONA']}, 
-            de portar un fierro para marcar ganado, del tipo {$Fierro['TIP_FIERRO']}, con número de folio {$Fierro['NUM_FOLIO_FIERRO']}, 
+             y la siguiente dirección:  {$Persona['DES_DIRECCION']}. Solicitó la autorización para su fierro de tipo {$Fierro['TIP_FIERRO']},
+             procediendo a bucar en los libros que esta Municipalidad lleva y al no encotrar una igual o parecida se le dio
+             tramite a la inscripcion de su figura para que pueda herrar sus semovientes de campo, 
             que fue registrado el día $dia del mes $mes del año $año 
-            en la siguiente dirección: {$Persona['DES_DIRECCION']}.</p>
             </div>
            
 
             <div class=\"signature\"><center>
                 <p>______________________________________</p>
-                <h3>Juez de Justicia Municipal</h3>
+                <p>Firma y Huella del Señor(a):</p>
+                <h4>{$Persona['NOM_PERSONA']}</h4>
+                <h4>{$Persona['DNI_PERSONA']}</h4>
             </div></center>
         </section>
     </body>
@@ -292,7 +331,7 @@ class FierroController extends Controller
         $pdf->writeHTML($contenido, true, false, true, false, '');
     
         // Descargar el PDF, "D" para descarga directa e "I" para pre-visualización.
-        $pdf->Output("Permiso_de_Sacrificio.pdf", "I");
+        $pdf->Output("Registro_Fierro.pdf", "I");
       }
 }
 
