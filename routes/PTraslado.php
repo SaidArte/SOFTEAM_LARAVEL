@@ -10,3 +10,5 @@ Route::get('',[PTrasladoController::class,'ptraslado']);
 Route::post('/insertar',[PTrasladoController::class,'nuevo_PermisoTraslado']);
 //Ruta para el Update
 Route::post('/actualizar',[PTrasladoController::class,'actualizar_PermisoTraslado']);
+//Ruta para imprimir pdf
+Route::get('/generar-pdf/{id}', [PTrasladoController::class, 'generarPdfT']);

@@ -688,10 +688,10 @@
                         <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
                         </button>
                     @endif
-                    <a href="{{ route('PTraslado.pdfTraslado') }}" class="btn btn-sm btn-danger" data-target="#PTraslado-edit-{{ $PTraslado['COD_PTRASLADO'] }}" target="_blank">
-
-                                        <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
-                                        </a>
+                    <!-- Boton de PDF -->
+                    <button onclick="mostrarVistaPrevia({{$PTraslado['COD_PTRASLADO']}})" class="btn btn-sm btn-danger">
+                        <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
+                    </button>
                         
                     </td>
                     
@@ -844,7 +844,17 @@
                                                 $('#COD_PERSONA-'+id).val('');
                                             }
                                         };
-     
+                                        
+                                        function mostrarVistaPrevia(idtraslado) {
+                                            // URL de la acción del controlador que genera el PDF
+                                            var nuevaVentana = window.open("{{ url('ptraslado/generar-pdf') }}/" + idtraslado, '_blank');
+
+                                            // Esperar a que la nueva ventana esté completamente cargada
+                                            nuevaVentana.onload = function () {
+                                                // Mostrar el diálogo de impresión
+                                                nuevaVentana.print();
+                                            };
+                                        }
                                      </script>
                             </div>
                         </div>
