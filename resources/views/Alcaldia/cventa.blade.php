@@ -552,7 +552,7 @@ function buscarAnimal(idAnimal) {
 
                                                 <div class="col-md-6">
                                                     <label for="Cventa">N° Vendedor</label>
-                                                    <input type="text" class="form-control" id="COD_VENDEDOR-{{$Cventa['COD_CVENTA']}}" name="COD_VENDEDOR" placeholder=" Ingrese el codigo del vendedor  " value="{{$Cventa['COD_VENDEDOR']}}   ">
+                                                    <input type="text" class="form-control" readonly id="COD_VENDEDOR-{{$Cventa['COD_CVENTA']}}" name="COD_VENDEDOR" placeholder=" Ingrese el codigo del vendedor  " value="{{$Cventa['COD_VENDEDOR']}}   ">
                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Cventa['COD_CVENTA']}}"></div>
                                                 </div>
 
@@ -572,7 +572,7 @@ function buscarAnimal(idAnimal) {
 
                                                 <div class="col-md-6">
                                                     <label for="Cventa">N° Animal</label>
-                                                    <input type="text" class="form-control" id="COD_ANIMAL-{{$Cventa['COD_CVENTA']}}" name="COD_ANIMAL" placeholder=" Ingrese el codigo del animal  " value="{{$Cventa['COD_ANIMAL']}}">
+                                                    <input type="text" class="form-control"readonly  id="COD_ANIMAL-{{$Cventa['COD_CVENTA']}}" name="COD_ANIMAL" placeholder=" Ingrese el codigo del animal  " value="{{$Cventa['COD_ANIMAL']}}">
                                                    
                     
                                         

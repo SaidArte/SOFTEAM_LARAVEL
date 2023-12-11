@@ -530,7 +530,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="Animal">N° fierro</label>
-                                                    <input type="text" class="form-control" id="COD_FIERRO" name="COD_FIERRO" placeholder=" Ingrese El Codigo Del Fierro  " value="{{$Animal['COD_FIERRO']}}">
+                                                    <input type="text" class="form-control" readonly  id="COD_FIERRO" name="COD_FIERRO" placeholder=" Ingrese El Codigo Del Fierro  " value="{{$Animal['COD_FIERRO']}}">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="Animal" class="form-label"> Venteado  Animal</label>
