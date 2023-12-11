@@ -717,7 +717,7 @@
                                             <label for="PTraslado" class="form-label">Fecha Traslado</label>
                                             <?php $fecha_formateada = date('Y-m-d', strtotime($PTraslado['FEC_TRASLADO'])); ?>    
                                             <input type="date" class="form-control" id="FEC_TRASLADO" name="FEC_TRASLADO" value="{{ $fecha_formateada }}" min="{{ date('Y-m-d', time()) }}" required>
-                                            <div class="valid-feedback1-{{$PTraslado['COD_PTRASLADO']}}"></div>
+                                            <div class="valid-feedback " id="invalid-feedback1--{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
 
                                         <div class="mb-3">
@@ -735,11 +735,13 @@
                                                     
                                         <div class="mb-3">
                                             <label for="PTraslado">Direccion Origen</label>
-                                            <input type="text" class="form-control" id="DIR_ORIG_PTRASLADO" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar direccion de origen del traslado" value="{{$PTraslado['DIR_ORIG_PTRASLADO']}}">
+                                            <input type="text" class="form-control" id="DIR_ORIG_PTRASLADO-{{$PTraslado['COD_PTRASLADO']}}" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar direccion de origen del traslado" value="{{$PTraslado['DIR_ORIG_PTRASLADO']}}" oninput="validarDireccion('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" class="invalid-feedback3-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="PTraslado">Direccion Destino</label>
-                                            <input type="text" class="form-control" id="DIR_DEST_TRASLADO" name="DIR_DEST_TRASLADO" placeholder="Ingresar direccion de destino del traslado" value="{{$PTraslado['DIR_DEST_TRASLADO']}}">
+                                            <input type="text" class="form-control" id="DIR_DEST_TRASLADO-{{$PTraslado['COD_PTRASLADO']}}" name="DIR_DEST_TRASLADO" placeholder="Ingresar direccion de destino del traslado" value="{{$PTraslado['DIR_DEST_TRASLADO']}}" oninput="validarDireccionD('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" class="invalid-feedback4-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
 
                                         
@@ -754,12 +756,14 @@
 
                                         <div class="mb-3">
                                             <label for="PTraslado">Identidad Transportista</label>
-                                            <input type="text" class="form-control" id="DNI_TRANSPORTISTA" name="DNI_TRANSPORTISTA" placeholder="Ingresar numero de identidad" value="{{$PTraslado['DNI_TRANSPORTISTA']}}">
+                                            <input type="text" class="form-control" id="DNI_TRANSPORTISTA-{{$PTraslado['COD_PTRASLADO']}}" name="DNI_TRANSPORTISTA" placeholder="Ingresar numero de identidad" value="{{$PTraslado['DNI_TRANSPORTISTA']}}" oninput="validarDNI('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback2-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
 
                                          <div class="mb-3">
                                             <label for="PTraslado">Telefono Transportista</label>
-                                            <input type="text" class="form-control" id="TEL_TRANSPORTISTA" name="TEL_TRANSPORTISTA" placeholder="Ingresar numero de telefono" value="{{$PTraslado['TEL_TRANSPORTISTA']}}">
+                                            <input type="text" class="form-control" id="TEL_TRANSPORTISTA-{{$PTraslado['COD_PTRASLADO']}}" name="TEL_TRANSPORTISTA" placeholder="Ingresar numero de telefono" value="{{$PTraslado['TEL_TRANSPORTISTA']}}" oninput="validarTelefono('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback1-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div> 
 
                                          <div class="mb-3">
@@ -806,45 +810,112 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <button type="submit" class="btn btn-primary">Editar</button>
+                                            <button type="submit" class="btn btn-primary"id="submitButton-{{$PTraslado['COD_PTRASLADO']}}">Editar</button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                         </div>
                                     </div>
                                  </div>
                              </form>
-                         </div>
-                    
+                            <script>
+                                function validarTelefono(id, telefono) {
+                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                    var inputElement = document.getElementById("TEL_TRANSPORTISTA-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback1-" + id);
 
-                                   <script>
+                                    
+                                    if (!/^\d{8}$/.test(telefono)) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "El teléfono debe tener exactamente 8 dígitos";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+                                //Validaciones EDITAR
+                                function validarDNI(id, dni) {
+                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                    var inputElement = document.getElementById("DNI_TRANSPORTISTA-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback2-" + id);
+
+                                    if (!/^\d{13}$/.test(dni)) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "El DNI debe tener exactamente 13 dígitos numéricos";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+                                function validarDireccion(id, direccion) {
+                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                    var inputElement = document.getElementById("DIR_ORIG_PTRASLADO-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback3-" + id);
+
+                                    if (direccion.length < 5) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "La dirección debe tener al menos 5 caracteres.";
+                                        btnGuardar.disabled = true;
+                                    } else if (direccion.length > 200) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "La dirección no puede tener más de 200 carácteres.";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+                                function validarDireccionD(id, direccion) {
+                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                    var inputElement = document.getElementById("DIR_DEST_TRASLADO-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback4-" + id);
+
+                                    if (direccion.length < 5) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "La dirección debe tener al menos 5 caracteres.";
+                                        btnGuardar.disabled = true;
+                                    } else if (direccion.length > 200) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "La dirección no puede tener más de 200 carácteres.";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
                                 //Función para buscar personas.
-                                            function buscarPersona2(id,idPersona) {
-                                            var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
-                                            var personaEncontrada = false;
+                                function buscarPersona2(id,idPersona) {
+                                        var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
+                                        var personaEncontrada = false;
 
                                             if(idPersona){
-                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
-                                                for (var i = 0; i < personasArreglo.length; i++) {
-                                                    if (personasArreglo[i].DNI_PERSONA == idPersona) {
-                                                        personaEncontrada = true;
-                                                        $('#NOM_PERSONA-'+id).val(personasArreglo[i].NOM_PERSONA);
-                                                        $('#COD_PERSONA-'+id).val(personasArreglo[i].COD_PERSONA);
-                                                        break;
+                                                    // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
+                                                    for (var i = 0; i < personasArreglo.length; i++) {
+                                                        if (personasArreglo[i].DNI_PERSONA == idPersona) {
+                                                            personaEncontrada = true;
+                                                            $('#NOM_PERSONA-'+id).val(personasArreglo[i].NOM_PERSONA);
+                                                            $('#COD_PERSONA-'+id).val(personasArreglo[i].COD_PERSONA);
+                                                            break;
+                                                        }
                                                     }
-                                                }
 
-                                                if (!personaEncontrada) {
+                                                    if (!personaEncontrada) {
+                                                        personaEncontrada = false;
+                                                        $('#NOM_PERSONA-'+id).val('Persona no encontrada');
+                                                        $('#COD_PERSONA-'+id).val('');
+                                                    }
+
+                                                }else{
                                                     personaEncontrada = false;
-                                                    $('#NOM_PERSONA-'+id).val('Persona no encontrada');
+                                                    $('#NOM_PERSONA-'+id).val('');
                                                     $('#COD_PERSONA-'+id).val('');
                                                 }
-
-                                            }else{
-                                                personaEncontrada = false;
-                                                $('#NOM_PERSONA-'+id).val('');
-                                                $('#COD_PERSONA-'+id).val('');
-                                            }
                                         };
-                                        
+                                    
                                         function mostrarVistaPrevia(idtraslado) {
                                             // URL de la acción del controlador que genera el PDF
                                             var nuevaVentana = window.open("{{ url('ptraslado/generar-pdf') }}/" + idtraslado, '_blank');
@@ -854,12 +925,13 @@
                                                 // Mostrar el diálogo de impresión
                                                 nuevaVentana.print();
                                             };
-                                        }
-                                     </script>
-                            </div>
-                        </div>
+                                        }                                       
+                             </script>
+                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
                 <!-- Modal Eliminar -->
                 <div class="modal fade" id="ptraslado-delete-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
