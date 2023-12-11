@@ -152,7 +152,6 @@
                                     </div> 
 
                             <div class="row">    
-
                                 <div class="col-md-6">
                                     <label for="CLAS_ANIMAL" >Clases Animal</label>
                                     <select class="form-select custom-select" id="CLAS_ANIMAL" name="CLAS_ANIMAL" required >
@@ -168,7 +167,6 @@
                                        
                                     </select>
                                 </div>
-        
                                 <div class="col-md-6">
                                     <label for="RAZ_ANIMAL" >Raza Animal</label>
                                     <select class="form-select custom-select" id="RAZ_ANIMAL" name="RAZ_ANIMAL"required >
@@ -227,31 +225,20 @@
                                         <option value="N" selected >NO</option>
                                                                                
                                     </select>
-                                </div>
-            
-                        
-                                
+                                </div>                             
                                 <div class="col-md-6">
                                     <label for="DET_ANIMAL">Detalle  Animal</label>
                                     <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del Animal" required >
                                     <div class="invalid-feedback">Ingrese solo letras en detalle del animal </div>
                                 </div>
-                            </div>  
-                               
-        
-        
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary" type="submit">Guardar</button>
-                                        <button type="button"id="CancelarButton"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                    </div>
-                            </form>
-
-
-
-
-
-                            
-                             
+                            </div>        
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary" type="submit">Guardar</button>
+                                    <button type="button" id="CancelarButton" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                            </form>                          
                             <script>
                                 $(document).ready(function() {
                                     function validateInput(input, regex) {
@@ -435,7 +422,6 @@
 
                                             }
                                         }; 
-
                                 
                                  //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                                  function limpiarFormulario() {
@@ -465,38 +451,27 @@
                                     invalidFields.forEach(field => {
                                         field.classList.remove("is-invalid");
                                     });
-
-                                    
-
-
-
-
                                 }
                                 document.getElementById("CancelarButton").addEventListener("click", function() {
                                     limpiarFormulario();
                                 });
-
-
                             </script>
-
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
-            <table cellspacing="9" cellpadding="9" class="Table table-hover table-bordered mt-1 " id="modAnimal" >
+            <table width=100% cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="modAnimal" >
                 <thead>
                     <th>N°</th>
+                    <th>Dueño Fierro</th>
                     <th>Fecha Registro</th>
                     <th>Clase </th>
                     <th>Color </th> 
-                    <th>Dueño Fierro </th>
                     <th>Venteado </th>
                     <th>Herrado</th>
-                    <th>Detalle </th>
-                    
-                
+                    <th>Detalle </th>               
                     <th><center><i class="fas fa-cog"></i></center></th>
                 </thead>
                 <tbody>
@@ -504,14 +479,13 @@
                     @foreach($citaArreglo as $Animal)
                         <tr>
                         <td>{{$Animal['COD_ANIMAL']}}</td>
+                        <td>{{$Animal['NOM_PERSONA']}}</td>
                         <td>{{date('d-m-y', strtotime($Animal['FEC_REG_ANIMAL']))}}</td>
                         <td>{{$Animal['CLAS_ANIMAL']}}</td>   
                         <td>{{$Animal['COL_ANIMAL']}}</td>
-                        <td>{{$Animal['NOM_PERSONA']}}</td>
                         <td>{{ $Animal['VEN_ANIMAL'] === 'S' ? 'Si' : 'No' }}</td>
                         <td>{{ $Animal['HER_ANIMAL'] === 'S' ? 'Si' : 'No' }}</td>
                         <td>{{$Animal['DET_ANIMAL']}}</td>
-
                             <td>
                             @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
                                 <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#Animal-edit-{{$Animal['COD_ANIMAL']}}">
@@ -523,11 +497,7 @@
                                     <i class='fas fa-trash-alt' style='font-size:13px;color:Red'></i> Eliminar
                                 </button>
                             -->
-
-
-                            </td>
-
-                        
+                            </td>                       
                         </tr>
                         <!-- Modal for editing goes here -->
                         <div class="modal fade bd-example-modal-lg" id="Animal-edit-{{$Animal['COD_ANIMAL']}}" tabindex="-1">
@@ -537,7 +507,7 @@
                                         <h5 class="modal-title">Actualizar Datos Animales</h5>
                                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-bodycontainer-fluid ">
+                                    <div class="modal-body container-fluid ">
                                         <form action="{{ url('Animal/actualizar') }}" method="post" class="row g-3 needs-validation">
                                             @csrf
                                                 <input type="hidden" class="form-control" name="COD_ANIMAL" value="{{$Animal['COD_ANIMAL']}}">
@@ -557,48 +527,30 @@
                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Animal['COD_ANIMAL']}}">Solo Se Permirte Ingresar letras</div>
                                             
                                                 </div>
-
-                                               
-
-
                                                 <div class="col-md-6">
                                                     <label for="Animal">Raza  Animal</label>
                                                     <input type="text" class="form-control" id="RAZ_ANIMAL-{{$Animal['COD_ANIMAL']}}" name="RAZ_ANIMAL" placeholder=" Ingrese La Raza Del Animal  " value="{{$Animal['RAZ_ANIMAL']}}"oninput=" validarRaza('{{$Animal['COD_ANIMAL']}}', this.value)" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="30"required>
                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Animal['COD_ANIMAL']}}">Solo Se Permirte Ingresar letras</div>
                                                     
                                                 </div>
-
-
                                                 <div class="col-md-6">
                                                     <label for="Animal">Color  Animal</label>
                                                     <input type="text" class="form-control" id="COL_ANIMAL-{{$Animal['COD_ANIMAL']}}" name="COL_ANIMAL" placeholder=" Ingrese El Color Del animal  " value="{{$Animal['COL_ANIMAL']}}"oninput=" validarColor('{{$Animal['COD_ANIMAL']}}', this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Animal['COD_ANIMAL']}}">Solo Se Permirte Ingresar letras</div>
-                                                  
-
                                                 </div>
-
-
                                                 <div class="col-md-6">
                                                     <label for="Animal">Codigo fierro</label>
                                                     <input type="text" class="form-control" id="COD_FIERRO" name="COD_FIERRO" placeholder=" Ingrese El Codigo Del Fierro  " value="{{$Animal['COD_FIERRO']}}">
-                                                    
-
                                                 </div>
-
-                                                
-
                                                 <div class="col-md-6">
                                                     <label for="Animal" class="form-label"> Venteado  Animal</label>
                                                 
                                                     <select class="form-select  custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL" value="{{$Animal['VEN_ANIMAL']}}"required >
                                                         <option value="S" @if($Animal['VEN_ANIMAL'] === 'S') selected @endif>SI</option>
-                                                        <option value="N" @if($Animal['VEN_ANIMAL'] === 'N') selected @endif>NO</option>
-                                                        
-                                                        
+                                                        <option value="N" @if($Animal['VEN_ANIMAL'] === 'N') selected @endif>NO</option>                                                      
                                                     </select>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
-
                                                 <div class="col-md-6">
                                                     <label for="Animal" class="form-label">Herrado Animal</label>
                                                     <select class="form-select custom-select"  id="HER_ANIMAL" name="HER_ANIMAL" value="{{$Animal['HER_ANIMAL']}}" required>
@@ -607,112 +559,93 @@
                                                     </select>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
-
-
-                                                
-
                                                 <div class="col-md-6">
                                                     <label for="Animal">Detalle Animal</label>
                                                     <input type="text" class="form-control" id="DET_ANIMAL-{{$Animal['COD_ANIMAL']}}" name="DET_ANIMAL" placeholder=" Ingrese El Detalle Del Animal  " value="{{$Animal['DET_ANIMAL']}}"oninput=" validarDet('{{$Animal['COD_ANIMAL']}}', this.value)"  required>
                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Animal['COD_ANIMAL']}}">Solo Se Permirte Ingresar letras</div>
                                                 </div>
                                             </div>
-
-                                                <!--
-                                                <div class="mb-3">
-                                                    <button type="submit" class="btn btn-primary">Editar</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                            
-                                            </div>-->
-                                            <div class="mb-3">
+                                            <div class="row mt-3">
+                                                <div class="col-md-12">
                                                     <button type="submit" class="btn btn-primary" id="submitButton-{{$Animal['COD_ANIMAL']}}">Editar</button>
                                                      <a href="{{ url('Animal') }}" class="btn btn-danger">Cancelar</a>
+                                                </div>
                                             </div>
-
                                         </form>
                                         
-                                        <script>
-                                            
+                                        <script>                                          
                                             function validarClase(id, clase) {
-    var btnGuardar = document.getElementById("submitButton-" + id);
-    var inputElement = document.getElementById("CLAS_ANIMAL-" + id);
-    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+                                                var btnGuardar = document.getElementById("submitButton-" + id);
+                                                var inputElement = document.getElementById("CLAS_ANIMAL-" + id);
+                                                var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
 
-    if (clase.length < 5 || clase.length > 10 || !/^[a-zA-Z\s]+$/.test(clase)) {
-        inputElement.classList.add("is-invalid");
-        invalidFeedback.textContent = "La clase debe tener al menos 5 caracteres y no más de 10, sin números";
-        btnGuardar.disabled = true;
-    } else {
-        inputElement.classList.remove("is-invalid");
-        invalidFeedback.textContent = "";
-        btnGuardar.disabled = false;
-    }
-}
+                                                if (clase.length < 5 || clase.length > 10 || !/^[a-zA-Z\s]+$/.test(clase)) {
+                                                    inputElement.classList.add("is-invalid");
+                                                    invalidFeedback.textContent = "La clase debe tener al menos 5 caracteres y no más de 10, sin números";
+                                                    btnGuardar.disabled = true;
+                                                } else {
+                                                    inputElement.classList.remove("is-invalid");
+                                                    invalidFeedback.textContent = "";
+                                                    btnGuardar.disabled = false;
+                                                }
+                                            }
+                                            function validarRaza(id, raza) {
+                                            var btnGuardar = document.getElementById("submitButton-" + id);
+                                            var inputElement = document.getElementById("RAZ_ANIMAL-" + id);
+                                            var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
 
-function validarRaza(id, raza) {
-    var btnGuardar = document.getElementById("submitButton-" + id);
-    var inputElement = document.getElementById("RAZ_ANIMAL-" + id);
-    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+                                            if (raza.length < 5 || raza.length > 10 || !/^[a-zA-Z\s]+$/.test(raza)) {
+                                            inputElement.classList.add("is-invalid");
+                                            invalidFeedback.textContent = "La raza debe tener al menos 5 caracteres y no más de 10, sin números";
+                                            btnGuardar.disabled = true;
+                                            } else {
+                                            inputElement.classList.remove("is-invalid");
+                                            invalidFeedback.textContent = "";
+                                            btnGuardar.disabled = false;
+                                            }
+                                            }
 
-    if (raza.length < 5 || raza.length > 10 || !/^[a-zA-Z\s]+$/.test(raza)) {
-        inputElement.classList.add("is-invalid");
-        invalidFeedback.textContent = "La raza debe tener al menos 5 caracteres y no más de 10, sin números";
-        btnGuardar.disabled = true;
-    } else {
-        inputElement.classList.remove("is-invalid");
-        invalidFeedback.textContent = "";
-        btnGuardar.disabled = false;
-    }
-}
+                                            function validarColor(id, color) {
+                                            var btnGuardar = document.getElementById("submitButton-" + id);
+                                            var inputElement = document.getElementById("COL_ANIMAL-" + id);
+                                            var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
 
-function validarColor(id, color) {
-    var btnGuardar = document.getElementById("submitButton-" + id);
-    var inputElement = document.getElementById("COL_ANIMAL-" + id);
-    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+                                            if (color.length < 4 || color.length > 15 || !/^[a-zA-Z\s]+$/.test(color)) {
+                                            inputElement.classList.add("is-invalid");
+                                            invalidFeedback.textContent = "El color debe tener al menos 4 caracteres y no más de 15, sin números";
+                                            btnGuardar.disabled = true;
+                                            } else {
+                                            inputElement.classList.remove("is-invalid");
+                                            invalidFeedback.textContent = "";
+                                            btnGuardar.disabled = false;
+                                            }
+                                            }
 
-    if (color.length < 4 || color.length > 15 || !/^[a-zA-Z\s]+$/.test(color)) {
-        inputElement.classList.add("is-invalid");
-        invalidFeedback.textContent = "El color debe tener al menos 4 caracteres y no más de 15, sin números";
-        btnGuardar.disabled = true;
-    } else {
-        inputElement.classList.remove("is-invalid");
-        invalidFeedback.textContent = "";
-        btnGuardar.disabled = false;
-    }
-}
+                                            function validarDet(id, det) {
+                                            var btnGuardar = document.getElementById("submitButton-" + id);
+                                            var inputElement = document.getElementById("DET_ANIMAL-" + id);
+                                            var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
 
-function validarDet(id, det) {
-    var btnGuardar = document.getElementById("submitButton-" + id);
-    var inputElement = document.getElementById("DET_ANIMAL-" + id);
-    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
-
-    if (det.length < 5 || det.length > 100 || !/^[a-zA-Z\s]+$/.test(det)) {
-        inputElement.classList.add("is-invalid");
-        invalidFeedback.textContent = "El detalle debe tener al menos 5 caracteres y no más de 100, sin números";
-        btnGuardar.disabled = true;
-    } else {
-        inputElement.classList.remove("is-invalid");
-        invalidFeedback.textContent = "";
-        btnGuardar.disabled = false;
-    }
-}
-
-
+                                            if (det.length < 5 || det.length > 100 || !/^[a-zA-Z\s]+$/.test(det)) {
+                                            inputElement.classList.add("is-invalid");
+                                            invalidFeedback.textContent = "El detalle debe tener al menos 5 caracteres y no más de 100, sin números";
+                                            btnGuardar.disabled = true;
+                                            } else {
+                                            inputElement.classList.remove("is-invalid");
+                                            invalidFeedback.textContent = "";
+                                            btnGuardar.disabled = false;
+                                            }
+                                            }
                                         </script>
-
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
-
                     @endforeach
                 </tbody>
             </table>
-                            </div>
-                            </div>
+        </div>
+    </div>
                                         <!-- MENSAJE BAJO -->
             <footer class="footer">
                 <div class="container-fluid">
@@ -813,19 +746,20 @@ function validarDet(id, det) {
                         lengthMenu : [10, 20, 30, 40, 50],
                         language: {
                             processing: "Procesando...",
-                            lengthMenu: "Mostrar _MENU_ registros",
-                            zeroRecords: "No se encontraron resultados",
-                            emptyTable: "Ningún dato disponible en esta tabla",
-                            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                            infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                            search: "Buscar:",
-                            infoThousands: ",",
-                            loadingRecords: "Cargando...",
-                            paginate: {
-                                first: "Primero",
-                                last: "Último",
-                                next: "Siguiente",
-                                previous: "Anterior",
+                                lengthMenu: "Mostrar _MENU_ registros",
+                                zeroRecords: "No se encontraron resultados",
+                                emptyTable: "Ningún dato disponible en esta tabla",
+                                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                                search: "Buscar:",
+                                infoThousands: ",",
+                                loadingRecords: "Cargando...",
+                                paginate: {
+                                    first: "Primero",
+                                    last: "Último",
+                                    next: "Siguiente",
+                                    previous: "Anterior"
                             },
                             buttons: {
                                 copy: "Copiar",

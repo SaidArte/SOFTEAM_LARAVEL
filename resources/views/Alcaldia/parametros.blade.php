@@ -163,7 +163,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-            <table cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="paramtbl">
+            <table width=100% cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="paramtbl">
                 <thead>
                     <th><center>Nº</center></th>
                     <th><center>Parámetro</center></th>

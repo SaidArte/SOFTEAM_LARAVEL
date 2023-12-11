@@ -451,7 +451,7 @@
                     <table width=100% cellspacing="10" cellpadding="5" class="table table-hover table-bordered table-responsive mt-1" id="persona">
                         <thead>
                             <th><center>N°</center></th>
-                            <th><center>Dni</center></th>
+                            <th><center>Identidad</center></th>
                             <th><center>Nombre</center></th>
                             <th><center>Imágen</center></th>
                             <th><center>Dirección</center></th>

@@ -332,7 +332,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                        <table cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="ajustes">
+                        <table width=100% cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="ajustes">
                         <thead>
                             <th><center>Nº</center></th>
                             <th><center>Fecha Registro Mantenimiento</center></th>

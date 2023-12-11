@@ -393,7 +393,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <table width=100% cellspacing="8" cellpadding="8" class="table table-hover ttable-bordered mt-1" id="usuarios">
+                        <table width=100% cellspacing="8" cellpadding="8" class="table table-hover table-bordered mt-1" id="usuarios">
                             <thead>
                                 <tr>
                                     <th><center>Nº</center></th>

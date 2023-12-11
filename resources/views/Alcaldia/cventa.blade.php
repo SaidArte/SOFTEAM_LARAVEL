@@ -395,18 +395,6 @@
                                         }; 
                                     } 
 
-
-                                       
-             
-
-                     
-
-
-                           
-
-                   
-
-
                              //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                              function limpiarFormulario() {
                                     document.getElementById("dni").value = "";
@@ -444,25 +432,8 @@
                                     limpiarFormulario();
                                 });
 
-
-                                
-
-
-
-
-
                         </script>
-
-
-
-
-
-
-
-
-
-                         
-                        </div>
+                       </div>
                     </div>
                 </div>
             </div>
@@ -584,17 +555,13 @@
                                                     </select>
                                                     <div class="invalid-feedback"></div>
                                                 </div>
-                                  
-
-                                             <!--   <div class="mb-3">
-                                                    <button type="submit" class="btn btn-primary">Editar</button>
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                            </div>-->
-
-                                            <div class="mb-3">
+                                            <div class="row mt-3">
+                                                <div class="col-md-12">
                                                     <button type="submit" class="btn btn-primary" id="submitButton-{{$Cventa['COD_CVENTA']}}">Editar</button>
                                                      <a href="{{ url('Cventa') }}" class="btn btn-danger">Cancelar</a>
+                                                </div>
                                             </div>
+
                                         </form>
                                    
 
@@ -772,27 +739,28 @@
                                 $(win.document.body).prepend("<p style='text-align: right;'>Fecha de impresión: " + formattedDate + "</p>");
                             },
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6],
+                                columns: [0, 1, 2, 3, 4, 5],
                                 stripHtml: false,
                             },
                         }
                              ],
                              lengthMenu : [10, 20, 30, 40, 50],
                              language: {
-                                 processing: "Procesando...",
-                                 lengthMenu: "Mostrar _MENU_ registros",
-                                 zeroRecords: "No se encontraron resultados",
-                                 emptyTable: "Ningún dato disponible en esta tabla",
-                                 infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                                 infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                                 search: "Buscar:",
-                                 infoThousands: ",",
-                                 loadingRecords: "Cargando...",
-                                 paginate: {
-                                     first: "Primero",
-                                     last: "Último",
-                                     next: "Siguiente",
-                                     previous: "Anterior",
+                                    processing: "Procesando...",
+                                    lengthMenu: "Mostrar _MENU_ registros",
+                                    zeroRecords: "No se encontraron resultados",
+                                    emptyTable: "Ningún dato disponible en esta tabla",
+                                    info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                    infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                    infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                                    search: "Buscar:",
+                                    infoThousands: ",",
+                                    loadingRecords: "Cargando...",
+                                    paginate: {
+                                        first: "Primero",
+                                        last: "Último",
+                                        next: "Siguiente",
+                                        previous: "Anterior"
                                  },
                                  buttons: {
                                      copy: "Copiar",

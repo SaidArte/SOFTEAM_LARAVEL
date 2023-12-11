@@ -147,7 +147,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-hover table-bordered mt-1" id="permitir">
+                    <table width=100% cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="permitir">
                         <thead>
                             <tr>
                                 <th class="hidden"><center>No. Rol</center></th>
