@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use DateTime;
 
 class CventaController extends Controller
 {
@@ -136,6 +137,17 @@ class CventaController extends Controller
 
     // Crear instancia de TCPDF con formato de página y orientación
     $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+    $fechaReg = $Cventa['FEC_CVENTA'];
+
+
+    // Convertir la fecha a un objeto DateTime
+    $dateTime = new DateTime($fechaReg);
+
+    // Obtener el día, mes y año como cadenas
+    $dia = $dateTime->format('d');
+    $mes = $dateTime->format('m');
+    $año = $dateTime->format('Y');
+
 
     // Configurar el salto de página automático
     $pdf->SetAutoPageBreak(true, 10);
@@ -225,8 +237,9 @@ class CventaController extends Controller
                     <br>
                  <p>NOTA: El infrascrito Director Municipal de Justicia, da fe de esta carta de venta. No somos responsables de
                 adulteraciones de este documento. Cualquier modificación, borrado o tachado debe ser refrendada por el sello
-                del Director Municipal de Justicia.</p>
-                <p>Talanga Francisco Morazan  Día ____ del mes ____ del año ______</p>
+                del Director Municipal de Justicia </p>
+
+                <p>Talanga Francisco Morazan el día $dia del mes $mes del año $año   </p>
             <br>
             </div>
             <p class=\"two-parts\">________________________________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;______________________________</p>
