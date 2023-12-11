@@ -825,7 +825,7 @@
                                         // Agrega tu encabezado personalizado aquí
                                         $(win.document.head).append("<style>@page { margin-top: 20px; }</style>");
                                         
-                                        // Agrega dos logos al encabezado
+                                        // Agrega dos logos al encabezado para que sirva
                                     
                                         
                                         $(win.document.body).prepend("<h5 style='text-align: center;'>           REGISTROS DE PERSONAS  </h5>");
