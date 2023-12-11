@@ -182,8 +182,8 @@
                         <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="id">DNI</label>
-                                <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
+                                <label for="id">Identidad Dueño</label>
+                                <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese Identidad del Dueño" oninput="buscarPersona(this.value)" required>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
@@ -197,12 +197,12 @@
 
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="FEC_TRAMITE_FIERRO">Fecha Tramite</label>
+                                <label for="FEC_TRAMITE_FIERRO">Fecha Trámite</label>
                                 <input type="date" id="FEC_TRAMITE_FIERRO" class="form-control" name="FEC_TRAMITE_FIERRO" placeholder="inserte la fecha de tramite." required>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
-                                <label for="NUM_FOLIO_FIERRO">Numero Folio</label>
+                                <label for="NUM_FOLIO_FIERRO">Número Folio</label>
                                 <input type="text" id="NUM_FOLIO_FIERRO" class="form-control" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el numero de folio del fierro" required>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -403,7 +403,7 @@
                             <th>Nº</th>
                             <th><center>Dueño Fierro</center></th>
                             <th><center>No. Identidad</center></th>
-                            <th><center>Fecha</center></th>
+                            <th><center>Fecha Registro</center></th>
                             <th><center>Folio</center></th>
                             <th><center>Tipo Fierro</center></th>
                             <th><center>Imagen</center></th>
@@ -496,14 +496,14 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="FEC_TRAMITE_FIERRO" class="form-label">Fecha Tramite:</label>
+                                                    <label for="FEC_TRAMITE_FIERRO" class="form-label">Fecha Trámite:</label>
                                                     <?php $fecha_formateada = date('Y-m-d', strtotime($fierro['FEC_TRAMITE_FIERRO'])); ?>
                                                     <input type="date" class="form-control" id="FEC_TRAMITE_FIERRO" name="FEC_TRAMITE_FIERRO" value="{{ $fecha_formateada }}" oninput="validarFechaTramite(this.value)">
                                                     <div class="invalid-feedback" id="fecha-invalid-feedback"></div>
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="NUM_FOLIO_FIERRO">Numero Folio</label>
+                                                    <label for="NUM_FOLIO_FIERRO">Número Folio</label>
                                                     <input type="text" class="form-control" id="NUM_FOLIO_FIERRO-{{ $fierro['COD_FIERRO'] }}" name="NUM_FOLIO_FIERRO" placeholder="Ingrese el Folio" value="{{ $fierro['NUM_FOLIO_FIERRO'] }}" oninput="validarFOLIO({{ $fierro['COD_FIERRO'] }}, this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback-{{ $fierro['COD_FIERRO'] }}"></div>
                                                 </div>
@@ -705,12 +705,8 @@
                             
                                 
                                 $(win.document.body).prepend("<h5 style='text-align: center;'>           REGISTROS DE FIERROS  </h5>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>  Correo: alcaldiamunicipaltalanga@gmail.com  </h6>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>Telefonos: 2775-8010, 2775-8018, 2775-8735</h6>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>=======================================================</h6>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>DEPARTAMENTO DE FRANCISCO MORAZÁN- HONDURAS, C.A.</h6>");
-                                $(win.document.body).prepend("<div style='text-align: center;'><img src='vendor/adminlte/dist/img/Talanga.png' alt='Logo 1' width='100' height='100' style='float: left; margin-right: 20px;' /><img src='vendor/adminlte/dist/img/Honduras.png' alt='Logo 2' width='100' height='100' style='float: right; margin-left: 20px;' /></div>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>MUNICIPALIDAD TALANGA</h6>");
+                                $(win.document.body).prepend("<div style='text-align: center;'><img src='vendor/adminlte/dist/img/Encabezado.jpg' alt='Logo 1' width='1500' height='400' style='float: left; margin-right: 20px;' />");
+
                                 
                                 // Agrega la fecha actual
                                 var currentDate = new Date();

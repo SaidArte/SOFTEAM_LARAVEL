@@ -750,11 +750,11 @@
                                      },
                                  },*/
                                  {
-                                     extend: "print",
-                                     text: "<i class='fa-solid fa-print'></i>",
-                                     tittleAttr: "Imprimir",
-                                     className: "btn btn-secondary",
-                                     footer: true,
+                            extend: "print",
+                            text: "<i class='fa-solid fa-print'></i>",
+                            titleAttr: "Imprimir",
+                            className: "btn btn-secondary",
+                            footer: true,
                             customize: function(win) {
                                 // Agrega tu encabezado personalizado aquí
                                 $(win.document.head).append("<style>@page { margin-top: 20px; }</style>");
@@ -762,23 +762,20 @@
                                 // Agrega dos logos al encabezado
                             
                                 
-                                $(win.document.body).prepend("<h5 style='text-align: center;'>           REGISTROS DE CARTAS DE VENTAS  </h5>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>  Correo: alcaldiamunicipaltalanga@gmail.com  </h6>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>Telefonos: 2775-8010, 2775-8018, 2775-8735</h6>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>=======================================================</h6>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>DEPARTAMENTO DE FRANCISCO MORAZÁN- HONDURAS, C.A.</h6>");
-                                $(win.document.body).prepend("<div style='text-align: center;'><img src='vendor/adminlte/dist/img/Talanga.png' alt='Logo 1' width='100' height='100' style='float: left; margin-right: 20px;' /><img src='vendor/adminlte/dist/img/Honduras.png' alt='Logo 2' width='100' height='100' style='float: right; margin-left: 20px;' /></div>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>MUNICIPALIDAD TALANGA</h6>");
+                                $(win.document.body).prepend("<h5 style='text-align: center;'>           REGISTROS CARTA DE VENTA  </h5>");
+                                $(win.document.body).prepend("<div style='text-align: center;'><img src='vendor/adminlte/dist/img/Encabezado.jpg' alt='Logo 1' width='1500' height='400' style='float: left; margin-right: 20px;' />");
+
                                 
                                 // Agrega la fecha actual
                                 var currentDate = new Date();
                                 var formattedDate = currentDate.toLocaleDateString();
                                 $(win.document.body).prepend("<p style='text-align: right;'>Fecha de impresión: " + formattedDate + "</p>");
                             },
-                                     exportOptions: {
-                                         columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
-                                     },
-                                 },
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6],
+                                stripHtml: false,
+                            },
+                        }
                              ],
                              lengthMenu : [10, 20, 30, 40, 50],
                              language: {

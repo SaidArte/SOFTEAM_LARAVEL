@@ -126,8 +126,8 @@
                                 <div class="row">
 
                                     <div class="col-md-6">
-                                        <label for="id">DNI</label>
-                                         <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
+                                        <label for="id">Identidad Dueño</label>
+                                         <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese Identidad del Dueño" oninput="buscarPersona(this.value)" required>
                                          <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-6">
@@ -203,35 +203,18 @@
                                 </div>
                                
         
-                            <div class="col-md-6">
-                                <label for="COL_ANIMAL" >Color  Animal</label>
-                                <select class="form-select custom-select" id="COL_ANIMAL" name="COL_ANIMAL" required >
-                                    <option value="" disabled selected>Seleccione el color del Ganado</option>
-        
-                                    <option value=" castaño" selected >castaño</option>
-                                    <option value="marron" selected >marron</option>
-                                    <option value="blanco" selected >blanco</option>
-                                    <option value=" negro" selected >negro</option>
-                                    <option value="cafes" selected >cafes</option>
-                                    <option value="manchado " selected >manchado </option>
-                                    <option value="Gris" selected >Gris </option>
-                                    <option value="" disabled selected>Seleccione el color del Ganado</option>
-                                   
-                                </select>
-                            </div>
-        
-                            
-                          
-
-                        
+                                <div class="col-md-6">
+                                    <label for="COL_ANIMAL">Color Animal</label>
+                                    <input type="text" class="form-control" id="COL_ANIMAL" name="COL_ANIMAL" placeholder="Ingrese el color del Animal" required>
+                                </div>
+  
                                 <div class="col-md-6">
                                     <label for="VEN_ANIMAL" >Venteado Animal</label>
                                     <select class="form-select custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL"required >
                                         <option value="" disabled selected>Seleccione una opción Venteado</option>
                                         <option value="S" selected >SI</option>
                                         <option value="N" selected >NO</option>
-                                        <option value="" disabled selected>Seleccione una opción Venteado</option>
-                                        
+                                                                              
                                        
                                     </select>
                                 </div>
@@ -240,11 +223,9 @@
                                     <label for="HER_ANIMAL">Herrado Animal</label>
                                     <select class="form-select custom-select" id="HER_ANIMAL" name="HER_ANIMAL"required >
                                         <option value="" disabled selected>Seleccione una opción de Herrado</option>
-        
                                         <option value="S" selected >SI</option>
                                         <option value="N" selected >NO</option>
-                                        <option value="" disabled selected>Seleccione una opción de Herrado</option>
-                                       
+                                                                               
                                     </select>
                                 </div>
             
@@ -252,7 +233,7 @@
                                 
                                 <div class="col-md-6">
                                     <label for="DET_ANIMAL">Detalle  Animal</label>
-                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal" required >
+                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del Animal" required >
                                     <div class="invalid-feedback">Ingrese solo letras en detalle del animal </div>
                                 </div>
                             </div>  
@@ -372,38 +353,38 @@
                                                         personaEncontrada = true;
                                                         $('#NOM_PERSONA').val(personasArreglo[i].NOM_PERSONA);
                                                         $('#COD_PERSONA').val(personasArreglo[i].COD_PERSONA);
- // Verifica si COD_PERSONA está definido
- if (personasArreglo[i].COD_PERSONA) {
-                    var persona = false;
+                                            // Verifica si COD_PERSONA está definido
+                                            if (personasArreglo[i].COD_PERSONA) {
+                                                                var persona = false;
 
-                    // Itera sobre el arreglo de fierros
-                    for (var j = 0; j < fierroArreglo.length; j++) {
-                        if (fierroArreglo[j].COD_PERSONA == personasArreglo[i].COD_PERSONA) {
-                            persona = true;
-                            
-                            // Establece los valores para los fierros encontrados
-                            $('#COD_FIERRO').val(fierroArreglo[j].COD_FIERRO);
-                            //$('#IMG_FIERRO').val(fierroArreglo[j].IMG_FIERRO);
-                            var imagenFierroUrl = fierroArreglo[j].IMG_FIERRO;
-        $('#imagenFierro').attr('src', imagenFierroUrl);
-        $('#imagenFierro').show();  // Asegúrate de que la imagen sea visible
+                                                                // Itera sobre el arreglo de fierros
+                                                                for (var j = 0; j < fierroArreglo.length; j++) {
+                                                                    if (fierroArreglo[j].COD_PERSONA == personasArreglo[i].COD_PERSONA) {
+                                                                        persona = true;
+                                                                        
+                                                                        // Establece los valores para los fierros encontrados
+                                                                        $('#COD_FIERRO').val(fierroArreglo[j].COD_FIERRO);
+                                                                        //$('#IMG_FIERRO').val(fierroArreglo[j].IMG_FIERRO);
+                                                                        var imagenFierroUrl = fierroArreglo[j].IMG_FIERRO;
+                                                    $('#imagenFierro').attr('src', imagenFierroUrl);
+                                                    $('#imagenFierro').show();  // Asegúrate de que la imagen sea visible
 
-                            break; // Sale del bucle al encontrar un fierro
-                        }
-                    }
+                                                                        break; // Sale del bucle al encontrar un fierro
+                                                                    }
+                                                                }
 
-                    // Verifica si no se encontró un fierro
-                    if (!persona) {
-                        $('#COD_FIERRO').val('Persona no  Tiene Fierro');
-                       // $('#IMG_FIERRO').val('Persona no encontrada');
-                       $('#imagenFierro').hide();  // Oculta la imagen si no se encuentra un fierro
-                    }
-                } else {
-                    // Si COD_PERSONA no está definido
-                    $('#COD_FIERRO').val('');
-                    $('#IMG_FIERRO').val('');
-                }
-                                                        
+                                                                // Verifica si no se encontró un fierro
+                                                                if (!persona) {
+                                                                    $('#COD_FIERRO').val('Persona no  Tiene Fierro');
+                                                                // $('#IMG_FIERRO').val('Persona no encontrada');
+                                                                $('#imagenFierro').hide();  // Oculta la imagen si no se encuentra un fierro
+                                                                }
+                                                            } else {
+                                                                // Si COD_PERSONA no está definido
+                                                                $('#COD_FIERRO').val('');
+                                                                $('#IMG_FIERRO').val('');
+                                                            }
+                                                                                                    
 
                                                         break;
                                                     }
@@ -496,12 +477,7 @@
                                 });
 
 
-
-
                             </script>
-
-                          
-
 
                         </div>
                     </div>
@@ -511,16 +487,14 @@
                 <div class="card-body">
             <table cellspacing="9" cellpadding="9" class="Table table-hover table-bordered mt-1 " id="modAnimal" >
                 <thead>
-                    <th>N° Animal</th>
-                    <th>Fecha registro</th>
-                    <th>Clase Animal</th>
-                    
-                    <th>color Animal</th>
-                   
-                    <th>Dueño Del Fierro </th>
-                    <th>Venteado Animal</th>
-                    <th>Herrado Animal</th>
-                    <th>Detalle Animal</th>
+                    <th>N°</th>
+                    <th>Fecha Registro</th>
+                    <th>Clase </th>
+                    <th>Color </th> 
+                    <th>Dueño Fierro </th>
+                    <th>Venteado </th>
+                    <th>Herrado</th>
+                    <th>Detalle </th>
                     
                 
                     <th><center><i class="fas fa-cog"></i></center></th>
@@ -529,17 +503,14 @@
                     <!-- Loop through $citaArreglo and show data -->
                     @foreach($citaArreglo as $Animal)
                         <tr>
-                            <td>{{$Animal['COD_ANIMAL']}}</td>
-                            <td>{{date('d-m-y', strtotime($Animal['FEC_REG_ANIMAL']))}}</td>
-                            <td>{{$Animal['CLAS_ANIMAL']}}</td>   
-                         
-                            <td>{{$Animal['COL_ANIMAL']}}</td>
-                           
-                            <td>{{$Animal['NOM_PERSONA']}}</td>
-                            <td>{{$Animal['VEN_ANIMAL']}}</td>
-                            <td>{{$Animal['HER_ANIMAL']}}</td>
-                            <td>{{$Animal['DET_ANIMAL']}}</td>
-
+                        <td>{{$Animal['COD_ANIMAL']}}</td>
+                        <td>{{date('d-m-y', strtotime($Animal['FEC_REG_ANIMAL']))}}</td>
+                        <td>{{$Animal['CLAS_ANIMAL']}}</td>   
+                        <td>{{$Animal['COL_ANIMAL']}}</td>
+                        <td>{{$Animal['NOM_PERSONA']}}</td>
+                        <td>{{ $Animal['VEN_ANIMAL'] === 'S' ? 'Si' : 'No' }}</td>
+                        <td>{{ $Animal['HER_ANIMAL'] === 'S' ? 'Si' : 'No' }}</td>
+                        <td>{{$Animal['DET_ANIMAL']}}</td>
 
                             <td>
                             @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
@@ -814,33 +785,30 @@ function validarDet(id, det) {
                             {
                                 extend: "print",
                                 text: "<i class='fa-solid fa-print'></i>",
-                                tittleAttr: "Imprimir",
+                                titleAttr: "Imprimir",
                                 className: "btn btn-secondary",
                                 footer: true,
-                            customize: function(win) {
+                                customize: function(win) {
                                 // Agrega tu encabezado personalizado aquí
                                 $(win.document.head).append("<style>@page { margin-top: 20px; }</style>");
                                 
-                                // Agrega dos logos al encabezado 
+                                // Agrega dos logos al encabezado
                             
                                 
                                 $(win.document.body).prepend("<h5 style='text-align: center;'>           REGISTROS DE ANIMALES  </h5>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>  Correo: alcaldiamunicipaltalanga@gmail.com  </h6>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>Telefonos: 2775-8010, 2775-8018, 2775-8735</h6>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>=======================================================</h6>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>DEPARTAMENTO DE FRANCISCO MORAZÁN- HONDURAS, C.A.</h6>");
-                                $(win.document.body).prepend("<div style='text-align: center;'><img src='vendor/adminlte/dist/img/Talanga.png' alt='Logo 1' width='100' height='100' style='float: left; margin-right: 20px;' /><img src='vendor/adminlte/dist/img/Honduras.png' alt='Logo 2' width='100' height='100' style='float: right; margin-left: 20px;' /></div>");
-                                $(win.document.body).prepend("<h6 style='text-align: center;'>MUNICIPALIDAD TALANGA</h6>");
+                                $(win.document.body).prepend("<div style='text-align: center;'><img src='vendor/adminlte/dist/img/Encabezado.jpg' alt='Logo 1' width='1500' height='400' style='float: left; margin-right: 20px;' />");
+
                                 
                                 // Agrega la fecha actual
                                 var currentDate = new Date();
                                 var formattedDate = currentDate.toLocaleDateString();
                                 $(win.document.body).prepend("<p style='text-align: right;'>Fecha de impresión: " + formattedDate + "</p>");
                             },
-                                exportOptions: {
-                                    columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
-                                },
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7],
+                                stripHtml: false,
                             },
+                        }
                         ],
                         lengthMenu : [10, 20, 30, 40, 50],
                         language: {
