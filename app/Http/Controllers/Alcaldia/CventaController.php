@@ -215,12 +215,12 @@ class CventaController extends Controller
             <h1>CARTA DE VENTA</h1>
             <span class=\"folio\">Nº: {$Cventa['FOL_CVENTA']} </span>
             <div style=\"text-align: justify;\">
-                <p>Yo, {$Cventa['NombreVendedor']}, mayor de edad y residente de _________, 
+                <p>Yo, {$Cventa['NombreVendedor']}, mayor de edad , 
                 mediante la presente hago constar que en la fecha de hoy he vendido y entregado al señor (a): {$Cventa['NOM_COMPRADOR']}, identificado con la cédula de identidad: {$Cventa['DNI_COMPRADOR']} 
-                residente de: ________________, en lo cual me obligo a la evicción y saneamiento conforme a la ley.</p>
+                , en lo cual me obligo a la evicción y saneamiento conforme a la ley.</p>
                     <p class=\"two-parts\">CLASE: {$Animal['CLAS_ANIMAL']}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;COLOR: {$Animal['COL_ANIMAL']} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; REGISTRO: {$Cventa['FOL_CVENTA']}</p>
                     <p class=\"two-parts\">HERRADO: {$Animal['HER_ANIMAL']}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VENTEADO: {$Animal['VEN_ANIMAL']} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ANTECEDENTES: {$Cventa['ANT_CVENTA']}</p>
-                    <p class=\"two-parts\">CANTIDAD: ____ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FIERRO </p>
+                    
                          
                     <br>
                  <p>NOTA: El infrascrito Director Municipal de Justicia, da fe de esta carta de venta. No somos responsables de

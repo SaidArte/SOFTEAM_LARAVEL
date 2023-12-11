@@ -510,11 +510,15 @@ function buscarAnimal(idAnimal) {
                                     </button>
                             @endif
 
-                             <!-- Boton de PDF -->
+                             <!-- Boton de PDF 
                              <button onclick="mostrarVistaPrevia ({{$Cventa['COD_CVENTA']}})" class="btn btn-sm btn-danger">
                                 <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
-                            </button>
+                            </button>-->
 
+
+                            <button onclick="mostrarVistaPrevia({{ $Cventa['COD_CVENTA'] }})" class="btn btn-sm btn-danger">
+                                <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
+                            </button>
                           
 
                             </td>   
@@ -657,16 +661,15 @@ function buscarAnimal(idAnimal) {
                                                         }
                                                     }
 
-                                                    function mostrarVistaPrevia (idCventa) {
-                                                        // URL de la acción del controlador que genera el PDF
-                                                        var nuevaVentana = window.open("{{ url('Cventa/generar-pdf') }} /"+ idCventa, '_blank');
-                                                      
-
-                                                        // Esperar a que la nueva ventana esté completamente cargada
-                                                        nuevaVentana.onload = function () {
-                                                            // Mostrar el diálogo de impresión
-                                                            nuevaVentana.print();
-                                                        };
+                                                    function mostrarVistaPrevia(idCventa) {
+                                                       // URL de la acción del controlador que genera el PDF
+                                                      var nuevaVentana = window.open("{{ url('Cventa/generar-pdf') }}/" + idCventa, '_blank');
+  
+                                                     // Esperar a que la nueva ventana esté completamente cargada
+                                                      nuevaVentana.onload = function () {
+                                                         // Mostrar el diálogo de impresión
+                                                         nuevaVentana.print();
+                                                      };
                                                     }
 
                           
@@ -751,6 +754,8 @@ function buscarAnimal(idAnimal) {
                                      exportOptions: {
                                          columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
                                      },
+                                     filename: "Cartas_Ventas_municipalidad_talanga", // Nombre personalizado para el archivo Excel
+
                                  },/*
                                  {
                                      extend: "pdfHtml5",

@@ -696,6 +696,7 @@
                                 exportOptions: {
                                     columns: [0, 1, 2, 3, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
                                 },
+                                filename: "Animales_municipalidad_talanga", // Nombre personalizado para el archivo Excel 
                             },/*
                             {
                                 extend: "pdfHtml5",
