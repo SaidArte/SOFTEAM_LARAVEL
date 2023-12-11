@@ -423,20 +423,21 @@ return [
             //'icon_color' => 'info',
             'submenu' => [
                 [
-                    'icon' => 'fa fa-folder-open',
-                    //'icon' => 'fa fa-briefcase',
-                    'text' => 'Carta de Ventas',
-                    //'icon_color' => 'indigo',
-                    'url' => 'Cventa',
-                    'icon_color' => 'green',
-                ],
-             
-                [
                     'icon' => 'fa fa-paw',
                     'text' => 'Animales',
                      'url' => 'Animal',
                      'icon_color' => 'green',
+                ],
+                [
+                    'icon' => 'fa fa-folder-open',
+                    //'icon' => 'fa fa-briefcase',
+                    'text' => 'Carta de Venta',
+                    //'icon_color' => 'indigo',
+                    'url' => 'Cventa',
+                    'icon_color' => 'green',
                 ]
+             
+              
             ]
         ],
         

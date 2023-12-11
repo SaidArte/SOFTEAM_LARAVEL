@@ -7,7 +7,9 @@
         'S' => 'Simbolo',
     ];
    @endphp
-
+   @php
+    use Carbon\Carbon;
+@endphp
 @section('title', 'Alcaldia')
 
 @section('css')
@@ -496,10 +498,10 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="FEC_TRAMITE_FIERRO" class="form-label">Fecha Trámite:</label>
-                                                    <?php $fecha_formateada = date('Y-m-d', strtotime($fierro['FEC_TRAMITE_FIERRO'])); ?>
-                                                    <input type="date" class="form-control" id="FEC_TRAMITE_FIERRO" name="FEC_TRAMITE_FIERRO" value="{{ $fecha_formateada }}" oninput="validarFechaTramite(this.value)">
-                                                    <div class="invalid-feedback" id="fecha-invalid-feedback"></div>
+                                                    <label for="fierro" class="form-label">Fecha Trámite:</label>
+                                                    <?php $fecha_formateada = Carbon::parse($fierro['FEC_TRAMITE_FIERRO'])->format('Y-m-d'); ?>
+                                                    <input type="date" id="FEC_TRAMITE_FIERRO-{{$fierro['COD_FIERRO']}}" class="form-control" name="FEC_TRAMITE_FIERRO" placeholder="Seleccione la fecha de Trámite" value="{{$fecha_formateada}}" oninput="validarFecTra('{{$fierro['COD_FIERRO']}}', this.value)" required>
+                                                    <div class="invalid-feedback" id="invalid-feedback3-{{$fierro['COD_FIERRO']}}"></div>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -549,6 +551,32 @@
                                                 </form>
                                                 
                                                 <script>
+                                                    function validarFecTra(id, fechaSeleccionada) {
+                                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                                        var inputElement = document.getElementById("FEC_TRAMITE_FIERRO-" + id);
+                                                        var invalidFeedback = document.getElementById("invalid-feedback3-" + id);
+
+                                                        // Obtener la fecha actual
+                                                        var fechaActual = new Date();
+
+                                                        // Convertir la fecha seleccionada a un objeto Date
+                                                        var fechaTramite = new Date(fechaSeleccionada);
+
+                                                        // Comparar con la fecha actual y permitir fechas pasadas o el día actual
+                                                        if (!isNaN(fechaTramite) && fechaTramite <= fechaActual) {
+                                                            inputElement.classList.remove("is-invalid");
+                                                            invalidFeedback.textContent = "";
+                                                            btnGuardar.disabled = false;
+                                                        } else {
+                                                            inputElement.classList.add("is-invalid");
+                                                            invalidFeedback.textContent = "La fecha de trámite no puede ser futura.";
+                                                            btnGuardar.disabled = true;
+                                                        }
+                                                    }
+
+
+
+
                                                function validarFOLIO(id, folio) {
                                                         var btnGuardar = document.getElementById("submitButton-" + id);
                                                         var inputElement = document.getElementById("NUM_FOLIO_FIERRO-" + id);
@@ -678,16 +706,15 @@
             $('#Rfierro').DataTable({
                 responsive: true,
                 dom: "Bfrtilp",
-                buttons: [
+                buttons: [//Botones de Excel, PDF, Imprimir
                     {
                         extend: "excelHtml5",
+                        filename: "Fierros",
                         text: "<i class='fa-solid fa-file-excel'></i>",
-                        titleAttr: "Exportar a Excel",
+                        tittleAttr: "Exportar a Excel",
                         className: "btn btn-success",
-                        footer: true,
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6],
-                            stripHtml: false,
+                            columns: [0, 1, 2, 4, 5, 6] //exportar solo la primera hasta las sexta tabla
                         },
                     },
                 
