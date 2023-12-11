@@ -700,6 +700,7 @@
                              buttons: [//Botones de Excel, PDF, Imprimir
                                  {
                                      extend: "excelHtml5",
+                                     filename: "Cartas de Venta",
                                      text: "<i class='fa-solid fa-file-excel'></i>",
                                      tittleAttr: "Exportar a Excel",
                                      className: "btn btn-success",
@@ -718,6 +719,7 @@
                                  },*/
                                  {
                             extend: "print",
+                            filename: "Cartas de Venta",
                             text: "<i class='fa-solid fa-print'></i>",
                             titleAttr: "Imprimir",
                             className: "btn btn-secondary",
