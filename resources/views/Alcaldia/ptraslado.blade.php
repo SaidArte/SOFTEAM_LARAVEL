@@ -82,8 +82,6 @@
             transform: translate(2px ,2px);
         }
     </style>
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
    
 @stop
 
@@ -135,13 +133,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="id">DNI</label>
+                    <label for="id">Identidad Dueño</label>
                     <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese número de identidad" oninput="buscarPersona(this.value)" required>
                     <div class="invalid-feedback"></div>
                 </div>
 
                  <div class="mb-3">
-                    <label for="nom">Nombre</label>
+                    <label for="nom">Nombre Dueño</label>
                     <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
                  </div>
                 <div class="mb-3">
@@ -149,12 +147,12 @@
                   </div>
 
                   <div class="mb-3">
-                    <label for="DIR_ORIG_PTRASLADO">Direccion Origen Traslado</label>
+                    <label for="DIR_ORIG_PTRASLADO">Dirección Origen Traslado</label>
                     <input type="text" id="DIR_ORIG_PTRASLADO" class="form-control" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar direccion de origen" required>
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
-                    <label for="DIR_DEST_TRASLADO">Direccion Destino Traslado</label>
+                    <label for="DIR_DEST_TRASLADO">Dirección Destino Traslado</label>
                     <input type="text" id="DIR_DEST_TRASLADO" class="form-control" name="DIR_DEST_TRASLADO" placeholder="Ingresar direccion de destino" required>
                     <div class="invalid-feedback"></div>
                 </div>
@@ -169,22 +167,22 @@
                          <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="DNI_TRANSPORTISTA">Numero Identidad</label>
+                        <label for="DNI_TRANSPORTISTA">Identidad Transportista</label>
                          <input type="text" id="DNI_TRANSPORTISTA" class="form-control" name="DNI_TRANSPORTISTA" placeholder="Ingresar numero de identidad" required>
                          <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="TEL_TRANSPORTISTA">Numero Telefono</label>
+                        <label for="TEL_TRANSPORTISTA">Telefono Transportista</label>
                         <input type="text" id="TEL_TRANSPORTISTA" class="form-control" name="TEL_TRANSPORTISTA" placeholder="Ingresar numero de telefono" required>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="MAR_VEHICULO">Marca Vehiculo</label>
+                        <label for="MAR_VEHICULO">Marca Vehículo</label>
                         <input type="text" id="MAR_VEHICULO" class="form-control" name="MAR_VEHICULO" placeholder="Ingresar marca del vehiculo" required>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="MOD_VEHICULO"> Modelo Vehiculo</label>
+                        <label for="MOD_VEHICULO"> Modelo Vehículo</label>
                         <input type="text" id="MOD_VEHICULO" class="form-control" name="MOD_VEHICULO" placeholder="Ingresar modelo del vehiculo" required>
                         <div class="invalid-feedback"></div>
                     </div>   
@@ -193,12 +191,12 @@
             <!-- Tercera columna -->
             <div class="col-md-4">
                     <div class="mb-3">
-                        <label for="MAT_VEHICULO">Matricula Vehiculo</label>
+                        <label for="MAT_VEHICULO">Matricula Vehículo</label>
                         <input type="text" id="MAT_VEHICULO" class="form-control" name="MAT_VEHICULO" placeholder="Ingresar matricula del vehiculo" required>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="COL_VEHICULO">Color Vehiculo</label>
+                        <label for="COL_VEHICULO">Color Vehículo</label>
                         <input type="text" id="COL_VEHICULO" class="form-control" name="COL_VEHICULO" placeholder="Ingresar color del vehiculo" required>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -721,12 +719,12 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="id">DNI</label>
+                                            <label for="id">Identidad Dueño</label>
                                             <input type="text" id="dni-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="dni" value="{{$persona['DNI_PERSONA']}}" placeholder="Ingrese número de identidad" oninput="buscarPersona2('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
                                             <div class="invalid-feedback2-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                          </div>
                                             <div class="mb-3">
-                                            <label for="nom">Nombre</label>
+                                            <label for="nom">Nombre Dueño</label>
                                             <input type="text" readonly id="NOM_PERSONA-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="NOM_PERSONA" value="{{$persona['NOM_PERSONA']}}" required>
                                         </div>
                                             <div class="mb-3">
@@ -734,14 +732,14 @@
                                         </div>
                                                     
                                         <div class="mb-3">
-                                            <label for="PTraslado">Direccion Origen</label>
+                                            <label for="PTraslado">Dirección Origen</label>
                                             <input type="text" class="form-control" id="DIR_ORIG_PTRASLADO-{{$PTraslado['COD_PTRASLADO']}}" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar direccion de origen del traslado" value="{{$PTraslado['DIR_ORIG_PTRASLADO']}}" oninput="validarDireccion('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
-                                            <div class="invalid-feedback" class="invalid-feedback3-{{$PTraslado['COD_PTRASLADO']}}"></div>
+                                            <div class="invalid-feedback" class="invalid-feedback10-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="PTraslado">Direccion Destino</label>
+                                            <label for="PTraslado">Dirección Destino</label>
                                             <input type="text" class="form-control" id="DIR_DEST_TRASLADO-{{$PTraslado['COD_PTRASLADO']}}" name="DIR_DEST_TRASLADO" placeholder="Ingresar direccion de destino del traslado" value="{{$PTraslado['DIR_DEST_TRASLADO']}}" oninput="validarDireccionD('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
-                                            <div class="invalid-feedback" class="invalid-feedback4-{{$PTraslado['COD_PTRASLADO']}}"></div>
+                                            <div class="invalid-feedback" class="invalid-feedback11-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
 
                                         
@@ -751,7 +749,8 @@
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="PTraslado">Nombre Transportista</label>
-                                            <input type="text" class="form-control" id="NOM_TRANSPORTISTA" name="NOM_TRANSPORTISTA" placeholder="Ingresar nombre del transportita" value="{{$PTraslado['NOM_TRANSPORTISTA']}}">
+                                            <input type="text" class="form-control" id="NOM_TRANSPORTISTA-{{$PTraslado['COD_PTRASLADO']}}" name="NOM_TRANSPORTISTA" placeholder="Ingresar nombre transportista" value="{{$PTraslado['NOM_TRANSPORTISTA']}}" oninput="validarNombre('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback3-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
 
                                         <div class="mb-3">
@@ -767,34 +766,39 @@
                                         </div> 
 
                                          <div class="mb-3">
-                                            <label for="PTraslado">Marca Vehiculo</label>
-                                            <input type="text" class="form-control" id="MAR_VEHICULO" name="MAR_VEHICULO" placeholder="Ingresar marca del vehiculo" value="{{$PTraslado['MAR_VEHICULO']}}">
+                                            <label for="PTraslado">Marca Vehículo</label>
+                                            <input type="text" class="form-control" id="MAR_VEHICULO-{{$PTraslado['COD_PTRASLADO']}}" name="MAR_VEHICULO" placeholder="Ingresar Marca Vehículo" value="{{$PTraslado['MAR_VEHICULO']}}" oninput="validarMarca('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback4-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="PTraslado">Modelo Vehiculo</label>
-                                            <input type="text" class="form-control" id="MOD_VEHICULO" name="MOD_VEHICULO" placeholder="Ingresar modelo del vehiculo" value="{{$PTraslado['MOD_VEHICULO']}}">
+                                            <label for="PTraslado">Modelo Vehículo</label>
+                                            <input type="text" class="form-control" id="MOD_VEHICULO-{{$PTraslado['COD_PTRASLADO']}}" name="MOD_VEHICULO" placeholder="Ingresar Modelo Vehículo" value="{{$PTraslado['MOD_VEHICULO']}}" oninput="validarModelo('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback5-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
                                     </div>
                                     <!-- Tercera columna --> 
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label for="PTraslado">Matricula Vehiculo</label>
-                                            <input type="text" class="form-control" id="MAT_VEHICULO" name="MAT_VEHICULO" placeholder="Ingresar matricula del vehiculo" value="{{$PTraslado['MAT_VEHICULO']}}">
+                                            <label for="PTraslado">Matricula Vehículo</label>
+                                            <input type="text" class="form-control" id="MAT_VEHICULO-{{$PTraslado['COD_PTRASLADO']}}" name="MAT_VEHICULO" placeholder="Ingresar la matricula del Vehículo" value="{{$PTraslado['MAT_VEHICULO']}}" oninput="validarMatri('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback8-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="PTraslado">Color Vehiculo</label>
-                                            <input type="text" class="form-control" id="COL_VEHICULO" name="COL_VEHICULO" placeholder="Ingresar color del vehiculo" value="{{$PTraslado['COL_VEHICULO']}}">
+                                            <label for="PTraslado">Color Vehículo</label>
+                                            <input type="text" class="form-control" id="COL_VEHICULO-{{$PTraslado['COD_PTRASLADO']}}" name="COL_VEHICULO" placeholder="Ingresar el color del Vehículo" value="{{$PTraslado['COL_VEHICULO']}}" oninput="validarColor('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback9-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
 
                                          <div class="mb-3">
                                             <label for="PTraslado">Monto Traslado</label>
-                                            <input type="text" class="form-control" id="MON_TRASLADO" name="MON_TRASLADO" placeholder="Ingresar monto del traslado" value="{{$PTraslado['MON_TRASLADO']}}">
+                                            <input type="text" class="form-control" id="MON_TRASLADO-{{$PTraslado['COD_PTRASLADO']}}" name="MON_TRASLADO" placeholder="Ingresar Monto de traslado" value="{{$PTraslado['MON_TRASLADO']}}" oninput="validarMonto('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback6-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
                                         <div class="mb-3">
                                              <label for="CAN_GANADO">Cantidad Animales</label>
-                                            <input type="text" id="CAN_GANADO" class="form-control" name="CAN_GANADO" placeholder="Ingresar cantidad de animales" value="{{$PTraslado['CAN_GANADO']}}" required>
-                                             <div class="invalid-feedback"></div>
+                                             <input type="text" class="form-control" id="CAN_GANADO-{{$PTraslado['COD_PTRASLADO']}}" name="CAN_GANADO" placeholder="Ingresar la cantidad de animales" value="{{$PTraslado['CAN_GANADO']}}" oninput="validarCanA('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback7-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                          </div>
                                         <div class="mb-3 mt-3">
                                             <label for="PTraslado">Estado</label>
@@ -817,6 +821,9 @@
                                  </div>
                              </form>
                             <script>
+                                //Validaciones del formulario EDITAR
+
+                                //Telefono Transportista listo
                                 function validarTelefono(id, telefono) {
                                     var btnGuardar = document.getElementById("submitButton-" + id);
                                     var inputElement = document.getElementById("TEL_TRANSPORTISTA-" + id);
@@ -833,7 +840,7 @@
                                         btnGuardar.disabled = false;
                                     }
                                 }
-                                //Validaciones EDITAR
+                                //Validaciones editar dni Transportista listo
                                 function validarDNI(id, dni) {
                                     var btnGuardar = document.getElementById("submitButton-" + id);
                                     var inputElement = document.getElementById("DNI_TRANSPORTISTA-" + id);
@@ -849,16 +856,16 @@
                                         btnGuardar.disabled = false;
                                     }
                                 }
-                                function validarDireccion(id, direccion) {
+                                   function validarDireccionO(id, direcciono) {
                                     var btnGuardar = document.getElementById("submitButton-" + id);
                                     var inputElement = document.getElementById("DIR_ORIG_PTRASLADO-" + id);
-                                    var invalidFeedback = document.getElementById("invalid-feedback3-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback10-" + id);
 
-                                    if (direccion.length < 5) {
+                                    if (direcciono.length < 5) {
                                         inputElement.classList.add("is-invalid");
                                         invalidFeedback.textContent = "La dirección debe tener al menos 5 caracteres.";
                                         btnGuardar.disabled = true;
-                                    } else if (direccion.length > 200) {
+                                    } else if (direcciono.length > 200) {
                                         inputElement.classList.add("is-invalid");
                                         invalidFeedback.textContent = "La dirección no puede tener más de 200 carácteres.";
                                         btnGuardar.disabled = true;
@@ -867,17 +874,17 @@
                                         invalidFeedback.textContent = "";
                                         btnGuardar.disabled = false;
                                     }
-                                }
-                                function validarDireccionD(id, direccion) {
+                                }                       
+                                function validarDireccionD(id, direcciond) {
                                     var btnGuardar = document.getElementById("submitButton-" + id);
                                     var inputElement = document.getElementById("DIR_DEST_TRASLADO-" + id);
-                                    var invalidFeedback = document.getElementById("invalid-feedback4-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback11-" + id);
 
-                                    if (direccion.length < 5) {
+                                    if (direcciond.length < 5) {
                                         inputElement.classList.add("is-invalid");
                                         invalidFeedback.textContent = "La dirección debe tener al menos 5 caracteres.";
                                         btnGuardar.disabled = true;
-                                    } else if (direccion.length > 200) {
+                                    } else if (direcciond.length > 200) {
                                         inputElement.classList.add("is-invalid");
                                         invalidFeedback.textContent = "La dirección no puede tener más de 200 carácteres.";
                                         btnGuardar.disabled = true;
@@ -887,6 +894,126 @@
                                         btnGuardar.disabled = false;
                                     }
                                 }
+
+                                //Validar Nombre Transportista
+                                function validarNombre(id, nombre) {
+                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                    var inputElement = document.getElementById("NOM_TRANSPORTISTA-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback3-" + id);
+
+                                    if (nombre.length < 5 || nombre.length > 100 || !/^[a-zA-Z\s]+$/.test(nombre)) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "El nombre debe tener al menos 5 carácteres sin números y Simbolos";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+                                //Validar Marca Vehículo
+                                function validarMarca(id, marca) {
+                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                    var inputElement = document.getElementById("MAR_VEHICULO-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback4-" + id);
+
+                                    if (marca.length < 4 || marca.length > 50 || !/^[a-zA-Z\s]+$/.test(marca)) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "No se permite números";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+
+                                //Validar Modelo Vehículo
+                                function validarModelo(id, modelo) {
+                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                    var inputElement = document.getElementById("MOD_VEHICULO-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback5-" + id);
+
+                                    if (modelo.length < 4 || modelo.length > 50 ||!/^[a-zA-Z0-9\s]+$/.test(modelo)) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "No se permite caracteres especiales";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+
+                                //Validar Matricula Vehículo
+                                function validarMatri(id, matricula) {
+                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                    var inputElement = document.getElementById("MAT_VEHICULO-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback8-" + id);
+
+                                    if (matricula.length < 6 || matricula.length > 50 ||!/^[a-zA-Z0-9\s]+$/.test(matricula)) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "No se permite caracteres especiales";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+                                //Validar Color Vehiculo 
+                                function validarColor(id, color) {
+                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                    var inputElement = document.getElementById("COL_VEHICULO-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback9-" + id);
+
+                                    if (color.length < 4 || color.length > 50 || !/^[a-zA-Z\s]+$/.test(color)) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "No se permiten números y Simbolos";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+
+                                //Validaciones monto traslado
+                                function validarMonto(id, monto) {
+                                         var btnGuardar = document.getElementById("submitButton-" + id);
+                                        var inputElement = document.getElementById("MON_TRASLADO-"+ id);
+                                         var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+                                         
+                                    if ( !/^\d{2,}$/.test(monto)) {
+                                         inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "El Monto solo permite numeros";
+                                         btnGuardar.disabled = true;
+                                     } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+                                //funcion validar cantidad de ganado 
+                                function validarCanA(id, cantidad) {
+                                        var btnGuardar = document.getElementById("submitButton-" + id);
+                                        var inputElement = document.getElementById("CAN_GANADO-"+ id);
+                                        var invalidFeedback = document.getElementById("invalid-feedback7-" + id);
+
+                                    
+                                    if (!/^\d{1,}$/.test(cantidad)) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "Solo permite números";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+
+
                                 //Función para buscar personas.
                                 function buscarPersona2(id,idPersona) {
                                         var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
@@ -1001,6 +1128,7 @@
                         buttons: [//Botones de Excel, PDF, Imprimir
                             {
                                 extend: "excelHtml5",
+                                filename: "Guías Francas",
                                 text: "<i class='fa-solid fa-file-excel'></i>",
                                 tittleAttr: "Exportar a Excel",
                                 className: "btn btn-success",
@@ -1010,6 +1138,7 @@
                             },
                             {
                             extend: "print",
+                            filename: "Guías Francas",
                             text: "<i class='fa-solid fa-print'></i>",
                             titleAttr: "Imprimir",
                             className: "btn btn-secondary",
