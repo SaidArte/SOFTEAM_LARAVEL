@@ -282,8 +282,8 @@
                                         // Implementar la lógica para verificar si el código ya existe y 
                                         //mostrar el mensaje de error correspondiente si ya está en uso.
                                     });
-                                     //Validaciones del campo direccion 
-                                     $('#DIR_PSACRIFICIO').on('input', function() {
+                                    //validaciones de direccion
+                                    $('#DIR_PSACRIFICIO').on('input', function() {
                                         var direccionSacrificio = $(this).val();
                                         var errorMessage = '';
 
@@ -292,17 +292,12 @@
                                             errorMessage = 'La dirección debe tener al menos 5 caracteres';
                                         }
 
-                                        // Validar la presencia de números
-                                        if (/\d/.test(direccionSacrificio)) {
-                                            errorMessage = 'No se permiten números en la dirección';
-                                            $(this).val(direccionSacrificio.replace(/\d/g, '')); // Eliminar números
+                                        // Validar que no se ingresen más de 100 caracteres
+                                        if (direccionSacrificio.length > 100) {
+                                            errorMessage = 'El máximo de caracteres permitidos es 100';
+                                            $(this).val(direccionSacrificio.substring(0, 100)); // Limitar a 100 caracteres
                                         }
 
-                                        // Validar la presencia de caracteres especiales
-                                        if (/[!@#$%^&*()_+{}\[\]:;<>,.\/?\\|~`]/.test(direccionSacrificio)) {
-                                            errorMessage = 'No se permiten caracteres especiales en la dirección';
-                                            $(this).val(direccionSacrificio.replace(/[!@#$%^&*()_+{}\[\]:;<>,.\/?\\|~`]/g, '')); // Eliminar caracteres especiales
-                                        }
 
                                         if (errorMessage) {
                                             $(this).addClass('is-invalid');
@@ -314,33 +309,41 @@
                                     });
 
 
-                                    //Validaciones del campo direccion 
+
                                     $('#COL_ANIMAL').on('input', function() {
-                                        var input = $(this).val();
-                                        var errorMessage = '';
-                                        // Validar caracteres especiales
-                                        var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    var input = $(this).val();
+    var errorMessage = '';
+    var maxLength = 20;
 
-                                        if (/^\d+$/.test(input)) {
-                                            errorMessage = 'No se aceptan números.';
-                                        } 
-                                        
-                                        if (specialChars.test(input)) {
-                                            errorMessage = 'No se aceptan caracteres especiales.';
-                                        } 
-                                        
-                                        if (input.length < 4 || input.length > 25) {
-                                            errorMessage = 'El color debe contener más de 4 caracteres y menos de 25.';
-                                        }
+    // Validar la longitud mínima y máxima
+    if (input.length < 4) {
+        errorMessage = 'El color debe tener al menos 4 caracteres.';
+    } else if (input.length > maxLength) {
+        errorMessage = 'El color no puede tener más de ' + maxLength + ' caracteres.';
+        $(this).val(input.substring(0, maxLength)); // Limitar a maxLength caracteres
+    }
 
-                                        if (errorMessage) {
-                                            $(this).addClass('is-invalid');
-                                            $(this).siblings('.invalid-feedback').text(errorMessage);
-                                        } else {
-                                            $(this).removeClass('is-invalid');
-                                            $(this).siblings('.invalid-feedback').text('');
-                                        }
-                                    });
+    // Validar que no se ingresen números
+    if (/^\d+$/.test(input)) {
+        errorMessage = 'No se aceptan números.';
+    }
+
+    // Validar que no se ingresen caracteres especiales, excepto espacios
+    var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    if (specialChars.test(input) || /\d/.test(input)) {
+        errorMessage = 'No se aceptan caracteres especiales ni números.';
+        $(this).val(input.replace(/[^\s]+/g, '')); // Eliminar caracteres especiales y números
+    }
+
+    if (errorMessage) {
+        $(this).addClass('is-invalid');
+        $(this).siblings('.invalid-feedback').text(errorMessage);
+    } else {
+        $(this).removeClass('is-invalid');
+        $(this).siblings('.invalid-feedback').text('');
+    }
+});
+
                                 });
                                 // Deshabilita el botón de enviar inicialmente
                                 $('form.needs-validation').find('button[type="submit"]').prop('disabled', true);
@@ -366,6 +369,7 @@
                                     document.getElementById("FEC_SACRIFICIO").value = "";
                                     document.getElementById("COD_ANIMAL").value = "";
                                     document.getElementById("DIR_PSACRIFICIO").value = "";
+                                    document.getElementById("COL_PSACRIFICIO").value = "";
 
                                     const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
                                     invalidFeedbackElements.forEach(element => {
