@@ -418,14 +418,14 @@ return [
         ],
         [
             'icon' => 'fa fa-briefcase',
-            'text' => 'Cartas De Ventas',
+            'text' => 'Expedientes',
             //'label_color' => 'success',
             //'icon_color' => 'info',
             'submenu' => [
                 [
                     'icon' => 'fa fa-folder-open',
                     //'icon' => 'fa fa-briefcase',
-                    'text' => 'Expediente de Cventas',
+                    'text' => 'Carta de Ventas',
                     //'icon_color' => 'indigo',
                     'url' => 'Cventa',
                     'icon_color' => 'green',

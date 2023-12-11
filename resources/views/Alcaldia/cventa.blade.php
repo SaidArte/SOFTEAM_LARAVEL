@@ -103,12 +103,9 @@
             ?>
              @if(session()->has('PRM_CONSULTAR') && session('PRM_CONSULTAR') == "S")
             <center><br>
-                <h1>Información </h1>
+                <h1>Información Cartas Ventas </h1>
             </center></br>
-            <center><br>
-                <h1>Expedientes Cartas  Ventas</h1>
-            </center></br>
-           
+                       
 
         @section('content')
         @if(session()->has('PRM_INSERTAR') && session('PRM_INSERTAR') == "S")
@@ -124,147 +121,99 @@
                 <div class="modal-dialog modal-lg ">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Ingresar un nuevo Expedientes_Cventas</h5>
+                            <h5 class="modal-title">Ingresar Nueva Carta de Venta</h5>
                            
                         </div>
                         <div class="modal-body  container-fluid">
                             <form action="{{ url('Cventa/insertar') }}" method="post" class="needs-validation cventa-form" >
-                                @csrf
-                                <!--metodo de inserta en codigo de vendedor  atraendo los datos ya existente de la tabla persona-->
+                            @csrf
+                                <!-- Método para insertar en código de vendedor atrayendo los datos ya existentes de la tabla persona -->
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="id">DNI</label>
-                                         <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese el número de identidad" oninput="buscarPersona(this.value)" required>
-                                         <div class="invalid-feedback"></div>
+                                        <label for="dni">Identidad Vendedor</label>
+                                        <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese Identidad del Vendedor" oninput="buscarPersona(this.value)" required>
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="nom">Nombre Vendedor</label>
-                                         <input type="text"readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA"  required>
+                                        <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
                                     </div>
-                               
-                                    <div class="mb-3">
-                                        <label for="nom"></label>
-                                        <input type="hidden"readonly  id="COD_PERSONA" class="form-control" name="COD_PERSONA"  oninput="buscarPersona(this.value)" required>
-                                    </div> 
-                                    
-                               </div>
-
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                <div class="row"> 
-                                <div class="col-md-6">
-                                    <label for="COD_VENDEDOR" >COD Vendedor</label>
-                                    <input type="text" id="COD_VENDEDOR" class="form-control" name="COD_VENDEDOR" readonly>
+                                    <input type="hidden" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA" oninput="buscarPersona(this.value)" required>
                                 </div>
-
-                                <!--metodo de inserta en codigo de comprador  atraendo los datos ya existente de la tabla persona-->
-                               <div class="col-md-6">
-                                    <label for="NOM_COMPRADOR">Nombre  Comprador</label>
-                                    <input type="text" id="NOM_COMPRADOR" class="form-control" name="NOM_COMPRADOR" placeholder="Ingresar el nombre completo de la Comprador"   pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="35"  required>
-                                    <div class="invalid-feedback">Ingresar el nombre completo de la Comprador</div>
-                                </div>
-                        
-                             <!--    <div class="mb-3">
-                                    <label for="DNI_COMPRADOR">Numero de Identidad comprador</label>
-                                    <input type="text" id="DNI_COMPRADOR" class="form-control" name="DNI_COMPRADOR" placeholder="Ingresar el numero de identidad de comprador" required>
-                                    <div class="invalid-feedback"></div>
-                                </div>-->
-                                <div class="col-md-6">
-                                    <label for="DNI_COMPRADOR">DNI comprador</label>
-                                    <input type="text" id="DNI_COMPRADOR" class="form-control @error('DNI_COMPRADOR') is-invalid @enderror" name="DNI_COMPRADOR" placeholder="Ingresar el numero de identidad de comprador" required pattern="[0-9]+" title="Ingrese solo números" maxlength="13">
-                                    <div class="invalid-feedback"> Ingresar el DNI completo de la Comprador</div>
-                                    @error('DNI_COMPRADOR')
-                                        <div class="invalid-feedback">Ingresar el DNI ompleto de la Comprador</div>
-                                    @enderror
-                                </div>
-
-
-
-                                <!--metodo de inserta en codigo de animal  atraendo los datos ya existente de la tabla persona-->
                                 
-
-                                <div class="col-md-6">
-                                    <label for="COD_ANIMAL">Animal</label>
-                                    <select class="form-select custom-select" id="COD_ANIMAL" name="COD_ANIMAL" placeholder="Seleccione Datos de Animal" oninput="buscarAnimal(this.value)" required>
-                                        <option value="" disabled selected>Seleccione Datos</option>
-                                        @foreach (array_slice($AnimalArreglo, -5) as $Animal)
-                                            <option value="{{$Animal['COD_ANIMAL']}}">{{$Animal['COD_ANIMAL']}}</option>
-                                        @endforeach 
-                                    </select>
+                                <!-- Método para insertar en código de comprador atrayendo los datos ya existentes de la tabla persona -->
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <label for="NOM_COMPRADOR">Nombre Comprador</label>
+                                        <input type="text" id="NOM_COMPRADOR" class="form-control" name="NOM_COMPRADOR" placeholder="Ingresar Nombre Completo del Comprador" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="35" required>
+                                        <div class="invalid-feedback">Ingrese Nombre Completo del Comprador</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="DNI_COMPRADOR">Identidad Comprador</label>
+                                        <input type="text" id="DNI_COMPRADOR" class="form-control @error('DNI_COMPRADOR') is-invalid @enderror" name="DNI_COMPRADOR" placeholder="Ingrese Identidad del Comprador" required pattern="[0-9]+" title="Ingrese solo números" maxlength="13">
+                                        <div class="invalid-feedback">Ingresar la Identidad del Comprador</div>
+                                        @error('DNI_COMPRADOR')
+                                            <div class="invalid-feedback">Ingresar Identidad del Comprador</div>
+                                        @enderror
+                                    </div>
                                 </div>
-
-                                <!--DATOS DEL ANIMAL-->
-                                <div class="col-md-6">
-        
-                                    <label for="nom">N° Fierro</label>
-                                    <input type="text" readonly id="COD_FIERRO" class="form-control" name="COD_FIERRO">
-                                </div> 
-                              
-                              
-                              
-                               <div class="col-md-6">
-                                      
-                                    <label for="nom">Clase Animal</label>
-                                    <input type="text" readonly id="CLAS_ANIMAL" class="form-control" name="CLAS_ANIMAL">
+                                
+                                <!-- Método para insertar en código de animal atrayendo los datos ya existentes de la tabla persona -->
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <label for="COD_ANIMAL">Animal</label>
+                                        <select class="form-select custom-select" id="COD_ANIMAL" name="COD_ANIMAL" placeholder="Seleccione Datos de Animal" oninput="buscarAnimal(this.value)" required>
+                                            <option value="" disabled selected>Seleccione Datos</option>
+                                            @foreach (array_slice($AnimalArreglo, -5) as $Animal)
+                                                <option value="{{$Animal['COD_ANIMAL']}}">{{$Animal['COD_ANIMAL']}}</option>
+                                            @endforeach 
+                                        </select>
+                                    </div>
+                                    <!-- Datos del Animal -->
+                                    <div class="col-md-6">
+                                        <label for="COD_FIERRO">N° Fierro</label>
+                                        <input type="text" readonly id="COD_FIERRO" class="form-control" name="COD_FIERRO">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="CLAS_ANIMAL">Clase Animal</label>
+                                        <input type="text" readonly id="CLAS_ANIMAL" class="form-control" name="CLAS_ANIMAL">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="COL_ANIMAL">Color Animal</label>
+                                        <input type="text" readonly id="COL_ANIMAL" class="form-control" name="COL_ANIMAL">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="DET_ANIMAL">Detalle Animal</label>
+                                        <input type="text" readonly id="DET_ANIMAL" class="form-control" name="DET_ANIMAL">
+                                    </div>
                                 </div>
-                              
-                               <div class="col-md-6">
-                                      
-                                    <label for="nom">Color Animla </label>
-                                    <input type="text" readonly id="COL_ANIMAL" class="form-control" name="COL_ANIMAL">
-                                </div>
-                              
-                               <div class="col-md-6">
-                                      
-                                    <label for="nom">Detalle Animal</label>
-                                    <input type="text" readonly id="DET_ANIMAL" class="form-control" name="DET_ANIMAL">
-                                </div>
-
-
-
-
-
-
-
-
-                                <div class="col-md-6">
-                                    <label for="FOL_CVENTA">Folios Cartas</label>
-                                    <input type="text" id="FOL_CVENTA" class="form-control"  @error('FOL_CVENTA') is-invalid @enderror "   name="FOL_CVENTA" placeholder="Ingrese numero de Folio "required pattern="[0-9]+" title="Ingrese solo números" maxlength="5" >
-                                    
-                                    <div class="invalid-feedback">Ingresar el numero de folio </div>
-                                    @error('FOL_CVENTA')
+                                
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <label for="FOL_CVENTA">Folios Carta</label>
+                                        <input type="text" id="FOL_CVENTA" class="form-control @error('FOL_CVENTA') is-invalid @enderror" name="FOL_CVENTA" placeholder="Ingrese numero de Folio" required pattern="[0-9]+" title="Ingrese solo números" maxlength="5">
                                         <div class="invalid-feedback">Ingresar el numero de folio</div>
-                                    @enderror
-                                    
-                                    
-                                </div>
-                            
-
-
-                                <div class="col-md-6">
-                                    <label for="ANT_CVENTA">Antecedentes carta venta</label>
-                                    <select class="form-select custom-select"  id="ANT_CVENTA" name="ANT_CVENTA" required>
-                                        <option value="" disabled selected>Seleccione una opción</option>
-                                        <option value="SI" selected >SI</option>
-                                        <option value="NO" selected >NO</option>
-                                        
-                                    
-                                    </select>
-                                    <div class="invalid-feedback" id="antCventaError">Seleccione una opción válida.</div>
-                                </div>
-                            </div>
-                            
-                            
-
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary" type="submit">Guardar</button>
-                                        <button type="button" id="CancelarButton"  class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                        @error('FOL_CVENTA')
+                                            <div class="invalid-feedback">Ingresar el numero de folio</div>
+                                        @enderror
                                     </div>
+                                    <div class="col-md-6">
+                                        <label for="ANT_CVENTA">Antecedentes Carta Venta</label>
+                                        <select class="form-select custom-select" id="ANT_CVENTA" name="ANT_CVENTA" required>
+                                            <option value="" disabled selected>Seleccione una opción</option>
+                                            <option value="SI" selected>SI</option>
+                                            <option value="NO" selected>NO</option>
+                                        </select>
+                                        <div class="invalid-feedback" id="antCventaError">Seleccione una opción válida.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary" type="submit">Guardar</button>
+                                        <button type="button" id="CancelarButton" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
                             </form>
                         <script>
                             $(document).ready(function() {
@@ -521,14 +470,12 @@
                 <div class="card-body">
             <table  width="100%"  cellspacing="9" cellpadding="9" class="Table table-hover table-bordered mt-1 " id="modCventa" >
                 <thead>
-                    <th>Código Cventas</th>
-                    <th>Fecha Venta</th>
-                    
+                    <th>Nº</th>
+                    <th>Fecha Venta</th>   
                     <th>Nombre Vendedor</th>
                     <th>Nombre Comprador</th>
-                    <th>DNI Comprador</th>
-                  
-                    <th>Folio Cventa</th>
+                    <th>Identidad Comprador</th>
+                    <th>Folio Venta</th>
                   
                     <th><center><i class="fas fa-cog"></i></center></th>
                    
@@ -567,7 +514,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header ">
-                                        <h5 class="modal-title">Actualizar Datos cartas Ventas</h5>
+                                        <h5 class="modal-title">Actualizar Carta Ventas</h5>
                                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body container-fluid">
@@ -581,19 +528,11 @@
                                                 <div class="row">
 
                                                 <div class="col-md-6">
-                                                    <label for="Cventa">Fecha  Registro Cventa</label>
+                                                    <label for="Cventa">Fecha  Registro Venta</label>
                                                     <input type="text" readonly class="form-control" id="FEC_CVENTA" name="FEC_CVENTA" value="{{date('d-m-y', strtotime($Cventa['FEC_CVENTA']))}}">
                                                     <input type="date" class="form-control" id="FEC_CVENTA" name="FEC_CVENTA" value="{{$Cventa['FEC_CVENTA']}}">
                                     
                                                 </div>
-
-                                                
-
-
-
-
-
-
 
                                                 <div class="col-md-6">
                                                     <label for="Cventa">Codigo Vendedor</label>
@@ -610,7 +549,7 @@
                                                 </div>
 
                                                <div class="col-md-6">
-                                                    <label for="Cventa">DNI Comprador</label>
+                                                    <label for="Cventa">Identidad Comprador</label>
                                                     <input type="text" class="form-control" id="DNI_COMPRADOR-{{$Cventa['COD_CVENTA']}}" name="DNI_COMPRADOR" placeholder=" Ingrese el codigo del comprador  " value="{{$Cventa['DNI_COMPRADOR']}}"oninput=" validarDNI('{{$Cventa['COD_CVENTA']}}', this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Cventa['COD_CVENTA']}}">Solo Se Permirte Ingresar Numeros</div>
                                                 </div>
