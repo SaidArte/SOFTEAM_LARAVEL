@@ -612,7 +612,7 @@
 
                                                     function mostrarVistaPrevia(idsacrificio) {
                                                         // URL de la acción del controlador que genera el PDF
-                                                        var nuevaVentana = window.open("{{ url('psacrificio/generar-pdf') }}/" + idsacrificio, '_blank');
+                                                        var nuevaVentana = window.open("{{ url('psacrificio/generar-pdf') }} /" + idsacrificio, '_blank');
 
                                                         // Esperar a que la nueva ventana esté completamente cargada
                                                         nuevaVentana.onload = function () {

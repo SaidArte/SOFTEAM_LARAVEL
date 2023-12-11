@@ -167,44 +167,27 @@
                                        
                                     </select>
                                 </div>
+
                                 <div class="col-md-6">
-                                    <label for="RAZ_ANIMAL" >Raza Animal</label>
-                                    <select class="form-select custom-select" id="RAZ_ANIMAL" name="RAZ_ANIMAL"required >
-                                        <option value="" disabled selected>Seleccione una Raza de Animal</option>
-                                       <!--Raza de Vaca-->
-                                        <option value="Holstein" selected >Vaca Holstein</option>
-                                        <option value="criolla" selected >Vaca criolla</option>
-                                        <option value="Hereford" selected >Vaca Hereford</option>
-                                        <option value="simmental<" selected >Vaca simmental</option>
-                                        <option value="Angus " selected >Vaca Angus </option>
-                                        <option value="Angus rojo" selected >Vaca Angus rojo</option>
-                                        <option value="Brangus" selected >Vaca Brangus</option>
-                                        <option value="Ganado Lechero" selected >Vaca Ganado Lechero</option>
-                                       <!--Raza de caballlo-->
-                                        <option value="criollo" selected >Caballo criollo</option>
-                                        <option value="mustang" selected >Caballo mustang</option>
-                                        <option value="shire" selected >Caballo shire</option>
-                                        <option value="frison" selected >Caballo frison</option>
-                                        <option value="arabe" selected >Caballo arabe</option>
-                                        <option value="pura sangre ingles" selected >Caballo pura sangre ingles</option>
-                                        <!--Raza de Cerdo-->
-                                        <option value="criollo" selected >Cerdo criollo</option>
-                                        <!--Raza de Burro-->
-                                        <option value="criollo" selected >Burro criollo</option>
-                                        <!--Raza de Yegua-->
-                                        <option value="criollo" selected >Yegua criollo</option>
-                                        <option value="" disabled selected>Seleccione una Raza de Animal</option>
-        
-        
-                                       
-                                    </select>
+                                    <label for="RAZ_ANIMAL">Raza Animal</label>
+                                    <input type="text" class="form-control" id="RAZ_ANIMAL" name="RAZ_ANIMAL" 
+                                           placeholder="Ingrese el Raza del Animal" required 
+                                           pattern="[A-Za-z ]+" title="Ingrese solo letras y espacios en el color del animal"
+                                           minlength="3" maxlength="20">
+                                    <div class="invalid-feedback">Ingrese entre 3 y 20 caracteres, solo letras y espacios en el color del animal</div>
                                 </div>
+
                                
-        
                                 <div class="col-md-6">
                                     <label for="COL_ANIMAL">Color Animal</label>
-                                    <input type="text" class="form-control" id="COL_ANIMAL" name="COL_ANIMAL" placeholder="Ingrese el color del Animal" required>
+                                    <input type="text" class="form-control" id="COL_ANIMAL" name="COL_ANIMAL" 
+                                           placeholder="Ingrese el color del Animal" required 
+                                           pattern="[A-Za-z ]+" title="Ingrese solo letras y espacios en el color del animal"
+                                           minlength="3" maxlength="20">
+                                    <div class="invalid-feedback">Ingrese entre 3 y 20 caracteres, solo letras y espacios en el color del animal</div>
                                 </div>
+        
+                                
   
                                 <div class="col-md-6">
                                     <label for="VEN_ANIMAL" >Venteado Animal</label>
@@ -225,12 +208,19 @@
                                         <option value="N" selected >NO</option>
                                                                                
                                     </select>
-                                </div>                             
+                                </div>  
+                                
                                 <div class="col-md-6">
-                                    <label for="DET_ANIMAL">Detalle  Animal</label>
-                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del Animal" required >
-                                    <div class="invalid-feedback">Ingrese solo letras en detalle del animal </div>
+                                    <label for="DET_ANIMAL">Detalle Animal</label>
+                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" 
+                                           placeholder="Ingrese detalle del Animal" required 
+                                           pattern="[A-Za-z0-9 ]+" title="Ingrese solo letras y números en detalle del animal"
+                                           minlength="3" maxlength="200">
+                                    <div class="invalid-feedback">Ingrese entre 3 y 200 caracteres, solo letras  en detalle del animal</div>
                                 </div>
+
+                                
+
                             </div>        
                             <div class="row mt-3">
                                 <div class="col-md-12">
@@ -539,7 +529,7 @@
                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Animal['COD_ANIMAL']}}">Solo Se Permirte Ingresar letras</div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="Animal">Codigo fierro</label>
+                                                    <label for="Animal">N° fierro</label>
                                                     <input type="text" class="form-control" id="COD_FIERRO" name="COD_FIERRO" placeholder=" Ingrese El Codigo Del Fierro  " value="{{$Animal['COD_FIERRO']}}">
                                                 </div>
                                                 <div class="col-md-6">

@@ -27,11 +27,14 @@ class CventaController extends Controller
       $personasArreglo = json_decode($personas->body(), true);
       // Imprime los datos para verificar si están llegando correctamente
      // dd($citaArreglo);
+     $fierro = Http::withHeaders($headers)->get(self::urlapi.'FIERROS/GETALL');
+     $fierroArreglo = json_decode($fierro->body(), true);
 
      
       return view('Alcaldia.cventa')
       ->with('citaArreglo', $citaArreglo)
       ->with('AnimalArreglo', $AnimalArreglo)
+      ->with('fierroArreglo', $fierroArreglo)
      ->with('personasArreglo', $personasArreglo); 
   
       //return view('Alcaldia.Cventa', compact('citaArreglo'));

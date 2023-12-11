@@ -130,7 +130,7 @@
                                 <!-- Método para insertar en código de vendedor atrayendo los datos ya existentes de la tabla persona -->
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="dni">Identidad Vendedor</label>
+                                        <label for="dni">DNI Vendedor</label>
                                         <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese Identidad del Vendedor" oninput="buscarPersona(this.value)" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -143,13 +143,23 @@
                                 
                                 <!-- Método para insertar en código de comprador atrayendo los datos ya existentes de la tabla persona -->
                                 <div class="row mt-3">
+
+                                
+                                   <div class="col-md-6">
+                                        <label for="COD_VENDEDOR" >N° Vendedor</label>
+                                        <input type="text" id="COD_VENDEDOR" class="form-control" name="COD_VENDEDOR" readonly>
+                                  </div>
+
+
+
                                     <div class="col-md-6">
+                                    
                                         <label for="NOM_COMPRADOR">Nombre Comprador</label>
                                         <input type="text" id="NOM_COMPRADOR" class="form-control" name="NOM_COMPRADOR" placeholder="Ingresar Nombre Completo del Comprador" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="35" required>
                                         <div class="invalid-feedback">Ingrese Nombre Completo del Comprador</div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="DNI_COMPRADOR">Identidad Comprador</label>
+                                        <label for="DNI_COMPRADOR">DNI Comprador</label>
                                         <input type="text" id="DNI_COMPRADOR" class="form-control @error('DNI_COMPRADOR') is-invalid @enderror" name="DNI_COMPRADOR" placeholder="Ingrese Identidad del Comprador" required pattern="[0-9]+" title="Ingrese solo números" maxlength="13">
                                         <div class="invalid-feedback">Ingresar la Identidad del Comprador</div>
                                         @error('DNI_COMPRADOR')
@@ -174,6 +184,14 @@
                                         <label for="COD_FIERRO">N° Fierro</label>
                                         <input type="text" readonly id="COD_FIERRO" class="form-control" name="COD_FIERRO">
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <img id="imagenFierro" src="" alt="Imagen del Fierro" style="display: none; max-width: 60%; max-height: 60%; ">
+
+                                        <label for="nom">Imagen Fierro</label>
+                                        <input type="text" readonly id="IMG_FIERRO" class="form-control" name="IMG_FIERRO">
+                                    </div> 
+
                                     <div class="col-md-6">
                                         <label for="CLAS_ANIMAL">Clase Animal</label>
                                         <input type="text" readonly id="CLAS_ANIMAL" class="form-control" name="CLAS_ANIMAL">
@@ -355,45 +373,59 @@
                                         };
 
 
-                                //Función para buscar animal.
-                                function buscarAnimal(idAnimal) {
-                                            var AnimalArreglo = <?php echo json_encode($AnimalArreglo); ?>;
-                                            var AnimalEncontrada = false;
+                                // Asumiendo que fierroArreglo está definido en algún lugar de tu código
 
-                                            if(idAnimal){
-                                                // Itera sobre el arreglo de personas en JavaScript (asumiendo que es un arreglo de objetos)
-                                                for (var i = 0; i < AnimalArreglo.length; i++) {
-                                                    if (AnimalArreglo[i].COD_ANIMAL == idAnimal) {
-                                                        AnimalEncontrada = true;
-                                                        $('#CLAS_ANIMAL').val(AnimalArreglo[i].CLAS_ANIMAL);
-                                                        $('#COL_ANIMAL').val(AnimalArreglo[i].COL_ANIMAL);
-                                                        $('#COD_FIERRO').val(AnimalArreglo[i].COD_FIERRO);
-                                                        $('#DET_ANIMAL').val(AnimalArreglo[i].DET_ANIMAL);
+function buscarAnimal(idAnimal) {
+    var AnimalArreglo = <?php echo json_encode($AnimalArreglo); ?>;
+    var fierroArreglo = <?php echo json_encode($fierroArreglo); ?>;  // Asegúrate de definir $fierroArreglo en tu PHP
+    
+    var AnimalEncontrada = false;
 
-                                                        break;
-                                                    }
-                                                }
+    if (idAnimal) {
+        for (var i = 0; i < AnimalArreglo.length; i++) {
+            if (AnimalArreglo[i].COD_ANIMAL == idAnimal) {
+                AnimalEncontrada = true;
+                $('#CLAS_ANIMAL').val(AnimalArreglo[i].CLAS_ANIMAL);
+                $('#COL_ANIMAL').val(AnimalArreglo[i].COL_ANIMAL);
+                $('#COD_FIERRO').val(AnimalArreglo[i].COD_FIERRO);
+                $('#DET_ANIMAL').val(AnimalArreglo[i].DET_ANIMAL);
 
-                                                if (!AnimalEncontrada) {
-                                                    AnimalEncontrada = false;
-                                                    $('#CLAS_ANIMAL').val();
-                                                        $('#COL_ANIMAL').val();
-                                                        $('#COD_FIERRO').val(); 
-                                                        $('#DET_ANIMAL').val('');
-                                                   
-                                                }
+                // Buscar el fierro correspondiente en fierroArreglo
+                var codigoFierro = AnimalArreglo[i].COD_FIERRO;
+                var fierroEncontrado = fierroArreglo.find(function(fierro) {
+                    return fierro.COD_FIERRO === codigoFierro;
+                });
 
-                                            }else{
-                                                AnimalEncontrada = false;
-                                                $('#CLAS_ANIMAL').val('');
-                                                $('#COL_ANIMAL').val('');
-                                                $('#COD_FIERRO').val('');
-                                                $('#DET_ANIMAL').val('');
+                // Mostrar la imagen del fierro si se encuentra
+                if (fierroEncontrado) {
+                    var imagenFierroUrl = fierroEncontrado.IMG_FIERRO;
+                    $('#imagenFierro').attr('src', imagenFierroUrl);
+                    $('#imagenFierro').show();
+                } else {
+                    // Si no se encuentra un fierro, puedes ocultar la imagen o hacer algo más
+                    $('#imagenFierro').hide();
+                }
 
+                break;
+            }
+        }
 
-                                               
-                                        }; 
-                                    } 
+        if (!AnimalEncontrada) {
+            $('#CLAS_ANIMAL').val('');
+            $('#COL_ANIMAL').val('');
+            $('#COD_FIERRO').val('');
+            $('#DET_ANIMAL').val('');
+            $('#imagenFierro').hide();  // Oculta la imagen si no se encuentra un animal
+        }
+    } else {
+        AnimalEncontrada = false;
+        $('#CLAS_ANIMAL').val('');
+        $('#COL_ANIMAL').val('');
+        $('#COD_FIERRO').val('');
+        $('#DET_ANIMAL').val('');
+        $('#imagenFierro').hide();  // Oculta la imagen si no se proporciona un ID de animal
+    }
+}
 
                              //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                              function limpiarFormulario() {
@@ -414,6 +446,13 @@
                                     document.getElementById("COD_FIERRO").value = "";
                                     
                                     document.getElementById("DET_ANIMAL").value = "";
+
+                                     // Limpiar el campo de imagen y ocultar la imagen
+                                  document.getElementById("IMG_FIERRO").value = "";
+                                  document.getElementById("imagenFierro").style.display = 'none'; 
+
+                                  // También puedes agregar código para restablecer la opción seleccionada en el select
+                                    document.getElementById("COD_ANIMAL").selectedIndex = 0;
 
                                     
                                     
@@ -472,10 +511,11 @@
                             @endif
 
                              <!-- Boton de PDF -->
-                             <button onclick="mostrarVistaPrevia()" class="btn btn-sm btn-danger">
+                             <button onclick="mostrarVistaPrevia ({{$Cventa['COD_CVENTA']}})" class="btn btn-sm btn-danger">
                                 <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
                             </button>
-    
+
+                          
 
                             </td>   
                                
@@ -498,15 +538,16 @@
 
                                                 <div class="row">
 
-                                                <div class="col-md-6">
-                                                    <label for="Cventa">Fecha  Registro Venta</label>
-                                                    <input type="text" readonly class="form-control" id="FEC_CVENTA" name="FEC_CVENTA" value="{{date('d-m-y', strtotime($Cventa['FEC_CVENTA']))}}">
-                                                    <input type="date" class="form-control" id="FEC_CVENTA" name="FEC_CVENTA" value="{{$Cventa['FEC_CVENTA']}}">
-                                    
-                                                </div>
+                                                    <div class="col-md-6">
+                                                        <label for="FEC_CVENTA">Fecha Registro Venta</label>
+                                                        <?php
+                                                        $fecha_formateada = date('Y-m-d', strtotime($Cventa['FEC_CVENTA']));
+                                                        ?>
+                                                       <input type="date" class="form-control" id="FEC_CVENTA" name="FEC_CVENTA" value="{{ $fecha_formateada }}">
+                                                    </div>
 
                                                 <div class="col-md-6">
-                                                    <label for="Cventa">Codigo Vendedor</label>
+                                                    <label for="Cventa">N° Vendedor</label>
                                                     <input type="text" class="form-control" id="COD_VENDEDOR-{{$Cventa['COD_CVENTA']}}" name="COD_VENDEDOR" placeholder=" Ingrese el codigo del vendedor  " value="{{$Cventa['COD_VENDEDOR']}}   ">
                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Cventa['COD_CVENTA']}}"></div>
                                                 </div>
@@ -520,13 +561,13 @@
                                                 </div>
 
                                                <div class="col-md-6">
-                                                    <label for="Cventa">Identidad Comprador</label>
+                                                    <label for="Cventa">DNI Comprador</label>
                                                     <input type="text" class="form-control" id="DNI_COMPRADOR-{{$Cventa['COD_CVENTA']}}" name="DNI_COMPRADOR" placeholder=" Ingrese el codigo del comprador  " value="{{$Cventa['DNI_COMPRADOR']}}"oninput=" validarDNI('{{$Cventa['COD_CVENTA']}}', this.value)" required>
                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Cventa['COD_CVENTA']}}">Solo Se Permirte Ingresar Numeros</div>
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    <label for="Cventa">Codigo Animal</label>
+                                                    <label for="Cventa">N° Animal</label>
                                                     <input type="text" class="form-control" id="COD_ANIMAL-{{$Cventa['COD_CVENTA']}}" name="COD_ANIMAL" placeholder=" Ingrese el codigo del animal  " value="{{$Cventa['COD_ANIMAL']}}">
                                                    
                     
@@ -616,9 +657,10 @@
                                                         }
                                                     }
 
-                                                    function mostrarVistaPrevia() {
+                                                    function mostrarVistaPrevia (idCventa) {
                                                         // URL de la acción del controlador que genera el PDF
-                                                        var nuevaVentana = window.open("{{ url('Cventa/generar-pdf', ['id' => $Cventa['COD_CVENTA']]) }}", '_blank');
+                                                        var nuevaVentana = window.open("{{ url('Cventa/generar-pdf') }} /"+ idCventa, '_blank');
+                                                      
 
                                                         // Esperar a que la nueva ventana esté completamente cargada
                                                         nuevaVentana.onload = function () {
@@ -626,6 +668,8 @@
                                                             nuevaVentana.print();
                                                         };
                                                     }
+
+                          
                                         </script>
 
 
