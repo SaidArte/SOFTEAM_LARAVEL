@@ -720,8 +720,8 @@
 
                                         <div class="mb-3">
                                             <label for="id">Identidad Dueño</label>
-                                            <input type="text" id="dni-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="dni" value="{{$persona['DNI_PERSONA']}}" placeholder="Ingrese número de identidad" oninput="buscarPersona2('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
-                                            <div class="invalid-feedback2-{{$PTraslado['COD_PTRASLADO']}}"></div>
+                                            <input type="text" id="dni-{{$PTraslado['COD_PTRASLADO']}}" class="form-control" name="dni" value="{{$persona['DNI_PERSONA']}}" placeholder="Ingrese número de identidad" oninput="buscarPersona2('{{$PTraslado['COD_PTRASLADO']}}', this.value);validarDNIDuenio('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback20-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                          </div>
                                             <div class="mb-3">
                                             <label for="nom">Nombre Dueño</label>
@@ -733,13 +733,13 @@
                                                     
                                         <div class="mb-3">
                                             <label for="PTraslado">Dirección Origen</label>
-                                            <input type="text" class="form-control" id="DIR_ORIG_PTRASLADO-{{$PTraslado['COD_PTRASLADO']}}" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar direccion de origen del traslado" value="{{$PTraslado['DIR_ORIG_PTRASLADO']}}" oninput="validarDireccion('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
-                                            <div class="invalid-feedback" class="invalid-feedback10-{{$PTraslado['COD_PTRASLADO']}}"></div>
+                                            <input type="text" class="form-control" id="DIR_ORIG_PTRASLADO-{{$PTraslado['COD_PTRASLADO']}}" name="DIR_ORIG_PTRASLADO" placeholder="Ingresar direccion de origen del traslado" value="{{$PTraslado['DIR_ORIG_PTRASLADO']}}" oninput="validarDireccionO('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback10-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="PTraslado">Dirección Destino</label>
                                             <input type="text" class="form-control" id="DIR_DEST_TRASLADO-{{$PTraslado['COD_PTRASLADO']}}" name="DIR_DEST_TRASLADO" placeholder="Ingresar direccion de destino del traslado" value="{{$PTraslado['DIR_DEST_TRASLADO']}}" oninput="validarDireccionD('{{$PTraslado['COD_PTRASLADO']}}', this.value)" required>
-                                            <div class="invalid-feedback" class="invalid-feedback11-{{$PTraslado['COD_PTRASLADO']}}"></div>
+                                            <div class="invalid-feedback" id="invalid-feedback11-{{$PTraslado['COD_PTRASLADO']}}"></div>
                                         </div>
 
                                         
@@ -815,7 +815,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <button type="submit" class="btn btn-primary"id="submitButton-{{$PTraslado['COD_PTRASLADO']}}">Editar</button>
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                            <a href="{{ url('ptraslado') }}" class="btn btn-danger">Cancelar</a>
                                         </div>
                                     </div>
                                  </div>
@@ -856,6 +856,23 @@
                                         btnGuardar.disabled = false;
                                     }
                                 }
+
+                                function validarDNIDuenio(id, dniD) {
+                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                    var inputElement = document.getElementById("dni-" + id);
+                                    var invalidFeedback = document.getElementById("invalid-feedback20-" + id);
+
+                                    if (!/^\d{13}$/.test(dniD)) {
+                                        inputElement.classList.add("is-invalid");
+                                        invalidFeedback.textContent = "El DNI debe tener exactamente 13 dígitos numéricos";
+                                        btnGuardar.disabled = true;
+                                    } else {
+                                        inputElement.classList.remove("is-invalid");
+                                        invalidFeedback.textContent = "";
+                                        btnGuardar.disabled = false;
+                                    }
+                                }
+
                                    function validarDireccionO(id, direcciono) {
                                     var btnGuardar = document.getElementById("submitButton-" + id);
                                     var inputElement = document.getElementById("DIR_ORIG_PTRASLADO-" + id);
