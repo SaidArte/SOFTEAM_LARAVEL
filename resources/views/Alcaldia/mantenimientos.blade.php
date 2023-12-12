@@ -139,12 +139,12 @@
                                 @csrf
                                     
                                 <div class="mb-3">
-                                    <label for="FEC_HR_MANTENIMIENTO">Fecha/Hora Mantenimiento</label>
+                                    <label for="FEC_HR_MANTENIMIENTO">Fecha/Hora:</label>
                                     <input type="datetime-local" id="FEC_HR_MANTENIMIENTO" class="form-control" name="FEC_HR_MANTENIMIENTO" required>
                                     <div class="invalid-feedback"></div>
                                 </div>
                                     <div class="mb-3 mt-3">
-                                        <label for="TIP_MANTENIMIENTO">Tipo Mantenimiento</label>
+                                        <label for="TIP_MANTENIMIENTO">Tipo:</label>
                                         <select class="form-select custom-select" id="TIP_MANTENIMIENTO" name="TIP_MANTENIMIENTO" required>
                                             <option value="" disabled selected>Seleccione una opción</option>
                                             <option value="Mantenimiento predictivo">Mantenimiento predictivo</option>
@@ -156,21 +156,21 @@
                                     </div>
                             
                                     <div class="mb-3">
-                                        <label for="DES_MANTENIMIENTO">Descripción Mantenimiento</label>
+                                        <label for="DES_MANTENIMIENTO">Descripción:</label>
                                         <input type="text" id="DES_MANTENIMIENTO" class="form-control" name="DES_MANTENIMIENTO" placeholder="Ingresar la descripción del mantenimiento" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="COD_USUARIO">Código Usuario</label>
+                                        <label for="NOM_USUARIO">Código Usuario:</label>
                                         <input type="text" id="COD_USUARIO" class="form-control" name="COD_USUARIO" placeholder="Ingresar el código de usuario" oninput="buscarUsuario(this.value)" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="NOMREALUSUARIO">Nombre Usuario</label>
+                                        <label for="NOMREALUSUARIO">Usuario:</label>
                                         <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="MON_MANTENIMIENTO">Monto Mantenimiento</label>
+                                        <label for="MON_MANTENIMIENTO">Monto:</label>
                                         <input type="number" prefix="L. " id="MON_MANTENIMIENTO" class="form-control" name="MON_MANTENIMIENTO" placeholder="Ingrese el costo del mantenimiento" min="1" step="any" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -335,13 +335,13 @@
                         <table width=100% cellspacing="7" cellpadding="7" class="table table-hover table-bordered mt-1" id="ajustes">
                         <thead>
                             <th><center>Nº</center></th>
-                            <th><center>Fecha Registro Mantenimiento</center></th>
-                            <th><center>Fecha/Hora Mantenimiento</center></th>
-                            <th><center>Tipo Mantenimiento</center></th>
-                            <th><center>Descripción Mantenimiento</center></th>
+                            <th><center>Fecha Registro</center></th>
+                            <th><center>Fecha/Hora</center></th>
+                            <th><center>Tipo</center></th>
+                            <th><center>Descripción</center></th>
                             <th class="hidden">Nº</th>
-                            <th><center>Nombre Usuario</center></th>
-                            <th><center>Monto Mantenimiento</center></th>
+                            <th><center>Usuario</center></th>
+                            <th><center>Monto</center></th>
                             <th><center><i class="fas fa-cog"></i></center></th>
                         </thead>
                         <tbody>
@@ -386,7 +386,7 @@
                                                         <input type="hidden" class="form-control" name="COD_MANTENIMIENTO" value="{{$Mantenimientos['COD_MANTENIMIENTO']}}">
                                                         
                                                         <div class="mb-3">
-                                                            <label for="FEC_HR_MANTENIMIENTO">Fecha/Hora Mantenimiento</label>
+                                                            <label for="FEC_HR_MANTENIMIENTO">Fecha/Hora:</label>
                                                             <?php $fecha_formateada = date('Y-m-d\TH:i', strtotime($Mantenimientos['FEC_HR_MANTENIMIENTO'])); ?>    
                                                             <input type="datetime-local" class="form-control" id="FEC_HR_MANTENIMIENTO" name="FEC_HR_MANTENIMIENTO" value="{{ $fecha_formateada }}" min="{{ date('Y-m-d\TH:i', time()) }}" required>
                                                             <!-- La etiqueta "min" nos ayuda a que no esten disponibles a elección fechas 
@@ -394,7 +394,7 @@
                                                             <div class="invalid-feedback"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="LTIP_MANTENIMIENTO">Tipo Mantenimiento</label>
+                                                            <label for="LTIP_MANTENIMIENTO">Tipo:</label>
                                                             <select class="form-select custom-select" id="TIP_MANTENIMIENTO" name="TIP_MANTENIMIENTO" required>
                                                                 <option value="Mantenimiento predictivo" @if($Mantenimientos['TIP_MANTENIMIENTO'] === 'Mantenimiento_predictivo') selected @endif>Mantenimiento predictivo</option>
                                                                 <option value="Mantenimiento preventivo" @if($Mantenimientos['TIP_MANTENIMIENTO'] === 'Mantenimiento_preventivo') selected @endif>Mantenimiento preventivo</option>
@@ -403,21 +403,21 @@
                                                             </select>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="LDES_MANTENIMIENTO">Descripción Mantenimiento</label>
+                                                            <label for="LDES_MANTENIMIENTO">Descripción:</label>
                                                             <input type="text" class="form-control" id="LDES_MANTENIMIENTO-{{$Mantenimientos['COD_MANTENIMIENTO']}}" name="DES_MANTENIMIENTO" value="{{$Mantenimientos['DES_MANTENIMIENTO']}}" oninput="validarDescripcion('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value)" required>
                                                             <div class="invalid-feedback" id="invalid-feedback-{{$Mantenimientos['COD_MANTENIMIENTO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="COD_USUARIO">Código Usuario</label>
+                                                            <label for="COD_USUARIO">Código Usuario:</label>
                                                             <input type="text" class="form-control" id="COD_USUARIO-{{$Mantenimientos['COD_MANTENIMIENTO']}}"  name="COD_USUARIO" value="{{$Mantenimientos['COD_USUARIO']}}" oninput="validarCodUsuario('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value), buscarUsuario2('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value)" required>
                                                             <div class="invalid-feedback"  id="invalid-feedback2-{{$Mantenimientos['COD_MANTENIMIENTO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="NOMREALUSUARIO">Nombre Usuario</label>
+                                                            <label for="NOMREALUSUARIO">Usuario:</label>
                                                             <input type="text" readonly id="NOM_PERSONA-{{$Mantenimientos['COD_MANTENIMIENTO']}}" class="form-control" name="NOM_PERSONA" value="{{$usuario['NOM_PERSONA']}}" required>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="LMON_MANTENIMIENTO">Monto Mantenimiento</label>
+                                                            <label for="LMON_MANTENIMIENTO">Monto:</label>
                                                             <input type="number" prefix="L. " class="form-control" id="MON_MANTENIMIENTO-{{$Mantenimientos['COD_MANTENIMIENTO']}}" name="MON_MANTENIMIENTO" value="{{$Mantenimientos['MON_MANTENIMIENTO']}}" oninput="validarMonto('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value)" min="1" step="any" required>
                                                             <div class="invalid-feedback" id="invalid-feedback3-{{$Mantenimientos['COD_MANTENIMIENTO']}}"></div>
                                                         </div>
@@ -564,6 +564,20 @@
                     $(document).ready(function() {
                         $('#ajustes').DataTable({
                             responsive: true,
+                            dom: "Bfrtilp",
+                                    buttons: [//Botones de Excel, PDF, Imprimir
+                                        {
+                                            extend: "excelHtml5",
+                                            text: "<i class='fa-solid fa-file-excel'></i>",
+                                            tittleAttr: "Exportar a Excel",
+                                            className: "btn btn-success",
+                                            exportOptions: {
+                                                columns: ":visible" // Exportar todas las columnas visibles
+                                            },
+                                            filename: "Mantenimientos_Talanga", // Nombre personalizado para el archivo Excel
+                                            title: "Programación Mantenimientos del Sistema",
+                                        },
+                                    ],
                             lengthMenu : [10, 20, 30, 40, 50],
                             language: {
                         processing: "Procesando...",
