@@ -161,13 +161,17 @@
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="NOM_USUARIO">Código Usuario:</label>
-                                        <input type="text" id="COD_USUARIO" class="form-control" name="COD_USUARIO" placeholder="Ingresar el código de usuario" oninput="buscarUsuario(this.value)" required>
+                                        <label for="NOM_USUARIOL">Usuario:</label>
+                                        <input type="text" id="NOM_USUARIO" class="form-control" name="MON_USUARIO" placeholder="Ingresar el usuario" oninput="this.value = this.value.toUpperCase(); buscarUsuario(this.value)" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="NOMREALUSUARIO">Usuario:</label>
+                                        <label for="NOMREALUSUARIO">Nombre:</label>
                                         <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="hidden" id="COD_USUARIO" class="form-control" name="COD_USUARIO" required>
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="MON_MANTENIMIENTO">Monto:</label>
@@ -182,7 +186,6 @@
                             <script>
                                 //VALIDACIONES
                                 var fechaHoraInput = document.getElementById("FEC_HR_MANTENIMIENTO");
-                                var codigoUsuarioInput = document.getElementById("COD_USUARIO");
                                 var desMantenimientoInput = document.getElementById("DES_MANTENIMIENTO");
                                 var montoInput = document.getElementById("MON_MANTENIMIENTO");
                                 var btnGuardar = document.getElementById("btnGuardar");
@@ -205,23 +208,6 @@
                                         this.classList.remove("is-invalid");
                                         this.nextElementSibling.textContent = "";
                                         btnGuardar.disabled = false;
-                                    }
-                                });
-                                codigoUsuarioInput.addEventListener("input", function() {
-                                    // Utilizar una expresión regular para verificar si solo contiene números enteros y máximo 3 dígitos
-                                    var regex = /^\d{1,3}$/;
-                                    var inputValue = this.value;
-
-                                    if (!regex.test(inputValue)) {
-                                        // Si contiene caracteres no numéricos o tiene más de 3 dígitos, mostrar un mensaje de error
-                                        this.classList.add("is-invalid");
-                                        this.nextElementSibling.textContent = "Solo se permiten números enteros de hasta 3 dígitos.";
-                                        btnGuardar.disabled = true; // Deshabilitar el botón de guardar
-                                    } else {
-                                        // Si es un número entero válido y tiene máximo 3 dígitos, eliminar cualquier mensaje de error
-                                        this.classList.remove("is-invalid");
-                                        this.nextElementSibling.textContent = "";
-                                        btnGuardar.disabled = false; // Habilitar el botón de guardar
                                     }
                                 });
 
@@ -262,16 +248,17 @@
                                     }
                                 });
                                 //Función para buscar usuarios.
-                                function buscarUsuario(idUsuario) {
+                                function buscarUsuario(usuario) {
                                     var usuariosArreglo = <?php echo json_encode($userArreglo); ?>;
                                     var usuarioEncontrado = false;
 
-                                    if(idUsuario){
+                                    if(usuario){
                                         // Itera sobre el arreglo de usuarios en JavaScript (asumiendo que es un arreglo de objetos)
                                         for (var i = 0; i < usuariosArreglo.length; i++) {
-                                            if (usuariosArreglo[i].COD_USUARIO == idUsuario) {
+                                            if (usuariosArreglo[i].NOM_USUARIO == usuario) {
                                                 usuarioEncontrado = true;
                                                 $('#NOM_PERSONA').val(usuariosArreglo[i].NOM_PERSONA);
+                                                $('#COD_USUARIO').val(usuariosArreglo[i].COD_USUARIO);
                                                 break;
                                             }
                                         }
@@ -279,11 +266,13 @@
                                         if (!usuarioEncontrado) {
                                             usuarioEncontrado = false;
                                             $('#NOM_PERSONA').val('Usuario no encontrado');
+                                            $('#COD_USUARIO').val('');
                                         }
 
                                     }else{
                                         usuarioEncontrado = false;
                                         $('#NOM_PERSONA').val('');
+                                        $('#COD_USUARIO').val('');
                                     }
                                 };
                                 (function () {
@@ -408,13 +397,16 @@
                                                             <div class="invalid-feedback" id="invalid-feedback-{{$Mantenimientos['COD_MANTENIMIENTO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="COD_USUARIO">Código Usuario:</label>
-                                                            <input type="text" class="form-control" id="COD_USUARIO-{{$Mantenimientos['COD_MANTENIMIENTO']}}"  name="COD_USUARIO" value="{{$Mantenimientos['COD_USUARIO']}}" oninput="validarCodUsuario('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value), buscarUsuario2('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value)" required>
+                                                            <label for="USUARIOL">Usuario:</label>
+                                                            <input type="text" class="form-control" id="NOM_USUARIO-{{$Mantenimientos['COD_MANTENIMIENTO']}}"  name="NOM_USUARIO" oninput="this.value = this.value.toUpperCase(); buscarUsuario2('{{$Mantenimientos['COD_MANTENIMIENTO']}}', this.value)" >
                                                             <div class="invalid-feedback"  id="invalid-feedback2-{{$Mantenimientos['COD_MANTENIMIENTO']}}"></div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="NOMREALUSUARIO">Usuario:</label>
+                                                            <label for="NOMREALUSUARIO">Nombre:</label>
                                                             <input type="text" readonly id="NOM_PERSONA-{{$Mantenimientos['COD_MANTENIMIENTO']}}" class="form-control" name="NOM_PERSONA" value="{{$usuario['NOM_PERSONA']}}" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <input type="hidden" class="form-control" id="COD_USUARIO-{{$Mantenimientos['COD_MANTENIMIENTO']}}"  name="COD_USUARIO" value="{{$Mantenimientos['COD_USUARIO']}}" required>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="LMON_MANTENIMIENTO">Monto:</label>
@@ -428,16 +420,17 @@
                                                 </form>
                                                 <script>
                                                     //Función para buscar usuarios.
-                                                    function buscarUsuario2(id, idUsuario) {
+                                                    function buscarUsuario2(id, usuario) {
                                                         var usuariosArreglo = <?php echo json_encode($userArreglo); ?>;
                                                         var usuarioEncontrado = false;
 
-                                                        if(idUsuario){
+                                                        if(usuario){
                                                             // Itera sobre el arreglo de usuarios en JavaScript (asumiendo que es un arreglo de objetos)
                                                             for (var i = 0; i < usuariosArreglo.length; i++) {
-                                                                if (usuariosArreglo[i].COD_USUARIO == idUsuario) {
+                                                                if (usuariosArreglo[i].NOM_USUARIO == usuario) {
                                                                     usuarioEncontrado = true;
                                                                     $('#NOM_PERSONA-'+id).val(usuariosArreglo[i].NOM_PERSONA);
+                                                                    $('#COD_USUARIO-'+id).val(usuariosArreglo[i].COD_USUARIO);
                                                                     break;
                                                                 }
                                                             }
@@ -445,11 +438,13 @@
                                                             if (!usuarioEncontrado) {
                                                                 usuarioEncontrado = false;
                                                                 $('#NOM_PERSONA-'+id).val('Usuario no encontrado');
+                                                                $('#COD_USUARIO-'+id).val('');
                                                             }
 
                                                         }else{
                                                             usuarioEncontrado = false;
                                                             $('#NOM_PERSONA-'+id).val('');
+                                                            $('#COD_USUARIO-'+id).val('');
                                                         }
                                                     };
                                                     
@@ -465,24 +460,6 @@
                                                         } else if (des_mantenimiento.length > 100) {
                                                             inputElement.classList.add("is-invalid");
                                                             invalidFeedback.textContent = "La descripción no puede tener más de 100 carácteres.";
-                                                            btnGuardar.disabled = true;
-                                                        } else {
-                                                            inputElement.classList.remove("is-invalid");
-                                                            invalidFeedback.textContent = "";
-                                                            btnGuardar.disabled = false;
-                                                        }
-                                                    }
-                                                    function validarCodUsuario(id, codUsuario) {
-                                                        var btnGuardar = document.getElementById("submitButton-" + id);
-                                                        var inputElement  = document.getElementById("COD_USUARIO-" + id);
-                                                        var invalidFeedback = document.getElementById("invalid-feedback2-" + id);
-
-                                                        // Quitar espacios y caracteres especiales excepto números
-                                                        //var inputElement = inputElement.replace(/[^0-9]/g, "");
-
-                                                        if (!/^\d{1,3}$/.test(codUsuario)) {
-                                                            inputElement.classList.add("is-invalid");
-                                                            invalidFeedback.textContent = "El código usuario no debe tener más de 3 números.";
                                                             btnGuardar.disabled = true;
                                                         } else {
                                                             inputElement.classList.remove("is-invalid");
