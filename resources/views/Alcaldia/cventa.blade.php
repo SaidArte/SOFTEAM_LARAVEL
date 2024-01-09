@@ -131,7 +131,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="dni">DNI Vendedor</label>
-                                        <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese Identidad del Vendedor" oninput="buscarPersona(this.value)" required>
+                                        <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese Identidad del Vendedor" maxlength="13" oninput="buscarPersona(this.value)" required>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-6">
@@ -281,6 +281,17 @@
                                         $(this).removeClass('is-invalid');
                                     }
                                 });
+
+                                $('#dni').on('input', function() {
+                                   var dniVendedor = $(this).val();
+                                   var dniRegex = /^[0-9]+$/;
+                                   if (dniVendedor === "" || !dniVendedor.match(dniRegex) || dniVendedor.length !== 13) {
+                                      $(this).addClass('is-invalid');
+                                    } else {
+                                      $(this).removeClass('is-invalid');
+                                    }
+                                });
+
                     
                                 $('#Cventa').submit(function(event) {
                                     var formIsValid = true;

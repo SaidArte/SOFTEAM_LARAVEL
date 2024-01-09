@@ -126,8 +126,8 @@
                                 <div class="row">
 
                                     <div class="col-md-6">
-                                        <label for="id">Identidad Dueño</label>
-                                         <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese Identidad del Dueño" oninput="buscarPersona(this.value)" required>
+                                        <label for="id">DNI Dueño</label>
+                                         <input type="text" id="dni" class="form-control" name="dni" placeholder="Ingrese Identidad del Dueño" maxlength="13" oninput="buscarPersona(this.value)" required>
                                          <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-6">
@@ -154,18 +154,8 @@
                             <div class="row">    
                                 <div class="col-md-6">
                                     <label for="CLAS_ANIMAL" >Clases Animal</label>
-                                    <select class="form-select custom-select" id="CLAS_ANIMAL" name="CLAS_ANIMAL" required >
-                                        <option value="" disabled selected>Seleccione una clase de animal</option>
-                                        <option value="Vaca" selected >Vaca</option>
-                                        <option value="Caballo" selected >Caballo</option>
-                                        <option value="Cerdo" selected >Cerdo</option>
-                                        <option value="Burro" selected >Burro</option>
-                                        <option value="Mula" selected >Mula</option>
-                                        <option value="Yegua" selected >Yegua</option>
-                                        <option value="" disabled selected>Seleccione una clase de animal</option>
-                                       
-                                       
-                                    </select>
+                                    <input type="text" id="CLAS_ANIMAL" class="form-control" name="CLAS_ANIMAL" placeholder="Ingresar a Clases del Animal" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras"  maxlength="15" required>
+                                    <div class="invalid-feedback">Ingrese solo letras en Clases del Animal</div>
                                 </div>
 
                                 <div class="col-md-6">
@@ -209,15 +199,17 @@
                                                                                
                                     </select>
                                 </div>  
-                                
+
                                 <div class="col-md-6">
-                                    <label for="DET_ANIMAL">Detalle Animal</label>
-                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" 
-                                           placeholder="Ingrese detalle del Animal" required 
-                                           pattern="[A-Za-z0-9 ]+" title="Ingrese solo letras y números en detalle del animal"
-                                           minlength="3" maxlength="200">
-                                    <div class="invalid-feedback">Ingrese entre 3 y 200 caracteres, solo letras  en detalle del animal</div>
+
+                                    <label for="DET_ANIMAL">Detalle del Animal</label>
+                                    <input type="text" id="DET_ANIMAL" class="form-control" name="DET_ANIMAL" placeholder="Ingrese detalle del animal"  maxlength="200" required >
+                                    <div class="invalid-feedback">Ingrese detalle  animal </div>
+
+                                  
                                 </div>
+                                
+                                
 
                                 
 
@@ -257,9 +249,18 @@
                                         }
                                     }
                             
-                                    $('#CLAS_ANIMAL, #RAZ_ANIMAL, #COL_ANIMAL, #DET_ANIMAL').on('input', function() {
+                                    $('#CLAS_ANIMAL, #RAZ_ANIMAL, #COL_ANIMAL').on('input', function() {
                                         validateInput($(this), /^[A-Za-z\s]+$/);
                                     });
+
+                                    $('#DET_ANIMAL').on('input', function() {
+                                         validateInput($(this), /^[A-Za-zÁÉÍÓÚÜáéíóúüÑñ0-9\s]+$/);
+                                    });
+
+                                    $('#dni').on('input', function() {
+                                       validateInput($(this), /^\d{13}$/);
+                                   });
+
                             
                                     $('select').on('change', function() {
                                         validateSelection($(this));
