@@ -170,15 +170,17 @@
                                 
                                 <!-- Método para insertar en código de animal atrayendo los datos ya existentes de la tabla persona -->
                                 <div class="row mt-3">
+                                    
+
                                     <div class="col-md-6">
                                         <label for="COD_ANIMAL">Animal</label>
-                                        <select class="form-select custom-select" id="COD_ANIMAL" name="COD_ANIMAL" placeholder="Seleccione Datos de Animal" oninput="buscarAnimal(this.value)" required>
-                                            <option value="" disabled selected>Seleccione Datos</option>
-                                            @foreach (array_slice($AnimalArreglo, -5) as $Animal)
-                                                <option value="{{$Animal['COD_ANIMAL']}}">{{$Animal['COD_ANIMAL']}}</option>
-                                            @endforeach 
+
+                                        <select id="COD_ANIMAL" class="form-control" name="COD_ANIMAL" oninput="buscarAnimal(this.value)" style="display: none;" required >
+                                            <!-- Opciones de animales se agregarán aquí dinámicamente -->
                                         </select>
+                                        
                                     </div>
+
                                     <!-- Datos del Animal -->
                                     <div class="col-md-6">
                                         <label for="COD_FIERRO">N° Fierro</label>
@@ -370,7 +372,11 @@
                                 }
                             });
 
+
+
+
                              //Función para buscar personas.
+                             /*
                              function buscarPersona(idPersona) {
                                             var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
                                             var personaEncontrada = false;
@@ -402,7 +408,83 @@
                                                 $('#COD_VENDEDOR').val(''); // Si no hay ID, limpia COD_VENDEDOR
                                             }
                                         };
+*/
 
+function buscarPersona(idPersona) {
+    var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
+    var fierroArreglo = <?php echo json_encode($fierroArreglo); ?>;
+    var animalArreglo = <?php echo json_encode($AnimalArreglo); ?>;
+
+    var personaEncontrada = false;
+
+    if (idPersona) {
+        for (var i = 0; i < personasArreglo.length; i++) {
+            if (personasArreglo[i].DNI_PERSONA == idPersona) {
+                personaEncontrada = true;
+                $('#NOM_PERSONA').val(personasArreglo[i].NOM_PERSONA);
+                $('#COD_PERSONA').val(personasArreglo[i].COD_PERSONA);
+                $('#COD_VENDEDOR').val(personasArreglo[i].COD_PERSONA);
+
+                if (personasArreglo[i].COD_PERSONA) {
+                    var persona = false;
+
+                    for (var j = 0; j < fierroArreglo.length; j++) {
+                        if (fierroArreglo[j].COD_PERSONA == personasArreglo[i].COD_PERSONA) {
+                            persona = true;
+                            $('#COD_FIERRO').val(fierroArreglo[j].COD_FIERRO);
+
+                            // Filtrar animales asociados al mismo fierro
+                            var animalesDelFierro = animalArreglo.filter(function(animal) {
+                                return animal.COD_FIERRO == fierroArreglo[j].COD_FIERRO;
+                            });
+
+                            if (animalesDelFierro.length > 0) {
+                                // Construir opciones para el elemento select
+                                var opcionesAnimales = animalesDelFierro.map(function(animal) {
+                                    return '<option value="' + animal.COD_ANIMAL + '">' + animal.COD_ANIMAL + '</option>';
+                                });
+
+                                // Agregar opciones al select
+                                $('#COD_ANIMAL').html(opcionesAnimales.join(''));
+
+                                // Muestra el select de animales asociados al mismo fierro
+                                $('#COD_ANIMAL').show();
+                                console.log('Animales asociados al mismo fierro:', animalesDelFierro);
+                            } else {
+                                console.log('No hay animales registrados para este fierro.');
+                                // Esconde el select si no hay animales
+                                $('#COD_ANIMAL').hide();
+                            }
+                            break;
+                        }
+                    }
+
+                    if (!persona) {
+                        $('#COD_FIERRO').val('Persona No Tiene Fierro Registrado');
+                    }
+                } else {
+                    $('#COD_FIERRO').val('');
+                }
+
+                break;
+            }
+        }
+
+        if (!personaEncontrada) {
+            $('#NOM_PERSONA').val('Persona No Encontrada');
+            $('#COD_PERSONA').val('');
+            $('#COD_FIERRO').val('');
+            $('#COD_ANIMAL').val('');
+        }
+    } else {
+        $('#NOM_PERSONA').val('');
+        $('#COD_PERSONA').val('');
+        $('#COD_FIERRO').val('');
+        $('#COD_ANIMAL').val('');
+        // Esconde el select si no hay DNI ingresado
+        $('#COD_ANIMAL').hide();
+    }
+}
 
                                 // Asumiendo que fierroArreglo está definido en algún lugar de tu código
 
@@ -704,7 +786,7 @@ function buscarAnimal(idAnimal) {
                                                           btnGuardar.disabled = false;
                                                         }
                                                     }
-                                                    
+
 
 
 
