@@ -617,7 +617,7 @@
                                             var inputElement = document.getElementById("DET_ANIMAL-" + id);
                                             var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
 
-                                            if (det.length < 5 || det.length > 100 || !/^[a-zA-Z\s]+$/.test(det)) {
+                                            if (det.length < 5 || det.length > 100 || !/^[A-Za-zÁÉÍÓÚÜáéíóúüÑñ0-9\s]+$/.test(det)) {
                                             inputElement.classList.add("is-invalid");
                                             invalidFeedback.textContent = "El detalle debe tener al menos 5 caracteres y no más de 100, sin números";
                                             btnGuardar.disabled = true;

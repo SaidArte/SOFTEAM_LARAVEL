@@ -215,14 +215,14 @@
                                             <div class="invalid-feedback">Ingresar el numero de folio</div>
                                         @enderror
                                     </div>
+
                                     <div class="col-md-6">
+
                                         <label for="ANT_CVENTA">Antecedentes Carta Venta</label>
-                                        <select class="form-select custom-select" id="ANT_CVENTA" name="ANT_CVENTA" required>
-                                            <option value="" disabled selected>Seleccione una opción</option>
-                                            <option value="SI" selected>SI</option>
-                                            <option value="NO" selected>NO</option>
-                                        </select>
-                                        <div class="invalid-feedback" id="antCventaError">Seleccione una opción válida.</div>
+                                        <input type="text" id="ANT_CVENTA" class="form-control" name="ANT_CVENTA" placeholder="Ingrese Antecedentes Carta Venta"  maxlength="200" required >
+                                        <div class="invalid-feedback">Ingrese Antecedentes Carta Venta </div>
+    
+                                      
                                     </div>
                                 </div>
                                 
@@ -262,7 +262,27 @@
                                         $(this).removeClass('is-invalid');
                                     }
                                 });
-                    
+
+                                $('#ANT_CVENTA').on('input', function() {
+                                    var antCventa = $(this).val();
+                                    var antRegex =  /^[A-Za-zÁÉÍÓÚÜáéíóúüÑñ0-9\s]+$/;
+
+                                  
+                                    if (antCventa === "" || !antCventa.match(antRegex)) {
+                                        $(this).addClass('is-invalid');
+                                        $('#antCventaError').text('Ingrese un valor válido.');
+                                    } else {
+                                        $(this).removeClass('is-invalid');
+                                        $('#antCventaError').text('');
+                                    }
+                                });
+
+
+
+
+
+
+                    /*
                                 $('#ANT_CVENTA').on('change', function() {
                                     var antCventa = $(this).val();
                                     if (antCventa === "") {
@@ -280,7 +300,7 @@
                                     } else {
                                         $(this).removeClass('is-invalid');
                                     }
-                                });
+                                });*/
 
                                 $('#dni').on('input', function() {
                                    var dniVendedor = $(this).val();
@@ -319,7 +339,7 @@
                                     } else {
                                         $('#FOL_CVENTA').removeClass('is-invalid');
                                     }
-                    
+                    /*
                                     var antCventa = $('#ANT_CVENTA').val();
                                     if (antCventa === "") {
                                         $('#ANT_CVENTA').addClass('is-invalid');
@@ -328,7 +348,7 @@
                                     } else {
                                         $('#ANT_CVENTA').removeClass('is-invalid');
                                         $('#antCventaError').text('');
-                                    }
+                                    }*/
 
 
                                                       
@@ -599,18 +619,14 @@ function buscarAnimal(idAnimal) {
                                                  
                                                 </div>
 
+                                              
                                                 <div class="col-md-6">
-                                                    <label for="Cventa" class="form-label">Antecedentes Carta Venta</label>
-                                                    <select class="form-select custom-select" id="ANT_CVENTA" name="ANT_CVENTA" value="{{$Cventa['ANT_CVENTA']}}" required>
-                                                   
-                                                   
-                                                        <option value="SI" @if($Cventa['ANT_CVENTA'] === 'SI') selected @endif>SI</option>
-                                                        <option value="NO" @if($Cventa['ANT_CVENTA'] === 'NO') selected @endif>NO</option>
-                                                        
-                                                        
-                                                    </select>
-                                                    <div class="invalid-feedback"></div>
+                                                    <label for="Cventa">Antecedentes Carta Venta</label>
+                                                    <input type="text" class="form-control" id="ANT_CVENTA-{{$Cventa['ANT_CVENTA']}}" name="ANT_CVENTA" placeholder="Ingrese Antecedente" value="{{$Cventa['ANT_CVENTA']}}" oninput="validarAntecedente('{{$Cventa['ANT_CVENTA']}}', this.value)" required>
+                                                    <div class="invalid-feedback" id="invalid-feedback6-{{$Cventa['ANT_CVENTA']}}">Solo Se Permite Ingresar letras</div>
                                                 </div>
+
+
                                             <div class="row mt-3">
                                                 <div class="col-md-12">
                                                     <button type="submit" class="btn btn-primary" id="submitButton-{{$Cventa['COD_CVENTA']}}">Editar</button>
@@ -671,6 +687,28 @@ function buscarAnimal(idAnimal) {
                                                             btnGuardar.disabled = false;
                                                         }
                                                     }
+
+
+                                                    function validarAntecedente(id, antecedente) {
+                                                       var btnGuardar = document.getElementById("submitButton-" + id);
+                                                       var inputElement = document.getElementById("ANT_CVENTA-" + id);
+                                                      var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+                                                      if (antecedente.length < 5 || antecedente.length > 100 || !/^[A-Za-zÁÉÍÓÚÜáéíóúüÑñ0-9\s]+$/.test(antecedente)) {
+                                                          inputElement.classList.add("is-invalid");
+                                                          invalidFeedback.textContent = "El antecedente debe tener al menos 5 caracteres y no más de 100, sin números";
+                                                          btnGuardar.disabled = true;
+                                                       } else {
+                                                          inputElement.classList.remove("is-invalid");
+                                                          invalidFeedback.textContent = "";
+                                                          btnGuardar.disabled = false;
+                                                        }
+                                                    }
+                                                    
+
+
+
+
 
                                                     function mostrarVistaPrevia(idCventa) {
                                                        // URL de la acción del controlador que genera el PDF
