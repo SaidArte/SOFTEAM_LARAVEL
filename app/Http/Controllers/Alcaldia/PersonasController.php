@@ -128,17 +128,17 @@ class PersonasController extends Controller
             }
         }
 
-        // Validaciones para correo electrónico
-        $emails = $request->input("DIR_EMAIL");
-        if (!isset($persona_actual["DIR_EMAIL"]) || $emails !== $persona_actual["DIR_EMAIL"]) {
-            $emails_existente = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL')->json();
-            foreach ($emails_existente as $persona) {
+        /*Validaciones para correo electrónico
+        $email = $request->input("DIR_EMAIL");
+        if (!isset($persona_actual["DIR_EMAIL"]) || $email !== $persona_actual["DIR_EMAIL"]) {
+            $email_existente = Http::withHeaders($headers)->get(self::urlapi.'PERSONAS/GETALL')->json();
+            foreach ($email_existente as $persona) {
                 // Excluir la persona actual en la verificación
-                if (isset($persona["DIR_EMAIL"]) && $persona["DIR_EMAIL"] === $emails && $persona["COD_PERSONA"] != $request->input("COD_PERSONA")) {
+                if (isset($persona["DIR_EMAIL"]) && $persona["DIR_EMAIL"] === $email && $persona["COD_PERSONA"] != $request->input("COD_PERSONA")) {
                     return redirect('/personas')->with('update_error', 'El correo electrónico ingresado ya existe')->withInput();
                 }
             }
-        }
+        }*/
 
         // Validaciones para número de teléfono
         $telefono = $request->input("NUM_TELEFONO");

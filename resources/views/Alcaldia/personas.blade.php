@@ -200,7 +200,7 @@
                                             </div>                          
                                             <div class="mb-3">
                                                 <label for="DIR_EMAIL">Correo Electrónico:</label>
-                                                <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" required>
+                                                <input type="text" id="DIR_EMAIL" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com">
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </div>
@@ -336,9 +336,13 @@
                                     });                                
                                     $('#DIR_EMAIL').on('input', function() {
                                         var correopersona = $(this).val();
-                                        var errorMessage = 'El correo debe tener entre 5 y 50 caraácteres, sin espacios y contener letras minúsculas, "@" y "."';
-                                        
-                                        if (correopersona.length < 5 || correopersona.length > 50 || correopersona.indexOf(' ') !== -1 || correopersona.indexOf('@') === -1 || !/^[a-z0-9@.]+$/.test(correopersona)) {
+                                        var errorMessage = 'El correo debe tener entre 5 y 50 caracteres, sin espacios y contener letras minúsculas, "@" y "."';
+
+                                        // Modificación para permitir campo vacío
+                                        if (correopersona === '') {
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('');
+                                        } else if (correopersona.length < 5 || correopersona.length > 50 || correopersona.indexOf(' ') !== -1 || correopersona.indexOf('@') === -1 || !/^[a-z0-9@.]+$/.test(correopersona)) {
                                             $(this).addClass('is-invalid');
                                             $(this).siblings('.invalid-feedback').text(errorMessage);
                                         } else {
@@ -378,7 +382,8 @@
                                 $('form.needs-validation').on('input change', function() {
                                     var esValido = true;
 
-                                    $(this).find('.form-control').each(function() {
+                                    // Itera sobre todos los campos excepto DIR_EMAIL
+                                    $(this).find('.form-control').not('#DIR_EMAIL').each(function() {
                                         if ($(this).hasClass('is-invalid') || $(this).val().trim() === '') {
                                             esValido = false;
                                             return false; // Sale del bucle si encuentra un campo no válido
@@ -386,7 +391,7 @@
                                     });
 
                                     $(this).find('button[type="submit"]').prop('disabled', !esValido);
-                                });                             
+                                });                           
                                 //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                                 function limpiarFormulario() {
                                     document.getElementById("DNI_PERSONA").value = "";
@@ -553,7 +558,7 @@
                                                                 </div>                        
                                                                 <div class="mb-3">
                                                                     <label for="personas">Correo Electrónico:</label>
-                                                                    <input type="text" id="DIR_EMAIL-{{$personas['COD_PERSONA']}}" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" value="{{$personas['DIR_EMAIL']}}" oninput="validarCorreo('{{$personas['COD_PERSONA']}}', this.value)" required>
+                                                                    <input type="text" id="DIR_EMAIL-{{$personas['COD_PERSONA']}}" class="form-control" name="DIR_EMAIL" placeholder="xxxx@gmail.com" value="{{$personas['DIR_EMAIL']}}" oninput="validarCorreo('{{$personas['COD_PERSONA']}}', this.value)">
                                                                     <div class="invalid-feedback" id="invalid-feedback5-{{$personas['COD_PERSONA']}}"></div>
                                                                 </div>
                                                             </div> 
@@ -685,8 +690,8 @@
                                                         var inputElement = document.getElementById("DIR_EMAIL-" + id);
                                                         var invalidFeedback = document.getElementById("invalid-feedback5-" + id);
 
-                                                        // Verificar si el correo cumple con los requisitos
-                                                        if (/^\S+@\S+\.\S{2,}$/.test(correo) && correo.length >= 5 && correo.length <= 50) {
+                                                        // Verificar si el correo es válido o está vacío
+                                                        if (correo === '' || (/^\S+@\S+\.\S{2,}$/.test(correo) && correo.length >= 5 && correo.length <= 50)) {
                                                             inputElement.classList.remove("is-invalid");
                                                             invalidFeedback.textContent = "";
                                                             btnGuardar.disabled = false;
