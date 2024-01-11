@@ -35,21 +35,51 @@ public function nuevo_psacrificio(Request $request)
     $headers = [
         'Authorization' => 'Bearer ' . Session::get('token'),
     ];
-    $nuevo_psacrificio = Http::withHeaders($headers)->post(self::urlapi.'PSACRIFICIO/INSERTAR', [
-        "FEC_REG_PSACRIFICIO"   => $request->input("FEC_REG_PSACRIFICIO"),
-        "NOM_PERSONA"           => $request->input("NOM_PERSONA"),
-        "DNI_PERSONA"           => $request->input("DNI_PERSONA"),
-        "TEL_PERSONA"           => $request->input("TEL_PERSONA"),
-        "FEC_SACRIFICIO"        => $request->input("FEC_SACRIFICIO"),
-        "DIR_PSACRIFICIO"       => $request->input("DIR_PSACRIFICIO"),
-        "ANIMAL"            => $request->input("ANIMAL"),
-        "COL_ANIMAL"            => $request->input("COL_ANIMAL"),
-    ]);
 
-    if ($nuevo_psacrificio->successful()) {
-        return redirect('/psacrificio')->with('success', 'Registro creado exitosamente.');
-    } else {
-        return redirect()->back()->with('error', 'Hubo un problema al crear el registro.');
+    try {
+        // Validación de la imagen
+        $request->validate([
+            'IMG_ANIMAL' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $imagen = $request->file('IMG_ANIMAL');
+
+        // Validar si hay una imagen ingresada.
+        if ($imagen->isValid()) {
+            $extension = $imagen->getClientOriginalExtension();
+            $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $extension;
+
+            $imagen->move(public_path('imagenes/animales-sacrificios'), $nombreImagen);
+
+            $rutaImagen = '/imagenes/animales-sacrificios/' . $nombreImagen; // Ruta relativa
+
+            // Ahora, convertimos la ruta relativa en una ruta absoluta utilizando la función url()
+            $rutaImagenAbsoluta = url($rutaImagen);
+        }
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Error al procesar la imagen: ' . $e->getMessage());
+    }
+
+    try {
+        $nuevo_psacrificio = Http::withHeaders($headers)->post(self::urlapi.'PSACRIFICIO/INSERTAR', [
+            "FEC_REG_PSACRIFICIO"   => $request->input("FEC_REG_PSACRIFICIO"),
+            "NOM_PERSONA"           => $request->input("NOM_PERSONA"),
+            "DNI_PERSONA"           => $request->input("DNI_PERSONA"),
+            "TEL_PERSONA"           => $request->input("TEL_PERSONA"),
+            "FEC_SACRIFICIO"        => $request->input("FEC_SACRIFICIO"),
+            "DIR_PSACRIFICIO"       => $request->input("DIR_PSACRIFICIO"),
+            "ANIMAL"                => $request->input("ANIMAL"),
+            "COL_ANIMAL"            => $request->input("COL_ANIMAL"),
+            "IMG_ANIMAL"            => $rutaImagenAbsoluta ?? null, // Utilizamos la ruta absoluta si está disponible
+        ]);
+
+        if ($nuevo_psacrificio->successful()) {
+            return redirect('/psacrificio')->with('success', 'Registro creado exitosamente.');
+        } else {
+            return redirect()->back()->with('error', 'Hubo un problema al crear el registro.');
+        }
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Error al realizar la solicitud: ' . $e->getMessage());
     }
 }
 
@@ -59,7 +89,8 @@ public function nuevo_psacrificio(Request $request)
             $headers = [
                 'Authorization' => 'Bearer ' . Session::get('token'),
             ];
-            $actualizar_psacrificio = Http::withHeaders($headers)->put(self::urlapi.'PSACRIFICIO/ACTUALIZAR/'.$request->input("COD_PSACRIFICIO"), [
+
+            $sacrificio = [
                 "COD_PSACRIFICIO"       => $request->input("COD_PSACRIFICIO"),
                 "FEC_REG_PSACRIFICIO"   => $request->input("FEC_REG_PSACRIFICIO"),
                 "NOM_PERSONA"           => $request->input("NOM_PERSONA"),
@@ -69,8 +100,33 @@ public function nuevo_psacrificio(Request $request)
                 "DIR_PSACRIFICIO"       => $request->input("DIR_PSACRIFICIO"),
                 "ANIMAL"            => $request->input("ANIMAL"),
                 "COL_ANIMAL"            => $request->input("COL_ANIMAL"),
-            ]);
+            ];
+    
+            // Obtén la ruta de la imagen actual del campo oculto
+            $rutaImagenActual = $request->input('IMG_ANIMAL_actual');
+
+            $imagen = $request->file('IMG_ANIMAL');
         
+            // Manejar la imagen si se proporciona
+            if ($request->hasFile('IMG_ANIMAL')) {
+                $request->validate([
+                    'IMG_ANIMAL' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                ]);
+        
+                $imagen = $request->file('IMG_ANIMAL');
+                $nombreImagen = md5(time() . '_' . $imagen->getClientOriginalName()) . '.' . $imagen->getClientOriginalExtension();
+                $imagen->move(public_path('imagenes/animales-sacrificios'), $nombreImagen);
+                $rutaImagen = '/imagenes/animales-sacrificios/' . $nombreImagen;
+            } else {
+                // Si no se ha subido una nueva imagen, utiliza la ruta de la imagen actual
+                $rutaImagen = $rutaImagenActual;
+            }
+        
+            // Actualizar los datos, incluyendo la nueva ruta de la imagen si se ha subido una nueva
+            $sacrificio['IMG_ANIMAL'] = $rutaImagen;
+        
+            // Realizar la solicitud HTTP para actualizar los datos
+            $actualizar_psacrificio = Http::withHeaders($headers)->put(self::urlapi.'PSACRIFICIO/ACTUALIZAR/'.$request->input("COD_PSACRIFICIO"), $sacrificio);
             if ($actualizar_psacrificio->successful()) {
                 return redirect('/psacrificio')->with('update_success', 'Datos actualizados exitosamente.');
             } else {
@@ -205,6 +261,41 @@ public function nuevo_psacrificio(Request $request)
             // Descargar el PDF, "D" para descarga directa e "I" para pre-visualización.
             $pdf->Output("Permiso_de_Sacrificio.pdf", "I");
           }
+
+    public function subirImagen(Request $request){
+        $headers = [
+            'Authorization' => 'Bearer ' . Session::get('token'),
+        ];
+        $request->validate([
+            'IMG_ANIMAL' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $imagen = $request->file('IMG_ANIMAL');
+        $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
+        $imagen->move(public_path('imagenes/animales-sacrificios'), $nombreImagen);
+
+        // Almacena la ruta de la imagen en la base de datos
+        $rutaImagen = '/imagenes/animales-sacrificios/' . $nombreImagen;
+
+        $nuevo_psacrificio = Http::withHeaders($headers)->post(self::urlapi.'PSACRIFICIO/INSERTAR', [
+            // ... otros campos ...
+            "IMG_ANIMAL" => $rutaImagen,
+        ]);
+
+        // Puedes redirigir de vuelta a la página donde subiste la imagen
+        // con un mensaje de éxito
+        return redirect()->back()->with('success', 'Imagen del animal cargada exitosamente.');
+    }
+
+
+    private function storeImage($image){
+        $nombreImagen = time() . '_' . $image->getClientOriginalName();
+        $image->move(public_path('imagenes/animales-sacrificios'), $nombreImagen);
+
+        // Aquí puedes guardar el nombre de la imagen en la base de datos si es necesario
+
+        return $nombreImagen;
+    }
        
     
 }

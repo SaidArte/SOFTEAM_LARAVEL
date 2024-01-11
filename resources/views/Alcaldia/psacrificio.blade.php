@@ -120,7 +120,7 @@
                         
                         <div class="modal-body">
                             <!-- Inicio del nuevo formulario -->
-                            <form action="{{ url('psacrificio/insertar') }}" method="post" class="needs-validation psacrificio-form">
+                            <form action="{{ url('psacrificio/insertar') }}" method="post" enctype="multipart/form-data" class="needs-validation psacrificio-form">
 
                                 @csrf
 
@@ -178,6 +178,12 @@
                                             <label for="COL_ANIMALL">Color Animal</label>
                                             <input type="text" id="COL_ANIMAL" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal" required>
                                             <div class="invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                            <div class="form-group">
+                                                <label for="IMG_ANIMAL">Imágen:</label>
+                                                <input type="file" class="form-control" id="IMG_ANIMAL" name="IMG_ANIMAL" accept="image/*">
                                         </div>
                                     </div>
                                 </div>
@@ -403,6 +409,8 @@
                                 <th><center>Fecha</center></th>
                                 <th><center>Dirección</center></th>
                                 <th><center>Animal</center></th>
+                                <th><center>Color</center></th>
+                                <th><center>Foto</center></th>
                                 
                                 <th><center>Opción</center></th>
                             </tr>
@@ -418,6 +426,10 @@
                                     <td>{{date('d/m/y',strtotime($psacrificio['FEC_SACRIFICIO']))}}</td>
                                     <td>{{$psacrificio['DIR_PSACRIFICIO']}}</td>
                                     <td>{{$psacrificio['ANIMAL']}}</td>
+                                    <td>{{$psacrificio['COL_ANIMAL']}}</td>
+                                    <td><center>
+                                        <img src="{{ asset($psacrificio['IMG_ANIMAL']) }}" alt="Imágen del animal" class="img-fluid" style="max-height: 60px;">
+                                    </center></td> 
                                     
                                     <td>
                                     @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
@@ -440,7 +452,7 @@
                                                 <h5 class="modal-title">Actualizar Datos</h5>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ url('psacrificio/actualizar') }}" method="post" class="row g-3 needs-validation" novalidate>
+                                                <form action="{{ url('psacrificio/actualizar') }}" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
                                                     @csrf
                                                         <input type="hidden" class="form-control" name="COD_PSACRIFICIO" value="{{$psacrificio['COD_PSACRIFICIO']}}">
                                                         
@@ -499,6 +511,15 @@
                                                                     <input type="text" id="COL_ANIMAL-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal" value="{{$psacrificio['COL_ANIMAL']}}" oninput="validarColor('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
                                                                     <!-- <div class="invalid-feedback"></div> -->
                                                                 </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="IMG_ANIMAL">Imágen:</label>
+                                                                    <input type="file" class="form-control" id="IMG_ANIMAL" name="IMG_ANIMAL" accept="image/*">
+                                                                </div>
+                                                                <!-- Campo oculto para almacenar la ruta de la imagen actual -->
+                                                                <input type="hidden" id="IMG_ANIMAL_actual" name="IMG_ANIMAL_actual" value="{{ $psacrificio['IMG_ANIMAL'] }}">
+                                                                <!-- Mostrar imagen actual -->
+                                                                <img src="{{ asset($psacrificio['IMG_ANIMAL']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
                                                             </div>
                                                         </div>
 
