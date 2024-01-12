@@ -127,22 +127,29 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="NOM_PERSONA">Nombre</label>
+                                            <div class="form-group">
+                                                <label for="IMG_ANIMAL">Imágen:</label>
+                                                <input type="file" class="form-control" id="IMG_ANIMAL" name="IMG_ANIMAL" accept="image/*">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="NOM_PERSONA">Nombre Completo</label>
                                             <input type="text" id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" placeholder="Ingresar el nombre completo de la persona" required>
                                             <div class="invalid-feedback"></div>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="DNI_PERSONA">Identidad</label>
-                                            <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="Ingresar el número de identidad" required>
+                                            <input type="text" id="DNI_PERSONA" class="form-control" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" required>
                                             <div class="invalid-feedback"></div>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="TEL_PERSONA">Teléfono</label>
-                                            <input type="text" id="TEL_PERSONA" class="form-control" name="TEL_PERSONA" placeholder="Ingresar el número de teléfono" required>
+                                            <input type="text" id="TEL_PERSONA" class="form-control" name="TEL_PERSONA" placeholder="0000-0000" required>
                                             <div class="invalid-feedback"></div>
                                         </div>
+                                        
                                     </div>
 
                                     <div class="col-md-6">
@@ -151,17 +158,10 @@
                                             <input type="date" id="FEC_SACRIFICIO" class="form-control" name="FEC_SACRIFICIO" placeholder="Inserte la fecha del sacrificio" required>
                                             <div class="invalid-feedback"></div>
                                         </div>
-
-                                        <div class="mb-3">
-                                            <label for="DIR_PSACRIFICIO">Dirección Sacrificio</label>
-                                            <input type="text" id="DIR_PSACRIFICIO" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingresar la dirección del sacrificio" required>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-
                                         <div class="mb-3">
                                             <label for="ANIMALL">Tipo Animal</label>
                                             <select class="form-select custom-select" id="ANIMAL" name="ANIMAL" required>
-                                                <option value="" disabled selected>Seleccione una clase de animal</option>
+                                                <option value="" disabled selected>Seleccione una opción</option>
                                                 <option value="Vaca">Vaca</option>
                                                 <option value="Caballo">Caballo</option>
                                                 <option value="Cerdo">Cerdo</option>
@@ -179,16 +179,16 @@
                                             <input type="text" id="COL_ANIMAL" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal" required>
                                             <div class="invalid-feedback"></div>
                                         </div>
-                                    </div>
-                                    <div class="mb-3">
+                                        <div class="col-sm-13 mb-3">
                                             <div class="form-group">
-                                                <label for="IMG_ANIMAL">Imágen:</label>
-                                                <input type="file" class="form-control" id="IMG_ANIMAL" name="IMG_ANIMAL" accept="image/*">
+                                                <label for="DIR_PSACRIFICIO">Dirección Sacrificio</label>
+                                                <textarea id="DIR_PSACRIFICIO" rows="5" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingrese una dirección" required></textarea>
+                                                <div class="invalid-feedback"></div>
+                                            </div> 
                                         </div>
                                     </div>
+                                    
                                 </div>
-
-
                                     <div class="mb-3">
                                         <button class="btn btn-primary" type="submit">Guardar</button>
                                         <button type="button" id="btnCancelar" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -313,42 +313,39 @@
                                             $(this).siblings('.invalid-feedback').text('');
                                         }
                                     });
-
-
-
                                     $('#COL_ANIMAL').on('input', function() {
-    var input = $(this).val();
-    var errorMessage = '';
-    var maxLength = 20;
+                                        var input = $(this).val();
+                                        var errorMessage = '';
+                                        var maxLength = 20;
 
-    // Validar la longitud mínima y máxima
-    if (input.length < 4) {
-        errorMessage = 'El color debe tener al menos 4 caracteres.';
-    } else if (input.length > maxLength) {
-        errorMessage = 'El color no puede tener más de ' + maxLength + ' caracteres.';
-        $(this).val(input.substring(0, maxLength)); // Limitar a maxLength caracteres
-    }
+                                        // Validar la longitud mínima y máxima
+                                        if (input.length < 4) {
+                                            errorMessage = 'El color debe tener al menos 4 caracteres.';
+                                        } else if (input.length > maxLength) {
+                                            errorMessage = 'El color no puede tener más de ' + maxLength + ' caracteres.';
+                                            $(this).val(input.substring(0, maxLength)); // Limitar a maxLength caracteres
+                                        }
 
-    // Validar que no se ingresen números
-    if (/^\d+$/.test(input)) {
-        errorMessage = 'No se aceptan números.';
-    }
+                                        // Validar que no se ingresen números
+                                        if (/^\d+$/.test(input)) {
+                                            errorMessage = 'No se aceptan números.';
+                                        }
 
-    // Validar que no se ingresen caracteres especiales, excepto espacios
-    var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
-    if (specialChars.test(input) || /\d/.test(input)) {
-        errorMessage = 'No se aceptan caracteres especiales ni números.';
-        $(this).val(input.replace(/[^\s]+/g, '')); // Eliminar caracteres especiales y números
-    }
+                                        // Validar que no se ingresen caracteres especiales, excepto espacios
+                                        var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+                                        if (specialChars.test(input) || /\d/.test(input)) {
+                                            errorMessage = 'No se aceptan caracteres especiales ni números.';
+                                            $(this).val(input.replace(/[^\s]+/g, '')); // Eliminar caracteres especiales y números
+                                        }
 
-    if (errorMessage) {
-        $(this).addClass('is-invalid');
-        $(this).siblings('.invalid-feedback').text(errorMessage);
-    } else {
-        $(this).removeClass('is-invalid');
-        $(this).siblings('.invalid-feedback').text('');
-    }
-});
+                                        if (errorMessage) {
+                                            $(this).addClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text(errorMessage);
+                                        } else {
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('');
+                                        }
+                                    });
 
                                 });
                                 // Deshabilita el botón de enviar inicialmente
@@ -369,19 +366,22 @@
                                 });
                                 //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                                 function limpiarFormulario() {
+                                    document.getElementById("IMG_ANIMAL").value = "";
                                     document.getElementById("NOM_PERSONA").value = "";
                                     document.getElementById("DNI_PERSONA").value = "";
                                     document.getElementById("TEL_PERSONA").value = "";
                                     document.getElementById("FEC_SACRIFICIO").value = "";
-                                    document.getElementById("COD_ANIMAL").value = "";
+                                    document.getElementById("ANIMAL").value = ""; // Agregué el identificador correcto para el campo ANIMAL
+                                    document.getElementById("COL_ANIMAL").value = "";
                                     document.getElementById("DIR_PSACRIFICIO").value = "";
-                                    document.getElementById("COL_PSACRIFICIO").value = "";
 
+                                    // Limpia los mensajes de validación
                                     const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
                                     invalidFeedbackElements.forEach(element => {
                                         element.textContent = "";
                                     });
 
+                                    // Remueve la clase is-invalid de todos los campos
                                     const invalidFields = document.querySelectorAll(".form-control.is-invalid");
                                     invalidFields.forEach(field => {
                                         field.classList.remove("is-invalid");
@@ -389,7 +389,29 @@
                                 }
                                 document.getElementById("btnCancelar").addEventListener("click", function() {
                                     limpiarFormulario();
+                                    // Cierra el modal manualmente
+                                    $('#psacrificio').modal('hide');
+                                    // Redirige a la página principal después de cerrar el modal
+                                    window.location.href = '/psacrificio';
                                 });
+                                  // Agregar una clase de CSS para mostrar la notificación flotante
+                                  function showSuccessMessage() {
+                                    const successMessage = document.createElement('div');
+                                    successMessage.className = 'success-message';
+                                    successMessage.textContent = 'Registro Exitoso';
+
+                                    document.body.appendChild(successMessage);
+
+                                    setTimeout(() => {
+                                        successMessage.remove();
+                                    }, 4000); // La notificación desaparecerá después de 4 segundos (puedes ajustar este valor)
+                                }
+
+                                // Función que se ejecutará después de enviar el formulario
+                                function formSubmitHandler() {
+                                    showSuccessMessage();
+                                }
+                                document.querySelector('.psacrificio-form').addEventListener('submit', formSubmitHandler);     
                             </script>
                         </div>
                     </div>
@@ -458,37 +480,40 @@
                                                         
                                                         <div class="row">
                                                             <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="IMG_ANIMAL">Imágen:</label>
+                                                                    <input type="file" class="form-control" id="IMG_ANIMAL" name="IMG_ANIMAL" accept="image/*">
+                                                                </div>
+                                                                <!-- Campo oculto para almacenar la ruta de la imagen actual -->
+                                                                <input type="hidden" id="IMG_ANIMAL_actual" name="IMG_ANIMAL_actual" value="{{ $psacrificio['IMG_ANIMAL'] }}">
+                                                                <!-- Mostrar imagen actual -->
+                                                                <img src="{{ asset($psacrificio['IMG_ANIMAL']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
+
                                                                 <div class="mb-3 mt-3">
-                                                                    <label for="psacrificio" class="form-label">Nombre</label>
+                                                                    <label for="psacrificio" class="form-label">Nombre Completo</label>
                                                                     <input type="text" id="NOM_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="NOM_PERSONA" placeholder="Ingrese el nombre de la persona" value="{{$psacrificio['NOM_PERSONA']}}" oninput="validarNombre('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
                                                                     <div class="invalid-feedback" id="invalid-feedback2-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
                                                                 </div>
 
                                                                 <div class="mb-3 mt-3">
                                                                     <label for="psacrificio" class="form-label">Identidad</label>
-                                                                    <input type="text" id="DNI_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="DNI_PERSONA" placeholder="Ingrese el número de identidad" value="{{$psacrificio['DNI_PERSONA']}}" oninput="validarDNI('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
+                                                                    <input type="text" id="DNI_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="DNI_PERSONA" placeholder="xxxx-xxxx-xxxxx" value="{{$psacrificio['DNI_PERSONA']}}" oninput="validarDNI('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
                                                                     <div class="invalid-feedback" id="invalid-feedback-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
                                                                 </div>
 
                                                                 <div class="mb-3">
                                                                     <label for="psacrificio">Teléfono</label>
-                                                                    <input type="text" id="TEL_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="TEL_PERSONA" placeholder="Ingrese el número de teléfono" value="{{$psacrificio['TEL_PERSONA']}}" oninput="validarTelefono('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
+                                                                    <input type="text" id="TEL_PERSONA-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="TEL_PERSONA" placeholder="0000-0000" value="{{$psacrificio['TEL_PERSONA']}}" oninput="validarTelefono('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
                                                                     <div class="invalid-feedback" id="invalid-feedback10-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-6">
-                                                                <div class="mb-3">
-                                                                    <label for="psacrificio" class="form-laabel">Fecha Sacrificio</label>
+                                                                <div class="mb-3 mt-3">
+                                                                    <label for="psacrificio" class="form-label">Fecha Sacrificio</label>
                                                                     <!-- Codigo para que me muestre la fecha ya registrada al momento de actualizar --->
                                                                     <?php $fecha_formateada = date('Y-m-d', strtotime($psacrificio['FEC_SACRIFICIO'])); ?>
-                                                                    <input type="date" class="form-control" id="FEC_SACRIFICIO" name="FEC_SACRIFICIO" placeholder="Ingrese la fecha del sacrificio" value="{{$fecha_formateada}}">
-                                                                </div>
-
-                                                                <div class="mb-3">
-                                                                    <label for="psacrificio">Dirección Sacrificio</label>
-                                                                    <input type="text" id="DIR_PSACRIFICIO-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingrese la dirección del sacrificio" value="{{$psacrificio['DIR_PSACRIFICIO']}}" oninput="validarDireccion('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
-                                                                    <div class="invalid-feedback" id="invalid-feedback5-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
+                                                                    <input type="date" class="form-control" id="FEC_SACRIFICIO" name="FEC_SACRIFICIO" placeholder="Ingrese la fecha del sacrificio" value="{{$fecha_formateada}}" min="{{ date('Y-m-d', time()) }}" required>
                                                                 </div>
 
                                                                 <div class="mb-3">
@@ -509,17 +534,15 @@
                                                                 <div class="mb-3">
                                                                     <label for="COL_ANIMALL">Color Animal</label>
                                                                     <input type="text" id="COL_ANIMAL-{{$psacrificio['COD_PSACRIFICIO']}}" class="form-control" name="COL_ANIMAL" placeholder="Ingrese color del animal" value="{{$psacrificio['COL_ANIMAL']}}" oninput="validarColor('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">
-                                                                    <!-- <div class="invalid-feedback"></div> -->
+                                                                    <div class="invalid-feedback" id="invalid-feedback4-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
                                                                 </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="IMG_ANIMAL">Imágen:</label>
-                                                                    <input type="file" class="form-control" id="IMG_ANIMAL" name="IMG_ANIMAL" accept="image/*">
+                                                                <div class="col-sm-13 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="psacrificio">Dirección Sacrificio</label>
+                                                                        <textarea id="DIR_PSACRIFICIO-{{$psacrificio['COD_PSACRIFICIO']}}" rows="6" class="form-control" name="DIR_PSACRIFICIO" placeholder="Ingrese la dirección del sacrificio" value="{{$psacrificio['DIR_PSACRIFICIO']}}" oninput="validarDireccion('{{$psacrificio['COD_PSACRIFICIO']}}', this.value)">{{$psacrificio['DIR_PSACRIFICIO']}}</textarea>
+                                                                        <div class="invalid-feedback" id="invalid-feedback5-{{$psacrificio['COD_PSACRIFICIO']}}"></div>
+                                                                    </div>
                                                                 </div>
-                                                                <!-- Campo oculto para almacenar la ruta de la imagen actual -->
-                                                                <input type="hidden" id="IMG_ANIMAL_actual" name="IMG_ANIMAL_actual" value="{{ $psacrificio['IMG_ANIMAL'] }}">
-                                                                <!-- Mostrar imagen actual -->
-                                                                <img src="{{ asset($psacrificio['IMG_ANIMAL']) }}" alt="Imagen actual" class="img-fluid" style="max-height: 100px;">
                                                             </div>
                                                         </div>
 
@@ -599,37 +622,23 @@
                                                             btnGuardar.disabled = false;
                                                         }
                                                     }
-
                                                     //validaciones color
-                                                    function validarColor(id, input) {
+                                                    function validarColor(id, color) {
                                                         var btnGuardar = document.getElementById("submitButton-" + id);
                                                         var inputElement = document.getElementById("COL_ANIMAL-" + id);
                                                         var invalidFeedback = document.getElementById("invalid-feedback4-" + id);
-                                                        // Validar caracteres especiales
-                                                        var specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 
-                                                        if (!isNaN(input)) {
-                                                            event.preventDefault();
+                                                        if (color.length < 4 || color.length > 45 || !/^[a-zA-Z\s]+$/.test(color)) {
                                                             inputElement.classList.add("is-invalid");
-                                                            invalidFeedback.textContent = 'No se aceptan números.';
-                                                            btnGuardar.disabled = true;
-                                                        } else if (specialChars.test(input)) {
-                                                            event.preventDefault();
-                                                            inputElement.classList.add("is-invalid");
-                                                            invalidFeedback.textContent= 'No se aceptan caracteres especiales.';
-                                                            btnGuardar.disabled = true;
-                                                        } else if (input.length < 4 || input.length > 25) {
-                                                            event.preventDefault();
-                                                            inputElement.classList.add("is-invalid");
-                                                            invalidFeedback.textContent= 'El color debe contener más de 4 caracteres y menos de 25.';
+                                                            invalidFeedback.textContent = "El color debe tener al menos 4 carácteres y no más de 45, sin números";
                                                             btnGuardar.disabled = true;
                                                         } else {
-                                                            // Si no hay números ni caracteres especiales, quitar la clase 'is-invalid'
                                                             inputElement.classList.remove("is-invalid");
                                                             invalidFeedback.textContent = "";
                                                             btnGuardar.disabled = false;
                                                         }
-                                                    }
+                                                    } 
+                                                    
 
                                                     function mostrarVistaPrevia(idsacrificio) {
                                                         // URL de la acción del controlador que genera el PDF
