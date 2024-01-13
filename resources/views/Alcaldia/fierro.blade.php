@@ -397,7 +397,18 @@
             </div>
 
             <div class="card">
-                <div class="card-body">
+            <div class="d-flex align-items-center">
+                    <div class="me-2">
+                        <label for="fechaInicio" class="me-2">Dia Inicial:</label>
+                        <input type="date" id="fechaInicio" class="form-control form-control-sm">
+                    </div>
+                    <div class="me-2">
+                        <label for="fechaFin" class="me-2">Dia Final:</label>
+                        <input type="date" id="fechaFin" class="form-control form-control-sm">
+                    </div>
+                    <button onclick="filtrarPorFecha()" class="btn btn-sm btn-primary">Buscar</button>
+                </div>
+                    <div class="card-body">
                     <!-- Inicio de la tabla -->
                     <table  width="100%" cellspacing="8 " cellpadding="8" class="table table-hover table-bordered mt-1" id="Rfierro">
                         <thead>
@@ -702,6 +713,47 @@
         }
     </style>
 @endsection
+function filtrarPorFecha() {
+    console.log("Botón de filtrar fecha ha sido clickeado.");
+
+    var fechaInicio = document.getElementById("fechaInicio").value;
+    var fechaFin = document.getElementById("fechaFin").value;
+
+    console.log("Fecha de inicio:", fechaInicio);
+    console.log("Fecha de fin:", fechaFin);
+
+    // Filtrar y actualizar la tabla por rango de fechas
+    $('#Rfierro tbody tr').each(function () {
+        var fechaRegistro = $(this).find('td:eq(3)').text(); // Columna de Fecha Registro
+
+        if (fechaRegistro) {
+            var fechaRegistroObj = new Date(fechaRegistro);
+            var fechaInicioObj = fechaInicio !== "" ? new Date(fechaInicio) : null;
+            var fechaFinObj = fechaFin !== "" ? new Date(fechaFin) : null;
+
+            var mostrarFila = (!fechaInicioObj || fechaRegistroObj >= fechaInicioObj) &&
+                              (!fechaFinObj || fechaRegistroObj <= fechaFinObj);
+
+            console.log("Fecha de registro:", fechaRegistro, "Mostrar fila:", mostrarFila);
+
+            $(this).toggle(mostrarFila); // Alternativa a show() y hide()
+        }
+    });
+
+    // Actualizar DataTables
+    $('#Rfierro').DataTable().draw();
+}
+
+
+function formatoFecha(fecha) {
+    if (fecha) {
+        // Convertir la fecha a formato "YYYY-MM-DD"
+        var partes = fecha.split("-");
+        return partes[2] + "-" + partes[1] + "-" + partes[0];
+    }
+    return "";
+}
+
         $(document).ready(function() {
             $('#Rfierro').DataTable({
                 responsive: true,
