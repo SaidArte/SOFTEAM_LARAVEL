@@ -96,6 +96,12 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->prefix('backuprestore')
                 ->group(base_path('routes/backuprestore.php'));
+
+            Route::middleware('web')
+                ->prefix('carta')
+                ->group(base_path('routes/carta.php')); 
+
+
                             
         });
     }

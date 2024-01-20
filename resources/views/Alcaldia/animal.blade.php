@@ -512,7 +512,7 @@
                                             -->
                                             <div class="row">  
                                             
-                                            <div class="col-md-6">
+                                                <div class="col-md-6">
                                                     <label for="Animal">Clase Animal</label>
                                                     <input type="text" class="form-control" id="CLAS_ANIMAL-{{$Animal['COD_ANIMAL']}}" name="CLAS_ANIMAL" placeholder=" Ingrese La clase Del Animal  " value="{{$Animal['CLAS_ANIMAL']}}" oninput=" validarClase('{{$Animal['COD_ANIMAL']}}', this.value)" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="30"required>
                                                     <div class="invalid-feedback" id="invalid-feedback6-{{$Animal['COD_ANIMAL']}}">Solo Se Permirte Ingresar letras</div>

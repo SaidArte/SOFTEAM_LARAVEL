@@ -435,7 +435,15 @@ return [
                     //'icon_color' => 'indigo',
                     'url' => 'Cventa',
                     'icon_color' => 'green',
-                ]
+                ],
+                [
+                    'icon' => 'fa fa-folder-open',
+                    //'icon' => 'fa fa-briefcase',
+                    'text' => 'Carta ',
+                    //'icon_color' => 'indigo',
+                    'url' => 'carta',
+                    'icon_color' => 'green',
+                ] 
              
               
             ]
