@@ -269,18 +269,19 @@
                     <thead>
                             <tr>
                                 <th>Nº</th>
-                                <th><center>Nombre V</center></th>
-                                <th><center>Nombre c</center></th>
-                                <th><center>Identidad</center></th>
+                                <th><center>Fecha</center></th>
+                                <th><center>Vendedor</center></th>
+                                <th><center>Comprador</center></th>
+                                <th><center>DNI Comprador</center></th>
                                 <th><center>Clase </center></th>
                                 <th><center>Color</center></th>
+                                <th><center>Fierro</center></th>
                                 <th><center>Venteado</center></th>
                                 <th><center>Herrado</center></th>
-                                <th><center>Cant</center></th>
-
-                                <th><center>folio</center></th>
-                                <th><center>ant</center></th>
-                                <th><center>estado</center></th>
+                                <th><center>Monto</center></th>
+                                <th><center>Folio</center></th>
+                                <th><center>Antecedentes</center></th>
+                                <th><center>Estado</center></th>
                                 <th><center>Opción</center></th>
                             </tr>
                         </thead>
@@ -292,18 +293,20 @@
                                     <td>{{$carta['COD_CVENTA']}}</td>
                                     <td>{{date('d-m-y', strtotime($carta['FEC_CVENTA']))}}</td>
                             
-                                    
+                                    <td>{{$carta['NOMBRE_VENDEDOR']}}</td>
                                     <td>{{$carta['NOM_COMPRADOR']}}</td> 
-                                    <td>{{$Cventa['DNI_COMPRADOR']}}</td> 
+                                    <td>{{$carta['DNI_COMPRADOR']}}</td> 
                                     
                                     <td>{{$carta['CLAS_ANIMAL']}}</td>   
                                     <td>{{$carta['COL_ANIMAL']}}</td>
-                                    <td>{{$carta['COD_FIERRO']}}</td>
+                                    <td><center>
+                                        <img src="{{ asset($carta['IMG_FIERRO']) }}" alt="Imágen del fierro" class="img-fluid" style="max-height: 60px;">
+                                    </center></td>
                                     <td>{{ $carta['VEN_ANIMAL']}}</td>
                                     <td>{{ $carta['HER_ANIMAL']}}</td>
-                                     <td>{{ $carta['CANT_ANIMAL']}}</td>
+                                     <td>{{$carta['CANT_CVENTA']}}</td>
                                     <td>{{$carta['FOL_CVENTA']}}</td> 
-                                    <td>{{$cartaa['ANT_CVENTA']}}</td> 
+                                    <td>{{$carta['ANT_CVENTA']}}</td> 
 
                                       <td>{{ $carta['IND_CVENTA']}}</td>
                                     <td>
@@ -319,243 +322,6 @@
                                         </button>
                                     </td>
                                 </tr>
-                                <!-- Modal for editing goes here -->
-                                <div class="modal fade bd-example-modal-sm" id="carta-edit-{{$carta['COD_CVENTA']}}" tabindex="-1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Actualizar Datos</h5>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{{ url('carta/actualizar') }}" method="post" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
-                                                    @csrf
-                                                        <input type="hidden" class="form-control" name="COD_CVENTA" value="{{$carta['COD_CVENTA']}}">
-                                                        
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <label for="FEC_CVENTA">Fecha Registro Venta</label>
-                                                                <?php
-                                                                $fecha_formateada = date('Y-m-d', strtotime($Cventa['FEC_CVENTA']));
-                                                                ?>
-                                                               <input type="date" class="form-control" id="FEC_CVENTA" name="FEC_CVENTA" value="{{ $fecha_formateada }}">
-                                                            </div>
-
-                                                            <!-- modificar-->
-
-                                                            <div class="col-md-6">
-                                                                <label for="carta">N° p</label>
-                                                                <input type="text" class="form-control" readonly id="COD_PERSONA-{{$carta['COD_CVENTA']}}" name="COD_PERSONA" placeholder=" Ingrese el codigo del vendedor  " value="{{$carta['COD_PERSONA']}}   ">
-                                                                <div class="invalid-feedback" id="invalid-feedback6-{{$Cventa['COD_CVENTA']}}"></div>
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <label for="carta">Nombre Comprador</label>
-                                                                <input type="text" class="form-control" id="NOM_COMPRADOR-{{$carta['COD_CVENTA']}}" name="NOM_COMPRADOR" placeholder="Ingrese el nombre del comprador" value="{{$carta['NOM_COMPRADOR']}}" oninput=" validarNombre('{{$carta['COD_CVENTA']}}', this.value)" required>
-                                                                 <div class="invalid-feedback" id="invalid-feedback6-{{$carta['COD_CVENTA']}}">Solo Se Permirte Ingresar letras</div>
-                                                            </div>
-            
-                                                           <div class="col-md-6">
-                                                                <label for="carta">DNI Comprador</label>
-                                                                <input type="text" class="form-control" id="DNI_COMPRADOR-{{$Carta['COD_CVENTA']}}" name="DNI_COMPRADOR" placeholder=" Ingrese el codigo del comprador  " value="{{$carta['DNI_COMPRADOR']}}"oninput=" validarDNI('{{$carta['COD_CVENTA']}}', this.value)" required>
-                                                                <div class="invalid-feedback" id="invalid-feedback6-{{$carta['COD_CVENTA']}}">Solo Se Permirte Ingresar Numeros</div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label for="carta">Clase Animal</label>
-                                                                <input type="text" class="form-control" id="CLAS_ANIMAL-{{$carta['COD_CVENTA']}}" name="CLAS_ANIMAL" placeholder=" Ingrese La clase Del Animal  " value="{{$carta['CLAS_ANIMAL']}}" oninput=" validarClase('{{$carta['COD_CVENTA']}}', this.value)" pattern="^[A-Za-z\s]+$" title="Ingrese solo letras" maxlength="30"required>
-                                                                <div class="invalid-feedback" id="invalid-feedback6-{{$carta['COD_CVENTA']}}">Solo Se Permirte Ingresar letras</div>
-                                                        
-                                                            </div>
-                                                            
-                                                            <div class="col-md-6">
-                                                                <label for="carta">Color  Animal</label>
-                                                                <input type="text" class="form-control" id="COL_ANIMAL-{{$carta['COD_CVENTA']}}" name="COL_ANIMAL" placeholder=" Ingrese El Color Del animal  " value="{{$carta['COL_ANIMAL']}}"oninput=" validarColor('{{$carta['COD_CVENTA']}}', this.value)" required>
-                                                                <div class="invalid-feedback" id="invalid-feedback6-{{$carta['COD_CVENTA']}}">Solo Se Permirte Ingresar letras</div>
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <label for="carta">N° fierro</label>
-                                                                <input type="text" class="form-control" readonly  id="COD_FIERRO" name="COD_FIERRO" placeholder=" Ingrese El Codigo Del Fierro  " value="{{$carta['COD_FIERRO']}}">
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <label for="carta" class="form-label"> Venteado  Animal</label>
-                                                            
-                                                                <select class="form-select  custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL" value="{{$carta['VEN_ANIMAL']}}"required >
-                                                                    <option value="SI" >SI</option>
-                                                                    <option value="NO" >NO</option>                                                      
-                                                                </select>
-                                                                <div class="invalid-feedback"></div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label for="carta" class="form-label">Herrado Animal</label>
-                                                                <select class="form-select custom-select"  id="HER_ANIMAL" name="HER_ANIMAL" value="{{$carta['HER_ANIMAL']}}" required>
-                                                                    <option value="SI" >SI</option>
-                                                                    <option value="NO">NO</option>
-                                                                </select>
-                                                                <div class="invalid-feedback"></div>
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <label for="carta">Monto</label>
-                                                                <input type="text" class="form-control" id="CANT_CVENTA-{{$carta['COD_CVENTA']}}" name="CANT_CVENTA" placeholder=" Ingrese el numero de folio  " value="{{$carta['CANT_CVENTA']}}"oninput=" validarFolio('{{$carta['COD_CVENTA']}}', this.value)" required>
-                                                                <div class="invalid-feedback" id="invalid-feedback6-{{$carta['COD_CVENTA']}}">Solo Se Permir Ingrese Numeros</div>
-                                                             
-                                                            </div>
-
-                                                            <div class="col-md-6">
-                                                                <label for="carta">Folio Carta Venta</label>
-                                                                <input type="text" class="form-control" id="FOL_CVENTA-{{$carta['COD_CVENTA']}}" name="FOL_CVENTA" placeholder=" Ingrese el numero de folio  " value="{{$carta['FOL_CVENTA']}}"oninput=" validarFolio('{{$carta['COD_CVENTA']}}', this.value)" required>
-                                                                <div class="invalid-feedback" id="invalid-feedback6-{{$carta['COD_CVENTA']}}">Solo Se Permir Ingrese Numeros</div>
-                                                             
-                                                            </div>
-            
-                                                          
-                                                            <div class="col-md-6">
-                                                                <label for="carta">Antecedentes Carta Venta</label>
-                                                                <input type="text" class="form-control" id="ANT_CVENTA-{{$carta['ANT_CVENTA']}}" name="ANT_CVENTA" placeholder="Ingrese Antecedente" value="{{$carta['ANT_CVENTA']}}" oninput="validarAntecedente('{{$carta['ANT_CVENTA']}}', this.value)" required>
-                                                                <div class="invalid-feedback" id="invalid-feedback6-{{$carta['COD_CVENTA']}}">Solo Se Permite Ingresar letras</div>
-                                                            </div>
-
-                                                            <div class="mb-3 mt-3">
-                                                                <label for="carta">Estado</label>
-                                                                <select class="form-select custom-select" id="IND_CVENTA" name="IND_CVENTA" required>
-                                                                    <option value="X" selected disabled>- Elija un estado -</option>
-                                                                    <option value="A" @if($carta['IND_CVENTA'] === 'A') selected @endif>ACTIVO</option>
-                                                                    <option value="I" @if($carta['IND_CVENTA'] === 'I') selected @endif>INACTIVO</option>
-                                                                </select>
-                                                            </div>
-            
-                                                            
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <!-- Boton de confirmar al editar -->
-                                                            <button type="submit" class="btn btn-primary" id="submitButton-{{$carta['COD_CVENTA']}}">Editar</button>
-                                                            <!-- Boton de cancelar -->
-                                                            <a href="{{ url('carta') }}" class="btn btn-danger">Cancelar</a>
-                                                    </div>
-                                                </form>
-                                                <script>
-
-function validarNombre(id, nombre) {
-                                                var btnGuardar = document.getElementById("submitButton-" + id);
-                                                var inputElement = document.getElementById("NOM_COMPRADOR-" + id);
-                                                var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
-
-                                               if (nombre.length < 5 || nombre.length > 100 || !/^[a-zA-Z\s]+$/.test(nombre)) {
-                                                    inputElement.classList.add("is-invalid");
-                                                    invalidFeedback.textContent = "El nombre debe tener al menos 5 caracteres y no más de 100, sin números";
-                                                    btnGuardar.disabled = true;
-                                               } else {
-                                                   inputElement.classList.remove("is-invalid");
-                                                    invalidFeedback.textContent = "";
-                                                 btnGuardar.disabled = false;
-                                                }
-                                            }
-       
-
-   
-                                                    function validarDNI(id, dni) {
-                                                        var btnGuardar = document.getElementById("submitButton-" + id);
-                                                        var inputElement = document.getElementById("DNI_COMPRADOR-" + id);
-                                                        var invalidFeedback = document.getElementById("invalid-feedback-" + id);
-              
-                                                        if (!/^\d{13}$/.test(dni)) {
-                                                            inputElement.classList.add("is-invalid");
-                                                            invalidFeedback.textContent = "El DNI debe tener exactamente 13 dígitos numéricos";
-                                                            btnGuardar.disabled = true;
-                                                        } else {
-                                                            inputElement.classList.remove("is-invalid");
-                                                            invalidFeedback.textContent = "";
-                                                            btnGuardar.disabled = false;
-                                                        }
-                                                    }
-
-                                                    function validarClase(id, clase) {
-                                                var btnGuardar = document.getElementById("submitButton-" + id);
-                                                var inputElement = document.getElementById("CLAS_ANIMAL-" + id);
-                                                var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
-
-                                                if (clase.length < 5 || clase.length > 10 || !/^[a-zA-Z\s]+$/.test(clase)) {
-                                                    inputElement.classList.add("is-invalid");
-                                                    invalidFeedback.textContent = "La clase debe tener al menos 5 caracteres y no más de 10, sin números";
-                                                    btnGuardar.disabled = true;
-                                                } else {
-                                                    inputElement.classList.remove("is-invalid");
-                                                    invalidFeedback.textContent = "";
-                                                    btnGuardar.disabled = false;
-                                                }
-                                            }
-
-                                           
-
-                                            function validarColor(id, color) {
-                                            var btnGuardar = document.getElementById("submitButton-" + id);
-                                            var inputElement = document.getElementById("COL_ANIMAL-" + id);
-                                            var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
-
-                                            if (color.length < 4 || color.length > 15 || !/^[a-zA-Z\s]+$/.test(color)) {
-                                            inputElement.classList.add("is-invalid");
-                                            invalidFeedback.textContent = "El color debe tener al menos 4 caracteres y no más de 15, sin números";
-                                            btnGuardar.disabled = true;
-                                            } else {
-                                            inputElement.classList.remove("is-invalid");
-                                            invalidFeedback.textContent = "";
-                                            btnGuardar.disabled = false;
-                                            }
-                                            }
-                                            
-                                                    function validarFolio(id, folio) {
-                                                        var btnGuardar = document.getElementById("submitButton-" + id);
-                                                        var inputElement = document.getElementById("FOL_CVENTA-" + id);
-                                                        var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
-
-                                                        
-                                                        if (!/^\d{5}$/.test(folio)) {
-                                                            inputElement.classList.add("is-invalid");
-                                                            invalidFeedback.textContent = " debe tener exactamente 5 dígitos";
-                                                            btnGuardar.disabled = true;
-                                                        } else {
-                                                            inputElement.classList.remove("is-invalid");
-                                                            invalidFeedback.textContent = "";
-                                                            btnGuardar.disabled = false;
-                                                        }
-                                                    }
-
-
-                                                    function validarAntecedente(id, antecedente) {
-                                                       var btnGuardar = document.getElementById("submitButton-" + id);
-                                                       var inputElement = document.getElementById("ANT_CVENTA-" + id);
-                                                      var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
-
-                                                      if (antecedente.length < 5 || antecedente.length > 100 || !/^[A-Za-zÁÉÍÓÚÜáéíóúüÑñ0-9\s]+$/.test(antecedente)) {
-                                                          inputElement.classList.add("is-invalid");
-                                                          invalidFeedback.textContent = "El antecedente debe tener al menos 5 caracteres y no más de 100, sin números";
-                                                          btnGuardar.disabled = true;
-                                                       } else {
-                                                          inputElement.classList.remove("is-invalid");
-                                                          invalidFeedback.textContent = "";
-                                                          btnGuardar.disabled = false;
-                                                        }
-                                                    }
-                                                  
-                                                    
-
-                                                    function mostrarVistaPrevia(idcarta) {
-                                                        // URL de la acción del controlador que genera el PDF
-                                                        var nuevaVentana = window.open("{{ url('carta/generar-pdf') }}/" + idsacrificio, '_blank');
-
-                                                        // Esperar a que la nueva ventana esté completamente cargada
-                                                        nuevaVentana.onload = function () {
-                                                            // Mostrar el diálogo de impresión
-                                                            nuevaVentana.print();
-                                                        };
-                                                    }  
-                                                </script>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             @endforeach
                         </tbody>
                     </table>
