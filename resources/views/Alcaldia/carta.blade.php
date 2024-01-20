@@ -322,6 +322,7 @@
                                         </button>
                                     </td>
                                 </tr>
+                               <!-- Aqui va editar -->
                             @endforeach
                         </tbody>
                     </table>
