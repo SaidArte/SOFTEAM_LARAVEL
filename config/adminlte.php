@@ -422,7 +422,7 @@ return [
             //'label_color' => 'success',
             //'icon_color' => 'info',
             'submenu' => [
-                [
+              /*  [
                     'icon' => 'fa fa-paw',
                     'text' => 'Animales',
                      'url' => 'Animal',
@@ -435,11 +435,11 @@ return [
                     //'icon_color' => 'indigo',
                     'url' => 'Cventa',
                     'icon_color' => 'green',
-                ],
+                ],*/
                 [
                     'icon' => 'fa fa-folder-open',
                     //'icon' => 'fa fa-briefcase',
-                    'text' => 'Carta ',
+                    'text' => 'Carta de Venta ',
                     //'icon_color' => 'indigo',
                     'url' => 'carta',
                     'icon_color' => 'green',

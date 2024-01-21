@@ -263,11 +263,22 @@
             </div>
 
             <div class="card">
-                <div class="card-body">
+            <div class="d-flex align-items-center">
+                    <div class="me-2">
+                        <label for="fechaInicio" class="me-2">Dia Inicial:</label>
+                        <input type="date" id="fechaInicio" class="form-control form-control-sm">
+                    </div>
+                    <div class="me-2">
+                        <label for="fechaFin" class="me-2">Dia Final:</label>
+                        <input type="date" id="fechaFin" class="form-control form-control-sm">
+                    </div>
+                    <button onclick="filtrarPorFecha()" class="btn btn-sm btn-primary">Buscar</button>
+                </div>
+                    <div class="card-body">
                     <!-- Inicio de la tabla -->
                     <table  width="100%" cellspacing="14 " cellpadding="14" class="table table-hover table-bordered mt-1" id="carta">
-                    <thead>
-                            <tr>
+                        <thead>
+            <tr>
                                 <th>Nº</th>
                                 <th><center>Fecha</center></th>
                                 <th><center>Vendedor</center></th>
@@ -283,46 +294,62 @@
                                 <th><center>Antecedentes</center></th>
                                 <th><center>Estado</center></th>
                                 <th><center>Opción</center></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Loop through $citaArreglo and show data -->
-                            @foreach($cartaArreglo as $carta)
-                                <tr>
-                                    
-                                    <td>{{$carta['COD_CVENTA']}}</td>
+            </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through $citaArreglo and show data -->
+                @foreach($cartaArreglo as $carta)
+                    <tr>
+                        <td>{{$carta['COD_CVENTA']}}</td>
                                     <td>{{date('d-m-y', strtotime($carta['FEC_CVENTA']))}}</td>
-                            
                                     <td>{{$carta['NOMBRE_VENDEDOR']}}</td>
                                     <td>{{$carta['NOM_COMPRADOR']}}</td> 
                                     <td>{{$carta['DNI_COMPRADOR']}}</td> 
-                                    
                                     <td>{{$carta['CLAS_ANIMAL']}}</td>   
                                     <td>{{$carta['COL_ANIMAL']}}</td>
                                     <td><center>
-                                        <img src="{{ asset($carta['IMG_FIERRO']) }}" alt="Imágen del fierro" class="img-fluid" style="max-height: 60px;">
+                                    <img src="{{ asset($carta['IMG_FIERRO']) }}" alt="Imágen del fierro" class="img-fluid" style="max-height: 60px;">
                                     </center></td>
                                     <td>{{ $carta['VEN_ANIMAL']}}</td>
                                     <td>{{ $carta['HER_ANIMAL']}}</td>
                                      <td>{{$carta['CANT_CVENTA']}}</td>
                                     <td>{{$carta['FOL_CVENTA']}}</td> 
                                     <td>{{$carta['ANT_CVENTA']}}</td> 
-
-                                      <td>{{ $carta['IND_CVENTA']}}</td>
-                                    <td>
-                                    @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
-                                        <!-- Boton de Editar -->
-                                        <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#carta-edit-{{$carta['COD_CVENTA']}}">
-                                        <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
-                                        </button>
-                                    @endif
-                                        <!-- Boton de PDF -->
-                                        <button onclick="mostrarVistaPrevia({{$carta['COD_CVENTA']}})" class="btn btn-sm btn-danger">
-                                            <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                               <!-- Aqui va editar -->
+                                     <td>{{ $carta['IND_CVENTA']}}</td>
+                        <td>
+                            @if(session()->has('PRM_ACTUALIZAR') && session('PRM_ACTUALIZAR') == "S")
+                                <!-- Boton de Editar -->
+                                <button value="Editar" title="Editar" class="btn btn-sm btn-warning" type="button" data-toggle="modal" data-target="#carta-edit-{{$carta['COD_CVENTA']}}">
+                                    <i class="fa-solid fa-pen-to-square" style='font-size:15px'></i>
+                                </button>
+                            @endif
+                            <!-- Boton de PDF -->
+                            <button onclick="mostrarVistaPrevia({{$carta['COD_CVENTA']}})" class="btn btn-sm btn-danger">
+                                <i class="fa-solid fa-file-pdf" style="font-size: 15px"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- Modal para editar -->
+                    <div class="modal fade" id="carta-edit-{{$carta['COD_CVENTA']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Registro</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Contenido del formulario de edición -->
+                                    <form>
+                                        
+                                        <!-- ... (otros campos) ... -->
+                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                    </form>
+                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </tbody>
                     </table>
@@ -333,7 +360,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            2023 &copy; UNAH 
+                            2023 &copy; UNAH  
                         </div>
                         <div class="col-md-6">
                             <div class="text-md-right footer-links d-none d-sm-block">
@@ -343,16 +370,15 @@
                     </div>
                 </div>
             </footer>
-            <!-- FIN MENSAJE -->
-
         @stop
 
         @section('js')                    
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script> console.log('Hi!'); </script>
             <script>
             <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+           <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
             <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
             <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
@@ -362,7 +388,6 @@
             <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
             <script src="sweetalert2.all.min.js"></script>
-
 <script>
         @if(session('update_success'))
             Swal.fire('¡Éxito!', '{{ session('update_success') }}', 'success');
