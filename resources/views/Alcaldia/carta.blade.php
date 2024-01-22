@@ -637,8 +637,8 @@
 
                                         <div class="col-md-4">
                                             <label for="carta">Monto </label>
-                                            <input type="text" class="form-control" id="CANT_CVENTA-{{$carta['CANT_CVENTA']}}" name="CANT_CVENTA" placeholder="Ingrese Antecedente" value="{{$carta['CANT_CVENTA']}}" oninput="validarAntecedente('{{$carta['CANT_CVENTA']}}', this.value)" required>
-                                            <div class="invalid-feedback" id="invalid-feedback6-{{$carta['CANT_CVENTA']}}">Solo Se Permite Ingresar letras</div>
+                                            <input type="text" class="form-control" id="CANT_CVENTA-{{$carta['CANT_CVENTA']}}" name="CANT_CVENTA" placeholder="Ingrese Antecedente" value="{{$carta['CANT_CVENTA']}}" oninput="validarMonto('{{$carta['CANT_CVENTA']}}', this.value)" required>
+                                            <div class="invalid-feedback" id="invalid-feedback6-{{$carta['CANT_CVENTA']}}">Debe tener entre 1 y 5 dígitos numéricos</div>
                                         </div>
 
         
@@ -660,7 +660,7 @@
 
                                         <div class="col-md-4">
                                             <label for="carta">Estado</label>
-                                            <input type="text" class="form-control" id="IND_CVENTA-{{$carta['IND_CVENTA']}}" name="IND_CVENTA" placeholder="Ingrese Antecedente" value="{{$carta['IND_CVENTA']}}" oninput="validarMonto('{{$carta['IND_CVENTA']}}', this.value)" required>
+                                            <input type="text" class="form-control" id="IND_CVENTA-{{$carta['IND_CVENTA']}}" name="IND_CVENTA" placeholder="Ingrese Antecedente" value="{{$carta['IND_CVENTA']}}" required>
                                             <div class="invalid-feedback" id="invalid-feedback6-{{$carta['IND_CVENTA']}}">Solo Se Permite Ingresar letras</div>
                                         </div>
 
@@ -703,6 +703,57 @@
                                                     if (!/^\d{13}$/.test(dni)) {
                                                         inputElement.classList.add("is-invalid");
                                                         invalidFeedback.textContent = "El DNI debe tener exactamente 13 dígitos numéricos";
+                                                        btnGuardar.disabled = true;
+                                                    } else {
+                                                        inputElement.classList.remove("is-invalid");
+                                                        invalidFeedback.textContent = "";
+                                                        btnGuardar.disabled = false;
+                                                    }
+                                                }
+
+                                                function validarClase(id, clase) {
+                                                var btnGuardar = document.getElementById("submitButton-" + id);
+                                                var inputElement = document.getElementById("CLAS_ANIMAL-" + id);
+                                                var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+                                                if (clase.length < 5 || clase.length > 10 || !/^[a-zA-Z\s]+$/.test(clase)) {
+                                                    inputElement.classList.add("is-invalid");
+                                                    invalidFeedback.textContent = "La clase debe tener al menos 5 caracteres y no más de 10, sin números";
+                                                    btnGuardar.disabled = true;
+                                                } else {
+                                                    inputElement.classList.remove("is-invalid");
+                                                    invalidFeedback.textContent = "";
+                                                    btnGuardar.disabled = false;
+                                                }
+                                            }
+                                          
+
+                                            function validarColor(id, color) {
+                                            var btnGuardar = document.getElementById("submitButton-" + id);
+                                            var inputElement = document.getElementById("COL_ANIMAL-" + id);
+                                            var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+                                            if (color.length < 4 || color.length > 15 || !/^[a-zA-Z\s]+$/.test(color)) {
+                                            inputElement.classList.add("is-invalid");
+                                            invalidFeedback.textContent = "El color debe tener al menos 4 caracteres y no más de 15, sin números";
+                                            btnGuardar.disabled = true;
+                                            } else {
+                                            inputElement.classList.remove("is-invalid");
+                                            invalidFeedback.textContent = "";
+                                            btnGuardar.disabled = false;
+                                            }
+                                            }
+
+                                            function validarMonto
+                                            (id, monto) {
+                                                    var btnGuardar = document.getElementById("submitButton-" + id);
+                                                    var inputElement = document.getElementById("CANT_CVENTA-" + id);
+                                                    var invalidFeedback = document.getElementById("invalid-feedback6-" + id);
+
+                                                    
+                                                    if (!/^\d{5}$/.test(monto)) {
+                                                        inputElement.classList.add("is-invalid");
+                                                        invalidFeedback.textContent = " debe tener exactamente 5 dígitos";
                                                         btnGuardar.disabled = true;
                                                     } else {
                                                         inputElement.classList.remove("is-invalid");
@@ -818,6 +869,8 @@
 @if(session('error'))
     Swal.fire('¡Error!', '{{ session('error') }}', 'error');
 @endif
+
+
 
          $(document).ready(function() {
              $('#modCventa').DataTable({
