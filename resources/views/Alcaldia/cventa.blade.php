@@ -280,30 +280,6 @@
                                 });
 
 
-
-
-
-
-                    /*
-                                $('#ANT_CVENTA').on('change', function() {
-                                    var antCventa = $(this).val();
-                                    if (antCventa === "") {
-                                        $(this).addClass('is-invalid');
-                                        $('#antCventaError').text('Seleccione una opción.');
-                                    } else {
-                                        $(this).removeClass('is-invalid');
-                                        $('#antCventaError').text('');
-                                    }
-                                });
-                    
-                                $('select[required]').on('change', function() {
-                                    if ($(this).val() === '' || $(this).val() === null) {
-                                        $(this).addClass('is-invalid');
-                                    } else {
-                                        $(this).removeClass('is-invalid');
-                                    }
-                                });*/
-
                                 $('#dni').on('input', function() {
                                    var dniVendedor = $(this).val();
                                    var dniRegex = /^[0-9]+$/;
@@ -340,18 +316,8 @@
                                         formIsValid = false;
                                     } else {
                                         $('#FOL_CVENTA').removeClass('is-invalid');
+                 
                                     }
-                    /*
-                                    var antCventa = $('#ANT_CVENTA').val();
-                                    if (antCventa === "") {
-                                        $('#ANT_CVENTA').addClass('is-invalid');
-                                        $('#antCventaError').text('Seleccione una opción.');
-                                        formIsValid = false;
-                                    } else {
-                                        $('#ANT_CVENTA').removeClass('is-invalid');
-                                        $('#antCventaError').text('');
-                                    }*/
-
 
                                                       
                                     if (!formIsValid) {

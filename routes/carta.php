@@ -14,4 +14,4 @@ Route::post('/insertar',[CartaController::class,'nuevo_carta']);
 //Ruta para el Update
 Route::post('/actualizar',[CartaController::class,'actualizar_carta']);
 //Ruta para imprimir pdf
-Route::get('/generar-pdf/{id}', [CartaController::class, 'generarPdfT']);
+Route::get('/generar-pdf/{id}', [CartaController::class, 'generarPdf']);
