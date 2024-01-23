@@ -127,7 +127,7 @@
 
 
                                 <!-- Método para insertar en código de vendedor atrayendo los datos ya existentes de la tabla persona -->
-                              <!-- comentado para probar el inserta de forma normal
+                              
                                  <div class="row">
                                     
                                     <div class="col-md-6">
@@ -139,12 +139,12 @@
                                         <label for="nom">Nombre Vendedor</label>
                                         <input type="text" readonly id="NOM_PERSONA" class="form-control" name="NOM_PERSONA" required>
                                     </div>
-                                  
+                                  <!--
                                     <div class="col-md-6">
                                         <label for="nom">Cod</label>
                                        <input type="text" readonly id="COD_PERSONA" class="form-control" name="COD_PERSONA" oninput="buscarPersona(this.value)" required>
-                                    </div>
-                                </div>-->
+                                    </div>-->
+                                </div>
 
                                 <div class="row">
 
@@ -194,14 +194,19 @@
                                         <div class="invalid-feedback">Ingrese solo numero</div>
                                     </div>
             
-                                    
+                                    <div class="col-md-4">
+                                        <img id="imagenFierro" src="" alt="Imagen del Fierro" style="display: none; max-width: 60%; max-height: 60%; ">
+
+                                        <label for="nom">Imagen Fierro</label>
+                                        <input type="text" readonly id="IMG_FIERRO" class="form-control" name="IMG_FIERRO">
+                                    </div> 
       
                                     <div class="col-md-4">
                                         <label for="VEN_ANIMAL" >Venteado Animal</label>
                                         <select class="form-select custom-select" id="VEN_ANIMAL" name="VEN_ANIMAL"required >
                                             <option value="" disabled selected>Seleccione una opción Venteado</option>
-                                            <option value="S" selected >SI</option>
-                                            <option value="N" selected >NO</option>
+                                            <option value="SI" selected >SI</option>
+                                            <option value="NO" selected >NO</option>
                                                                                   
                                            
                                         </select>
@@ -211,8 +216,8 @@
                                         <label for="HER_ANIMAL">Herrado Animal</label>
                                         <select class="form-select custom-select" id="HER_ANIMAL" name="HER_ANIMAL"required >
                                             <option value="" disabled selected>Seleccione una opción de Herrado</option>
-                                            <option value="S" selected >SI</option>
-                                            <option value="N" selected >NO</option>
+                                            <option value="SI" selected >SI</option>
+                                            <option value="NO" selected >NO</option>
                                                                                    
                                         </select>
                                     </div> 
@@ -360,7 +365,7 @@
 
 
                                  //Función para buscar personas . USO DE LA BUSQUEDA COMENTADO AUN 
-                                 /*function buscarPersona(idPersona  ) {
+                                 function buscarPersona(idPersona  ) {
                                             var personasArreglo = <?php echo json_encode($personasArreglo); ?>;
                                             var fierroArreglo = <?php echo json_encode($fierroArreglo); ?>;
                                            
@@ -425,7 +430,7 @@
                                                 $('#NOM_PERSONA').val('');
                                                 $('#COD_PERSONA').val('');
                                             }
-                                        };*/
+                                        };
                                          //Funcion de limpiar el formulario al momento que le demos al boton de cancelar
                                 function limpiarFormulario() {
                                    /* BUSQUEDA
@@ -904,7 +909,7 @@
                     text: "<i class='fa-solid fa-print'></i>",
                     titleAttr: "Imprimir",
                     className: "btn btn-secondary",
-                    footer: true,
+                    footer: true, 
                     customize: function(win) {
                         // Agrega tu encabezado personalizado aquí
                         $(win.document.head).append("<style>@page { margin-top: 20px; }</style>");
