@@ -150,7 +150,7 @@
 
                                     <div class="col-md-4">
                                     
-                                        <label for="COD_PERSONA">cod vendedor</label>
+                                        <label for="COD_PERSONA">N° vendedor</label>
                                         <input type="text" id="COD_PERSONA" class="form-control" name="COD_PERSONA"  required>
                                         <div class="invalid-feedback">Ingrese Nombre Completo</div>
                                     </div>
@@ -454,8 +454,8 @@
                                     document.getElementById("IND_CVENTA").value = "";
 
                                      // Limpiar el campo de imagen y ocultar la imagen
-                                 // document.getElementById("IMG_FIERRO").value = "";
-                                 // document.getElementById("imagenFierro").style.display = 'none';
+                                    document.getElementById("IMG_FIERRO").value = "";
+                                    document.getElementById("imagenFierro").style.display = 'none';
                                     
 
                                     const invalidFeedbackElements = document.querySelectorAll(".invalid-feedback");
